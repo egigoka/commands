@@ -11,7 +11,7 @@ __version__ = "8.4.2.9-alpha"
 import sys  # used for check version of python for init or not win_unicode_console
 
 FRACKING_classes_speed_tweaking = False
-#FRACKING_classes_speed_tweaking = True
+FRACKING_classes_speed_tweaking = True
 
 bench_no_bench_import_time = datetime.datetime.now()
 
@@ -26,7 +26,7 @@ try:
 
     if FRACKING_classes_speed_tweaking:
         LoadTimeBenchMark = get_Bench()
-        LoadTimeBenchMark.fraction_digits = 3
+        LoadTimeBenchMark.fraction_digits = 2
         LoadTimeBenchMark.time_start = start_bench_no_bench
         LoadTimeBenchMark.end("python libs imported in", quiet_if_zero=True)
         LoadTimeBenchMark.time_start = bench_no_bench_import_time
