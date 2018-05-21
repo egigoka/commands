@@ -6,9 +6,10 @@ try:
     from commands8 import *
 except ModuleNotFoundError:
     from commands import *
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 def get_name_of_repo():
+    import os
     if Path.working().split(os.sep)[-1] in ["t", "term"]:
         return "test"
     else:

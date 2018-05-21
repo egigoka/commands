@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 import datetime
 start_bench_no_bench = datetime.datetime.now()
-__version__ = "8.4.0.4-alpha"
+__version__ = "8.4.1.8-alpha"
 # TODO for 9.0.0 release:
     # todo OS class vars not strings, but booleans
     # todo lazy load for all modules
     # todo docstrings everywhere
-import os  # widely used
+    # new dir_c
 import sys  # used for check version of python for init or not win_unicode_console
 
 FRACKING_classes_speed_tweaking = True
@@ -25,30 +25,26 @@ try:
 
     if FRACKING_classes_speed_tweaking:
         LoadTimeBenchMark = get_Bench()
+        LoadTimeBenchMark.fraction_digits = 3
         LoadTimeBenchMark.time_start = start_bench_no_bench
         LoadTimeBenchMark.end("python libs imported in", quiet_if_zero=True)
-        LoadTimeBenchMark.start()
         LoadTimeBenchMark.time_start = bench_no_bench_import_time
-        LoadTimeBenchMark.end("func get_Bench loaded in", quiet_if_zero=True)
-        LoadTimeBenchMark.start()
+        LoadTimeBenchMark.end("func get_Bench loaded in", quiet_if_zero=True, start_immideately=True)
 
     from commands.str8 import Str
 
     if FRACKING_classes_speed_tweaking:
-        LoadTimeBenchMark.end("class Str loaded in", quiet_if_zero=True)  # python searching for that module in PATH
-        LoadTimeBenchMark.start()
+        LoadTimeBenchMark.end("class Str loaded in", quiet_if_zero=True, start_immideately=True)  # python searching for that module in PATH
 
     from commands.os8 import OS
 
     if FRACKING_classes_speed_tweaking:
-        LoadTimeBenchMark.end("class OS loaded in", quiet_if_zero=True)
-        LoadTimeBenchMark.start()
+        LoadTimeBenchMark.end("class OS loaded in", quiet_if_zero=True, start_immideately=True)
 
     from commands.print8 import Print
 
     if FRACKING_classes_speed_tweaking:
-        LoadTimeBenchMark.end("class Print loaded in", quiet_if_zero=True)
-        LoadTimeBenchMark.start()
+        LoadTimeBenchMark.end("class Print loaded in", quiet_if_zero=True, start_immideately=True)
 
     class Internal:
         @staticmethod
@@ -90,15 +86,14 @@ try:
             import commands8, importlib
             commands8 = importlib.reload(commands8)
             del commands8
-            string = "from commands8 import *"  # d you need to manually add this <<< string to code :(
+            string = "from commands import *"  # d you need to manually add this <<< string to code :(
             if not quiet:
                 print('"'+string+'" copied to clipboard')
                 import copypaste
                 copypaste.copy(string)
                 pass
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Internal loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Internal loaded in", quiet_if_zero=True, start_immideately=True)
 
     if OS.name == "windows":  # init some modules to proper work with windows console
         if sys.version_info < (3,6):
@@ -107,15 +102,13 @@ try:
     import colorama
     colorama.init()
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("imported all dependencies in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("imported all dependencies in", quiet_if_zero=True, start_immideately=True)
 
     from commands.const8 import *
 
     from commands.console8 import Console
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Console loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Console loaded in", quiet_if_zero=True, start_immideately=True)
 
     class Ssh:
         @staticmethod
@@ -152,8 +145,7 @@ try:
             return output
 
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Ssh loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Ssh loaded in", quiet_if_zero=True, start_immideately=True)
 
 
     class Path:
@@ -242,6 +234,7 @@ try:
     class Dir:
         @staticmethod
         def create(filename):  # create dir if didn't exist
+            import os
             if not os.path.exists(filename):
                 os.makedirs(filename)
 
@@ -253,11 +246,14 @@ try:
 
         @staticmethod
         def list_of_files(path):  # return list of files in folder
+            import os
             return os.listdir(path)
 
         @staticmethod
-        def number_of_files(path, quiet=False):  # return integer of number of files
-          # d in directory
+        def number_of_files(path, quiet=False):
+            """Return integer of number of files in directory
+            """
+            import os
             try:
                 dir_contents = Dir.contents(path)
                 if not quiet:
@@ -277,12 +273,12 @@ try:
                     if not quiet:
                         print(filename, "renamed to", final_name)
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Path loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Path loaded in", quiet_if_zero=True, start_immideately=True)
 
     class File:
         @staticmethod
         def create(filename):
+            import os
             filename = Path.full(filename)
             if os.path.split(filename)[0] != "":
                 Dir.create(os.path.split(filename)[0])
@@ -298,6 +294,7 @@ try:
         @staticmethod
         def delete(path, quiet=False):  # ...
             import time
+            import os
             if os.path.isdir(path):
                 raise IsADirectoryError(path + " is directory, use Dir.delete to delete")
             try:
@@ -326,8 +323,10 @@ try:
             File.move(input_file, output_file)
 
         @staticmethod
-        def hide(filename, quiet=True):  # adding dot to filename and set attribute
-          # d FILE_ATTRIBUTE_HIDDEN to file, if running on Windows
+        def hide(filename, quiet=True):
+            """adding dot to filename and set attribute FILE_ATTRIBUTE_HIDDEN to
+            file, if running on Windows"""
+            import os
             filename = Path.full(filename)
             if OS.name == "windows":
                 import win32api, win32con
@@ -340,8 +339,10 @@ try:
 
         @classmethod
         def backup(cls, filename, subfolder="bak", hide=True, quiet = False):
-          # d move file to subfolder, adds sort of timestamp to filename and hide
-          # d file if necessary
+            """Move file to subfolder, adds sort of timestamp to filename and
+            hide file if same named argument is True
+            """
+            import os
             import shutil
             filename = Path.full(filename) # normalize filename
             backupfilename = str(filename) + "." + Time.dotted() + ".bak"  # add dottedtime to backup filename
@@ -371,33 +372,31 @@ try:
 
         @staticmethod
         def read(path):  # return pipe to file content
-        # import locale
-        # locale.getpreferredencoding(False) # what is that?
-        # locale.getpreferredencoding(False)
             with open(path, "r", encoding='utf-8') as f:
                 return f.read()
 
         @staticmethod
-        def write(filename, what_to_write, mode="ab"):  # write to end of file with default mode, you can change it to any
-          # g that supported by python open() func
+        def write(filename, what_to_write, mode="ab"):
+            """write to end of file with default mode, you can change it to any
+            that supported by python open() func"""
             with open(filename, mode=mode) as file:  # open file then closes it
                 file.write(what_to_write.encode("utf-8"))
 
         @staticmethod
         def get_size(filename):  # return size in bytes
+            import os
             return os.stat(filename).st_size
 
         @staticmethod
         def exists(filename):
+            import os
             return os.path.exists(filename)
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class File loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class File loaded in", quiet_if_zero=True, start_immideately=True)
 
     from commands.time8 import Time
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Time loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Time loaded in", quiet_if_zero=True, start_immideately=True)
 
     class Json():
         @classmethod
@@ -434,6 +433,7 @@ try:
         @classmethod
         def load(cls, filename, quiet = False, debug=False):
             import json
+            import os
             try:
                 if not os.path.isfile(filename):
                     File.create(filename)
@@ -451,17 +451,16 @@ try:
                 raise IOError("error while loading JSON, try to repair script at path " +
                               Path.full(sys.argv[0]))
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Json loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Json loaded in", quiet_if_zero=True, start_immideately=True)
 
     from commands.list8 import List
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class List loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class List loaded in", quiet_if_zero=True, start_immideately=True)
 
     class Process():
         @staticmethod
         def kill(process):
+            import os
             if OS.name == "windows":
                 command_ = "taskkill /f /im " + str(process) + ".exe"
                 try:
@@ -481,6 +480,7 @@ try:
             os.system(command_)
         @staticmethod
         def start(*arguments, new_window=False, debug=False, pureshell=False):
+            import os
             arguments = List.flatterize(arguments)
             if debug:
                 Print.debug("Process.start arguments", arguments)
@@ -517,8 +517,7 @@ try:
                     # print(commands)
                     os.system(commands)
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Process loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Process loaded in", quiet_if_zero=True, start_immideately=True)
 
     class Dict:
         @staticmethod
@@ -538,8 +537,7 @@ try:
                 import collections
                 return collections.OrderedDict(sorted(dict.items()))
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Dict loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Dict loaded in", quiet_if_zero=True, start_immideately=True)
 
     class Codegen:
         debug = False
@@ -562,8 +560,7 @@ try:
         shebang = "#! python3" + newline + \
                   "# -*- coding: utf-8 -*-" + newline
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Codegen loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Codegen loaded in", quiet_if_zero=True, start_immideately=True)
 
     def plog(logfile, logstring="some shit happened", customtime=None, quiet=False, backup=True):
         if not quiet:
@@ -578,8 +575,7 @@ try:
             file.write(Time.rustime() + " " + str(logstring) + newline)
         file.close()
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("func plog loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("func plog loaded in", quiet_if_zero=True, start_immideately=True)
 
     class Network:
         @staticmethod
@@ -664,20 +660,19 @@ try:
                 return up, ip, ping_output
             return up
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Network loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Network loaded in", quiet_if_zero=True, start_immideately=True)
 
     class Fix:
 
         def winRepair_UnicodeEncodeError(quiet=""):
+            import os
             if quiet:
                 quiet = " > null"
             os.system("chcp 65001" + quiet)
             os.system("set PYTHONIOENCODING = utf - 8")
 
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Fix loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Fix loaded in", quiet_if_zero=True, start_immideately=True)
 
     class Bash:
         escapable_chars = [backslash]
@@ -687,8 +682,7 @@ try:
                 argument = argument.replace(char, backslash+char)
             return Str.to_quotes(argument)
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Bash loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Bash loaded in", quiet_if_zero=True, start_immideately=True)
 
     if OS.name == "macos":
         class macOS:
@@ -731,8 +725,7 @@ try:
                 if list_of_sounds:
                     Print.debug("global sounds", Dir.list_of_files(Path.extend("System", "Library", "Sounds")), "local sounds", Dir.list_of_files(Path.extend("~", "Library", "Sounds")))
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class macOS loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class macOS loaded in", quiet_if_zero=True, start_immideately=True)
 
     class Gui:
         def warning(message):
@@ -765,8 +758,7 @@ try:
                 Print.debug("PyPy doesn't support pyautogui, so warning is here:", warning)
                 input("Press Enter to continue")
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Gui loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Gui loaded in", quiet_if_zero=True, start_immideately=True)
 
     class Tkinter():
         @staticmethod
@@ -774,8 +766,7 @@ try:
           # d Tkinter
             return str('#%02x%02x%02x' % (red, green, blue))
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Tkinter loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Tkinter loaded in", quiet_if_zero=True, start_immideately=True)
 
     if OS.name == "windows":
         class Windows:
@@ -787,13 +778,11 @@ try:
                 else:
                     raise OSError("Locking work only on Windows < 10")
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Windows loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Windows loaded in", quiet_if_zero=True, start_immideately=True)
 
+    from commands.random8 import Random
 
-
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Random loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Random loaded in", quiet_if_zero=True, start_immideately=True)
 
     class Wget:
         @staticmethod
@@ -809,8 +798,7 @@ try:
                 Process.start("wget", url, "-O", output, arguments, pureshell=True)
             # Another way to fix blocks by creating ~/.wgetrc file https://stackoverflow.com/a/34166756
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Wget loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Wget loaded in", quiet_if_zero=True, start_immideately=True)
 
     class Int:
         @staticmethod
@@ -831,8 +819,7 @@ try:
             else:
                 return roots
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Int loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Int loaded in", quiet_if_zero=True, start_immideately=True)
 
     class CLI():
         @staticmethod
@@ -879,8 +866,7 @@ try:
         def progressbar(count, of):
             Console.width()
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class CLI loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class CLI loaded in", quiet_if_zero=True, start_immideately=True)
 
     class Repl:
         @staticmethod
@@ -903,8 +889,7 @@ try:
             else:
                 main()
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Repl loaded in", quiet_if_zero=True)
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.start()
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Repl loaded in", quiet_if_zero=True, start_immideately=True)
 
     try:
         colorama.reinit()
