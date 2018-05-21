@@ -10,7 +10,7 @@ __version__ = "8.4.1.8-alpha"
     # new dir_c
 import sys  # used for check version of python for init or not win_unicode_console
 
-FRACKING_classes_speed_tweaking = True
+FRACKING_classes_speed_tweaking = False
 
 bench_no_bench_import_time = datetime.datetime.now()
 
