@@ -1,40 +1,46 @@
 #! python3
 # -*- coding: utf-8 -*-
 # http://python.su/forum/topic/15531/?page=1#post-93316
-from commands.os8 import OS
-from commands.str8 import Str
-from commands.const8 import *
-import os
-__version__ = "0.1.1"
+__version__ = "0.1.3"
+
 
 class Console():
     @staticmethod
-    def clean():  # wipe terminal output. Not tested on linux
-      # todo test on linux
-        if OS.name == "windows":
+    def clean():
+        """Wipe terminal output. Not tested on linux
+        todo test on linux
+        """
+        import os
+        from .os8 import OS
+        if OS.windows:
             os.system("cls")
-        elif OS.name == "linux":
+        elif OS.linux:
             import shutil
+            from .const8 import newline
             print(newline * shutil.get_terminal_size().lines)
-        elif OS.name == "macos":
+        elif OS.macos:
             os.system(r"clear && printf '\e[3J'")
 
     @staticmethod
     def width():  # return width of terminal window in characters
-        if OS.name == "windows":
+        from .os8 import OS
+        if OS.windows:
             import shutil
             width_ = shutil.get_terminal_size().columns
-        elif OS.name in ["linux", "macos"]:
+        elif OS.unix_family:
             io = Console.get_output("stty size")
             width_ = Str.get_integers(io)[1]
         return int(width_)
 
     @staticmethod
-    def height():  # return height of terminal window in characters
-        if OS.name == "windows":
+    def height():
+        """Return height of terminal window in characters
+        """
+        from .os8 import OS
+        if OS.windows:
             import shutil
             height = width_ = shutil.get_terminal_size().lines
-        elif OS.name in ["linux", "macos"]:
+        elif OS.unix_family:
             sttysize = Console.get_output("stty size")
             height = Str.get_integers(sttysize)[0]
         if height > 100:
@@ -43,11 +49,14 @@ class Console():
 
     @classmethod
     def blink(cls, width=None, height=None, symbol="#", sleep=0.5):
+        """fastly print to terminal characters with random color. Completely
+        shit. Arguments width and height changing size of terminal, works only
+        in Windows.
+        """
         import random
-      # d fastly print to terminal characters with random color. Completely shit.
-      # d arguments width and height changing size of terminal, works only in
-      # d Windows.
-        if width is not None and height is not None:
+        from .os8 import OS
+        if (width is not None) and (height is not None) and OS.windows:
+            import os
             os.system("mode con cols=" + str(width) + " lines=" + str(height))
         if width is None:
             width = cls.width()
@@ -76,13 +85,14 @@ class Console():
 
 
     @staticmethod
-    def get_output(command):  # d return output
-      # d of executing command. Doesn't output it to terminal in realtime.
-      # d can be output after done if "quiet" argument activated.
-        # TODO make ouptut even if exit status != 0
+    def get_output(command):
+        """Return output of executing command. Doesn't output it to terminal in
+        realtime. Can be output after done if "quiet" argument activated.
+        """
         import subprocess
+        from .os8 import OS
         p = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
-        if OS.name == "windows":
+        if OS.windows:
             output = p.decode("cp866")
         elif OS.family == "unix":
             output = p.decode("utf8")

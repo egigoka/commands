@@ -1,11 +1,9 @@
 #! python3
 # -*- coding: utf-8 -*-
 # http://python.su/forum/topic/15531/?page=1#post-93316
-from commands.os8 import OS
-from commands.str8 import Str
-from commands.bench8 import get_Bench
-from commands.print8 import Print
-__version__ = "0.0.8"
+__version__ = "0.0.9"
+
+
 class Time:
 
     @staticmethod
@@ -17,6 +15,7 @@ class Time:
     @staticmethod
     def get(size, zfill=0):
         import datetime
+        from .str8 import Str
         return Str.leftpad(eval("str(datetime.datetime.now()." + size + ")"), leng=zfill, ch=0)
 
 
@@ -45,21 +44,27 @@ class Time:
     @classmethod
     def rustime(Time, customtime=None):
         import datetime
-        if customtime:
-            time = Time.timestamp_to_datetime(customtime)
+        from .os8 import OS
+        if OS.cyrillic_support:
+            if customtime:
+                time = Time.timestamp_to_datetime(customtime)
+            else:
+                time = datetime.datetime.now()
+            def lp(string):
+                from .str8 import Str
+                return Str.leftpad(string, 2, 0)
+            rustime = lp(time.day) + " числа " \
+            + lp(time.month) + " месяца " \
+            + lp(time.year) + " года в " \
+            + lp(time.hour) + ":" + lp(time.minute) + ":" + lp(time.second)
         else:
-            time = datetime.datetime.now()
-        def lp(string): return Str.leftpad(string, 2, 0)
-        rustime = lp(time.day) + " числа " \
-        + lp(time.month) + " месяца " \
-        + lp(time.year) + " года в " \
-        + lp(time.hour) + ":" + lp(time.minute) + ":" + lp(time.second)
-        if not OS.cyrillic_support:
             rustime = Time.dotted()
         return rustime
 
     @staticmethod
     def timer(seconds, check_per_sec=10):
+        from .print8 import Print
+        from .bench8 import get_Bench
         Countdown = get_Bench()
         Countdown.start()
         secs_second_var = int(seconds)

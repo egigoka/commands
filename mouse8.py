@@ -1,8 +1,9 @@
 #! python3
 # -*- coding: utf-8 -*-
 # http://python.su/forum/topic/15531/?page=1#post-93316
-from commands.time8 import Time
-__version__ = "1.0.1"
+__version__ = "1.0.2"
+
+
 try:
     import pyautogui
 except:
@@ -40,6 +41,7 @@ class Mouse:
     class Click:
         @staticmethod
         def click(button, position, quiet=False):
+            from .time8 import Time
             Time.sleep(Settings_Mouse.sleep_before_click, quiet=quiet)
             if position:
                 pyautogui.click(x=position[0],y=position[1],button=button)

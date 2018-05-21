@@ -1,14 +1,15 @@
 #! python3
 # -*- coding: utf-8 -*-
 # http://python.su/forum/topic/15531/?page=1#post-93316
-from commands.os8 import OS
-from commands.console8 import Console
-from commands.const8 import *
-__version__ = "0.1.5"
+__version__ = "0.1.6"
+
+
 class Print():
     @staticmethod
-    def debug(*strings, raw=False):  # d just more notable print, only for
-      # d debugging
+    def debug(*strings, raw=False):
+        """just more notable print, only for debugging
+        """
+        from .console8 import Console
         line = "-" * Console.width()
         print("<<<Debug sheet:>>>")
         for str_ in strings:
@@ -21,11 +22,14 @@ class Print():
         print("<<<End of debug sheet>>>")
 
     @staticmethod
-    def rewrite(*strings, sep=" ", raw=False):  # d string, that can be rewritable
-      # d note, that you need to rewrite string to remove characters
-        # clean
+    def rewrite(*strings, sep=" ", raw=False):
+        """String, that can be rewritable note, that you need to rewrite string
+        to remove previous characters
+        """
+        from .os8 import OS
+        from .console8 import Console
         line = " " * Console.width()
-        if OS.name == "windows":  # windows add symbol to end of string :(
+        if OS.windows:  # windows add symbol to end of string :(
             line = line[:-1]
         print(line, end="\r")
         # print or output
@@ -44,10 +48,11 @@ class Print():
     colorama_inited = False
 
     @classmethod
-    def colored(Print, *strings, attrs=None, end=newline, sep=" "):  # usage: Print.colored("text", "red") or Print.colored("text", "red", "on_white")
+    def colored(Print, *strings, attrs=None, end="\n", sep=" "):  # usage: Print.colored("text", "red") or Print.colored("text", "red", "on_white")
       # d you can pick colors from termcolor.COLORS, highlights from termcolor.HIGHLIGHTS
         import termcolor
-        if OS.name == "windows":
+        from .os8 import OS
+        if OS.windows:
             import colorama
             colorama.init()
         # check for colors in input

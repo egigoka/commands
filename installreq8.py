@@ -7,7 +7,8 @@ import os
 from commands.os8 import OS
 from commands.pip8 import Pip
 from commands.bench8 import get_Bench
-__version__ = "0.0.5"
+__version__ = "0.0.6"
+
 
 FRACKING_Internal_mine_import_speed_tweaking = True
 
@@ -20,12 +21,12 @@ def mine_import(module_name, objects=None, justdownload=False, az=None):  # impo
     if module_name not in Pip.list_of_modules:
         ###########RARE###########
         if module_name == "pyautogui":
-            if OS.name == "linux":
+            if OS.linux:
                 if OS.is_python3:
                     os.system("apt-get install python-xlib")
                 else:
                     os.system("apt-get install python3-Xlib")
-            if OS.name == "macos":
+            if OS.macos:
                 for package in ["python" + OS.python_commandline_version + "-xlib",
                                 "pyobjc-core", "pyobjc"]:
                     Pip.install(package)
@@ -95,18 +96,18 @@ def mine_import(module_name, objects=None, justdownload=False, az=None):  # impo
 
 
 mine_import("termcolor", objects="colored, cprint")  # print_green_on_cyan = lambda x: cprint(x, 'green', 'on_cyan')
-if OS.name == "windows":
+if OS.windows:
     mine_import("copypaste")
     mine_import("pyperclip", az="copypaste")
 else:
     mine_import("copypaste")
 if OS.display:
     if OS.python_implementation != "pypy":
-        if OS.name != "macos:":
+        if OS.macos:
             mine_import("pyautogui", justdownload=True)
         mine_import("paramiko", justdownload=True)
     import tkinter
-if OS.name == "windows":
+if OS.windows:
     if sys.version_info < (3,6):
         mine_import("win_unicode_console")
     mine_import("win32api")

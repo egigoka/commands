@@ -2,33 +2,38 @@
 # -*- coding: utf-8 -*-
 import datetime
 start_bench_no_bench = datetime.datetime.now()
-__version__ = "8.4.2.9-alpha"
+__version__ = "9.0.0-alpha"
 # TODO for 9.0.0 release:
-    # todo OS class vars not strings, but booleans
-    # todo lazy load for all modules
+    # !done! todo OS class vars not strings, but booleans
+    # !done! todo lazy load for all modules
+    # all submodules lazy load
     # todo docstrings everywhere
     # new dir_c
-import sys  # used for check version of python for init or not win_unicode_console
-
-FRACKING_classes_speed_tweaking = False
-FRACKING_classes_speed_tweaking = True
-
-bench_no_bench_import_time = datetime.datetime.now()
-
-# todo version diff
+    # fix Time.rustime without cyrillic_support
+    # Console.get_output make ouptut even if exit status != 0
+    # make tests for all
+    # PIP8 check for all
+# TODO version diff
 #   todo export script as json?
 #   todo compare jsons?
 #   todo save changes as commit message?
 
+FRACKING_classes_speed_tweaking = False
+# FRACKING_classes_speed_tweaking = True
+
+
+
 try:
+
+    bench_no_bench_import_time = datetime.datetime.now()
 
     from commands.bench8 import get_Bench
 
     if FRACKING_classes_speed_tweaking:
         LoadTimeBenchMark = get_Bench()
-        LoadTimeBenchMark.fraction_digits = 2
+        LoadTimeBenchMark.fraction_digits = 3
         LoadTimeBenchMark.time_start = start_bench_no_bench
-        LoadTimeBenchMark.end("python libs imported in", quiet_if_zero=True)
+        LoadTimeBenchMark.end("init in", quiet_if_zero=True)
         LoadTimeBenchMark.time_start = bench_no_bench_import_time
         LoadTimeBenchMark.end("func get_Bench loaded in", quiet_if_zero=True, start_immideately=True)
 
@@ -49,33 +54,11 @@ try:
 
     class Internal:
         @staticmethod
-        def dir_c(debug=False):  # d print all functionality of commands8
-            first_func_after_class = 1
-
-            cnt_of_all_def = 0
-            cnt_of_commented_def = 0
-
-            file_path = Path.extend(Path.commands8(), "commands8.py")
-            file_pipe = File.read(file_path)
-            file_lines = Str.nl(file_pipe)
-            for line in file_lines:  # dir ignore
-                if "# dir ignore" not in line:  # dir ignore
-                    if "bnl" in line:  # dir ignore
-                        print(newline*Str.get_integers(line)[-1], end="")  # dir ignore
-                        line = line.replace("bnl"+str(Str.get_integers(line)[-1]),"")
-                    if "def " in line:  # dir ignore
-                        print(newline*first_func_after_class + line)  # dir ignore
-                        first_func_after_class = 1
-
-                        cnt_of_all_def += 1
-                        if "  # " in line: cnt_of_commented_def += 1
-
-                    elif ("class " in line) and (line[0:4] != "    "):  # dir ignore
-                        first_func_after_class = 0
-                        print(newline + line)  # dir ignore
-                    elif "# d " in line:  # dir ignore
-                        print(line.replace("# d ", "# ", 1))  # dir ignore
-            if debug: Print.debug(cnt_of_all_def, cnt_of_commented_def)
+        def dir_c():
+            """Print all functionality of commands8
+            """
+            raise NotImplementedError
+            # commands.__dict__
 
 
 
@@ -166,15 +149,14 @@ try:
                 try:
                     path = os.path.join(str(path), str(path_part))
                 except NameError:  # first path piece is very important
-                    if OS.family == "": pass # fix
-                    if (OS.name == "windows") and path_part == backslash:  # support for smb windows paths like \\ip_or_pc\dir\
+                    if (OS.windows) and path_part == backslash:  # support for smb windows paths like \\ip_or_pc\dir\
                         path = backslash * 2
-                    elif (OS.name == "windows") and (len(path_part) <= 3):
+                    elif (OS.windows) and (len(path_part) <= 3):
                         path = os.path.join(path_part, os.sep)
-                    elif OS.name == "windows":
+                    elif OS.windows:
                         path = path_part
                         if debug: Print.debug("path", path, "path_part", path_part)
-                    elif OS.family == "unix":
+                    elif OS.unix_family:
                         if path_part == "..":
                             path = path_part
                         elif path_part == ".":
@@ -192,7 +174,7 @@ try:
         def home():  # return path of home directory of current user. Not tested in
           # d linux.
           # todo test in lunux!
-            if OS.name == "windows":
+            if OS.windows:
                 path = Console.get_output(r"echo %userprofile%")
                 path = path.rstrip(newline2)
             else:
@@ -212,15 +194,15 @@ try:
 
 
     class Locations:
-        if OS.name == "windows":  # d ...
+        if OS.windows:  # d ...
             texteditor = "notepad"  # d notepad is in every version of Windows, yea?
             py = "py"
             pyw = "pyw"
-        elif OS.name == "macos":  # d ...
+        elif OS.macos:  # d ...
             texteditor = "open"  # d just open default program for file
             py = "python3"
             pyw = "python3"
-        elif OS.name == "linux":  # d ...
+        elif OS.linux:  # d ...
             texteditor = "nano"  # d nano is everywhere, I suppose? ]-:
             py = "python3"
             pyw = "python3"
@@ -282,13 +264,13 @@ try:
             else:
                 raise FileExistsError("file" + str(filename) + "exists")
             if not File.exists(filename):
+                import sys
                 raise FileNotFoundError("error while creating file " + filename +
                                         "try to repair script at " + Path.full(sys.argv[0]))
 
         @staticmethod
         def delete(path, quiet=False):  # ...
-            import time
-            import os
+            import time, os
             if os.path.isdir(path):
                 raise IsADirectoryError(path + " is directory, use Dir.delete to delete")
             try:
@@ -322,7 +304,7 @@ try:
             file, if running on Windows"""
             import os
             filename = Path.full(filename)
-            if OS.name == "windows":
+            if OS.windows:
                 import win32api, win32con
                 win32api.SetFileAttributes(filename, win32con.FILE_ATTRIBUTE_HIDDEN)  # hiding file like windows do
             dotted_file = Path.extend(os.path.split(filename)[0], "." + os.path.split(filename)[1])  # adding dot
@@ -404,7 +386,7 @@ try:
 
         @classmethod
         def save(cls, filename, jsonstring, quiet=False, debug=False):
-            import json
+            import json, sys
             try:
                 File.wipe(filename)
                 settingsJsonTextIO = open(filename, "w")
@@ -426,8 +408,7 @@ try:
 
         @classmethod
         def load(cls, filename, quiet = False, debug=False):
-            import json
-            import os
+            import json, os
             try:
                 if not os.path.isfile(filename):
                     File.create(filename)
@@ -442,6 +423,7 @@ try:
                     print(jsonStringInMemory)
                 return jsonStringInMemory
             except:
+                import sys
                 raise IOError("error while loading JSON, try to repair script at path " +
                               Path.full(sys.argv[0]))
 
@@ -455,14 +437,14 @@ try:
         @staticmethod
         def kill(process):
             import os
-            if OS.name == "windows":
+            if OS.windows:
                 command_ = "taskkill /f /im " + str(process) + ".exe"
                 try:
                     int(process)
                     command_ = "taskkill /f /pid " + str(process)
                 except:
                     pass
-            elif OS.name == "macos":
+            elif OS.macos:
                 command_ = "killall " + str(process)
                 try:
                     int(process)
@@ -470,7 +452,7 @@ try:
                 except:
                     pass
             else:
-                Gui.warning("OS " + str(OS.name) + " not supported")
+                Gui.warning("OS not supported")
             os.system(command_)
         @staticmethod
         def start(*arguments, new_window=False, debug=False, pureshell=False):
@@ -481,7 +463,7 @@ try:
             if new_window or pureshell:
                 for argument_ in arguments:
                     if " " in argument_ and argument_[:1] != "-":
-                        if OS.name == "windows":
+                        if OS.windows:
                             argument_ = Str.to_quotes(argument_)
                         else:
                             argument_ = Str.to_quotes_2(argument_)
@@ -489,22 +471,22 @@ try:
                         command = command + " " + argument_
                     except NameError:
                         if new_window:
-                            if OS.name == "windows":
+                            if OS.windows:
                                 command = 'start "" ' + argument_
-                            elif OS.name == "macos":
+                            elif OS.macos:
                                 Gui.warning("macOS doesn't support creating new window now")
                                 #command = "" +
                         else:
                             command = argument_
                 os.system(command)
             else:
-                if OS.name == "windows":
+                if OS.windows:
                     import subprocess
                     commands = []
                     for argument_ in arguments:
                         commands.append(str(argument_))
                     subprocess.call(commands)
-                elif OS.name == "macos":
+                elif OS.macos:
                     commands = ""
                     for argument_ in arguments:
                         commands += str(argument_) + " "
@@ -597,19 +579,20 @@ try:
                 up_message = domain + " is up!"
                 down_message = domain + " is down."
             try:
-                if OS.name == "windows":
+                if OS.windows:
                     count_arg = "n"
                     timeout_arg = "w"
-                if OS.name in ["macos", "linux"]:
+                if OS.unix_family:
                     count_arg = "c"
                     timeout_arg = "W"
-                if OS.name == "linux":
+                if OS.linux:
                     timeout = int(timeout/1000)
                 command = "ping " + domain + " -" + count_arg + " " + str(count) + \
                           " -" + timeout_arg + " " + str(timeout)
                 ping_output = Console.get_output(command)
 
             except KeyboardInterrupt:
+                import sys
                 sys.exit()
             except:  # any exception is not good ping
                 try:
@@ -676,7 +659,7 @@ try:
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Bash loaded in", quiet_if_zero=True, start_immideately=True)
 
-    if OS.name == "macos":
+    if OS.macos:
         class macOS:
             class osascript:
                 @staticmethod
@@ -721,6 +704,7 @@ try:
 
     class Gui:
         def warning(message):
+            import sys
             try:
                 try:
                     sys.ps1
@@ -741,9 +725,9 @@ try:
             except IndexError:
                 Print.debug("sys.argv", sys.argv)
                 raise RuntimeError ("Something wrong with sys.argv. Tkinter doesn't like it.")
-            if OS.name == 'macos':
+            if OS.macos:
                 macOS.notification(message)
-            if OS.name != "macos" and OS.python_implementation != "pypy":
+            if (not OS.macos) and (OS.python_implementation != "pypy"):
                 Internal.mine_import("pyautogui")
                 pyautogui.alert(message)
             else:
@@ -760,7 +744,7 @@ try:
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Tkinter loaded in", quiet_if_zero=True, start_immideately=True)
 
-    if OS.name == "windows":
+    if OS.windows:
         class Windows:
             @staticmethod
             def lock():  # locking screen, work only on Windows < 10
@@ -884,7 +868,15 @@ try:
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Repl loaded in", quiet_if_zero=True, start_immideately=True)
     LoadTimeBenchMark = get_Bench()
     LoadTimeBenchMark.time_start = start_bench_no_bench
-    LoadTimeBenchMark.end("commands8 v" + __version__ + " loaded in")
+
+
+    class __build__:
+        build_json_file = Path.extend(Path.commands8(), "buildnumber.json")
+        build = Json.load(build_json_file, quiet=True)[0]
+        Json.save(build_json_file, [build+1], quiet=True)
+
+
+    LoadTimeBenchMark.end("commands8 v" + __version__ + "-'build'-" + str(__build__.build) + " loaded in")
 except ModuleNotFoundError:
     import commands.installreq8
     from commands.print8 import Print

@@ -1,8 +1,7 @@
 #! python3
 # -*- coding: utf-8 -*-
 # http://python.su/forum/topic/15531/?page=1#post-93316
-from commands.const8 import *
-__version__ = "0.4.10"
+__version__ = "0.4.13"
 
 
 class Str:
@@ -56,16 +55,18 @@ class Str:
         return integers
 
     @staticmethod
-    def newlines_to_strings(string, quiet=False):  # split long string with line
-      # d breaks to separate strings in list
-        if isinstance(string, str):  # если эта строка существует или пустая
+    def newlines_to_strings(string, quiet=False):
+        """split long string with line breaks to separate strings in list
+        """
+        from .const8 import newline, newline2
+        if isinstance(string, str):  # if input is string
             string = str(string)
             strings = string.split(newline2)
             if len(strings) == 1:
                 strings = strings[0].split(newline)
             return strings
         else:
-            raise TypeError("None can't be splitted")
+            raise TypeError(str(type(string)) + " can't be splitted")
 
     @classmethod
     def nl(cls, string):  # alias to newline

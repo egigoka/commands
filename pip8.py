@@ -1,10 +1,9 @@
 #! python3
 # -*- coding: utf-8 -*-
 # http://python.su/forum/topic/15531/?page=1#post-93316
-from commands.os8 import OS
-from commands.str8 import Str
-from commands.list8 import List
-__version__ = "0.0.7"
+__version__ = "0.1.1"
+
+
 class Pip:
 
     @staticmethod
@@ -18,6 +17,7 @@ class Pip:
     @classmethod
     def install(Pip, *module_names, upgrade=False, uninstall=False):
         import time
+        from .list8 import List
         commands = ["install"]
         if uninstall: commands = ["uninstall", "-y"]
         elif upgrade: commands.append("--upgrade")
@@ -33,11 +33,13 @@ class Pip:
     @classmethod
     def check_pip_installation(Pip):
         if "pip" not in Pip.list_of_modules:
-            if OS.name == "linux":
+            from .os8 import OS
+            if OS.linux:
                 os.system("sudo apt-get install python" + OS.python_commandline_version + "-pip")
 
     @classmethod
     def update_all_packages(Pip):
+        from .str8 import Str
         packages = Str.nl(Console.get_output("pip list"))
         packages_names = []
         for package in packages[3:]:

@@ -1,7 +1,9 @@
 #! python3
 # -*- coding: utf-8 -*-
 # http://python.su/forum/topic/15531/?page=1#post-93316
-__version__ = "0.2.1"
+__version__ = "0.2.2"
+
+
 def get_Bench(start=False):  # return class with those functions:
     class Bench(object):  # dir ignore
         import datetime

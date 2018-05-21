@@ -1,8 +1,10 @@
 #! python3
 # -*- coding: utf-8 -*-
 #from commands7 import *
-from .. import *
-__version__ = "1.0.1"
+from . import *
+__version__ = "1.0.3"
+
+
 def bubblesort(list, quiet=True):
     list = copy.deepcopy(list)
     is_sorted = False
@@ -21,7 +23,7 @@ def bubblesort(list, quiet=True):
                         if cnt > maxcnt:
                             maxcnt = cnt
                             output_string = Str.leftpad(str(maxcnt), len(str(lenlist)))+"/"+str(lenlist)
-                            if OS.name == "macos":
+                            if OS.macos:
                                 output_string = " " + output_string
                             Print.rewrite(output_string)
                     break
