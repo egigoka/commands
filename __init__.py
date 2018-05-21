@@ -2,14 +2,13 @@
 # -*- coding: utf-8 -*-
 import datetime
 start_bench_no_bench = datetime.datetime.now()
-__version__ = "8.4.0.3-alpha"
+__version__ = "8.4.0.4-alpha"
 # TODO for 9.0.0 release:
     # todo OS class vars not strings, but booleans
     # todo lazy load for all modules
     # todo docstrings everywhere
 import os  # widely used
 import sys  # used for check version of python for init or not win_unicode_console
-sys.path.append(".")
 
 FRACKING_classes_speed_tweaking = True
 
@@ -160,19 +159,23 @@ try:
     class Path:
         @staticmethod
         def full(path):
+            import os
             return os.path.abspath(path)
 
         @staticmethod
         def commands8():
+            import os
             return os.path.dirname(os.path.realpath(__file__))
 
         @staticmethod
         def working():
+            import os
             return os.getcwd()
 
         @classmethod
         def extend(cls, *paths, debug=False):  # paths input strings of path pieces, return
           # d string with path, good for OS
+            import os
             for path_part in paths:
                 try:
                     path = os.path.join(str(path), str(path_part))
@@ -212,8 +215,11 @@ try:
             return path
 
         @staticmethod
-        def set_current(path, quiet=True):  # changes current working directory.
-          # d If quiet is disabled, prints directory.
+        def set_current(path, quiet=True):
+            """changes current working directory. If quiet is disabled, prints
+            directory.
+            """
+            import os
             os.chdir(path)
             if not quiet:
                 Print.debug("os.getcwd()  # current directory is", os.getcwd())
