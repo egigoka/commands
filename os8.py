@@ -5,6 +5,7 @@ import sys
 import platform
 __version__ = "0.0.2"
 class OS:   # TODO name of system make boolean
+    sys_version_info = sys.version_info
     is_python3 = sys.version_info >= (3, 0)  # d boolean
     python_implementation = None # d string with name of python implementation: "cpython" or "pypy"
     python_version_major = sys.version_info.major # d int of major python version

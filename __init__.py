@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 start_bench_no_bench = datetime.datetime.now()
-__version__ = "8.4.1.8-alpha"
+__version__ = "8.4.2.9-alpha"
 # TODO for 9.0.0 release:
     # todo OS class vars not strings, but booleans
     # todo lazy load for all modules
@@ -95,16 +95,9 @@ try:
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Internal loaded in", quiet_if_zero=True, start_immideately=True)
 
-    if OS.name == "windows":  # init some modules to proper work with windows console
-        if sys.version_info < (3,6):
-            import win_unicode_console
-            win_unicode_console.init()
-    import colorama
-    colorama.init()
-
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("imported all dependencies in", quiet_if_zero=True, start_immideately=True)
-
     from commands.const8 import *
+
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("imported constants in", quiet_if_zero=True, start_immideately=True)
 
     from commands.console8 import Console
 
@@ -599,7 +592,6 @@ try:
             domain = Network.getDomainOfUrl(domain)
             backup_ping_output = ""
             if not quiet:
-                colorama.reinit()
                 Print.rewrite("Pinging", domain, count, "times...")
                 up_message = domain + " is up!"
                 down_message = domain + " is down."
@@ -644,7 +636,6 @@ try:
                     termcolor.cprint(up_message, "white", "on_green")
                 else:
                     termcolor.cprint(down_message, "white", "on_red")
-                colorama.deinit()
             ip = None
             if return_ip:
                 try:
@@ -890,11 +881,6 @@ try:
                 main()
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Repl loaded in", quiet_if_zero=True, start_immideately=True)
-
-    try:
-        colorama.reinit()
-    except AttributeError:
-        print("failed to init colorama, maybe problem with importing")
     LoadTimeBenchMark = get_Bench()
     LoadTimeBenchMark.time_start = start_bench_no_bench
     LoadTimeBenchMark.end("commands8 v" + __version__ + " loaded in")
