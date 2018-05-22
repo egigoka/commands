@@ -31,7 +31,7 @@ class macOS:
         # simpler commandline tool - https://github.com/vjeantet/alerter
         # commands = "display notification \"message\" with title \"title\" subtitle \"subtitle\" sound name \"Sosumi\""
         from .str8 import Str
-        from .
+        from .process8 import Process
         commands = "display notification " + Str.to_quotes(cls.osascript.quotes_escape(message))
         if title or subtitle:
             commands += " with "
@@ -46,5 +46,8 @@ class macOS:
         Process.start("osascript", "-e",
                       commands)  # f start(*arguments, new_window=False, debug=False, pureshell=False):
         if list_of_sounds:
+            from .print8 import Print
+            from .dir8 import Dir
+            from .path8 import Path
             Print.debug("global sounds", Dir.list_of_files(Path.extend("System", "Library", "Sounds")), "local sounds",
                         Dir.list_of_files(Path.extend("~", "Library", "Sounds")))
