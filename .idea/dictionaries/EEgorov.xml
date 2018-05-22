@@ -2,7 +2,10 @@
   <dictionary name="EEgorov">
     <words>
       <w>chcp</w>
+      <w>codegen</w>
+      <w>macos</w>
       <w>nano</w>
+      <w>plog</w>
       <w>pylint</w>
       <w>pythonioencoding</w>
       <w>repl</w>

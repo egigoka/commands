@@ -9,28 +9,28 @@ import datetime
 START_TIME = datetime.datetime.now()
 __version__ = "9.0.0-prealpha"
 # TODO for 9.0.0 release:
-    # !done! OS class vars not strings, but booleans
-    # !done! lazy load for all modules
-    # !done! all submodules lazy load
-    # fix Time.rustime without cyrillic_support
-    # Console.get_output make ouptut even if exit status != 0
-    # make tests for all
-    # PIP8 check for all
-    # docstrings for all
-    # new dir_c
-    # Internal.rel update to reload all
+#    !done! OS class vars not strings, but booleans
+#    !done! lazy load for all modules
+#    !done! all submodules lazy load
+#    fix Time.rustime without cyrillic_support
+#    Console.get_output make ouptut even if exit status != 0
+#    make tests for all
+#    PIP8 check for all
+#    docstrings for all
+#    new dir_c
+#    Internal.rel update to reload all
 # TODO version diff
-#   todo export script as json?
-#   todo compare jsons?
-#   todo save changes as commit message?
+#   export script as json?
+#   compare json's?
+#   save changes as commit message?
 
 CLASSES_SPEED_TWEAKING = False
-#CLASSES_SPEED_TWEAKING = True
+# CLASSES_SPEED_TWEAKING = True
 
 
 def import_class(module_name, class_name, quiet=False):
     import importlib  # pylint: disable=unused-variable
-    globals()[class_name] = eval("importlib.import_module('." + module_name + "', package='commands')." + class_name) # pylint: disable=eval-used
+    globals()[class_name] = eval("importlib.import_module('." + module_name + "', package='commands')." + class_name)  # pylint: disable=eval-used
     if CLASSES_SPEED_TWEAKING and not quiet:
         LOAD_TIME_BENCHMARK.end("class " + class_name + " loaded in", quiet_if_zero=True, start_immideately=True)
 
@@ -45,7 +45,6 @@ try:
         LOAD_TIME_BENCHMARK.end("init in", quiet_if_zero=True)
         LOAD_TIME_BENCHMARK.time_start = INITED_TIME
         LOAD_TIME_BENCHMARK.end("func get_Bench loaded in", quiet_if_zero=True, start_immideately=True)
-
     import_class("str8", "Str")
     # python searching for that module in PATH
     import_class("os8", "OS")
@@ -79,7 +78,6 @@ try:
     from .const8 import *  # pylint: disable=wildcard-import
     if CLASSES_SPEED_TWEAKING:
         LOAD_TIME_BENCHMARK.end("imported constants in", quiet_if_zero=True, start_immideately=True)
-
 
 
     class Internal:

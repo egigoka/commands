@@ -1,13 +1,20 @@
 #! python3
 # -*- coding: utf-8 -*-
-# http://python.su/forum/topic/15531/?page=1#post-93316
-__version__ = "0.1.1"
+"""Internal module"""
+__version__ = "0.1.5"
 
 
 class Pip:
-
+    """
+    Aliases to work with pip.
+    """
     @staticmethod
     def main(list_of_args):
+        """
+        It's alias of pip.main function, it needed, because pip10 remove public API
+        :param list_of_args: must be list, same arguments as pip
+        :return: same as alias
+        """
         try:
             from pip import main as pip_main
         except ImportError:
@@ -15,45 +22,76 @@ class Pip:
         return pip_main(list_of_args)
 
     @classmethod
-    def install(Pip, *module_names, upgrade=False, uninstall=False):
+    def install(cls, *module_names, upgrade=False, uninstall=False):
+        """
+        Alias to 'pip install'
+        :param module_names:
+        :param upgrade: boolean, if True, "--upgrade" argument will pass to pip
+        :param uninstall: boolean, if True, "uninstall", "-y" arguments will pass to pip
+        :return: None
+        """
         import time
         from .list8 import List
         commands = ["install"]
-        if uninstall: commands = ["uninstall", "-y"]
-        elif upgrade: commands.append("--upgrade")
+        if uninstall:
+            commands = ["uninstall", "-y"]
+        elif upgrade:
+            commands.append("--upgrade")
         commands.append(module_names)
-        Pip.main(List.flatterize(commands))
+        cls.main(List.flatterize(commands))
         time.sleep(0.5)
-        Pip.update_list_of_modules()
+        cls._update_list_of_modules()
 
     @classmethod
-    def uninstall(Pip, *module_names):
-        Pip.install(*module_names, uninstall=True)
+    def uninstall(cls, *module_names):
+        """
+        Alias to Pip.install with True passed to uninstall argument
+        :param module_names:
+        :return: None
+        """
+        cls.install(*module_names, uninstall=True)
 
     @classmethod
-    def check_pip_installation(Pip):
-        if "pip" not in Pip.list_of_modules:
+    def check_pip_installation(cls):
+        """
+        Checks pip installation on Linux, if hasn't, tries to install it with apt-get
+        :return: None
+        """
+        if "pip" not in cls.list_of_modules:
             from .os8 import OS
             if OS.linux:
+                import os
                 os.system("sudo apt-get install python" + OS.python_commandline_version + "-pip")
 
     @classmethod
-    def update_all_packages(Pip):
+    def update_all_packages(cls):
+        """
+        Update _all_ installed packages at once
+        :return: None
+        """
         from .str8 import Str
+        from .console8 import Console
         packages = Str.nl(Console.get_output("pip list"))
         packages_names = []
         for package in packages[3:]:
             if ("Package" not in package) and ("---" not in package) and package != "":
                 packages_names.append(Str.get_words(package)[0])
+        from .print8 import Print
         Print.debug(packages_names)
-        Pip.install(*packages_names, upgrade=True)
+        cls.install(*packages_names, upgrade=True)
 
     list_of_modules = []
 
     @classmethod
-    def update_list_of_modules(Pip):
+    def _update_list_of_modules(cls):
+        """
+        Internal method. Updates internal list of modules.
+        :return: None
+        """
         import pkgutil
-        Pip.list_of_modules = []
+        cls.list_of_modules = []
         for item in pkgutil.iter_modules():
-            Pip.list_of_modules.append(item[1])
-Pip.update_list_of_modules()
+            cls.list_of_modules.append(item[1])
+
+
+Pip.__update_list_of_modules()
