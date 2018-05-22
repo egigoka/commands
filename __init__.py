@@ -434,65 +434,7 @@ try:
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class List loaded in", quiet_if_zero=True, start_immideately=True)
 
-    class Process():
-        @staticmethod
-        def kill(process):
-            import os
-            if OS.windows:
-                command_ = "taskkill /f /im " + str(process) + ".exe"
-                try:
-                    int(process)
-                    command_ = "taskkill /f /pid " + str(process)
-                except:
-                    pass
-            elif OS.macos:
-                command_ = "killall " + str(process)
-                try:
-                    int(process)
-                    command_ = "kill " + str(process)
-                except:
-                    pass
-            else:
-                Gui.warning("OS not supported")
-            os.system(command_)
-        @staticmethod
-        def start(*arguments, new_window=False, debug=False, pureshell=False):
-            import os
-            arguments = List.flatterize(arguments)
-            if debug:
-                Print.debug("Process.start arguments", arguments)
-            if new_window or pureshell:
-                for argument_ in arguments:
-                    if " " in argument_ and argument_[:1] != "-":
-                        if OS.windows:
-                            argument_ = Str.to_quotes(argument_)
-                        else:
-                            argument_ = Str.to_quotes_2(argument_)
-                    try:
-                        command = command + " " + argument_
-                    except NameError:
-                        if new_window:
-                            if OS.windows:
-                                command = 'start "" ' + argument_
-                            elif OS.macos:
-                                Gui.warning("macOS doesn't support creating new window now")
-                                #command = "" +
-                        else:
-                            command = argument_
-                os.system(command)
-            else:
-                if OS.windows:
-                    import subprocess
-                    commands = []
-                    for argument_ in arguments:
-                        commands.append(str(argument_))
-                    subprocess.call(commands)
-                elif OS.macos:
-                    commands = ""
-                    for argument_ in arguments:
-                        commands += str(argument_) + " "
-                    # print(commands)
-                    os.system(commands)
+    from .process8 import Process
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Process loaded in", quiet_if_zero=True, start_immideately=True)
 
@@ -661,79 +603,11 @@ try:
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Bash loaded in", quiet_if_zero=True, start_immideately=True)
 
     if OS.macos:
-        class macOS:
-            class osascript:
-                @staticmethod
-                def quotes_escape(string):
-                    quote_1 = '"'
-                    #quote_2 = "'"
-                    # if there any already escaped symbols:
-                    string = string.replace(backslash, backslash*3)  # if there any other escaped symbols except quotes
-                    string = string.replace(backslash*3+quote_1, backslash*2+quote_1)  # removing one backslash, because it will added furthurer
-                    #string = string.replace(backslash*3+quote_2, backslash*2+quote_2)
-
-                    # usual quotes escape
-                    escaped_1 = backslash + quote_1
-                    #escaped_2 = backslash + quote_2
-                    string = string.replace(quote_1,escaped_1)
-                    #string = string.replace(quote_2, escaped_2)
-                    return string
-
-            @classmethod
-            def notification(cls, message, title="python3", subtitle=None, sound=None, list_of_sounds=False):
-                # https://apple.stackexchange.com/questions/57412/how-can-i-trigger-a-notification-center-notification-from-an-applescript-or-shel# - just applescript
-                # better realizations:
-                # advanced commandline tool - https://github.com/vjeantet/alerter
-                # simpler commandline tool - https://github.com/vjeantet/alerter
-                # commands = "display notification \"message\" with title \"title\" subtitle \"subtitle\" sound name \"Sosumi\""
-                commands = "display notification " + Str.to_quotes(cls.osascript.quotes_escape(message))
-                if title or subtitle:
-                    commands += " with "
-                    if title:
-                        commands += "title " + Str.to_quotes(cls.osascript.quotes_escape(title)) + " "
-                    if subtitle:
-                        commands += "subtitle " + Str.to_quotes(cls.osascript.quotes_escape(subtitle)) + " "
-                if sound:
-                    commands += " sound name " + Str.to_quotes(cls.osascript.quotes_escape(sound))
-                commands = cls.osascript.quotes_escape(commands)  # escaping quotes:
-                commands = Str.to_quotes(commands)  # applescript to quotes
-                Process.start("osascript", "-e", commands)  # f start(*arguments, new_window=False, debug=False, pureshell=False):
-                if list_of_sounds:
-                    Print.debug("global sounds", Dir.list_of_files(Path.extend("System", "Library", "Sounds")), "local sounds", Dir.list_of_files(Path.extend("~", "Library", "Sounds")))
+        from .macos8 import macOS
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class macOS loaded in", quiet_if_zero=True, start_immideately=True)
 
-    class Gui:
-        def warning(message):
-            import sys
-            try:
-                try:
-                    sys.ps1
-                    sys.ps2
-                    interactive_mode = True
-                except:
-                    interactive_mode = False
-                Print.debug("interactive_mode", interactive_mode)
-                try:
-                    not_dot_py = sys.argv[0][-3] != ".py"  # todo check logic
-                except:
-                    not_dot_py = True
-
-                if (not_dot_py or (sys.argv[0] != "")) and (not interactive_mode):
-                    Print.debug("sys.argv", sys.argv)
-                    Print.debug("Something wrong with sys.argv. Tkinter doesn't like it.")
-                    input()
-            except IndexError:
-                Print.debug("sys.argv", sys.argv)
-                raise RuntimeError ("Something wrong with sys.argv. Tkinter doesn't like it.")
-            if OS.macos:
-                macOS.notification(message)
-            if (not OS.macos) and (OS.python_implementation != "pypy"):
-                Internal.mine_import("pyautogui")
-                pyautogui.alert(message)
-            else:
-                Print.debug("PyPy doesn't support pyautogui, so warning is here:", warning)
-                input("Press Enter to continue")
+    from .gui8 import Gui
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Gui loaded in", quiet_if_zero=True, start_immideately=True)
 
@@ -781,32 +655,10 @@ try:
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Int loaded in", quiet_if_zero=True, start_immideately=True)
 
-
+    from .cli8 import CLI
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class CLI loaded in", quiet_if_zero=True, start_immideately=True)
 
-    class Repl:
-        @staticmethod
-        def loop(safe=False):  # mine shitty implementation of REPL
-            def main():  # dir ignore
-                while True:
-                    try:
-                        command = input(">>")
-                        exec (command)
-                        exec("print(" + Str.substring(command, before = '', after=' ') + ")", globals())
-                    except KeyboardInterrupt:
-                        break
-                    except SyntaxError as err:
-                        print(err)
-            if safe:
-                try:
-                    main()
-                except:
-                    pass
-            else:
-                main()
-
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Repl loaded in", quiet_if_zero=True, start_immideately=True)
     LoadTimeBenchMark = get_Bench()
     LoadTimeBenchMark.time_start = start_bench_no_bench
 
