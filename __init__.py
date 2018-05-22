@@ -25,7 +25,7 @@ __version__ = "9.0.0-prealpha"
 #   todo save changes as commit message?
 
 CLASSES_SPEED_TWEAKING = False
-CLASSES_SPEED_TWEAKING = True
+#CLASSES_SPEED_TWEAKING = True
 
 
 def import_class(module_name, class_name, quiet=False):
@@ -79,8 +79,7 @@ try:
     from .const8 import *  # pylint: disable=wildcard-import
     if CLASSES_SPEED_TWEAKING:
         LOAD_TIME_BENCHMARK.end("imported constants in", quiet_if_zero=True, start_immideately=True)
-    LOAD_TIME_BENCHMARK = get_Bench()  # pylint: disable=undefined-variable
-    LOAD_TIME_BENCHMARK.time_start = START_TIME
+
 
 
     class Internal:
@@ -126,10 +125,12 @@ try:
             build = "NaN"
         Json.save(build_json_file, [build+1], quiet=True)  # pylint: disable=undefined-variable
 
-    del START_TIME
     del INITED_TIME
     del CLASSES_SPEED_TWEAKING
+    LOAD_TIME_BENCHMARK = get_Bench()  # pylint: disable=undefined-variable
+    LOAD_TIME_BENCHMARK.time_start = START_TIME
     LOAD_TIME_BENCHMARK.end("commands8 v" + __version__ + "-'build'-" + str(__build__.build) + " loaded in")
+    del START_TIME
     del LOAD_TIME_BENCHMARK
 except ModuleNotFoundError:
     import commands.installreq8
