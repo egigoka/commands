@@ -1,6 +1,7 @@
 #! python3
 # -*- coding: utf-8 -*-
-# http://python.su/forum/topic/15531/?page=1#post-93316
+"""Stub for load module
+"""
 import sys
 sys.path.insert(0, ".")
 from commands import *

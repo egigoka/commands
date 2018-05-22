@@ -3,7 +3,9 @@
     <words>
       <w>chcp</w>
       <w>nano</w>
+      <w>pylint</w>
       <w>pythonioencoding</w>
+      <w>repl</w>
       <w>taskkill</w>
       <w>texteditor</w>
       <w>uptime</w>

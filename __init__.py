@@ -1,7 +1,12 @@
 #! python3
 # -*- coding: utf-8 -*-
+"""This is kinda tiny framework? Idk.
+I learn Python by creating this.
+Also I have some memory issues, so programming with this library and fixing it help me to learn programming.
+Otherwise I every time search how to do some thing and just copy-paste it without understanding and memorizing.
+"""
 import datetime
-start_bench_no_bench = datetime.datetime.now()
+START_TIME = datetime.datetime.now()
 __version__ = "9.0.0-prealpha"
 # TODO for 9.0.0 release:
     # !done! OS class vars not strings, but booleans
@@ -19,25 +24,63 @@ __version__ = "9.0.0-prealpha"
 #   todo compare jsons?
 #   todo save changes as commit message?
 
-FRACKING_classes_speed_tweaking = False
-#FRACKING_classes_speed_tweaking = True
+CLASSES_SPEED_TWEAKING = False
+CLASSES_SPEED_TWEAKING = True
+
+
+def import_class(module_name, class_name, quiet=False):
+    import importlib  # pylint: disable=unused-variable
+    globals()[class_name] = eval("importlib.import_module('." + module_name + "', package='commands')." + class_name) # pylint: disable=eval-used
+    if CLASSES_SPEED_TWEAKING and not quiet:
+        LOAD_TIME_BENCHMARK.end("class " + class_name + " loaded in", quiet_if_zero=True, start_immideately=True)
+
 
 try:
-    bench_no_bench_init_time = datetime.datetime.now()
-    from .bench8 import get_Bench
-    if FRACKING_classes_speed_tweaking:
-        LoadTimeBenchMark = get_Bench()
-        LoadTimeBenchMark.fraction_digits = 4
-        LoadTimeBenchMark.time_start = start_bench_no_bench
-        LoadTimeBenchMark.end("init in", quiet_if_zero=True)
-        LoadTimeBenchMark.time_start = bench_no_bench_init_time
-        LoadTimeBenchMark.end("func get_Bench loaded in", quiet_if_zero=True, start_immideately=True)
-    from .str8 import Str
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Str loaded in", quiet_if_zero=True, start_immideately=True)  # python searching for that module in PATH
-    from .os8 import OS
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class OS loaded in", quiet_if_zero=True, start_immideately=True)
-    from .print8 import Print
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Print loaded in", quiet_if_zero=True, start_immideately=True)
+    INITED_TIME = datetime.datetime.now()
+    import_class("bench8", "get_Bench", quiet=True)
+    if CLASSES_SPEED_TWEAKING:
+        LOAD_TIME_BENCHMARK = get_Bench()  # pylint: disable=undefined-variable
+        LOAD_TIME_BENCHMARK.fraction_digits = 4
+        LOAD_TIME_BENCHMARK.time_start = START_TIME
+        LOAD_TIME_BENCHMARK.end("init in", quiet_if_zero=True)
+        LOAD_TIME_BENCHMARK.time_start = INITED_TIME
+        LOAD_TIME_BENCHMARK.end("func get_Bench loaded in", quiet_if_zero=True, start_immideately=True)
+
+    import_class("str8", "Str")
+    # python searching for that module in PATH
+    import_class("os8", "OS")
+    import_class("print8", "Print")
+    import_class("console8", "Console")
+    import_class("ssh8", "Ssh")
+    import_class("file8", "File")
+    import_class("locations8", "Locations")
+    import_class("dir8", "Dir")
+    import_class("path8", "Path")
+    import_class("file8", "File")
+    import_class("time8", "Time")
+    import_class("json8", "Json")
+    import_class("list8", "List")
+    import_class("process8", "Process")
+    import_class("dict8", "Dict")
+    import_class("codegen8", "Codegen")
+    import_class("log8", "plog")
+    import_class("network8", "Network")
+    import_class("bash8", "Bash")
+    if OS.macos:  # pylint: disable=undefined-variable
+        import_class("macos8", "macOS")
+    elif OS.windows:  # pylint: disable=undefined-variable
+        import_class("windows8", "Windows")
+    import_class("gui8", "Gui")
+    import_class("tkinter8", "Tkinter")
+    import_class("random8", "Random")
+    import_class("wget8", "Wget")
+    import_class("int8", "Int")
+    import_class("cli8", "CLI")
+    from .const8 import *  # pylint: disable=wildcard-import
+    if CLASSES_SPEED_TWEAKING:
+        LOAD_TIME_BENCHMARK.end("imported constants in", quiet_if_zero=True, start_immideately=True)
+    LOAD_TIME_BENCHMARK = get_Bench()  # pylint: disable=undefined-variable
+    LOAD_TIME_BENCHMARK.time_start = START_TIME
 
 
     class Internal:
@@ -56,8 +99,9 @@ try:
             :param quiet: boolean, True suppress print to terminal and interaction with clipboard
             :return: None
             """
-            import commands, importlib
-            globals()["Wget"] = eval("importlib.reload(commands.wget8).Wget")
+            import importlib
+            import commands  # pylint: disable=import-self, redefined-outer-name
+            globals()["Wget"] = eval("importlib.reload(commands.wget8).Wget")  # pylint: disable=eval-used
             commands = importlib.reload(commands)
 
             del commands
@@ -69,78 +113,25 @@ try:
                 except ModuleNotFoundError:
                     from .installreq8 import copypaste
                 copypaste.copy(string)
-                pass
 
 
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Internal loaded in", quiet_if_zero=True, start_immideately=True)
-    from .const8 import *
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("imported constants in", quiet_if_zero=True, start_immideately=True)
-    from .console8 import Console
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Console loaded in", quiet_if_zero=True, start_immideately=True)
-    from .ssh8 import Ssh
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Ssh loaded in", quiet_if_zero=True, start_immideately=True)
-    from .file8 import File
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class File loaded in", quiet_if_zero=True, start_immideately=True)
-    from .locations8 import Locations
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Path loaded in", quiet_if_zero=True, start_immideately=True)
-    from .dir8 import Dir
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Path loaded in", quiet_if_zero=True, start_immideately=True)
-    from .path8 import Path
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Path loaded in", quiet_if_zero=True, start_immideately=True)
-    from .file8 import File
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class File loaded in", quiet_if_zero=True, start_immideately=True)
-    from .time8 import Time
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Time loaded in", quiet_if_zero=True, start_immideately=True)
-    from .json8 import Json
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Json loaded in", quiet_if_zero=True, start_immideately=True)
-    from .list8 import List
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class List loaded in", quiet_if_zero=True, start_immideately=True)
-    from .process8 import Process
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Process loaded in", quiet_if_zero=True, start_immideately=True)
-    from .dict8 import Dict
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Dict loaded in", quiet_if_zero=True, start_immideately=True)
-    from .codegen8 import Codegen
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Codegen loaded in", quiet_if_zero=True, start_immideately=True)
-    from .log8 import plog
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("func plog loaded in", quiet_if_zero=True, start_immideately=True)
-    from .network8 import Network
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Network loaded in", quiet_if_zero=True, start_immideately=True)
-    from .bash8 import Bash
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Bash loaded in", quiet_if_zero=True, start_immideately=True)
-    if OS.macos:
-        from .macos8 import macOS
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class macOS loaded in", quiet_if_zero=True, start_immideately=True)
-    if OS.windows:
-        from .windows8 import Windows
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Windows loaded in", quiet_if_zero=True, start_immideately=True)
-    from .gui8 import Gui
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Gui loaded in", quiet_if_zero=True, start_immideately=True)
-    from .tkinter8 import Tkinter
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Tkinter loaded in", quiet_if_zero=True, start_immideately=True)
-    from .random8 import Random
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Random loaded in", quiet_if_zero=True, start_immideately=True)
-    from .wget8 import Wget
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Wget loaded in", quiet_if_zero=True, start_immideately=True)
-    from .int8 import Int
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Int loaded in", quiet_if_zero=True, start_immideately=True)
-    from .cli8 import CLI
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class CLI loaded in", quiet_if_zero=True, start_immideately=True)
+    if CLASSES_SPEED_TWEAKING:
+        LOAD_TIME_BENCHMARK.end("class Internal loaded in", quiet_if_zero=True, start_immideately=True)
 
-    LoadTimeBenchMark = get_Bench()
-    LoadTimeBenchMark.time_start = start_bench_no_bench
-
-
-    class __build__:
-        build_json_file = Path.extend(Path.commands8(), "buildnumber.json")
+    class __build__:  # pylint: disable=too-few-public-methods, invalid-name
+        build_json_file = Path.extend(Path.commands8(), "buildnumber.json")  # pylint: disable=undefined-variable
         try:
-            build = Json.load(build_json_file, quiet=True)[0]
-        except:
+            build = Json.load(build_json_file, quiet=True)[0]  # pylint: disable=undefined-variable
+        except:  # pylint: disable=bare-except
             build = "NaN"
-        Json.save(build_json_file, [build+1], quiet=True)
+        Json.save(build_json_file, [build+1], quiet=True)  # pylint: disable=undefined-variable
 
-
-    LoadTimeBenchMark.end("commands8 v" + __version__ + "-'build'-" + str(__build__.build) + " loaded in")
+    del START_TIME
+    del INITED_TIME
+    del CLASSES_SPEED_TWEAKING
+    LOAD_TIME_BENCHMARK.end("commands8 v" + __version__ + "-'build'-" + str(__build__.build) + " loaded in")
+    del LOAD_TIME_BENCHMARK
 except ModuleNotFoundError:
-    import console.installreq8
+    import commands.installreq8
     from .print8 import Print
     Print.debug("I tried my best to install dependencies, try to restart script, everything must be okay")
