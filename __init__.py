@@ -2,24 +2,25 @@
 # -*- coding: utf-8 -*-
 import datetime
 start_bench_no_bench = datetime.datetime.now()
-__version__ = "9.0.0-alpha"
+__version__ = "9.0.0-prealpha"
 # TODO for 9.0.0 release:
-    # !done! todo OS class vars not strings, but booleans
-    # !done! todo lazy load for all modules
-    # all submodules lazy load
-    # todo docstrings everywhere
-    # new dir_c
+    # !done! OS class vars not strings, but booleans
+    # !done! lazy load for all modules
+    # !done! all submodules lazy load
     # fix Time.rustime without cyrillic_support
     # Console.get_output make ouptut even if exit status != 0
     # make tests for all
     # PIP8 check for all
+    # docstrings for all
+    # new dir_c
 # TODO version diff
 #   todo export script as json?
 #   todo compare jsons?
 #   todo save changes as commit message?
 
 FRACKING_classes_speed_tweaking = False
-# FRACKING_classes_speed_tweaking = True
+FRACKING_classes_speed_tweaking = True
+
 
 
 
@@ -27,27 +28,27 @@ try:
 
     bench_no_bench_import_time = datetime.datetime.now()
 
-    from commands.bench8 import get_Bench
+    from .bench8 import get_Bench
 
     if FRACKING_classes_speed_tweaking:
         LoadTimeBenchMark = get_Bench()
-        LoadTimeBenchMark.fraction_digits = 3
+        LoadTimeBenchMark.fraction_digits = 4
         LoadTimeBenchMark.time_start = start_bench_no_bench
         LoadTimeBenchMark.end("init in", quiet_if_zero=True)
         LoadTimeBenchMark.time_start = bench_no_bench_import_time
         LoadTimeBenchMark.end("func get_Bench loaded in", quiet_if_zero=True, start_immideately=True)
 
-    from commands.str8 import Str
+    from .str8 import Str
 
     if FRACKING_classes_speed_tweaking:
         LoadTimeBenchMark.end("class Str loaded in", quiet_if_zero=True, start_immideately=True)  # python searching for that module in PATH
 
-    from commands.os8 import OS
+    from .os8 import OS
 
     if FRACKING_classes_speed_tweaking:
         LoadTimeBenchMark.end("class OS loaded in", quiet_if_zero=True, start_immideately=True)
 
-    from commands.print8 import Print
+    from .print8 import Print
 
     if FRACKING_classes_speed_tweaking:
         LoadTimeBenchMark.end("class Print loaded in", quiet_if_zero=True, start_immideately=True)
@@ -67,9 +68,9 @@ try:
           # d require additional line of code after reload if you import not entrie commands8
           # d you need manually add "from commands8 import *" to script/REPL
           # d if you import like "import commands8", additional line of code not needed
-            import commands8, importlib
-            commands8 = importlib.reload(commands8)
-            del commands8
+            import commands, importlib
+            commands = importlib.reload(commands8)
+            del commands
             string = "from commands import *"  # d you need to manually add this <<< string to code :(
             if not quiet:
                 print('"'+string+'" copied to clipboard')
@@ -79,11 +80,11 @@ try:
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Internal loaded in", quiet_if_zero=True, start_immideately=True)
 
-    from commands.const8 import *
+    from .const8 import *
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("imported constants in", quiet_if_zero=True, start_immideately=True)
 
-    from commands.console8 import Console
+    from .console8 import Console
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Console loaded in", quiet_if_zero=True, start_immideately=True)
 
@@ -370,7 +371,7 @@ try:
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class File loaded in", quiet_if_zero=True, start_immideately=True)
 
-    from commands.time8 import Time
+    from .time8 import Time
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Time loaded in", quiet_if_zero=True, start_immideately=True)
 
@@ -429,7 +430,7 @@ try:
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Json loaded in", quiet_if_zero=True, start_immideately=True)
 
-    from commands.list8 import List
+    from .list8 import List
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class List loaded in", quiet_if_zero=True, start_immideately=True)
 
@@ -756,7 +757,7 @@ try:
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Windows loaded in", quiet_if_zero=True, start_immideately=True)
 
-    from commands.random8 import Random
+    from .random8 import Random
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Random loaded in", quiet_if_zero=True, start_immideately=True)
 
@@ -776,24 +777,7 @@ try:
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Wget loaded in", quiet_if_zero=True, start_immideately=True)
 
-    class Int:
-        @staticmethod
-        def from_to(start, end, to_str=False, list=False):  # return list of integers, if argument
-          # g "to_str" activated, return list of strings with equal length
-          # g if "list" arg activated, list will be returned, otherwise, it will be iterable obj
-            if list: roots = range(start, end + 1)
-            else: roots = xrange(start, end + 1)
-            if to_str:
-                output = []
-                max_len = max(len(str(start)), len(str(end)))
-                for root in roots:
-                    if root < 0:
-                        output.append("-" + Str.leftpad(-root, max_len-1, 0))
-                    else:
-                        output.append(Str.leftpad(root, max_len, 0))
-                return output
-            else:
-                return roots
+    from .int8 import Int
 
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Int loaded in", quiet_if_zero=True, start_immideately=True)
 
@@ -872,12 +856,15 @@ try:
 
     class __build__:
         build_json_file = Path.extend(Path.commands8(), "buildnumber.json")
-        build = Json.load(build_json_file, quiet=True)[0]
+        try:
+            build = Json.load(build_json_file, quiet=True)[0]
+        except:
+            build = "NaN"
         Json.save(build_json_file, [build+1], quiet=True)
 
 
     LoadTimeBenchMark.end("commands8 v" + __version__ + "-'build'-" + str(__build__.build) + " loaded in")
 except ModuleNotFoundError:
-    import commands.installreq8
-    from commands.print8 import Print
+    import console.installreq8
+    from .print8 import Print
     Print.debug("I tried my best to install dependencies, try to restart script, everything must be okay")
