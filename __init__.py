@@ -13,13 +13,14 @@ __version__ = "9.0.0-prealpha"
     # PIP8 check for all
     # docstrings for all
     # new dir_c
+    # Internal.rel update to reload all
 # TODO version diff
 #   todo export script as json?
 #   todo compare jsons?
 #   todo save changes as commit message?
 
 FRACKING_classes_speed_tweaking = False
-FRACKING_classes_speed_tweaking = True
+#FRACKING_classes_speed_tweaking = True
 
 try:
     bench_no_bench_init_time = datetime.datetime.now()
@@ -47,15 +48,18 @@ try:
             raise NotImplementedError
             # commands.__dict__
 
-
-
         @staticmethod
-        def rel(quiet=False):  # d reload commands8, if you use it not in REPL, activate quiet argument
-          # d require additional line of code after reload if you import not entrie commands8
-          # d you need manually add "from commands8 import *" to script/REPL
-          # d if you import like "import commands8", additional line of code not needed
+        def rel(quiet=False):
+            """Reload commands8, if you use it not in REPL, activate quiet argument require additional line of code
+            after reload if you import not entrie commands8 you need manually add "from commands8 import *" to
+            script/REPL if you import like "import commands", additional line of code not needed
+            :param quiet: boolean, True suppress print to terminal and interaction with clipboard
+            :return: None
+            """
             import commands, importlib
-            commands = importlib.reload(commands8)
+            globals()["Wget"] = eval("importlib.reload(commands.wget8).Wget")
+            commands = importlib.reload(commands)
+
             del commands
             string = "from commands import *"  # d you need to manually add this <<< string to code :(
             if not quiet:
@@ -106,13 +110,13 @@ try:
     if OS.macos:
         from .macos8 import macOS
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class macOS loaded in", quiet_if_zero=True, start_immideately=True)
+    if OS.windows:
+        from .windows8 import Windows
+    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Windows loaded in", quiet_if_zero=True, start_immideately=True)
     from .gui8 import Gui
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Gui loaded in", quiet_if_zero=True, start_immideately=True)
     from .tkinter8 import Tkinter
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Tkinter loaded in", quiet_if_zero=True, start_immideately=True)
-    if OS.windows:
-        from .windows8 import Windows
-    if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Windows loaded in", quiet_if_zero=True, start_immideately=True)
     from .random8 import Random
     if FRACKING_classes_speed_tweaking: LoadTimeBenchMark.end("class Random loaded in", quiet_if_zero=True, start_immideately=True)
     from .wget8 import Wget
