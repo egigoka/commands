@@ -1,10 +1,14 @@
 #! python3
 # -*- coding: utf-8 -*-
-__version__ = "0.0.1"
+"""Internal module with some predefined paths
+"""
+from .os8 import OS
+__version__ = "0.0.3"
 
 
-class Locations:
-    from .os8 import OS
+class Locations:  # pylint: disable=too-few-public-methods
+    """Class with some predefined paths
+    """
     if OS.windows:
         texteditor = "notepad"  # d notepad is in every version of Windows, yea?
         py = "py"

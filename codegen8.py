@@ -1,26 +1,35 @@
 #! python3
 # -*- coding: utf-8 -*-
-__version__ = "0.0.2"
+"""Internal module to write files
+"""
+__version__ = "0.1.3"
 
 
 class Codegen:
+    """Class for write files
+    """
     debug = False
 
     @classmethod
     def start(cls, file_path):
+        """Define path of file and wipes it
+        :param file_path: string with path of file
+        :return:
+        """
         from .file8 import File
         File.wipe(file_path)
-        cls.file = open(file_path, "wb")
+        cls.file_path = file_path
 
     @classmethod
-    def add_line(cls, code):
-        cls.file.write(code.encode('utf8'))
+    def add_line(cls, some_string):
+        """Write arg string to file
+        :param some_string: string that will be wrote to file
+        :return: None
+        """
+        with open(cls.file_path, "wb") as file:
+            file.write(some_string.encode('utf8'))
         if cls.debug:
-            print(code)
-
-    @classmethod
-    def end(cls, quiet=False):
-        cls.file.close()
+            print(some_string)
 
     from .const8 import newline
     shebang = "#! python3" + newline + \

@@ -1,14 +1,25 @@
 #! python3
 # -*- coding: utf-8 -*-
-# http://python.su/forum/topic/15531/?page=1#post-93316
-__version__ = "1.0.1"
+"""Internal module to work with base64
+"""
+__version__ = "1.0.4"
 
 
-class Base64:
+class Base64:  # pylint: disable=too-few-public-methods
+    """Class to work with base64
+    """
     @staticmethod
     def to_png(string, filename):
+        """
+        :param string: string base64
+        :param filename: filename to save png
+        :return: None
+        """
         import base64
-        png_recovered = base64.decodestring(string.encode('ascii'))  # decode string to pure picture
-        f = open(str(filename)+".png", "wb")
-        f.write(png_recovered)
-        f.close()
+        png_recovered = base64.decodebytes(string.encode('ascii'))  # decode string to pure picture
+        filename = str(filename)
+        if not filename.endswith(".png"):
+            filename = filename + ".png"
+        file = open(filename, "wb")
+        file.write(png_recovered)
+        file.close()

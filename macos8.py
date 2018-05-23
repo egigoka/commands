@@ -1,12 +1,22 @@
 #! python3
 # -*- coding: utf-8 -*-
-__version__ = "0.0.1"
+"""Internal module with functions that works only in macOS
+"""
+__version__ = "0.1.2"
 
 
-class macOS:
-    class osascript:
+class macOS:  # pylint: disable=invalid-name, too-few-public-methods
+    """Class with functions that works only in macOS
+    """
+    class OSAScript:  # pylint: disable=too-few-public-methods
+        """Class with function to work with osascript shell command
+        """
         @staticmethod
         def quotes_escape(string):
+            """Trying to escape quotes to puch them through AppleScript
+            :param string: string input
+            :return: string with escaped symbols
+            """
             from .const8 import backslash
             quote_1 = '"'
             # quote_2 = "'"
@@ -24,30 +34,48 @@ class macOS:
             return string
 
     @classmethod
-    def notification(cls, message, title="python3", subtitle=None, sound=None, list_of_sounds=False):
-        # https://apple.stackexchange.com/questions/57412/how-can-i-trigger-a-notification-center-notification-from-an-applescript-or-shel# - just applescript
+    def get_list_of_sounds(cls, quiet=False):
+        """Print all sound names from current machine and user
+        :param quiet: suppress print to console
+        :return: list of all sounds
+        """
+        from .print8 import Print
+        from .dir8 import Dir
+        from .path8 import Path
+        global_sounds = Dir.list_of_files(Path.extend("System", "Library", "Sounds"))
+        local_sounds = Dir.list_of_files(Path.extend("~", "Library", "Sounds"))
+        if not quiet:
+            Print.debug("global sounds", global_sounds, "local sounds", local_sounds)
+        return global_sounds + local_sounds
+
+    @classmethod
+    def notification(cls, message, title="python3", subtitle=None, sound=None):
+        """Create notification with AppleScript
+        :param message: string
+        :param title: string
+        :param subtitle: string
+        :param sound: string with sound name
+        :param list_of_sounds: boolean,
+        :return: None
+        """
+        # https://apple.stackexchange.com/questions/57412/how-can-i-trigger-a-notification-center-notification-from-an-a
+        # pplescript-or-shel# - just AppleScript
         # better realizations:
         # advanced commandline tool - https://github.com/vjeantet/alerter
         # simpler commandline tool - https://github.com/vjeantet/alerter
         # commands = "display notification \"message\" with title \"title\" subtitle \"subtitle\" sound name \"Sosumi\""
         from .str8 import Str
         from .process8 import Process
-        commands = "display notification " + Str.to_quotes(cls.osascript.quotes_escape(message))
+        commands = "display notification " + Str.to_quotes(cls.OSAScript.quotes_escape(message))
         if title or subtitle:
             commands += " with "
             if title:
-                commands += "title " + Str.to_quotes(cls.osascript.quotes_escape(title)) + " "
+                commands += "title " + Str.to_quotes(cls.OSAScript.quotes_escape(title)) + " "
             if subtitle:
-                commands += "subtitle " + Str.to_quotes(cls.osascript.quotes_escape(subtitle)) + " "
+                commands += "subtitle " + Str.to_quotes(cls.OSAScript.quotes_escape(subtitle)) + " "
         if sound:
-            commands += " sound name " + Str.to_quotes(cls.osascript.quotes_escape(sound))
-        commands = cls.osascript.quotes_escape(commands)  # escaping quotes:
+            commands += " sound name " + Str.to_quotes(cls.OSAScript.quotes_escape(sound))
+        commands = cls.OSAScript.quotes_escape(commands)  # escaping quotes:
         commands = Str.to_quotes(commands)  # applescript to quotes
         Process.start("osascript", "-e",
                       commands)  # f start(*arguments, new_window=False, debug=False, pureshell=False):
-        if list_of_sounds:
-            from .print8 import Print
-            from .dir8 import Dir
-            from .path8 import Path
-            Print.debug("global sounds", Dir.list_of_files(Path.extend("System", "Library", "Sounds")), "local sounds",
-                        Dir.list_of_files(Path.extend("~", "Library", "Sounds")))

@@ -94,4 +94,4 @@ class Pip:
             cls.list_of_modules.append(item[1])
 
 
-Pip.__update_list_of_modules()
+Pip._update_list_of_modules()

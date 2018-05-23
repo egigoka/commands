@@ -1,9 +1,13 @@
 #! python3
 # -*- coding: utf-8 -*-
-__version__ = "0.0.2"
+"""Internal module, import it like "from commands.int8 import Int"
+"""
+__version__ = "0.0.5"
 
 
-class Int:
+class Int:  # pylint: disable=too-few-public-methods
+    """Methods to interact with integers
+    """
     @staticmethod
     def from_to(start, end, to_str=False):
         """return list of integers, if argument
@@ -15,7 +19,7 @@ class Int:
         if OS.is_python3:
             roots = range(start, end + 1)
         else:
-            roots = xrange(start, end + 1)
+            roots = xrange(start, end + 1)  # pylint: disable=undefined-variable
         if to_str:
             output = []
             max_len = max(len(str(start)), len(str(end)))
@@ -25,5 +29,4 @@ class Int:
                 else:
                     output.append(Str.leftpad(root, max_len, 0))
             return output
-        else:
-            return roots
+        return roots

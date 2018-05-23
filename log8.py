@@ -1,19 +1,30 @@
 #! python3
 # -*- coding: utf-8 -*-
-__version__ = "0.0.2"
+"""Internal module for logging
+"""
+__version__ = "0.0.4"
 
-def plog(logfile, logstring="some shit happened", customtime=None, quiet=False, backup=True):
+
+def plog(logfile, description, custom_time=None, quiet=False, backup=True):
+    """Write string with time and description to file, also print it to console
+    :param logfile: file where to write log
+    :param description: string with description of event
+    :param custom_time: int with unix_time, used to write to log with not current time
+    :param quiet: boolean, suppress print to console
+    :param backup: boolean, means to backup log before new event adding or not (too much backups can use all disk space)
+    :return:
+    """
     from .file8 import File
     from .time8 import Time
     from .const8 import newline
     if not quiet:
-        print(logstring)
+        print(description)
     File.create(logfile)
     if backup:
         File.backup(logfile, quiet=True)
     file = open(logfile, "a")
-    if customtime:
-        file.write(Time.rustime(customtime) + " " + str(logstring) + newline)
+    if custom_time:
+        file.write(Time.rustime(custom_time) + " " + str(description) + newline)
     else:
-        file.write(Time.rustime() + " " + str(logstring) + newline)
+        file.write(Time.rustime() + " " + str(description) + newline)
     file.close()

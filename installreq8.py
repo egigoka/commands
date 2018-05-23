@@ -1,25 +1,37 @@
 #! python3
 # -*- coding: utf-8 -*-
-# http://python.su/forum/topic/15531/?page=1#post-93316
+"""Internal module to install requirements
+"""
+# pylint: disable=unused-import, exec-used, too-many-branches
 import pkgutil
+import importlib
 import sys
 import os
-from commands.os8 import OS
-from commands.pip8 import Pip
-from commands.bench8 import get_Bench
-__version__ = "0.0.6"
+from .os8 import OS
+from .pip8 import Pip
+from .bench8 import get_Bench
+from .print8 import Print
+__version__ = "0.1.7"
 
 
-FRACKING_Internal_mine_import_speed_tweaking = True
+FRACKING_MINE_IMPORT_SPEED_TWEAKING = True
 
-def mine_import(module_name, objects=None, justdownload=False, az=None):  # import
-  # d module, if module not found, trying to install it by pip
-    #return
-    if FRACKING_Internal_mine_import_speed_tweaking: debug_Bench = get_Bench()
-    if FRACKING_Internal_mine_import_speed_tweaking: debug_Bench.start()
+
+def mine_import(module_name, objects=None, just_download=False, az=None):  # pylint: disable=invalid-name
+    """Import module, if it doesn't installed, install it by pip
+    :param module_name: string with module name
+    :param objects: string of module parts needed to import
+    :param just_download: disable import of module
+    :param az: string with define variable name of module in globals
+    :return: None
+    """
+    # return
+    if FRACKING_MINE_IMPORT_SPEED_TWEAKING:
+        debug_bench = get_Bench()
+        debug_bench.start()
     Pip.check_pip_installation()
     if module_name not in Pip.list_of_modules:
-        ###########RARE###########
+        # ##########RARE###########
         if module_name == "pyautogui":
             if OS.linux:
                 if OS.is_python3:
@@ -32,17 +44,21 @@ def mine_import(module_name, objects=None, justdownload=False, az=None):  # impo
                     Pip.install(package)
                 if OS.python_implementation == "pypy":
                     Print.debug("Yep, PyPy doesn't support pyobjc")
-        if module_name in ["win32api","win32con"]:
+        if module_name in ["win32api", "win32con"]:
             Pip.install("pypiwin32")
         else:
-        ###########RARE###########
+        # ##########RARE###########
             Pip.install(module_name)
-    if not justdownload:
+    if not just_download:
         def import_error():
+            """Re-run whole script in last try to import installed module
+            :return: None
+            """
             import_fail_arg = "--import-fail"
             import_fail_count = 3
             if sys.argv.count(import_fail_arg) > import_fail_count:
-                print('<<<<<<<<<<Some errors occured with importing "' + str(module_name) + '", re-run script doesnt help, sorry about that>>>>>>>>>>')
+                print('<<<<<<<<<<Some errors occured with importing "' + str(module_name) +
+                      '", re-run script doesnt help, sorry about that>>>>>>>>>>')
                 print('<<<<<<<<<<Trying to work without "' + str(module_name) + '">>>>>>>>>>')
             else:
                 commands = ""
@@ -50,52 +66,45 @@ def mine_import(module_name, objects=None, justdownload=False, az=None):  # impo
                 for arg in sys.argv:
                     commands += arg + " "
                 commands = commands.rstrip(" ")
-                print('<<<<<<<<<<Some errors occured with importing "' + str(module_name) + '", trying to re-run script with parameters "' + commands + '">>>>>>>>>>')
+                print('<<<<<<<<<<Some errors occured with importing "' + str(module_name) +
+                      '", trying to re-run script with parameters "' + commands + '">>>>>>>>>>')
                 os.system(commands)
                 sys.exit()
         try:
             if az and objects:
                 if len(objects.split(",")) == 1:
                     globals()[az] = importlib.import_module(objects[0], package=module_name)
-                print("mine_import doesn't support both attributes use 'az' and 'objects', so only 'objects' will apply.")
+                print("mine_import doesn't support both attributes use 'az' and 'objects'")
+                print("so only 'objects' will apply.")
                 az = None
             if az:
-                import importlib
                 try:
                     globals()[az] = importlib.import_module(module_name)
                 except ImportError as err:  # support for py3.4
                     print(err)
                     print("trying to import " + module_name + " in another way")
-                    exec ("import " + module_name + " as " + az, globals())
-                except ModuleNotFoundError as err:
-                    print(err)
-                    print("trying to import " + module_name + " in another way")
-                    exec ("import " + module_name + " as " + az, globals())
+                    exec("import " + module_name + " as " + az, globals())
             elif objects:
                 # import importlib  # todo better code
                 # for object in objects.split(",")
                 #     globals()[object] = importlib.import_module(name, package=module_name):
-                #### if " as " in object поделить и применить правильно, то есть имя назначить второе, а импортировать из первого
+                # ### if " as " in object поделить и применить правильно, то есть имя назначить второе, а
+                # ### импортировать из первого
                 exec("from " + module_name + " import " + objects, globals())
             else:
-                import importlib
                 try:
                     globals()[module_name] = importlib.import_module(module_name)
                 except ImportError as err:  # support for py3.4
                     print(err)
                     print("trying to import " + module_name + " in another way")
-                    exec ("import " + module_name, globals())
-                except ModuleNotFoundError as err:
-                    print(err)
-                    print("trying to import " + module_name + " in another way")
-                    exec ("import " + module_name, globals())
+                    exec("import " + module_name, globals())
         except ImportError as err:  # support for py3.4
             import_error()
-        except ModuleNotFoundError:
-            import_error()
+        if FRACKING_MINE_IMPORT_SPEED_TWEAKING:
+            debug_bench.end("module " + module_name + " imported in ")
 
 
-mine_import("termcolor", objects="colored, cprint")  # print_green_on_cyan = lambda x: cprint(x, 'green', 'on_cyan')
+mine_import("termcolor")  # print_green_on_cyan = lambda x: cprint(x, 'green', 'on_cyan')
 if OS.windows:
     mine_import("copypaste")
     mine_import("pyperclip", az="copypaste")
@@ -104,11 +113,11 @@ else:
 if OS.display:
     if OS.python_implementation != "pypy":
         if OS.macos:
-            mine_import("pyautogui", justdownload=True)
-        mine_import("paramiko", justdownload=True)
+            mine_import("pyautogui")
+        mine_import("paramiko")
     import tkinter
 if OS.windows:
-    if sys.version_info < (3,6):
+    if sys.version_info < (3, 6):
         mine_import("win_unicode_console")
     mine_import("win32api")
     mine_import("win32con")

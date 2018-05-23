@@ -12,13 +12,18 @@ __version__ = "9.0.0-prealpha"
 #    !done! OS class vars not strings, but booleans
 #    !done! lazy load for all modules
 #    !done! all submodules lazy load
-#    fix Time.rustime without cyrillic_support
+#    fix Str.get_integers!!!!!!!!!!!!!!!!!!
 #    Console.get_output make ouptut even if exit status != 0
 #    make tests for all
 #    PIP8 check for all
 #    docstrings for all
 #    new dir_c
 #    Internal.rel update to reload all
+#    Json.save update check of corectness save json with int keys in dict
+#    remove Time.rustime, change time format in log8
+#    change all docstring to "Class with functions"
+#    check docstrings for first Capitalized letter, dot at end, no more capitalized letter, for all parameters
+#    check parameters to define types
 # TODO version diff
 #   export script as json?
 #   compare json's?
@@ -29,6 +34,12 @@ CLASSES_SPEED_TWEAKING = False
 
 
 def import_class(module_name, class_name, quiet=False):
+    """Imports class from submodule.
+    :param module_name: string with submodule name
+    :param class_name: string with class name from submodule
+    :param quiet: boolean suppress print to console
+    :return:
+    """
     import importlib  # pylint: disable=unused-variable
     globals()[class_name] = eval("importlib.import_module('." + module_name + "', package='commands')." + class_name)  # pylint: disable=eval-used
     if CLASSES_SPEED_TWEAKING and not quiet:

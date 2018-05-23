@@ -15,8 +15,8 @@ class Windows:
 
     @staticmethod
     def fix_unicode_encode_error(quiet=""):
-            import os
-            if quiet:
-                quiet = " > null"
-            os.system("chcp 65001" + quiet)
-            os.system("set PYTHONIOENCODING = utf - 8")
+        import os
+        if quiet:
+            quiet = " > null"
+        os.system("chcp 65001" + quiet)
+        os.system("set PYTHONIOENCODING = utf - 8")

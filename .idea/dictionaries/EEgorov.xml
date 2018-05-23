@@ -3,12 +3,20 @@
     <words>
       <w>chcp</w>
       <w>codegen</w>
+      <w>flatterize</w>
+      <w>gethostbyname</w>
       <w>macos</w>
       <w>nano</w>
+      <w>osascript</w>
       <w>plog</w>
+      <w>pplescript</w>
+      <w>pyautogui</w>
       <w>pylint</w>
       <w>pythonioencoding</w>
+      <w>realtime</w>
       <w>repl</w>
+      <w>rustime</w>
+      <w>subfolder</w>
       <w>taskkill</w>
       <w>texteditor</w>
       <w>uptime</w>

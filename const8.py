@@ -1,9 +1,11 @@
 #! python3
 # -*- coding: utf-8 -*-
-# http://python.su/forum/topic/15531/?page=1#post-93316
-__version__ = "1.0.0"
+"""Internal module with constants
+"""
+__version__ = "1.0.1"
 
-newline = '\n'  # d string with newline bnl3
-ruble = u"\u20bd"  # d string with ₽ symbol
-backslash = "\ "[:1]  # d string with backslash
-newline2 = "\r\n"  # d string with other newline
+# pylint: disable=invalid-name, anomalous-backslash-in-string
+newline = '\n'  # string with newline
+ruble = u"\u20bd"  # string with ₽ symbol
+backslash = "\ "[:1]  # string with backslash
+newline2 = "\r\n"  # string with other newline

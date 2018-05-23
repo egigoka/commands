@@ -3,7 +3,7 @@
 # http://python.su/forum/topic/15531/?page=1#post-93316
 import sys  # static module
 import platform  # static module
-__version__ = "2.0.1"
+__version__ = "2.1.0"
 
 
 class OS:
@@ -52,6 +52,13 @@ class OS:
     except ImportError:
         display = False
         print("Your system haven't display -_-")
+
+    try:
+        sys.ps1  # pylint: disable = pointless-statement, no-member
+        sys.ps2  # pylint: disable = pointless-statement, no-member
+        running_in_repl = True
+    except:
+        running_in_repl = False
 
     try:
         #if windows:

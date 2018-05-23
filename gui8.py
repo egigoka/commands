@@ -1,28 +1,28 @@
 #! python3
 # -*- coding: utf-8 -*-
-__version__ = "0.0.3"
+"""Internal module to interact with gui
+"""
+__version__ = "0.1.2"
 
 
-class Gui:
+class Gui:  # pylint: disable=too-few-public-methods
+    """Class to interact with gui
+    """
     @staticmethod
     def warning(message):
+        """Starts Tkinter window with message to user
+        :param message: string with message to user
+        :return: None
+        """
         import sys
         from .print8 import Print
         from .os8 import OS
         try:
             try:
-                sys.ps1
-                sys.ps2
-                interactive_mode = True
-            except:
-                interactive_mode = False
-            # Print.debug("interactive_mode", interactive_mode)
-            try:
                 not_dot_py = sys.argv[0][-3] != ".py"  # todo check logic
-            except:
+            except IndexError:
                 not_dot_py = True
-
-            if (not_dot_py or (sys.argv[0] != "")) and (not interactive_mode):
+            if (not_dot_py or (sys.argv[0] != "")) and (not OS.running_in_repl):
                 Print.debug("sys.argv", sys.argv)
                 Print.debug("Something wrong with sys.argv. Tkinter doesn't like it.")
                 input()

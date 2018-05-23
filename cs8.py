@@ -1,15 +1,20 @@
 #! python3
 # -*- coding: utf-8 -*-
-# http://python.su/forum/topic/15531/?page=1#post-93316
-__version__ = "2.0.1"
+"""Internal module with shit functions
+"""
+__version__ = "2.0.5"
 
 
-#some shitty functions that i wrote million time in other shitty scripts
-
-def dirify(object, quiet=False):
+def dirify(object_, quiet=False):
+    """Print and return list of object public attributes
+    :param object_: object to input
+    :param quiet: suppress output to console
+    :return: list of object public attributes
+    """
     output = []
-    for subobj in dir(object):
+    for subobj in dir(object_):
         if "__" not in subobj:
-            if not quiet: print(subobj)
+            if not quiet:
+                print(subobj)
             output.append(subobj)
     return output
