@@ -3,34 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="ab250972-bedb-43ec-ada4-6c3e3e557441" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/dictionaries/EEgorov.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/EEgorov.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base64_8.py" beforeDir="false" afterPath="$PROJECT_DIR$/base64_8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bash8.py" beforeDir="false" afterPath="$PROJECT_DIR$/bash8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildnumber.json" beforeDir="false" afterPath="$PROJECT_DIR$/buildnumber.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cli8.py" beforeDir="false" afterPath="$PROJECT_DIR$/cli8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/codegen8.py" beforeDir="false" afterPath="$PROJECT_DIR$/codegen8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/console8.py" beforeDir="false" afterPath="$PROJECT_DIR$/console8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/const8.py" beforeDir="false" afterPath="$PROJECT_DIR$/const8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cs8.py" beforeDir="false" afterPath="$PROJECT_DIR$/cs8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dict8.py" beforeDir="false" afterPath="$PROJECT_DIR$/dict8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dir8.py" beforeDir="false" afterPath="$PROJECT_DIR$/dir8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file8.py" beforeDir="false" afterPath="$PROJECT_DIR$/file8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui8.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/installreq8.py" beforeDir="false" afterPath="$PROJECT_DIR$/installreq8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/int8.py" beforeDir="false" afterPath="$PROJECT_DIR$/int8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json8.py" beforeDir="false" afterPath="$PROJECT_DIR$/json8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linter.bat" beforeDir="false" afterPath="$PROJECT_DIR$/linter.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/list8.py" beforeDir="false" afterPath="$PROJECT_DIR$/list8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/locations8.py" beforeDir="false" afterPath="$PROJECT_DIR$/locations8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log8.py" beforeDir="false" afterPath="$PROJECT_DIR$/log8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos8.py" beforeDir="false" afterPath="$PROJECT_DIR$/macos8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mouse8.py" beforeDir="false" afterPath="$PROJECT_DIR$/mouse8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/network8.py" beforeDir="false" afterPath="$PROJECT_DIR$/network8.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/os8.py" beforeDir="false" afterPath="$PROJECT_DIR$/os8.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/path8.py" beforeDir="false" afterPath="$PROJECT_DIR$/path8.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pip8.py" beforeDir="false" afterPath="$PROJECT_DIR$/pip8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/time8.py" beforeDir="false" afterPath="$PROJECT_DIR$/time8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows8.py" beforeDir="false" afterPath="$PROJECT_DIR$/windows8.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/print8.py" beforeDir="false" afterPath="$PROJECT_DIR$/print8.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/process8.py" beforeDir="false" afterPath="$PROJECT_DIR$/process8.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/random8.py" beforeDir="false" afterPath="$PROJECT_DIR$/random8.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shebang.py" beforeDir="false" afterPath="$PROJECT_DIR$/shebang.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ssh8.py" beforeDir="false" afterPath="$PROJECT_DIR$/ssh8.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/str8.py" beforeDir="false" afterPath="$PROJECT_DIR$/str8.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -44,14 +26,50 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="43" selection-start-line="14" selection-start-column="43" selection-end-line="14" selection-end-column="43" />
+            <state relative-caret-position="357">
+              <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="json8.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/json8.py">
+      <file leaf-file-name="tkinter8.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tkinter8.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pip8.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pip8.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" selection-start-line="2" selection-end-line="3" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="print8.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/print8.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" selection-start-line="2" selection-end-line="3" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="process8.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/process8.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" selection-start-line="2" selection-end-line="3" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="random8.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/random8.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
               <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
@@ -59,56 +77,38 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="list8.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/list8.py">
+      <file leaf-file-name="shebang.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shebang.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+            <state relative-caret-position="34">
+              <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="locations8.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/locations8.py">
+      <file leaf-file-name="ssh8.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ssh8.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
+            <state relative-caret-position="493">
+              <caret line="29" column="104" selection-start-line="29" selection-start-column="104" selection-end-line="29" selection-end-column="104" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="log8.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/log8.py">
+      <file leaf-file-name="time8.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/time8.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+            <state relative-caret-position="544">
+              <caret line="32" column="23" lean-forward="true" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="macos8.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/macos8.py">
+      <file leaf-file-name="str8.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/str8.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mouse8.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mouse8.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="27" column="54" selection-start-line="27" selection-start-column="54" selection-end-line="27" selection-end-column="54" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="network8.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/network8.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+            <state relative-caret-position="984">
+              <caret line="92" column="8" selection-start-line="92" selection-start-column="8" selection-end-line="92" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -131,6 +131,8 @@
       <find>process</find>
       <find>intera</find>
       <find>debug_b</find>
+      <find>from .p</find>
+      <find>if raw</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -142,13 +144,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/process8.py" />
-        <option value="$PROJECT_DIR$/path8.py" />
-        <option value="$PROJECT_DIR$/ssh8.py" />
         <option value="$PROJECT_DIR$/tkinter8.py" />
         <option value="$PROJECT_DIR$/wget8.py" />
         <option value="$PROJECT_DIR$/__main__.py" />
-        <option value="$PROJECT_DIR$/pip8.py" />
         <option value="$PROJECT_DIR$/int8.py" />
         <option value="$PROJECT_DIR$/windows8.py" />
         <option value="$PROJECT_DIR$/time8.py" />
@@ -162,7 +160,6 @@
         <option value="$PROJECT_DIR$/dict8.py" />
         <option value="$PROJECT_DIR$/dir8.py" />
         <option value="$PROJECT_DIR$/file8.py" />
-        <option value="$PROJECT_DIR$/os8.py" />
         <option value="$PROJECT_DIR$/gui8.py" />
         <option value="$PROJECT_DIR$/installreq8.py" />
         <option value="$PROJECT_DIR$/json8.py" />
@@ -171,8 +168,17 @@
         <option value="$PROJECT_DIR$/log8.py" />
         <option value="$PROJECT_DIR$/macos8.py" />
         <option value="$PROJECT_DIR$/mouse8.py" />
-        <option value="$PROJECT_DIR$/__init__.py" />
         <option value="$PROJECT_DIR$/network8.py" />
+        <option value="$PROJECT_DIR$/os8.py" />
+        <option value="$PROJECT_DIR$/__init__.py" />
+        <option value="$PROJECT_DIR$/path8.py" />
+        <option value="$PROJECT_DIR$/pip8.py" />
+        <option value="$PROJECT_DIR$/print8.py" />
+        <option value="$PROJECT_DIR$/process8.py" />
+        <option value="$PROJECT_DIR$/random8.py" />
+        <option value="$PROJECT_DIR$/shebang.py" />
+        <option value="$PROJECT_DIR$/ssh8.py" />
+        <option value="$PROJECT_DIR$/str8.py" />
       </list>
     </option>
   </component>
@@ -202,6 +208,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/EEgorov/commands/__init__.py" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
@@ -239,7 +246,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.375" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.375" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.4677661" />
@@ -262,34 +269,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="95" selection-start-line="5" selection-start-column="95" selection-end-line="5" selection-end-column="95" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/__main__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wget8.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tkinter8.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/int8.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -368,35 +347,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/__init__.py___jb_tmp___" />
     <entry file="file://$PROJECT_DIR$/__init__.py___jb_tmp___" />
-    <entry file="file://$PROJECT_DIR$/process8.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="19" lean-forward="true" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/path8.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="20" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ssh8.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="20" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dict8.py.py" />
-    <entry file="file://$PROJECT_DIR$/pip8.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1377">
-          <caret line="96" column="4" selection-start-line="96" selection-start-column="4" selection-end-line="96" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/__main__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -408,13 +359,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="21" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tkinter8.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
@@ -450,13 +394,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" selection-start-line="2" selection-end-line="3" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/time8.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="32" column="23" lean-forward="true" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -504,13 +441,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gi.py">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/os8.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gui8.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -578,17 +508,97 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="43" selection-start-line="14" selection-start-column="43" selection-end-line="14" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/network8.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/os8.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+          <folding>
+            <element signature="e#91#118#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/path8.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shebang.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/print8.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="3" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/random8.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pip8.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="3" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ssh8.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="104" selection-start-line="29" selection-start-column="104" selection-end-line="29" selection-end-column="104" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/process8.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="3" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tkinter8.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/time8.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="32" column="23" lean-forward="true" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/str8.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="984">
+          <caret line="92" column="8" selection-start-line="92" selection-start-column="8" selection-end-line="92" selection-end-column="8" />
         </state>
       </provider>
     </entry>

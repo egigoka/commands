@@ -1,8 +1,11 @@
 <component name="ProjectDictionaryState">
   <dictionary name="EEgorov">
     <words>
+      <w>attrs</w>
       <w>chcp</w>
       <w>codegen</w>
+      <w>colorama</w>
+      <w>cprint</w>
       <w>flatterize</w>
       <w>gethostbyname</w>
       <w>macos</w>
@@ -18,7 +21,9 @@
       <w>rustime</w>
       <w>subfolder</w>
       <w>taskkill</w>
+      <w>termcolor</w>
       <w>texteditor</w>
+      <w>typles</w>
       <w>uptime</w>
       <w>wget</w>
     </words>

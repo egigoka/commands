@@ -24,6 +24,8 @@ __version__ = "9.0.0-prealpha"
 #    change all docstring to "Class with functions"
 #    check docstrings for first Capitalized letter, dot at end, no more capitalized letter, for all parameters
 #    check parameters to define types
+#    fix OS.display
+#    test all in linux
 # TODO version diff
 #   export script as json?
 #   compare json's?

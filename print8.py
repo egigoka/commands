@@ -1,13 +1,19 @@
 #! python3
 # -*- coding: utf-8 -*-
-# http://python.su/forum/topic/15531/?page=1#post-93316
-__version__ = "0.1.6"
+"""Internal module with functions for print to console.
+"""
+__version__ = "0.3.1"
 
 
-class Print():
+class Print:
+    """Class with functions for print to console.
+    """
     @staticmethod
     def debug(*strings, raw=False):
-        """just more notable print, only for debugging
+        """More notable print, used only for debugging
+        :param strings: strings, prints separately
+        :param raw: print representation of raw strings
+        :return:
         """
         from .console8 import Console
         line = "-" * Console.width()
@@ -22,9 +28,11 @@ class Print():
         print("<<<End of debug sheet>>>")
 
     @staticmethod
-    def rewrite(*strings, sep=" ", raw=False):
-        """String, that can be rewritable note, that you need to rewrite string
-        to remove previous characters
+    def rewrite(*strings, sep=" "):
+        """Print rewritable string. note, that you need to rewrite string to remove previous characters
+        :param strings: strings, work as builtin print()
+        :param sep: sep as builtin print(sep)
+        :return:
         """
         from .os8 import OS
         from .console8 import Console
@@ -32,28 +40,45 @@ class Print():
         if OS.windows:  # windows add symbol to end of string :(
             line = line[:-1]
         print(line, end="\r")
-        # print or output
-
         print(*strings, sep=sep, end="\r")
 
     @staticmethod
-    def prettify(object, indent=4, quiet=False):
+    def prettify(object_, indent=4, quiet=False):
+        """Pretty print of list, dicts, tuples
+        :param object_: list|dict|tuple
+        :param indent: int, indent to new nested level
+        :param quiet: boolean, suppress print to console
+        :return: string, from pprint.pformat
+        """
         import pprint
-        pp = pprint.PrettyPrinter(indent=indent)
+        pretty_printer = pprint.PrettyPrinter(indent=indent)
         if not quiet:
-            pp.pprint(object)
-        else:
-            return pp.pformat(object=object)
+            pretty_printer.pprint(object_)
+        return pretty_printer.pformat(object=object_)
 
     colorama_inited = False
 
     @classmethod
-    def colored(Print, *strings, attrs=None, end="\n", sep=" "):  # usage: Print.colored("text", "red") or Print.colored("text", "red", "on_white")
-      # d you can pick colors from termcolor.COLORS, highlights from termcolor.HIGHLIGHTS
-        import termcolor
+    def colored(cls, *strings, attributes=None, end="\n", sep=" "):
+        """Wrapper for tkinter.cprint, added some smartness :3
+        Usage: Print.colored("text1", "text2", "red") or cls.colored("text", "text2", "red", "on_white").
+        You can pick colors from termcolor.COLORS, highlights from termcolor.HIGHLIGHTS.
+        :param strings: strings, work as builtin print()
+        :param attributes: list of attributes, going to tkinter.cprint(attrs) argument
+        :param end: string, same end, as builtin print(end)
+        :param sep: string, same end, as builtin print(sep)
+        :return: None
+        """
+        try:
+            import termcolor
+        except ImportError:
+            from .installreq8 import termcolor
         from .os8 import OS
         if OS.windows:
-            import colorama
+            try:
+                import colorama
+            except ImportError:
+                from .installreq8 import colorama
             colorama.init()
         # check for colors in input
         highlight = None
@@ -80,4 +105,4 @@ class Print():
             string += substring + sep
         string += strings[-1]  # последняя без сепаратора
         # run termcolor
-        termcolor.cprint(string, color=color, on_color=highlight, attrs=attrs, end=end)
+        termcolor.cprint(string, color=color, on_color=highlight, attrs=attributes, end=end)

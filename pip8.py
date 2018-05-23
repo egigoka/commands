@@ -1,12 +1,12 @@
 #! python3
 # -*- coding: utf-8 -*-
-"""Internal module"""
-__version__ = "0.1.5"
+"""Internal module with functions to work with pip
+"""
+__version__ = "0.1.7"
 
 
 class Pip:
-    """
-    Aliases to work with pip.
+    """Aliases to work with pip.
     """
     @staticmethod
     def main(list_of_args):
@@ -94,4 +94,4 @@ class Pip:
             cls.list_of_modules.append(item[1])
 
 
-Pip._update_list_of_modules()
+Pip._update_list_of_modules()  # pylint: disable=protected-access

@@ -1,12 +1,15 @@
 #! python3
 # -*- coding: utf-8 -*-
-# http://python.su/forum/topic/15531/?page=1#post-93316
+"""Internal module to check some environment properties
+"""
 import sys  # static module
 import platform  # static module
-__version__ = "2.1.0"
+__version__ = "2.1.4"
 
 
-class OS:
+class OS:  # pylint: disable=too-few-public-methods
+    """Class with some environment properties
+    """
     sys_version_info = sys.version_info
     is_python3 = sys.version_info >= (3, 0)  # d boolean
     python_implementation = None # d string with name of python implementation: "cpython" or "pypy"
@@ -45,7 +48,7 @@ class OS:
     elif macos or linux:
         unix_family = True
 
-    try:  # TODO make this work!
+    try:
         if linux:
             from Xlib.display import Display
         display = True
@@ -57,18 +60,18 @@ class OS:
         sys.ps1  # pylint: disable = pointless-statement, no-member
         sys.ps2  # pylint: disable = pointless-statement, no-member
         running_in_repl = True
-    except:
+    except AttributeError:
         running_in_repl = False
 
     try:
         #if windows:
         #cyrline = "йцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ"
         cyrline = "йЙ"
-        if windows and sys.version_info < (3,6):
+        if windows and sys.version_info < (3, 6):
             try:
-                import win_unicode_console
+                import win_unicode_console  # pylint: disable=import-error
                 win_unicode_console.enable()
-            except:
+            except:  # pylint: disable=bare-except
                 pass
         for cyrsybol in cyrline:
             print(cyrsybol*2, end="\r")
@@ -77,4 +80,4 @@ class OS:
     except UnicodeEncodeError as err:
         cyrillic_support = False
         # print (err)
-        print ("Your system doesn't properly work with cyrrilic -_-")
+        print("Your system doesn't properly work with cyrillic -_-")

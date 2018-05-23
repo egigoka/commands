@@ -1,21 +1,37 @@
 #! python3
 # -*- coding: utf-8 -*-
-# http://python.su/forum/topic/15531/?page=1#post-93316
-__version__ = "0.4.13"
+"""Internal module with functions for managing strings.
+"""
+__version__ = "0.4.14"
 
 
 class Str:
+    """Class with functions for managing strings.
+    """
     @staticmethod
-    def to_quotes(some_string):  # just place input string inside "" quotes
+    def to_quotes(some_string):
+        """
+        :param some_string: string
+        :return: string, inside "" quotes
+        """
         return '"' + str(some_string) + '"'
 
     @staticmethod
-    def to_quotes_2(some_string):  # place input string inside '' quotes
+    def to_quotes_2(some_string):
+        """
+        :param some_string: string
+        :return: string, inside '' quotes
+        """
         return "'" + str(some_string) + "'"
 
     @classmethod
     def get_integers(Str, string, floatsupport=True):  # return list of integers from string,
         # todo add support for floating numbers, it will be cool!
+        """
+        :param string: string, with some integers or floats inside
+        :param floatsupport: boolean, enable float support
+        :return: list of integers or floats
+        """
         string = Str.remove_spaces(string)
         integer_found = False
         integers = []
@@ -56,7 +72,10 @@ class Str:
 
     @staticmethod
     def newlines_to_strings(string, quiet=False):
-        """split long string with line breaks to separate strings in list
+        """
+        :param string: string, with some newlines
+        :param quiet: boolean suppress print to console
+        :return: list of strings
         """
         from .const8 import newline, newline2
         if isinstance(string, str):  # if input is string
@@ -69,7 +88,12 @@ class Str:
             raise TypeError(str(type(string)) + " can't be splitted")
 
     @classmethod
-    def nl(cls, string):  # alias to newline
+    def nl(cls, string):
+        """
+        :param string: string, with some newlines
+        :param quiet: boolean suppress print to console
+        :return: list of strings
+        """
         return cls.newlines_to_strings(string=string)
 
     @staticmethod

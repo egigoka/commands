@@ -1,12 +1,22 @@
 #! python3
 # -*- coding: utf-8 -*-
-__version__ = "0.0.2"
+"""Internal module with functions to work with ssh
+"""
+__version__ = "0.1.1"
 
 
 class Ssh:
+    """Class with functions to work with ssh
+    """
     @staticmethod
     def get_output(host, username, password, command, safe=False):
         """Return output from command, runned on SSH server. Support only username:password autorisation.
+        :param host: string, host or IP
+        :param username: string
+        :param password: string
+        :param command: string
+        :param safe: boolean, do not crash if connection unsuccessful
+        :return: string, output from 'command' execution
         """
         # todo authorisation by key.
         from .os8 import OS
@@ -17,7 +27,7 @@ class Ssh:
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())  # automatically add unknown hosts
         ssh.connect(host, username=username, password=password)
-        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("uptime")
+        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(command)  # pylint: disable=unused-variable
         if (ssh_stderr.read() != b'') and not safe:
             raise IOError("ssh_stderr = " + str(ssh_stderr))
         ssh.close()
@@ -25,25 +35,30 @@ class Ssh:
 
     @classmethod
     def get_avg_load_lin(cls, host, username, password, safe=False):
-        """Return list of average loads from SSH linux server. Shit, I know
+        """Shit, I know
+        :param host: string, host or IP
+        :param username: string
+        :param password: string
+        :param safe: boolean, do not crash if connection unsuccessful
+        :return: string with average loads of SSH linux server.
         """
         from .str8 import Str
         from .const8 import newline
-        output = cls.get_output(host=host, username=username, password=password, command="uprime", safe=safe)
+        output = cls.get_output(host=host, username=username, password=password, command="uptime", safe=safe)
         output = Str.substring(output, before="load average: ", after=newline)
         output = output.split(", ")
         return output
 
     @classmethod
-    def get_uptime_lin(cls, host, username, password, safe=False):  #
+    def get_uptime_lin(cls, host, username, password, safe=False):
         """
-        :param host:
-        :param username:
-        :param password:
-        :param safe:
+        :param host: string, host or IP
+        :param username: string
+        :param password: string
+        :param safe: boolean, do not crash if connection unsuccessful
         :return: string with uptime of SSH linux server.
         """
         from .str8 import Str
-        output = cls.get_output(host=host, username=username, password=password, command="uprime", safe=safe)
+        output = cls.get_output(host=host, username=username, password=password, command="uptime", safe=safe)
         output = Str.substring(output, before=" up ", after=", ")
         return output

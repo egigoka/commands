@@ -1,26 +1,35 @@
 #! python3
 # -*- coding: utf-8 -*-
-__version__ = "0.0.2"
+"""Internal module with functions for managing processes.
+"""
+__version__ = "0.1.3"
 
 
 class Process:
+    """Class with functions for managing processes.
+    """
     @staticmethod
     def kill(process):
+        """
+        :param process: process name or PID
+        :return: None
+        """
         import os
         from .os8 import OS
         if OS.windows:
-            command_ = "taskkill /f /im " + str(process) + ".exe"
             try:
                 int(process)
                 command_ = "taskkill /f /pid " + str(process)
-            except:
-                pass
+            except ValueError:
+                if not process.endswith(".exe"):
+                    process = process + ".exe"
+                command_ = "taskkill /f /im " + process
         elif OS.macos:
             command_ = "killall " + str(process)
             try:
                 int(process)
                 command_ = "kill " + str(process)
-            except:
+            except ValueError:
                 pass
         else:
             from .gui8 import Gui
@@ -28,7 +37,14 @@ class Process:
         os.system(command_)
 
     @staticmethod
-    def start(*arguments, new_window=False, debug=False, pureshell=False):
+    def start(*arguments, new_window=False, debug=False, pureshell=False):  # pylint: disable=too-many-branches
+        """
+        :param arguments: strings, arguments to start process, include name
+        :param new_window: boolean, open process in new window
+        :param debug: boolean, debug
+        :param pureshell: boolean, use only first argument from *arguments, not processing others
+        :return: None
+        """
         import os
         from .list8 import List
         from .os8 import OS
@@ -45,7 +61,7 @@ class Process:
                     else:
                         argument_ = Str.to_quotes_2(argument_)
                 try:
-                    command = command + " " + argument_
+                    command = command + " " + argument_  # pylint: disable=used-before-assignment
                 except NameError:
                     if new_window:
                         if OS.windows:
