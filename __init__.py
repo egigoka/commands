@@ -16,7 +16,7 @@ __version__ = "9.0.0-prealpha"
 #    Console.get_output make ouptut even if exit status != 0
 #    make tests for all
 #    PIP8 check for all
-#    !partial done! docstrings for all
+#    !done! docstrings for all
 #    new dir_c
 #    Internal.rel update to reload all
 #    Json.save update check of corectness save json with int keys in dict
