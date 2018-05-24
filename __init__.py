@@ -12,8 +12,8 @@ __version__ = "9.0.0-prealpha"
 #    !done! OS class vars not strings, but booleans
 #    !done! lazy load for all modules
 #    !done! all submodules lazy load
-#    fix Str.get_integers!!!!!!!!!!!!!!!!!!
-#    Console.get_output make ouptut even if exit status != 0
+#    !done! fix Str.get_integers!!!!!!!!!!!!!!!!!!
+#    Console.get_output make output even if exit status != 0
 #    make tests for all
 #    PEP8 check for all
 #    !done! docstrings for all
