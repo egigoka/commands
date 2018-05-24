@@ -127,7 +127,7 @@ def simple_calc_page65():
     list = []
     try:
         while True:
-            list.append(Str.input_int(quiet=True))
+            list.append(Str.input_int(debug=True))
     except ValueError:
         mean = 0
         for item in list:
@@ -140,7 +140,7 @@ def simple_calc_advanced_page66():
     list = []
     try:
         while True:
-            list.append(Str.input_int(quiet=True))
+            list.append(Str.input_int(debug=True))
     except ValueError:
         if len(list) == 0:
             print("no input")

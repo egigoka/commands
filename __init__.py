@@ -16,16 +16,18 @@ __version__ = "9.0.0-prealpha"
 #    Console.get_output make ouptut even if exit status != 0
 #    make tests for all
 #    PIP8 check for all
-#    docstrings for all
+#    !partial done! docstrings for all
 #    new dir_c
 #    Internal.rel update to reload all
 #    Json.save update check of corectness save json with int keys in dict
-#    remove Time.rustime, change time format in log8
+#    !done!remove Time.rustime, change time format in log8
 #    change all docstring to "Class with functions"
 #    check docstrings for first Capitalized letter, dot at end, no more capitalized letter, for all parameters
 #    check parameters to define types
 #    fix OS.display
 #    test all in linux
+#    rewerite Str.diff_simple
+
 # TODO version diff
 #   export script as json?
 #   compare json's?
@@ -35,16 +37,20 @@ CLASSES_SPEED_TWEAKING = False
 # CLASSES_SPEED_TWEAKING = True
 
 
-def import_class(module_name, class_name, quiet=False):
+def import_class(module_name, class_name, quiet=not CLASSES_SPEED_TWEAKING, reload=False):
     """Imports class from submodule.
     :param module_name: string with submodule name
     :param class_name: string with class name from submodule
     :param quiet: boolean suppress print to console
-    :return:
+    :param reload: boolean, reloads loaded module
+    :return: None
     """
     import importlib  # pylint: disable=unused-variable
-    globals()[class_name] = eval("importlib.import_module('." + module_name + "', package='commands')." + class_name)  # pylint: disable=eval-used
-    if CLASSES_SPEED_TWEAKING and not quiet:
+    if reload:
+        globals()[class_name] = eval("importlib.reload(commands." + module_name + ")." + class_name)  # pylint: disable=eval-used
+    else:
+        globals()[class_name] = eval("importlib.import_module('." + module_name + "', package='commands')."+class_name)  # pylint: disable=eval-used
+    if not quiet:
         LOAD_TIME_BENCHMARK.end("class " + class_name + " loaded in", quiet_if_zero=True, start_immideately=True)
 
 
@@ -58,42 +64,49 @@ try:
         LOAD_TIME_BENCHMARK.end("init in", quiet_if_zero=True)
         LOAD_TIME_BENCHMARK.time_start = INITED_TIME
         LOAD_TIME_BENCHMARK.end("func get_Bench loaded in", quiet_if_zero=True, start_immideately=True)
-    import_class("str8", "Str")
-    # python searching for that module in PATH
-    import_class("os8", "OS")
-    import_class("print8", "Print")
-    import_class("console8", "Console")
-    import_class("ssh8", "Ssh")
-    import_class("file8", "File")
-    import_class("locations8", "Locations")
-    import_class("dir8", "Dir")
-    import_class("path8", "Path")
-    import_class("file8", "File")
-    import_class("time8", "Time")
-    import_class("json8", "Json")
-    import_class("list8", "List")
-    import_class("process8", "Process")
-    import_class("dict8", "Dict")
-    import_class("codegen8", "Codegen")
-    import_class("log8", "plog")
-    import_class("network8", "Network")
-    import_class("bash8", "Bash")
-    if OS.macos:  # pylint: disable=undefined-variable
-        import_class("macos8", "macOS")
-    elif OS.windows:  # pylint: disable=undefined-variable
-        import_class("windows8", "Windows")
-    import_class("gui8", "Gui")
-    import_class("tkinter8", "Tkinter")
-    import_class("random8", "Random")
-    import_class("wget8", "Wget")
-    import_class("int8", "Int")
-    import_class("cli8", "CLI")
-    from .const8 import *  # pylint: disable=wildcard-import
+
+    LIST_CLASSES = [{"module": "str8", "name": "Str"},
+                    {"module": "os8", "name": "OS"},
+                    {"module": "print8", "name": "Print"},
+                    {"module": "console8", "name": "Console"},
+                    {"module": "ssh8", "name": "Ssh"},
+                    {"module": "file8", "name": "File"},
+                    {"module": "locations8", "name": "Locations"},
+                    {"module": "dir8", "name": "Dir"},
+                    {"module": "path8", "name": "Path"},
+                    {"module": "file8", "name": "File"},
+                    {"module": "time8", "name": "Time"},
+                    {"module": "json8", "name": "Json"},
+                    {"module": "list8", "name": "List"},
+                    {"module": "process8", "name": "Process"},
+                    {"module": "dict8", "name": "Dict"},
+                    {"module": "codegen8", "name": "Codegen"},
+                    {"module": "log8", "name": "plog"},
+                    {"module": "network8", "name": "Network"},
+                    {"module": "bash8", "name": "Bash"},
+                    {"module": "macos8", "name": "macOS"},
+                    {"module": "windows8", "name": "Windows"},
+                    {"module": "gui8", "name": "Gui"},
+                    {"module": "tkinter8", "name": "Tkinter"},
+                    {"module": "random8", "name": "Random"},
+                    {"module": "wget8", "name": "Wget"},
+                    {"module": "int8", "name": "Int"},
+                    {"module": "cli8", "name": "CLI"},
+                    {"module": "cs8", "name": "dirify"}, ]
+    import commands.const8 as const8
+    for object_name in dir(const8):
+        if object_name[:1] != "_":
+            LIST_CLASSES.append({"module": "const8", "name": object_name})
+    for class_ in LIST_CLASSES:
+        import_class(class_["module"], class_["name"])
+    from .const8 import *
     if CLASSES_SPEED_TWEAKING:
         LOAD_TIME_BENCHMARK.end("imported constants in", quiet_if_zero=True, start_immideately=True)
 
-
     class Internal:
+        """Internal class with internal functions
+        """
+
         @staticmethod
         def dir_c():
             """Print all functionality of commands8
@@ -111,19 +124,18 @@ try:
             """
             import importlib
             import commands  # pylint: disable=import-self, redefined-outer-name
-            globals()["Wget"] = eval("importlib.reload(commands.wget8).Wget")  # pylint: disable=eval-used
+
             commands = importlib.reload(commands)
 
             del commands
             string = "from commands import *"  # d you need to manually add this <<< string to code :(
             if not quiet:
-                print('"'+string+'" copied to clipboard')
+                print('"' + string + '" copied to clipboard')
                 try:
                     import copypaste
                 except ModuleNotFoundError:
                     from .installreq8 import copypaste
                 copypaste.copy(string)
-
 
     if CLASSES_SPEED_TWEAKING:
         LOAD_TIME_BENCHMARK.end("class Internal loaded in", quiet_if_zero=True, start_immideately=True)
@@ -134,7 +146,7 @@ try:
             build = Json.load(build_json_file, quiet=True)[0]  # pylint: disable=undefined-variable
         except:  # pylint: disable=bare-except
             build = "NaN"
-        Json.save(build_json_file, [build+1], quiet=True)  # pylint: disable=undefined-variable
+        Json.save(build_json_file, [build + 1], quiet=True)  # pylint: disable=undefined-variable
 
     del INITED_TIME
     del CLASSES_SPEED_TWEAKING
@@ -143,7 +155,8 @@ try:
     LOAD_TIME_BENCHMARK.end("commands8 v" + __version__ + "-'build'-" + str(__build__.build) + " loaded in")
     del START_TIME
     del LOAD_TIME_BENCHMARK
-except ModuleNotFoundError:
+except ModuleNotFoundError as err:
+    print(err)
     import commands.installreq8
     from .print8 import Print
     Print.debug("I tried my best to install dependencies, try to restart script, everything must be okay")

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.4.14"
+__version__ = "0.8.5"
 
 
 class Str:
@@ -25,36 +25,40 @@ class Str:
         return "'" + str(some_string) + "'"
 
     @classmethod
-    def get_integers(Str, string, floatsupport=True):  # return list of integers from string,
-        # todo add support for floating numbers, it will be cool!
+    def get_integers(cls, string, float_support=True, debug=False):
         """
         :param string: string, with some integers or floats inside
-        :param floatsupport: boolean, enable float support
+        :param float_support: boolean, enable float support
+        :param debug: boolean, debug print enable
         :return: list of integers or floats
         """
-        string = Str.remove_spaces(string)
+        string = cls.remove_spaces(string)
         integer_found = False
         integers = []
         current_integer = 0
         negative = False
-        floatn = False
+        floatn = None
         for symbol in str(string) + " ":  # in exception some processing, meh :(
             try:
                 if symbol in ['-', '—']:
                     negative = True
                     continue
-                if symbol in [".", ","]:
-                    if isinstance(floatn, str):
-                        floatn = False
-                    floatn = 0
-                    continue
+                if float_support:
+                    if symbol in [".", ","]:
+                        if isinstance(floatn, int):
+                            floatn = None
+                            raise ValueError  # goto to except block code
+                        floatn = 0
+                        continue
                 int(symbol)
                 if isinstance(floatn, int):
                     floatn += 1
                     value_before = current_integer
                     added_value = int(symbol)*pow(10, -floatn)
                     current_integer = current_integer + added_value
-                    #print("value_before", value_before, "floatn", floatn, "added_value", added_value, "current_integer", current_integer)
+                    if debug:
+                        print("value_before", value_before, "floatn", floatn, "added_value", added_value,
+                              "current_integer", current_integer)
                     current_integer = round(current_integer, floatn)  # to reduce problems with floating numbers
                 else:
                     current_integer = current_integer*10 + int(symbol)
@@ -67,11 +71,11 @@ class Str:
                     current_integer = 0
                     integer_found = False
                 negative = False
-                floatn = False
+                floatn = None
         return integers
 
     @staticmethod
-    def newlines_to_strings(string, quiet=False):
+    def newlines_to_strings(string):
         """
         :param string: string, with some newlines
         :param quiet: boolean suppress print to console
@@ -88,7 +92,7 @@ class Str:
             raise TypeError(str(type(string)) + " can't be splitted")
 
     @classmethod
-    def nl(cls, string):
+    def nl(cls, string):  # pylint: disable=invalid-name
         """
         :param string: string, with some newlines
         :param quiet: boolean suppress print to console
@@ -97,15 +101,19 @@ class Str:
         return cls.newlines_to_strings(string=string)
 
     @staticmethod
-    def split_every(string, chars):  # split string every N chars
+    def split_every(string, chars):
+        """Split line every N chars
+        :param string: string, input
+        :param chars: int, count of chars, that split line
+        :return: list of substring of 'chars' length
+        """
         chars = int(chars)
         if chars <= 0:
             raise ValueError("chars must be positive, not", chars)
-        if not (isinstance(string, str) or isinstance(string, int)):
+        if not isinstance(string, (int, str)):
             raise ValueError("type", type(string), "isn't supported by Str.split_every")
         string = str(string)
         import re
-
         output_lines = []
         char_exists = "."
         char_can_be_exists = ".?"
@@ -115,27 +123,45 @@ class Str:
         return output_lines
 
     @staticmethod
-    def leftpad(string, leng, ch="0", rightpad=False):  # return string with
-      # d added characters to left side. If string longer — return original string
+    def leftpad(string, length, char="0", rightpad=False):
+        """Adds symbols from char str to left side of output string to change input string len to 'length'
+        :param string: string, input
+        :param length: int, len of output string
+        :param char: string, characters, added to left side of input string
+        :param rightpad: boolean, if True, adds symbols to right side
+        :return: string, with added characters to side of input string
+        """
+        # return string with
+        # d added characters to left side. If string longer — return original string
+        char = str(char)
         string = str(string)
-        if len(string) >= leng:
+        if len(string) >= length:
             return string
-        strOfCh = str(ch) * leng
-        string_output = strOfCh[len(string):leng] + string
+        str_of_chars = str(char) * (length/len(char))+1
+        string_output = str_of_chars[len(string):length] + string
         if rightpad:
-            string_output = string + strOfCh[len(string):leng]
+            string_output = string + str_of_chars[len(string):length]
         return string_output
 
     @classmethod
-    def rightpad(cls, string, leng, ch="0"):  # return string with added
-      # d characters to right side. If string longer — return original string
-        return cls.leftpad(string, leng, ch=ch, rightpad=True)
+    def rightpad(cls, string, leng, char="0"):
+        """Adds symbols from char str to right side of output string to change input string len to 'length'
+        :param string: string, input
+        :param length: int, len of output string
+        :param char: string, characters, added to right side of input string
+        :return: string, with added characters to side of input string
+        """
+        return cls.leftpad(string, leng, char=char, rightpad=True)
 
     @staticmethod
-    def substring(string, before, after=None, return_after_substring=False):  # return
-      # d string that between "before", and "after" strings, not including
-      # d those. If "return_after_substring", return typle with substring and
-      # d part of string after it.
+    def substring(string, before, after=None, return_after_substring=False):
+        """Get substring from string that between "before", and "after" strings, not including those.
+        :param string: string
+        :param before: string, that before output string
+        :param after: string, that after output string
+        :param return_after_substring: boolean, if True, return list of substring and part after substring
+        :return: string, from string that between "before", and "after" arguments
+        """
         string = str(string)
         before = str(before)
         after = str(after)
@@ -156,59 +182,72 @@ class Str:
         else:
             substring = string[startfrom:]
         if return_after_substring:
-            #try:
+            # try:
             #    after_substring
-            #except UnboundLocalError:
+            # except UnboundLocalError:
             #    Print.debug("string", string,
             #                "before", before,
             #                "after", after,
             #                "return_after_substring", return_after_substring,
             #                "substring", substring,
-            #                "after_substring", "UnboundLocalError: local variable 'after_substring' referenced before assignment")
+            #                "after_substring",
+            #                 "UnboundLocalError: local variable 'after_substring' referenced before assignment")
             return substring, after_substring
         return substring
 
     @staticmethod
-    def diff_simple(string_a, string_b):  # d print all symbol differents.
-      # d Not all mine code, must rewrite.
-      # todo rewrite this shit.
+    def diff_simple(string_a, string_b):
+        """Print all different symbols. Code not all mine, so it's not so good (or bad).
+        :param string_a: string
+        :param string_b: string
+        :return: None
+        """
         import difflib
-
         strings = [(string_a, string_b)]  # for furthurer support for unlimited srtings
-
-        for a, b in strings:
-            print('{} => {}'.format(a, b))
-            for i, s in enumerate(difflib.ndiff(a, b)):
-                if s[0] == ' ':
+        for symbol_a, symbol_b in strings:
+            print('{} => {}'.format(symbol_a, symbol_b))
+            for i, symbol in enumerate(difflib.ndiff(symbol_a, symbol_b)):
+                if symbol[0] == ' ':
                     continue
-                elif s[0] == '-':
-                    print(u'Delete "{}" from position {}'.format(s[-1], i))
-                elif s[0] == '+':
-                    print(u'Add "{}" to position {}'.format(s[-1], i))
+                elif symbol[0] == '-':
+                    print(u'Delete "{}" from position {}'.format(symbol[-1], i))
+                elif symbol[0] == '+':
+                    print(u'Add "{}" to position {}'.format(symbol[-1], i))
             print()
 
     @staticmethod
-    def input_pass(string="Password:"):  # d return string from user, securely
-      # d inputed by getpass library
+    def input_pass(string="Password:"):
+        """Secure input password
+        :param string: string, with message to user, that asks password
+        :return: string, that returned from getpass lib
+        """
         import getpass
-        return getpass.getpass(string)
+        return getpass.getpass(str(string))
 
-    @staticmethod
-    def input_int(message="Input integer: ", minimum=None, maximum=None, default=None, quiet=False):
-      # d return integer from user with multible parameters.
+    @classmethod
+    def input_int(cls, message="Input integer: ", minimum=None, maximum=None, default=None, debug=True):  # pylint: disable=too-many-arguments
+        """Ask user to input integer.
+        :param message: string, message to user
+        :param minimum: minimum value of returned integer
+        :param maximum: maximum value of returned integer
+        :param default: default value if user just press Enter
+        :param debug: boolean, debug purposes
+        :return: int, input from user
+        """
         output_int = "jabla fitta"
         if default:
-            message = "(Enter = " + str(default) + ")"
+            message += "(Enter = " + str(default) + ") "
         while output_int == "jabla fitta":  # цикл, пока не получит итоговое число
             integer = input(message)
             if integer != "":
                 try:
-                    integer = Str.get_integers(integer)[0]
+                    integer = cls.get_integers(integer)[0]
                 except IndexError:
                     print("Это не число")
                     continue
-            elif default and integer != "":
+            elif default and integer == "":
                 output_int = default
+                break
             elif integer == "":
                 print("Это не число")
                 raise ValueError
@@ -222,21 +261,31 @@ class Str:
                     raise ValueError
             output_int = integer
             break
-        if not quiet:
+        if debug:
             print("Итоговое число:", output_int)
         return output_int
 
 
     @classmethod
-    def remove_spaces(Str, string_):
+    def remove_spaces(cls, string_):
+        """Remove all duplicating spaces in string
+        :param string_: string, input
+        :return: string, without duplicated spaces
+        """
         string_ = str(string_)
         while '  ' in string_:
             string_ = string_.replace('  ', ' ')
         return string_
 
     @classmethod
-    def get_words(Str, string_):
-        removed_spaces = ' '.join(string_.split())  # at least, it's fast https://stackoverflow.com/questions/2077897/substitute-multiple-whitespace-with-single-whitespace-in-python?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+    def get_words(cls, string_):
+        """
+        :param string_: string, with spaces to split it
+        :return: list of substrings, splitted by space|multiple space
+        """
+        removed_spaces = ' '.join(string_.split())  # at least, it's fast https://stackoverflow.com/questions/2077897/
+        # substitute-multiple-whitespace-with-single-whitespace-in-python
         words = removed_spaces.split(" ")
-        if words == [""]: words = []
+        if words == [""]:
+            words = []
         return words

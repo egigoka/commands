@@ -6,8 +6,10 @@
       <w>codegen</w>
       <w>colorama</w>
       <w>cprint</w>
+      <w>dirify</w>
       <w>flatterize</w>
       <w>gethostbyname</w>
+      <w>leftpad</w>
       <w>macos</w>
       <w>nano</w>
       <w>osascript</w>
@@ -18,6 +20,7 @@
       <w>pythonioencoding</w>
       <w>realtime</w>
       <w>repl</w>
+      <w>rightpad</w>
       <w>rustime</w>
       <w>subfolder</w>
       <w>taskkill</w>

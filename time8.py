@@ -1,70 +1,71 @@
 #! python3
 # -*- coding: utf-8 -*-
-# http://python.su/forum/topic/15531/?page=1#post-93316
-__version__ = "0.0.10"
+"""Internal module to work with time
+"""
+__version__ = "0.1.3"
 
 
 class Time:
+    """Class to work with time
+    """
+    @staticmethod
+    def _lp2(string, length=2):
+        """Internal alias to Str.leftpad
+        """
+        from .str8 import Str
+        return Str.leftpad(string, length, 0)
 
     @staticmethod
     def stamp():
+        """
+        :return: float, timestamp
+        """
         import time
         return time.time()
 
-
-    @staticmethod
-    def get(size, zfill=0):
-        import datetime
-        from .str8 import Str
-        return Str.leftpad(eval("str(datetime.datetime.now()." + size + ")"), leng=zfill, ch=0)
-
-
-    @classmethod
-    def dotted(Time):
-        date_and_time = Time.get("year") + "." + Time.get("month", 2) + "." + \
-                        Time.get("day", 2) + "_at_" + Time.get("hour", 2) + "." + \
-                        Time.get("minute", 2) + "." + Time.get("second", 2) + "." + \
-                        Time.get("microsecond", 6)
-        return date_and_time
-
-
     @staticmethod
     def timestamp_to_datetime(timestamp):
+        """
+        :param timestamp: float, timestamp
+        :return: datetime.datetime time object
+        """
         import datetime
         if isinstance(timestamp, datetime.datetime):
             return timestamp
         return datetime.datetime.fromtimestamp(timestamp)
 
-
     @staticmethod
     def datetime_to_timestamp(datetime_object):
+        """
+        :param datetime_object: datetime.datetime time object
+        :return: float, timestamp
+        """
         import time
         return time.mktime(datetime_object.timetuple())
 
-
     @classmethod
-    def rustime(Time, customtime=None):
+    def dotted(cls, custom_time=None):
+        """
+        :param custom_time: datetime.datetime time object|float of timestamp
+        :return: string with time in format "1999.12.31_at_12.59.59.999999"
+        """
         import datetime
-        from .os8 import OS
-        if OS.cyrillic_support:
-            if customtime:
-                time = Time.timestamp_to_datetime(customtime)
-            else:
-                time = datetime.datetime.now()
-
-            def lp(string):
-                from .str8 import Str
-                return Str.leftpad(string, 2, 0)
-            rustime = lp(time.day) + " числа " \
-                      + lp(time.month) + " месяца " \
-                      + lp(time.year) + " года в " \
-                      + lp(time.hour) + ":" + lp(time.minute) + ":" + lp(time.second)
+        if custom_time:
+            time = cls.timestamp_to_datetime(custom_time)
         else:
-            rustime = Time.dotted()
-        return rustime
+            time = datetime.datetime.now()
+        time = cls._lp2(time.year) + "." + cls._lp2(time.month) + "." + cls._lp2(time.day) + "_at_" + \
+            cls._lp2(time.hour) + "." + cls._lp2(time.minute) + "." + cls._lp2(time.second) + "." + \
+            cls._lp2(time.microsecond, 6)
+        return time
 
     @staticmethod
-    def timer(seconds, check_per_sec=10):
+    def _timer(seconds, check_per_sec=10):
+        """Internal function to idle (used in Time.sleep). Print how much time left.
+        :param seconds: int|float, how long sleep
+        :param check_per_sec: int|float, how often check time
+        :return: None
+        """
         from .print8 import Print
         from .bench8 import get_Bench
         benchmark = get_Bench()
@@ -80,22 +81,35 @@ class Time:
         Print.rewrite("")
 
     @classmethod
-    def sleep(Time, seconds, quiet=False):
+    def sleep(cls, seconds, quiet_small=False, check_per_sec=10):
+        """Function to idle. If 'seconds more, than 1, running Time._timer. Otherwise run time.sleep and print time
+        left.
+        :param seconds: int|float, how long sleep
+        :param quiet_small: boolean, suppress print for time len <= 1 second
+        :param check_per_sec: int|float, how often check time
+        :return: None
+        """
         if seconds < 0:
-            raise ValueError("sleep length must be non-negative")
+            raise ValueError("sleep time must be non-negative")
         elif seconds >= 1:
-            Time.timer(seconds)
+            cls._timer(seconds, check_per_sec)
         else:
-            if not quiet:
+            if not quiet_small:
                 print("sleeping", seconds)
             import time
             time.sleep(seconds)
 
     @classmethod
-    def delta(Time, time_a, time_b):  # return difference between two timestamps
-        if time_a > time_b: time_a, time_b = time_b, time_a
-        time_a = Time.timestamp_to_datetime(time_a)
-        time_b = Time.timestamp_to_datetime(time_b)
+    def delta(cls, time_a, time_b):
+        """
+        :param time_a: datetime.datetime time object|float of timestamp
+        :param time_b: datetime.datetime time object|float of timestamp
+        :return: difference between two timestamps
+        """
+        if time_a > time_b:
+            time_a, time_b = time_b, time_a
+        time_a = cls.timestamp_to_datetime(time_a)
+        time_b = cls.timestamp_to_datetime(time_b)
         delta = time_b - time_a
         delta_combined = delta.seconds + delta.microseconds / 1E6
         return delta_combined

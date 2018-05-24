@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module for logging
 """
-__version__ = "0.0.4"
+__version__ = "0.0.5"
 
 
 def plog(logfile, description, custom_time=None, quiet=False, backup=True):
@@ -24,7 +24,7 @@ def plog(logfile, description, custom_time=None, quiet=False, backup=True):
         File.backup(logfile, quiet=True)
     file = open(logfile, "a")
     if custom_time:
-        file.write(Time.rustime(custom_time) + " " + str(description) + newline)
+        file.write(Time.dotted(custom_time) + " " + str(description) + newline)
     else:
-        file.write(Time.rustime() + " " + str(description) + newline)
+        file.write(Time.dotted() + " " + str(description) + newline)
     file.close()
