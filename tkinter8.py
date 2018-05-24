@@ -1,9 +1,13 @@
 #! python3
 # -*- coding: utf-8 -*-
-__version__ = "0.0.1"
+"""Internal module to simplify work with tkinter
+"""
+__version__ = "0.0.2"
 
 
-class Tkinter():
+class Tkinter:  # pylint: disable=too-few-public-methods
+    """Class to simplify work with tkinter
+    """
     @staticmethod
     def color(red, green, blue):
         """

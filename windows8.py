@@ -1,11 +1,18 @@
 #! python3
 # -*- coding: utf-8 -*-
-__version__ = "0.1.0"
+"""Internal module to work with Windows-specific functions
+"""
+__version__ = "0.1.2"
 
 
 class Windows:
+    """Class to work with Windows-specific functions
+    """
     @staticmethod
-    def lock():  # locking screen, work only on Windows < 10
+    def lock():
+        """Locking windows workstation, doesn't work with Windows 10
+        :return: None
+        """
         from .os8 import OS
         if OS.windows_version and (OS.windows_version != 10):
             import ctypes
@@ -15,6 +22,10 @@ class Windows:
 
     @staticmethod
     def fix_unicode_encode_error(quiet=""):
+        """Fix UnicodeConsoleError on old versions of Python
+        :param quiet: boolean, suppress print to console
+        :return: None
+        """
         import os
         if quiet:
             quiet = " > null"

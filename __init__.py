@@ -51,7 +51,7 @@ def import_class(module_name, class_name, quiet=not CLASSES_SPEED_TWEAKING, relo
     else:
         globals()[class_name] = eval("importlib.import_module('." + module_name + "', package='commands')."+class_name)  # pylint: disable=eval-used
     if not quiet:
-        LOAD_TIME_BENCHMARK.end("class " + class_name + " loaded in", quiet_if_zero=True, start_immideately=True)
+        LOAD_TIME_BENCHMARK.end("class " + class_name + " loaded in", quiet_if_zero=True, start_immediately=True)
 
 
 try:
@@ -63,7 +63,7 @@ try:
         LOAD_TIME_BENCHMARK.time_start = START_TIME
         LOAD_TIME_BENCHMARK.end("init in", quiet_if_zero=True)
         LOAD_TIME_BENCHMARK.time_start = INITED_TIME
-        LOAD_TIME_BENCHMARK.end("func get_Bench loaded in", quiet_if_zero=True, start_immideately=True)
+        LOAD_TIME_BENCHMARK.end("func get_Bench loaded in", quiet_if_zero=True, start_immediately=True)
 
     LIST_CLASSES = [{"module": "str8", "name": "Str"},
                     {"module": "os8", "name": "OS"},
@@ -99,9 +99,6 @@ try:
             LIST_CLASSES.append({"module": "const8", "name": object_name})
     for class_ in LIST_CLASSES:
         import_class(class_["module"], class_["name"])
-    from .const8 import *
-    if CLASSES_SPEED_TWEAKING:
-        LOAD_TIME_BENCHMARK.end("imported constants in", quiet_if_zero=True, start_immideately=True)
 
     class Internal:
         """Internal class with internal functions
@@ -138,7 +135,7 @@ try:
                 copypaste.copy(string)
 
     if CLASSES_SPEED_TWEAKING:
-        LOAD_TIME_BENCHMARK.end("class Internal loaded in", quiet_if_zero=True, start_immideately=True)
+        LOAD_TIME_BENCHMARK.end("class Internal loaded in", quiet_if_zero=True, start_immediately=True)
 
     class __build__:  # pylint: disable=too-few-public-methods, invalid-name
         build_json_file = Path.extend(Path.commands8(), "buildnumber.json")  # pylint: disable=undefined-variable
@@ -152,7 +149,7 @@ try:
     del CLASSES_SPEED_TWEAKING
     LOAD_TIME_BENCHMARK = get_Bench()  # pylint: disable=undefined-variable
     LOAD_TIME_BENCHMARK.time_start = START_TIME
-    LOAD_TIME_BENCHMARK.end("commands8 v" + __version__ + "-'build'-" + str(__build__.build) + " loaded in")
+    LOAD_TIME_BENCHMARK.end("commands v" + __version__ + "-'build'-" + str(__build__.build) + " loaded in")
     del START_TIME
     del LOAD_TIME_BENCHMARK
 except ModuleNotFoundError as err:

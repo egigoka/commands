@@ -1,24 +1,29 @@
 #! python3
 # -*- coding: utf-8 -*-
-#from commands7 import *
-from . import *
+# pylint: disable=wildcard-import, unused-wildcard-import, missing-docstring, too-many-nested-blocks,
+from .os8 import *
+from .print8 import *
+from .str8 import *
+from .random8 import *
+from .int8 import *
 __version__ = "1.0.3"
 
 
-def bubblesort(list, quiet=True):
-    list = copy.deepcopy(list)
+def bubblesort(list_, quiet=True):
+    import copy
+    list_ = copy.deepcopy(list_)
     is_sorted = False
     if not quiet:
         maxcnt = 0
-        lenlist = len(list)
+        lenlist = len(list_)
     while not is_sorted:
         cnt = 0
         while True:
             try:
-                if list[cnt] > list[cnt+1]:
-                    temp_var = list[cnt]
-                    list[cnt] = list[cnt+1]
-                    list[cnt+1] = temp_var
+                if list_[cnt] > list_[cnt + 1]:
+                    temp_var = list_[cnt]
+                    list_[cnt] = list_[cnt + 1]
+                    list_[cnt + 1] = temp_var
                     if not quiet:
                         if cnt > maxcnt:
                             maxcnt = cnt
@@ -31,87 +36,87 @@ def bubblesort(list, quiet=True):
             except IndexError:  # значит, прошлись по всему списку и всё ок
                 is_sorted = True
                 break
-    return list
+    return list_
+
 
 def bigdigits(digits):
-    def digits_init(height = False):
-        Zero = ["   ###   ",
+    def digits_init(height=False):
+        zero = ["   ###   ",
                 "  #   #  ",
                 " #     # ",
                 "#       #",
                 " #     # ",
                 "  #   #  ",
                 "   ###   ", ]
-        One = ["    #    ",
+        one = ["    #    ",
                "   ##    ",
                "  # #    ",
                "    #    ",
                "    #    ",
                "    #    ",
                " ####### ", ]
-        Two = [" ####### ",
+        two = [" ####### ",
                "#       #",
                "        #",
                " ####### ",
                "#        ",
                "#        ",
                "#########", ]
-        Three = [" ####### ",
+        three = [" ####### ",
                  "#       #",
                  "        #",
                  "     ### ",
                  "        #",
                  "#       #",
                  " ####### ", ]
-        Four = ["#       #",
+        four = ["#       #",
                 "#       #",
                 "#       #",
                 "#########",
                 "        #",
                 "        #",
                 "        #", ]
-        Five = ["#########",
+        five = ["#########",
                 "#        ",
                 "#        ",
                 "######## ",
                 "        #",
                 "#       #",
                 " ####### ", ]
-        Six = [" ####### ",
+        six = [" ####### ",
                "#       #",
                "#        ",
                "######## ",
                "#       #",
                "#       #",
                " ####### ", ]
-        Seven = ["#########",
+        seven = ["#########",
                  "#       #",
                  "      ## ",
                  "    ##   ",
                  "  ##     ",
                  " #       ",
                  "#        ", ]
-        Eight = [" ####### ",
+        eight = [" ####### ",
                  "#       #",
                  "#       #",
                  " ####### ",
                  "#       #",
                  "#       #",
                  " ####### ", ]
-        Nine = [" ####### ",
+        nine = [" ####### ",
                 "#       #",
                 "#       #",
                 " ########",
                 "        #",
                 "#       #",
                 " ####### ", ]
-        Digits = [Zero, One, Two, Three, Four, Five, Six, Seven, Eight, Nine]
-        height_int = len(Zero)
+        digits = [zero, one, two, three, four, five, six, seven, eight, nine]
+        height_int = len(zero)
         if height:
             return height_int
-        else:
-            return Digits
-    Digits = digits_init()
+        return digits
+    digits = digits_init()
     column = 0
     while column < digits_init(height=True):
         line = ""
@@ -119,42 +124,47 @@ def bigdigits(digits):
         for digit in digits:
             # try:
             digit = int(digit)
-            line = line + Digits[digit][column].replace("#", str(digit)) + " "
+            line = line + digits[digit][column].replace("#", str(digit)) + " "
         print(line)
         column += 1
 
 def simple_calc_page65():
-    list = []
+    list_ = []
     try:
         while True:
-            list.append(Str.input_int(debug=True))
+            list_.append(Str.input_int(debug=True))
     except ValueError:
         mean = 0
-        for item in list:
+        for item in list_:
             mean += item
-        mean /= len(list)
-        print("numbers:", list)
-        print("count =", len(list), "lowest =", min(list), "highest =", max(list), "mean =", mean)
+        mean /= len(list_)
+        print("numbers:", list_)
+        print("count =", len(list_), "lowest =", min(list_), "highest =", max(list_), "mean =", mean)
 
 def simple_calc_advanced_page66():
-    list = []
+    list_ = []
     try:
         while True:
-            list.append(Str.input_int(debug=True))
+            list_.append(Str.input_int(debug=True))
     except ValueError:
-        if len(list) == 0:
+        if list_ == 0:
             print("no input")
         else:
             mean = 0
-            for item in list:
+            for item in list_:
                 mean += item
-            mean /= len(list)
-            if len(list) % 2 == 1:
-                median = list[int(0.5+((len(list)-1)/2))]  # средний элемент списка
+            mean /= len(list_)
+            if len(list_) % 2 == 1:
+                median = list_[int(0.5+((len(list_)-1)/2))]  # средний элемент списка
             else:
-                median = (list[int(len(list)/2)]+list[int(len(list)/2)-1])/2  # среднеарифметическое среди двух средних элементов
-            print("numbers:", list)
-            print("count =", len(list), "lowest =", min(list), "highest =", max(list), "mean =", mean, "median =", median)
+                median = (list_[int(len(list_)/2)]+list_[int(len(list_)/2)-1])/2
+                # среднеарифметическое среди двух средних элементов
+            print("numbers:", list_)
+            print("count =", len(list_),
+                  "lowest =", min(list_),
+                  "highest =", max(list_),
+                  "mean =", mean,
+                  "median =", median)
 
 def awful_poetry_page65(sentences=5):
     articles = ["a", "the"]
@@ -167,8 +177,8 @@ def awful_poetry_page65(sentences=5):
     verbs = ["jumped", "fucked", "fucks", "sang", "ran", "clusteryfied", "died"]
     adverbs = ["as fuck", "loudly", "well", "badly", "quetly"]
 
-    for _ in Int.from_to(1,sentences):
-        multiple = Random.integer(0,1)
+    for _ in Int.from_to(1, sentences):
+        multiple = Random.integer(0, 1)
         print(pronouns[multiple][Random.integer(0, len(pronouns[multiple])-1)].capitalize(), end=" ")
         print(nouns[multiple][Random.integer(0, len(nouns[multiple]) - 1)], end=" ")
         print(verbs[Random.integer(0, len(verbs)-1)], end=" ")
