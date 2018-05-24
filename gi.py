@@ -11,7 +11,7 @@ except ModuleNotFoundError:
     from commands.path8 import *
     from commands.process8 import *
     from commands.bash8 import *
-__version__ = "1.0.3"
+__version__ = "1.1.3"
 
 def get_name_of_repo():
     """Return mine name of repo

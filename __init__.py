@@ -13,14 +13,14 @@ __version__ = "9.0.0-prealpha"
 #    !done! lazy load for all modules
 #    !done! all submodules lazy load
 #    !done! fix Str.get_integers!!!!!!!!!!!!!!!!!!
-#    Console.get_output make output even if exit status != 0
+#    !done! remove Time.rustime, change time format in log8
+#    !done! docstrings for all
 #    make tests for all
 #    PEP8 check for all
-#    !done! docstrings for all
+#    Console.get_output make output even if exit status != 0
 #    new dir_c
 #    Internal.rel update to reload all
 #    Json.save update check of corectness save json with int keys in dict
-#    !done!remove Time.rustime, change time format in log8
 #    change all docstring to "Class with functions"
 #    check docstrings for first Capitalized letter, dot at end, no more capitalized letter, for all parameters
 #    check parameters to define types
