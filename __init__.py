@@ -15,7 +15,7 @@ __version__ = "9.0.0-prealpha"
 #    fix Str.get_integers!!!!!!!!!!!!!!!!!!
 #    Console.get_output make ouptut even if exit status != 0
 #    make tests for all
-#    PIP8 check for all
+#    PEP8 check for all
 #    !done! docstrings for all
 #    new dir_c
 #    Internal.rel update to reload all
