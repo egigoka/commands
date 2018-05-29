@@ -102,8 +102,8 @@ class Network:
             from .str8 import Str
             try:
                 for line in Str.nl(ping_output + backup_ping_output):
-                    if len(Str.get_integers(line)) >= 4:
-                        octaves = Str.get_integers(line)
+                    if len(Str.get_integers(line, float_support=False)) >= 4:
+                        octaves = Str.get_integers(line, float_support=False)
                         # pylint: disable=invalid-name
                         ip = str(octaves[0]) + "." + str(octaves[1]) + "." + str(octaves[2]) + "." + str(octaves[3])
                         break
