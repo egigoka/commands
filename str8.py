@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.8.5"
+__version__ = "0.9.0"
 
 
 class Str:
@@ -137,7 +137,7 @@ class Str:
         string = str(string)
         if len(string) >= length:
             return string
-        str_of_chars = str(char) * (length/len(char))+1
+        str_of_chars = str(char) * int((length/len(char))+1)
         string_output = str_of_chars[len(string):length] + string
         if rightpad:
             string_output = string + str_of_chars[len(string):length]
