@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for creating some random values.
 """
-__version__ = "0.1.1"
+__version__ = "0.2.0"
 
 
 class Random:
@@ -37,3 +37,11 @@ class Random:
         import random
         import string
         return ''.join(random.choices(string.ascii_uppercase + string.ascii_lowercase + string.digits, k=length))
+
+    @staticmethod
+    def boolean():
+        """
+        :return: Boolean, random
+        """
+        import random
+        return random.random() < 0.5
