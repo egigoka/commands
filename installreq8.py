@@ -11,7 +11,7 @@ from .os8 import OS
 from .pip8 import Pip
 from .bench8 import get_Bench
 from .print8 import Print
-__version__ = "0.1.7"
+__version__ = "0.2.0"
 
 
 FRACKING_MINE_IMPORT_SPEED_TWEAKING = True
@@ -62,6 +62,8 @@ def mine_import(module_name, objects=None, just_download=False, az=None):  # pyl
                 print('<<<<<<<<<<Trying to work without "' + str(module_name) + '">>>>>>>>>>')
             else:
                 commands = ""
+                if OS.windows and "py" not in str(sys.argv):
+                    sys.argv.insert(0, "py")
                 sys.argv.append(import_fail_arg)
                 for arg in sys.argv:
                     commands += arg + " "
