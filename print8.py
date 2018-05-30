@@ -78,8 +78,6 @@ class Print:
             try:
                 import colorama
             except ImportError:
-                import commands.installreq8 as check
-                print(dir(check))
                 from .installreq8 import colorama
             colorama.init()
         # check for colors in input
