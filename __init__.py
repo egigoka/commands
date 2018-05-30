@@ -139,11 +139,13 @@ try:
 
     class __build__:  # pylint: disable=too-few-public-methods, invalid-name
         build_json_file = Path.extend(Path.commands8(), "buildnumber.json")  # pylint: disable=undefined-variable
+        build_json = Json(build_json_file)
         try:
-            build = Json.load(build_json_file, quiet=True)[0]  # pylint: disable=undefined-variable
+            build = build_json.string[0]
         except:  # pylint: disable=bare-except
-            build = "NaN"
-        Json.save(build_json_file, [build + 1], quiet=True)  # pylint: disable=undefined-variable
+            build = -65535
+        build_json.string = [build + 1]
+        build_json.save()
 
     del INITED_TIME
     del CLASSES_SPEED_TWEAKING

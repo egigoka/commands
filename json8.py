@@ -2,27 +2,45 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "0.0.6"
+__version__ = "2.2.0"
 
 
 class Json:
     """Class to work with JSON
     """
+
     @classmethod
-    def check(cls, filename):
+    def __init__(cls, filename, quiet=True):
+        cls.filename = filename
+        if cls._check_file(filename):
+            cls.string = cls._load_from_file(cls.filename, quiet=quiet)
+        else:
+            cls.string = {}
+            cls._save_to_file(cls.filename, cls.string, quiet=quiet)
+
+    @classmethod
+    def load(cls, quiet=True):
+        cls.string = cls._load_from_file(cls.filename, quiet=quiet)
+
+    def save(cls, quiet=True):
+        cls._save_to_file(cls.filename, cls.string, quiet=quiet)
+
+    @classmethod
+    def _check_file(cls, filename, quiet=True):
         """
         :param filename: string with path to JSON file
         :return: boolean with state of JSON correctness
         """
         try:
-            cls.load(filename)
+            cls._load_from_file(filename, quiet=quiet)
             return True
         except:  # pylint: disable=bare-except
-            print("JSON is bad")
+            if not quiet:
+                print("JSON is bad")
             return False
 
     @classmethod
-    def save(cls, filename, json_string, quiet=False, debug=False):
+    def _save_to_file(cls, filename, json_string, quiet=False, debug=False):
         """
         :param filename: path of file, where JSON will be saved
         :param json_string: list or dict to save in file
@@ -47,7 +65,7 @@ class Json:
             from .path8 import Path
             raise IOError("error while saving JSON, try to repair script at path " +
                           Path.full(sys.argv[0]))
-        json_test_string = cls.load(filename, quiet=True)
+        json_test_string = cls._load_from_file(filename, quiet=True)
         if json_string != json_test_string:
             from .path8 import Path
             from .print8 import Print
@@ -56,7 +74,7 @@ class Json:
                           Path.full(sys.argv[0]))  # exception
 
     @classmethod
-    def load(cls, filename, quiet=False, debug=False):
+    def _load_from_file(cls, filename, quiet=False, debug=False):
         """
         :param filename: path of file, from load JSON
         :param quiet: suppress print to console
