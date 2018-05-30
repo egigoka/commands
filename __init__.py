@@ -93,8 +93,8 @@ try:
                     {"module": "int8", "name": "Int"},
                     {"module": "cli8", "name": "CLI"},
                     {"module": "cs8", "name": "dirify"}, ]
-    import commands.const8 as const8
-    for object_name in dir(const8):
+    import commands.const8
+    for object_name in dir(commands.const8):
         if object_name[:1] != "_":
             LIST_CLASSES.append({"module": "const8", "name": object_name})
     for class_ in LIST_CLASSES:
