@@ -7,14 +7,11 @@ import pkgutil
 import importlib
 import sys
 import os
-from .os8 import OS
-from .pip8 import Pip
-from .bench8 import get_Bench
-from .print8 import Print
-__version__ = "0.2.0"
-
-
-FRACKING_MINE_IMPORT_SPEED_TWEAKING = True
+from commands.os8 import OS
+from commands.pip8 import Pip
+from commands.bench8 import get_Bench
+from commands.print8 import Print
+__version__ = "0.4.0"
 
 
 def mine_import(module_name, objects=None, just_download=False, az=None):  # pylint: disable=invalid-name
@@ -25,10 +22,6 @@ def mine_import(module_name, objects=None, just_download=False, az=None):  # pyl
     :param az: string with define variable name of module in globals
     :return: None
     """
-    # return
-    if FRACKING_MINE_IMPORT_SPEED_TWEAKING:
-        debug_bench = get_Bench()
-        debug_bench.start()
     Pip.check_pip_installation()
     if module_name not in Pip.list_of_modules:
         # ##########RARE###########
@@ -102,8 +95,6 @@ def mine_import(module_name, objects=None, just_download=False, az=None):  # pyl
                     exec("import " + module_name, globals())
         except ImportError as err:  # support for py3.4
             import_error()
-        if FRACKING_MINE_IMPORT_SPEED_TWEAKING:
-            debug_bench.end("module " + module_name + " imported in ")
 
 
 mine_import("termcolor")  # print_green_on_cyan = lambda x: cprint(x, 'green', 'on_cyan')
