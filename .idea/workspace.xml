@@ -2,8 +2,53 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab250972-bedb-43ec-ada4-6c3e3e557441" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/path8.py" beforeDir="false" afterPath="$PROJECT_DIR$/path8.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/__main__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base64_8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bash8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bench8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildnumber.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cli8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegen8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/buildnumber.json" beforeDir="false" afterPath="$PROJECT_DIR$/commands/buildnumber.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/linter.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/linter_all.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/setup.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands/shebang.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/console8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/const8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cs8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dict8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dir8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gi.py" beforeDir="false" afterPath="$PROJECT_DIR$/gi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/installreq8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/int8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/json8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learning8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/list8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/locations8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mouse8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/network8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/os8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/path8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pip8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/print8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/process8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/random8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ssh8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/str8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/time8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tkinter8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wget8.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows8.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -46,9 +91,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/__init__.py" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
