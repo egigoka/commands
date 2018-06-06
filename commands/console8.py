@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.1.10"
+__version__ = "0.2.0"
 
 
 class Console:
@@ -67,6 +67,7 @@ class Console:
         """
         import random
         from .os8 import OS
+        from .print8 import Print
         if (width is not None) and (height is not None) and OS.windows:
             import os
             os.system("mode con cols=" + str(width) + " lines=" + str(height))
@@ -74,11 +75,6 @@ class Console:
             width = cls.width()
         if height is None:
             height = cls.height()
-        try:
-            import colorama
-        except ModuleNotFoundError:
-            from .installreq8 import colorama
-        colorama.init()
         while True:
             colors = ["grey", "red", "green", "yellow", "blue", "magenta", "cyan", "white"]
             highlights = ["on_grey", "on_red", "on_green", "on_yellow", "on_blue", "on_magenta", "on_cyan", "on_white"]
@@ -88,16 +84,11 @@ class Console:
             highlight = random.choice(highlights)
             try:  # New version with one long line. Works perfect, as I see.
                 import time
-                try:
-                    import termcolor
-                except ModuleNotFoundError:
-                    from .installreq8 import termcolor
                 string = string * height
-                print(termcolor.colored(string, color, highlight))
+                Print.colored(string, color, highlight)
                 time.sleep(sleep)
             except KeyboardInterrupt:
-                print(termcolor.colored("OK", "white", "on_grey"))
-                colorama.deinit()
+                Print.colored("OK", "white", "on_grey")
                 cls.clean()
                 break
 

@@ -2,12 +2,9 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with mouse
 """
-__version__ = "1.2.8"
+__version__ = "1.3.0"
 
-try:
-    import pyautogui
-except ImportError:
-    from .installreq8 import pyautogui
+import pyautogui
 
 
 class SettingsMouse:  # pylint: disable=too-few-public-methods

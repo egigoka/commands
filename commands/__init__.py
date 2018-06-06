@@ -130,10 +130,7 @@ try:
             string = "from commands import *"  # d you need to manually add this <<< string to code :(
             if not quiet:
                 print('"' + string + '" copied to clipboard')
-                try:
-                    import copypaste
-                except ModuleNotFoundError:
-                    from .installreq8 import copypaste
+                import copypaste
                 copypaste.copy(string)
 
     if CLASSES_SPEED_TWEAKING:

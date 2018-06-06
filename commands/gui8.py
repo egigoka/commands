@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with gui
 """
-__version__ = "0.1.2"
+__version__ = "0.2.0"
 
 
 class Gui:  # pylint: disable=too-few-public-methods
@@ -33,10 +33,7 @@ class Gui:  # pylint: disable=too-few-public-methods
             from .macos8 import macOS
             macOS.notification(message)
         if (not OS.macos) and (OS.python_implementation != "pypy"):
-            try:
-                import pyautogui
-            except ModuleNotFoundError:
-                from .installreq8 import pyautogui
+            import pyautogui
             pyautogui.alert(message)
         else:
             Print.debug("PyPy doesn't support pyautogui, so warning is here:", message)

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for print to console.
 """
-__version__ = "0.4.2"
+__version__ = "0.4.3"
 
 
 class Print:
@@ -69,17 +69,12 @@ class Print:
         :param sep: string, same end, as builtin print(sep)
         :return: None
         """
-        try:
-            import termcolor
-        except ImportError:
-            from .installreq8 import termcolor
+        import termcolor
         from .os8 import OS
-        if OS.windows:
-            try:
-                import colorama
-            except ImportError:
-                from .installreq8 import colorama
+        if OS.windows and not cls.colorama_inited:
+            import colorama
             colorama.init()
+            cls.colorama_inited = True
         # check for colors in input
         highlight = None
         color = None
