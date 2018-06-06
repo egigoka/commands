@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.2.0"
+__version__ = "2.2.1"
 
 
 class Json:
@@ -20,9 +20,18 @@ class Json:
 
     @classmethod
     def load(cls, quiet=True):
+        """Loads json from file, defined in class init to class var "string"
+        :param quiet: boolean, suppress print to console
+        :return: None
+        """
         cls.string = cls._load_from_file(cls.filename, quiet=quiet)
 
+    @classmethod
     def save(cls, quiet=True):
+        """Saves json to file, defined in class init from class var "string"
+        :param quiet: boolean, suppress print to console
+        :return: None
+        """
         cls._save_to_file(cls.filename, cls.string, quiet=quiet)
 
     @classmethod
@@ -44,7 +53,7 @@ class Json:
         """
         :param filename: path of file, where JSON will be saved
         :param json_string: list or dict to save in file
-        :param quiet: suppress print to console
+        :param quiet: boolean, suppress print to console
         :param debug: boolean, needed for debugging
         :return:
         """

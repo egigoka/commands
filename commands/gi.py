@@ -4,33 +4,11 @@
 """
 # pylint: disable=unused-wildcard-import, wildcard-import
 import sys
-sys.path.append("..")
-try:
-    from commands8 import *
-except ModuleNotFoundError:
-    from commands.path8 import Path
-    from commands.process8 import Process
-    from commands.bash8 import Bash
-__version__ = "1.1.3"
+from commands.path8 import Path
+from commands.process8 import Process
+from commands.bash8 import Bash
+__version__ = "1.1.4"
 
-# for setup.py
-try:
-    from commands.dir8 import Dir
-    from commands.file8 import File
-    from commands.print8 import Print
-except ModuleNotFoundError:
-    print("using commands8? 0_o")
-
-import os
-if not os.path.isdir(Path.extend(Path.working(), "commands")):
-    Dir.create(Path.extend(Path.working(), "commands"))
-
-for file_or_dir in Dir.list_of_files(Path.commands8()):
-    if file_or_dir not in ["commands", ".git", ".idea", ".gitignore", "venv", "__pycache__"]:
-        file_to_copy = Path.extend(Path.working(), file_or_dir)
-        new_file = Path.extend(Path.working(), "commands", file_or_dir)
-        File.copy(file_to_copy, new_file)
-# end support for setup.py
 
 def get_name_of_repo():
     """Return mine name of repo
@@ -90,7 +68,6 @@ class Git:
         cls.push(path, upstream=True)
 
 
-
 if __name__ == "__main__":
     ARGUMENTS = list(sys.argv)
     ARGUMENTS.pop(0)
@@ -106,4 +83,3 @@ if __name__ == "__main__":
         if INPUT_STRING:
             STRING = INPUT_STRING
     Git.update(STRING)
-

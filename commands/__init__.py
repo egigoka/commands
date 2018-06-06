@@ -138,7 +138,7 @@ try:
 
     class __build__:  # pylint: disable=too-few-public-methods, invalid-name
         build_json_file = Path.extend(Path.commands8(), "buildnumber.json")  # pylint: disable=undefined-variable
-        build_json = Json(build_json_file)
+        build_json = Json(build_json_file)  # pylint: disable=undefined-variable
         try:
             build = build_json.string[0]
         except:  # pylint: disable=bare-except
