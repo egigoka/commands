@@ -11,7 +11,7 @@ from commands.os8 import OS
 from commands.pip8 import Pip
 from commands.print8 import Print
 from commands.str8 import Str
-__version__ = "0.5.2"
+__version__ = "0.5.3"
 
 
 def mine_import(module_name, objects=None, just_download=False, az=None):  # pylint: disable=invalid-name
@@ -48,7 +48,7 @@ def mine_import(module_name, objects=None, just_download=False, az=None):  # pyl
             :return: None
             """
             import_fail_arg = "--import-fail"
-            import_fail_count = 7
+            import_fail_count = 10
             if sys.argv.count(import_fail_arg) > import_fail_count:
                 print('<<<<<<<<<<Some errors occured with importing "' + str(module_name) +
                       '", re-run script doesnt help, sorry about that>>>>>>>>>>')
