@@ -9,8 +9,8 @@ import sys
 import os
 from commands.os8 import OS
 from commands.pip8 import Pip
-from commands.bench8 import get_Bench
 from commands.print8 import Print
+from commands.str8 import Str
 __version__ = "0.5.0"
 
 
@@ -61,6 +61,8 @@ def mine_import(module_name, objects=None, just_download=False, az=None):  # pyl
                     sys.argv.append("commands")
                 sys.argv.append(import_fail_arg)
                 for arg in sys.argv:
+                    if " " in arg:
+                        arg = Str.to_quotes(arg)
                     commands += arg + " "
                 commands = commands.rstrip(" ")
                 print('<<<<<<<<<<Some errors occured with importing "' + str(module_name) +
