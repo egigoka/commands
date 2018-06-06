@@ -5,18 +5,15 @@ with open("README.md", 'r') as f:
 
 setup(
     name='commands',
-    version='9.0.0-alpha10',
+    version='9.0.0-alpha11',
     description='Mine commands',
     license="MIT",
     long_description=long_description,
     author='Egor Egorov',
     author_email='egigoka@gmail.com',
-    # url="http://www.foopackage.com/",
+    url="https://www.github.com/egigoka/commands",
     packages=['commands'],  # same as name
     install_requires=[
-        # 'win_unicode_console;python_version<"3.6";platform_system=="Windows"',
-        # 'pywin32;platform_system=="Windows"',
-        # 'colorama;platform_system=="Windows"',
         'termcolor',
         'copypaste',
         'pyautogui',
