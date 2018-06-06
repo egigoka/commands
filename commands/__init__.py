@@ -27,6 +27,7 @@ __version__ = "9.0.0-prealpha"
 #    fix OS.display
 #    test all in linux
 #    rewerite Str.diff_simple
+#    Path.expand bug with "." and ".." in windows
 
 # TODO version diff
 #   export script as json?

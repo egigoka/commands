@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with funtions to work with path strings
 """
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 
 class Path:
@@ -50,7 +50,7 @@ class Path:
                 from .print8 import Print
                 if (OS.windows) and path_part == backslash:  # support for smb windows paths like \\ip_or_pc\dir\
                     path = backslash * 2
-                elif (OS.windows) and (len(path_part) <= 3):
+                elif (OS.windows) and (len(path_part) <= 3):  # todo bug with "." and ".."
                     path = os.path.join(path_part, os.sep)
                 elif OS.windows:
                     path = path_part
