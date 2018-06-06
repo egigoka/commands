@@ -5,7 +5,7 @@ with open("README.md", 'r') as f:
 
 setup(
    name='commands',
-   version='9.0.0-alpha6',
+   version='9.0.0-alpha7',
    description='Mine commands',
    license="MIT",
    long_description=long_description,
