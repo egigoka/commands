@@ -11,7 +11,7 @@ from commands.os8 import OS
 from commands.pip8 import Pip
 from commands.bench8 import get_Bench
 from commands.print8 import Print
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 
 
 def mine_import(module_name, objects=None, just_download=False, az=None):  # pylint: disable=invalid-name
@@ -57,6 +57,8 @@ def mine_import(module_name, objects=None, just_download=False, az=None):  # pyl
                 commands = ""
                 if OS.windows and "py" not in str(sys.argv):
                     sys.argv.insert(0, "py")
+                if ("-m" in sys.argv) and ("commands" not in sys.argv):  # if running with -m arg, "commands" doesn't go to sys.argv
+                    sys.argv.append("commands")
                 sys.argv.append(import_fail_arg)
                 for arg in sys.argv:
                     commands += arg + " "
