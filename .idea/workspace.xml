@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab250972-bedb-43ec-ada4-6c3e3e557441" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/buildnumber.json" beforeDir="false" afterPath="$PROJECT_DIR$/buildnumber.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gi.py" beforeDir="false" afterPath="$PROJECT_DIR$/gi.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
