@@ -1,21 +1,23 @@
 #! python3
 # -*- coding: utf-8 -*-
-# # # bootstrap # # #
+# # # bootstrap # # # 1.3.0
 import sys
 import os
+def download_file(url, out=None):
+    try:  # getting wget
+        import wget
+    except ModuleNotFoundError:
+        os.system("pip install wget")
+        import wget
+    import ssl
+    ssl._create_default_https_context = ssl._create_unverified_context
+    output_file_name = wget.download(url, out=out)
+    print()
+    return output_file_name
 if os.system("git --version"):  # if get error while checking git version
     if sys.platform == "win32":  # getting git
-        try:  # getting wget
-            import wget
-        except ModuleNotFoundError:
-            # todo if permissions are broken, fix ( too much code :( )
-            os.system("pip install wget")
-            import wget
         print("Downloading git, please, wait!")
-        import ssl
-        ssl._create_default_https_context = ssl._create_unverified_context
-        git_file_name = wget.download("http://github.com/git-for-windows/git/releases/download/v2.17.1.windows.2/Git-2.17.1.2-32-bit.exe")
-        print()
+        git_file_name = download_file("http://github.com/git-for-windows/git/releases/download/v2.17.1.windows.2/Git-2.17.1.2-32-bit.exe")
         print("Installing git, please, wait!")
         os.system(git_file_name +  r' /VERYSILENT /NORESTART /NOCANCEL /SP- /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS /COMPONENTS="icons,ext\reg\shellhere,assoc,assoc_sh"')
         os.environ["PATH"] = os.environ["PATH"] + r";C:\Program Files (x86)\Git\cmd;C:\Program Files\Git\cmd"

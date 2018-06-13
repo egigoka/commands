@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for print to console.
 """
-__version__ = "0.4.3"
+__version__ = "0.4.4"
 
 
 class Print:
@@ -60,7 +60,7 @@ class Print:
 
     @classmethod
     def colored(cls, *strings, attributes=None, end="\n", sep=" "):
-        """Wrapper for tkinter.cprint, added some smartness :3
+        """Wrapper for termcolor.cprint, added some smartness :3
         Usage: Print.colored("text1", "text2", "red") or cls.colored("text", "text2", "red", "on_white").
         You can pick colors from termcolor.COLORS, highlights from termcolor.HIGHLIGHTS.
         :param strings: strings, work as builtin print()
@@ -79,6 +79,7 @@ class Print:
         highlight = None
         color = None
         color_args = 0
+
         if len(strings) >= 3:
             if strings[-1] in termcolor.HIGHLIGHTS:
                 highlight = strings[-1]
@@ -101,6 +102,8 @@ class Print:
                 string += substring + sep
             string += strings[-1]  # последняя без сепаратора
         else:  # if there only one object
+            from .print8 import Print
+            Print.debug(len(strings))
             string = strings[0]
         # run termcolor
         termcolor.cprint(string, color=color, on_color=highlight, attrs=attributes, end=end)
