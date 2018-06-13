@@ -27,7 +27,7 @@ class Gui:  # pylint: disable=too-few-public-methods
                 Print.debug("Something wrong with sys.argv. Tkinter doesn't like it.")
         except IndexError:
             Print.debug("sys.argv", sys.argv)
-            raise RuntimeError("Something wrong with sys.argv. Tkinter doesn't like it.")
+            raise RuntimeError("Something wrong with sys.argv. Tkinter doesn't like it!")
         if OS.macos:
             from .macos8 import macOS
             macOS.notification(message)
