@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for print to console.
 """
-__version__ = "0.4.4"
+__version__ = "0.5.0"
 
 
 class Print:
@@ -79,7 +79,6 @@ class Print:
         highlight = None
         color = None
         color_args = 0
-
         if len(strings) >= 3:
             if strings[-1] in termcolor.HIGHLIGHTS:
                 highlight = strings[-1]
@@ -96,14 +95,13 @@ class Print:
                 color_args += 1
         # create single string to pass it into termcolor
         string = ""
-        strings = strings[:-color_args]
+        if color_args:
+            strings = strings[:-color_args]
         if len(strings) > 1:
             for substring in strings[:-1]:  # все строки добавляются в основную строку с сепаратором
                 string += substring + sep
             string += strings[-1]  # последняя без сепаратора
         else:  # if there only one object
-            from .print8 import Print
-            Print.debug(len(strings))
             string = strings[0]
         # run termcolor
         termcolor.cprint(string, color=color, on_color=highlight, attrs=attributes, end=end)
