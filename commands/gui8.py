@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with gui
 """
-__version__ = "0.2.4"
+__version__ = "0.3.1"
 
 
 class Gui:  # pylint: disable=too-few-public-methods
@@ -23,9 +23,9 @@ class Gui:  # pylint: disable=too-few-public-methods
             except IndexError:
                 not_dot_py = True
             Print.debug("not_dot_py", not_dot_py)
-            if (not_dot_py or (sys.argv[0] != "")) and (not OS.running_in_repl()):
-                Print.debug("sys.argv", sys.argv)
-                Print.debug("Something wrong with sys.argv. Tkinter doesn't like it.")
+            # if (not_dot_py or (sys.argv[0] != "")) and (not OS.running_in_repl()):  # I forgot why sys.argv[0] must not be empty, so ... 06/13/2018
+                # Print.debug("sys.argv", sys.argv)
+                # Print.debug("Something wrong with sys.argv. Tkinter doesn't like it.")
         except IndexError:
             Print.debug("sys.argv", sys.argv)
             raise RuntimeError("Something wrong with sys.argv. Tkinter doesn't like it!")
