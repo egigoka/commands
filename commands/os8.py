@@ -4,7 +4,7 @@
 """
 import sys  # static module
 import platform  # static module
-__version__ = "2.1.4"
+__version__ = "2.2.0"
 
 
 class OS:  # pylint: disable=too-few-public-methods
@@ -56,12 +56,13 @@ class OS:  # pylint: disable=too-few-public-methods
         display = False
         print("Your system haven't display -_-")
 
-    try:
-        sys.ps1  # pylint: disable = pointless-statement, no-member
-        sys.ps2  # pylint: disable = pointless-statement, no-member
-        running_in_repl = True
-    except AttributeError:
-        running_in_repl = False
+    def running_in_repl():
+        try:
+            sys.ps1  # pylint: disable = pointless-statement, no-member
+            sys.ps2  # pylint: disable = pointless-statement, no-member
+            return True
+        except AttributeError:
+            return False
 
     try:
         #if windows:
