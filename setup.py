@@ -5,7 +5,7 @@ with open("README.md", 'r') as f:
 
 setup(
     name='commands',
-    version='9.0.0-alpha13',
+    version='9.0.0-alpha14',
     description='Mine commands',
     license="MIT",
     long_description=long_description,
@@ -16,9 +16,9 @@ setup(
     install_requires=[
         'termcolor',
         'copypaste',
-        'pyautogui',
         'paramiko'],
     extras_require={
+        ':platform_system!="Linux"': ['pyautogui'],
         ':platform_system=="Windows"': ['pywin32', 'colorama'],
         ':python_version < "3.6" and platform_system=="Windows"': ['win_unicode_console'],
         }
