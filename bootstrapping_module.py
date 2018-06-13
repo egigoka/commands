@@ -5,6 +5,7 @@ if os.system("git --version"):  # if get error while checking git version
         try:  # getting wget
             import wget
         except ModuleNotFoundError:
+            # todo if permissions are broken, fix ( too much code :( )
             os.system("pip install wget")
             import wget
         print("Downloading git, please, wait!")
