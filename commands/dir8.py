@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 
 class Dir:
@@ -89,3 +89,4 @@ class Dir:
                 os.remove(os.path.join(root, name))
             for name in dirs:
                 os.rmdir(os.path.join(root, name))
+        os.removedirs(directory)
