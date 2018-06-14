@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing processes.
 """
-__version__ = "0.1.3"
+__version__ = "0.2.0"
 
 
 class Process:
     """Class with functions for managing processes.
     """
     @staticmethod
-    def kill(process):
+    def kill(process, quiet=False):
         """
         :param process: process name or PID
         :return: None
@@ -32,9 +32,12 @@ class Process:
             except ValueError:
                 pass
         else:
-            from .gui8 import Gui
-            Gui.warning("OS not supported")
-        os.system(command_)
+            raise NotImplementedError("OS not supported, now only Windows and macOS")
+        if quiet:
+            from .console8 import Console
+            Console.get_output(command_)
+        else:
+            os.system(command_)
 
     @staticmethod
     def start(*arguments, new_window=False, debug=False, pureshell=False):  # pylint: disable=too-many-branches
