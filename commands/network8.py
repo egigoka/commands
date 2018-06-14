@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.1.1"
+__version__ = "0.2.0"
 
 
 class Network:
@@ -113,3 +113,8 @@ class Network:
                 ip = cls.dns_lookup(domain)  # pylint: disable=invalid-name
             return up, ip, ping_output
         return up
+
+    @staticmethod
+    def get_fqdn(ip=None):
+        import socket
+        return socket.getfqdn(ip)
