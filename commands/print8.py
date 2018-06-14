@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for print to console.
 """
-__version__ = "0.5.0"
+__version__ = "0.6.0"
 
 
 class Print:
@@ -99,7 +99,7 @@ class Print:
             strings = strings[:-color_args]
         if len(strings) > 1:
             for substring in strings[:-1]:  # все строки добавляются в основную строку с сепаратором
-                string += substring + sep
+                string += str(substring) + sep
             string += strings[-1]  # последняя без сепаратора
         else:  # if there only one object
             string = strings[0]
