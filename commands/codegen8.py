@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to write files
 """
-__version__ = "0.1.3"
+__version__ = "0.2.0"
 
 
 class Codegen:
@@ -26,7 +26,7 @@ class Codegen:
         :param some_string: string that will be wrote to file
         :return: None
         """
-        with open(cls.file_path, "wb") as file:
+        with open(cls.file_path, "ab") as file:
             file.write(some_string.encode('utf8'))
         if cls.debug:
             print(some_string)
