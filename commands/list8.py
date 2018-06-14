@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with lists
 """
-__version__ = "0.0.7"
+__version__ = "0.1.0"
 
 
 class List:
@@ -38,3 +38,13 @@ class List:
         output_lists = [list_input[x:x+count] for x in range(0, len(list_input), count)]
         # https://stackoverflow.com/questions/9671224/split-a-python-list-into-other-sublists-i-e-smaller-lists
         return output_lists  # todo отдебажить пограничные моменты
+
+    @staticmethod
+    def wildcard_search(list_input, regexp):
+        """Search list shell-like
+        :param list_input: list
+        :param regexp: string with shell-like wildcards: ? for one character or * for multiple characters.
+        :return: list of result of search
+        """
+        import fnmatch
+        return fnmatch.filter(list_input, regexp)
