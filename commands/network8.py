@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 
 class Network:
@@ -117,4 +117,6 @@ class Network:
     @staticmethod
     def get_fqdn(ip=None):
         import socket
-        return socket.getfqdn(ip)
+        if ip:
+            return socket.getfqdn(ip)
+        return socket.getfqdn()
