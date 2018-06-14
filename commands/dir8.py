@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.2.3"
+__version__ = "0.3.0"
 
 
 class Dir:
@@ -77,3 +77,15 @@ class Dir:
                 File.rename(filename, final_name)
                 if not quiet:
                     print(filename, "renamed to", final_name)
+
+    @staticmethod
+    def delete(directory):
+        """Removes all content in directory
+        :param directory: string with path to directory
+        """
+        import os
+        for root, dirs, files in os.walk(directory, topdown=False):
+            for name in files:
+                os.remove(os.path.join(root, name))
+            for name in dirs:
+                os.rmdir(os.path.join(root, name))
