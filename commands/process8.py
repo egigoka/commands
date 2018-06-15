@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing processes.
 """
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 
 class Process:
@@ -40,7 +40,7 @@ class Process:
             os.system(command_)
 
     @staticmethod
-    def start(*arguments, new_window=False, debug=False, pureshell=False):  # pylint: disable=too-many-branches
+    def start(*arguments, new_window=False, debug=False, pureshell=False, window_name=""):  # pylint: disable=too-many-branches
         """
         :param arguments: strings, arguments to start process, include name
         :param new_window: boolean, open process in new window
@@ -68,7 +68,7 @@ class Process:
                 except NameError:
                     if new_window:
                         if OS.windows:
-                            command = 'start "" ' + argument_
+                            command = 'start "' + window_name + '" ' + argument_
                         elif OS.macos:
                             from .gui8 import Gui
                             Gui.warning("macOS doesn't support creating new window now")

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.9.0"
+__version__ = "0.9.1"
 
 
 class Str:
@@ -131,8 +131,6 @@ class Str:
         :param rightpad: boolean, if True, adds symbols to right side
         :return: string, with added characters to side of input string
         """
-        # return string with
-        # d added characters to left side. If string longer — return original string
         char = str(char)
         string = str(string)
         if len(string) >= length:
@@ -182,16 +180,6 @@ class Str:
         else:
             substring = string[startfrom:]
         if return_after_substring:
-            # try:
-            #    after_substring
-            # except UnboundLocalError:
-            #    Print.debug("string", string,
-            #                "before", before,
-            #                "after", after,
-            #                "return_after_substring", return_after_substring,
-            #                "substring", substring,
-            #                "after_substring",
-            #                 "UnboundLocalError: local variable 'after_substring' referenced before assignment")
             return substring, after_substring
         return substring
 
@@ -277,8 +265,8 @@ class Str:
             string_ = string_.replace('  ', ' ')
         return string_
 
-    @classmethod
-    def get_words(cls, string_):
+    @staticmethod
+    def get_words(string_):
         """
         :param string_: string, with spaces to split it
         :return: list of substrings, splitted by space|multiple space

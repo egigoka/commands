@@ -2,14 +2,15 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "0.1.6"
+__version__ = "0.2.1"
 # pylint: disable=c-extension-no-member
+
 
 class File:
     """Class to work with files
     """
-    @staticmethod
-    def create(filename):
+    @classmethod
+    def create(cls, filename):
         """Creates subdirs, if needed
         :param filename: string with path to creating file
         :return: None
@@ -20,18 +21,18 @@ class File:
         filename = Path.full(filename)
         if os.path.split(filename)[0] != "":
             Dir.create(os.path.split(filename)[0])
-        if not File.exists(filename):
+        if not cls.exists(filename):
             with open(filename, 'a'):  # open file and close after
                 os.utime(filename, None)  # change time of file modification
         else:
             raise FileExistsError("file" + str(filename) + "exists")
-        if not File.exists(filename):
+        if not cls.exists(filename):
             import sys
             raise FileNotFoundError("error while creating file " + filename +
                                     "try to repair script at " + Path.full(sys.argv[0]))
 
-    @staticmethod
-    def delete(path, quiet=False):
+    @classmethod
+    def delete(cls, path, quiet=False):
         """
         :param path: string with path to deleting file
         :param quiet: suppress print to console
@@ -49,7 +50,7 @@ class File:
         if not quiet:
             print("file", path, "is deleted")
         time.sleep(0.05)
-        if File.exists(path):
+        if cls.exists(path):
             raise FileExistsError(path + " is not deleted")
 
     @staticmethod
@@ -72,17 +73,17 @@ class File:
         import shutil
         shutil.copy2(input_file, output_file)
 
-    @staticmethod
-    def rename(input_file, output_file):
+    @classmethod
+    def rename(cls, input_file, output_file):
         """
         :param input_file: string with path to previous file place
         :param output_file: string with path to new file place
         :return: None
         """
-        File.move(input_file, output_file)
+        cls.move(input_file, output_file)
 
-    @staticmethod
-    def hide(filename, quiet=True):
+    @classmethod
+    def hide(cls, filename, quiet=True):
         """Adding dot to filename and set attribute FILE_ATTRIBUTE_HIDDEN to
         file, if running on Windows
         :param filename: string with path to file
@@ -98,7 +99,7 @@ class File:
             import win32con
             win32api.SetFileAttributes(filename, win32con.FILE_ATTRIBUTE_HIDDEN)  # hiding file like windows do
         dotted_file = Path.extend(os.path.split(filename)[0], "." + os.path.split(filename)[1])  # adding dot
-        File.rename(filename, dotted_file)
+        cls.rename(filename, dotted_file)
         if not quiet:
             print("file", filename, "is hidden now")
         return dotted_file
@@ -157,15 +158,19 @@ class File:
             return file.read()
 
     @staticmethod
-    def write(filename, what_to_write, mode="ab"):
+    def write(filename, what_to_write, mode="a"):
         """Write to end of file if "mode" arg isn't redefined
         :param filename: string with path to file
         :param what_to_write: string to write
         :param mode: string with any mode that supported by python open() func
         :return: None
         """
-        with open(filename, mode=mode) as file:  # open file then closes it
-            file.write(what_to_write.encode("utf-8"))
+        if "b" not in mode and isinstance(what_to_write, str):
+            with open(filename, mode=mode+"b") as file:  # open file then closes it
+                file.write(what_to_write.encode("utf-8"))
+        else:
+            with open(filename, mode=mode) as file:  # open file then closes it
+                file.write(what_to_write)
 
     @staticmethod
     def get_size(filename):  # return size in bytes

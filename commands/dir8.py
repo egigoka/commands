@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 
 class Dir:
@@ -68,7 +68,7 @@ class Dir:
         :param previous_name_substring: string that must be changed in every file
         :param new_name_substring: string to that will be changed 'input_str'
         :param quiet: suppress print to console
-        :return:
+        :return: None
         """
         for filename in cls.list_of_files(directory):
             if previous_name_substring in filename:
@@ -82,6 +82,7 @@ class Dir:
     def delete(directory):
         """Removes all content in directory
         :param directory: string with path to directory
+        :return: None
         """
         import os
         for root, dirs, files in os.walk(directory, topdown=False):

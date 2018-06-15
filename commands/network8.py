@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 
 class Network:
@@ -120,3 +120,23 @@ class Network:
         if ip:
             return socket.getfqdn(ip)
         return socket.getfqdn()
+
+    @staticmethod
+    def get_netbios(ip):
+        import socket
+        if ip:
+            socket.gethostbyaddr(ip)
+        return socket.gethostname()
+
+    @staticmethod
+    def download_file(url, out=None, quiet=None):
+        import os
+        from .file8 import File
+        from .path8 import Path
+        if not out:
+            out = os.path.split(url)[1]
+        import urllib.request
+        response = urllib.request.urlopen(url)
+        data = response.read()  # a `bytes` object
+        File.write(out, data, mode="wb")
+        return Path.full(out)
