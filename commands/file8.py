@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 # pylint: disable=c-extension-no-member
 
 
@@ -192,5 +192,9 @@ class File:
 
     @staticmethod
     def get_modification_time(filename):
+        """
+        :param filename: string, path to file
+        :return: float,
+        """
         import os
         return os.path.getmtime(filename)
