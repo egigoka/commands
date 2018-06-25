@@ -113,3 +113,6 @@ class Time:
         delta = time_b - time_a
         delta_combined = delta.seconds + delta.microseconds / 1E6
         return delta_combined
+
+# datetime.datetime.now().strftime('some') todo implement
+# Popen work with todo implement

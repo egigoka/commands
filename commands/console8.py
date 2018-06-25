@@ -95,6 +95,11 @@ class Console:
 
     @staticmethod
     def get_output(command):
+        # from subprocess import Popen, PIPE
+        #
+        # out, err = Popen('ping ya.ru', stdout=PIPE, stderr=PIPE).communicate()
+        # print(out)
+        # print(err)
         """Return output of executing command. Doesn't output it to terminal in
         realtime.
         :param command: single string with command
@@ -108,3 +113,10 @@ class Console:
         elif OS.unix_family:
             output = io_string.decode("utf8")
         return output
+
+# Popen work with todo implement
+#     try:
+#         command = 'netsh advfirewall firewall delete rule name="Open Port ' + str(grafana_port) + '" protocol=tcp localport=' + str(grafana_port) + ''
+#         out, err = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+#     except:
+#         pass
