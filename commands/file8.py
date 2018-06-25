@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "0.2.1"
+__version__ = "0.3.0"
 # pylint: disable=c-extension-no-member
 
 
@@ -189,3 +189,8 @@ class File:
         """
         import os
         return os.path.exists(filename)
+
+    @staticmethod
+    def get_modification_time(filename):
+        import os
+        return os.path.getmtime(filename)
