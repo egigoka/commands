@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.4.1"
+__version__ = "0.5.0"
 
 
 class Dir:
@@ -91,3 +91,43 @@ class Dir:
             for name in dirs:
                 os.rmdir(os.path.join(root, name))
         os.removedirs(directory)
+
+    @classmethod
+    def copy(cls, src, dst, symlinks=False, ignore=None):
+        """Same behavior as shutil.copytree, but can copy into existing directory
+        https://stackoverflow.com/a/22331852/6519078
+        :param src: string, source directory to copy
+        :param dst: stirng, destination
+        :param symlinks: boolean, following symlinks
+        :param ignore: You can define any function with any name you like before calling copytree function. This
+        function (which could also be a lambda expression) takes two arguments: a directory name and the files in it, it
+        should return an iterable of ignore files.
+        :return: None
+        """
+        import os
+        import shutil
+        import stat
+        if not os.path.exists(dst):
+            os.makedirs(dst)
+            shutil.copystat(src, dst)
+        lst = os.listdir(src)
+        if ignore:
+            excl = ignore(src, lst)
+            lst = [x for x in lst if x not in excl]
+        for item in lst:
+            s = os.path.join(src, item)
+            d = os.path.join(dst, item)
+            if symlinks and os.path.islink(s):
+                if os.path.lexists(d):
+                    os.remove(d)
+                os.symlink(os.readlink(s), d)
+                try:
+                    st = os.lstat(s)
+                    mode = stat.S_IMODE(st.st_mode)
+                    os.lchmod(d, mode)
+                except:
+                    pass  # lchmod not available
+            elif os.path.isdir(s):
+                cls.copy(s, d, symlinks, ignore)
+            else:
+                shutil.copy2(s, d)
