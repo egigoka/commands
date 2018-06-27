@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with shit functions
 """
-__version__ = "2.2.0"
+__version__ = "2.3.0"
 
 
 def dirify(object_, regexp="*", quiet=False):
@@ -20,3 +20,7 @@ def dirify(object_, regexp="*", quiet=False):
                 print(subobj)
             output.append(subobj)
     return output
+
+def multiple(*types):
+    from typing import Union
+    return Union[types]
