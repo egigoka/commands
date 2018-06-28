@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.6.0"
+__version__ = "0.6.1"
 
 
 class Dir:
@@ -130,7 +130,7 @@ class Dir:
                 except:
                     pass  # lchmod not available
             elif os.path.isdir(s):
-                cls.copy(s, d, symlinks, ignore)
+                cls.copy(s, d, symlinks, ignore, skip_PermissionError, quiet_PermissionError)
             else:
                 if not skip_PermissionError:
                     shutil.copy2(s, d)
