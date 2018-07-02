@@ -28,6 +28,7 @@ __version__ = "9.0.0-prealpha"
 #    test all in linux
 #    rewerite Str.diff_simple
 #    Path.expand bug with "." and ".." in windows
+#    do better benchmarking of commands import
 
 # TODO version diff
 #   export script as json?
@@ -37,70 +38,40 @@ __version__ = "9.0.0-prealpha"
 CLASSES_SPEED_TWEAKING = False
 # CLASSES_SPEED_TWEAKING = True
 
-
-def import_class(module_name, class_name, quiet=not CLASSES_SPEED_TWEAKING, reload=False):
-    """Imports class from submodule.
-    :param module_name: string with submodule name
-    :param class_name: string with class name from submodule
-    :param quiet: boolean suppress print to console
-    :param reload: boolean, reloads loaded module
-    :return: None
-    """
-    import importlib  # pylint: disable=unused-variable
-    if reload:
-        globals()[class_name] = eval("importlib.reload(commands." + module_name + ")." + class_name)  # pylint: disable=eval-used
-    else:
-        globals()[class_name] = eval("importlib.import_module('." + module_name + "', package='commands')."+class_name)  # pylint: disable=eval-used
-    if not quiet:
-        LOAD_TIME_BENCHMARK.end("class " + class_name + " loaded in", quiet_if_zero=True, start_immediately=True)
-
-
 try:
-    INITED_TIME = datetime.datetime.now()
-    import_class("bench8", "get_Bench", quiet=True)
+    from .bench8 import get_Bench
     if CLASSES_SPEED_TWEAKING:
-        LOAD_TIME_BENCHMARK = get_Bench()  # pylint: disable=undefined-variable
+        LOAD_TIME_BENCHMARK = get_Bench()
         LOAD_TIME_BENCHMARK.fraction_digits = 4
-        LOAD_TIME_BENCHMARK.time_start = START_TIME
-        LOAD_TIME_BENCHMARK.end("init in", quiet_if_zero=True)
-        LOAD_TIME_BENCHMARK.time_start = INITED_TIME
-        LOAD_TIME_BENCHMARK.end("func get_Bench loaded in", quiet_if_zero=True, start_immediately=True)
-
-    LIST_CLASSES = [{"module": "str8", "name": "Str"},
-                    {"module": "os8", "name": "OS"},
-                    {"module": "print8", "name": "Print"},
-                    {"module": "console8", "name": "Console"},
-                    {"module": "ssh8", "name": "Ssh"},
-                    {"module": "file8", "name": "File"},
-                    {"module": "locations8", "name": "Locations"},
-                    {"module": "dir8", "name": "Dir"},
-                    {"module": "path8", "name": "Path"},
-                    {"module": "file8", "name": "File"},
-                    {"module": "time8", "name": "Time"},
-                    {"module": "json8", "name": "Json"},
-                    {"module": "list8", "name": "List"},
-                    {"module": "process8", "name": "Process"},
-                    {"module": "dict8", "name": "Dict"},
-                    {"module": "codegen8", "name": "Codegen"},
-                    {"module": "log8", "name": "plog"},
-                    {"module": "network8", "name": "Network"},
-                    {"module": "bash8", "name": "Bash"},
-                    {"module": "macos8", "name": "macOS"},
-                    {"module": "windows8", "name": "Windows"},
-                    {"module": "gui8", "name": "Gui"},
-                    {"module": "tkinter8", "name": "Tkinter"},
-                    {"module": "random8", "name": "Random"},
-                    {"module": "wget8", "name": "Wget"},
-                    {"module": "int8", "name": "Int"},
-                    {"module": "cli8", "name": "CLI"},
-                    {"module": "cs8", "name": "dirify"}, ]
-
-    from commands import const8
-    for object_name in dir(const8):
-        if object_name[:1] != "_":
-            LIST_CLASSES.append({"module": "const8", "name": object_name})
-    for class_ in LIST_CLASSES:
-        import_class(class_["module"], class_["name"])
+    from .str8 import Str
+    from .os8 import OS
+    from .print8 import Print
+    from .console8 import Console
+    from .ssh8 import Ssh
+    from .file8 import File
+    from .locations8 import Locations
+    from .dir8 import Dir
+    from .path8 import Path
+    from .file8 import File
+    from .time8 import Time
+    from .json8 import Json
+    from .list8 import List
+    from .process8 import Process
+    from .dict8 import Dict
+    from .codegen8 import Codegen
+    from .log8 import plog
+    from .network8 import Network
+    from .bash8 import Bash
+    from .macos8 import macOS
+    from .windows8 import Windows
+    from .gui8 import Gui
+    from .tkinter8 import Tkinter
+    from .random8 import Random
+    from .wget8 import Wget
+    from .int8 import Int
+    from .cli8 import CLI
+    from .cs8 import dirify
+    from .const8 import backslash, newline, newline2, ruble
 
     class Internal:
         """Internal class with internal functions
@@ -133,9 +104,6 @@ try:
                 import copypaste
                 copypaste.copy(string)
 
-    if CLASSES_SPEED_TWEAKING:
-        LOAD_TIME_BENCHMARK.end("class Internal loaded in", quiet_if_zero=True, start_immediately=True)
-
     class __build__:  # pylint: disable=too-few-public-methods, invalid-name
         build_json_file = Path.extend(Path.commands8(), "buildnumber.json")  # pylint: disable=undefined-variable
         build_json = Json(build_json_file)  # pylint: disable=undefined-variable
@@ -146,7 +114,6 @@ try:
         build_json.string = [build + 1]
         build_json.save()
 
-    del INITED_TIME
     del CLASSES_SPEED_TWEAKING
     LOAD_TIME_BENCHMARK = get_Bench()  # pylint: disable=undefined-variable
     LOAD_TIME_BENCHMARK.time_start = START_TIME
