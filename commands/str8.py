@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.9.1"
+__version__ = "0.10.0"
 
 
 class Str:
@@ -152,12 +152,13 @@ class Str:
         return cls.leftpad(string, leng, char=char, rightpad=True)
 
     @staticmethod
-    def substring(string, before, after=None, return_after_substring=False):
+    def substring(string, before, after=None, return_after_substring=False, safe=False):
         """Get substring from string that between "before", and "after" strings, not including those.
         :param string: string
         :param before: string, that before output string
         :param after: string, that after output string
         :param return_after_substring: boolean, if True, return list of substring and part after substring
+        :param safe: boolean, suppress exceptions if something not found
         :return: string, from string that between "before", and "after" arguments
         """
         string = str(string)
@@ -168,6 +169,8 @@ class Str:
             startfrom = string.find(before) + len(before)
         else:
             startfrom = 0
+            if not safe:
+                raise KeyError("The line preceding ({}) the search string was not found".format(before))
         if (after) or (after == ""):
             end_at = string[startfrom:].find(after)
             if end_at != -1:
@@ -177,6 +180,8 @@ class Str:
             else:
                 substring = string[startfrom:]
                 after_substring = ""
+                if not safe:
+                    raise KeyError("The string ({}) that followed the search string was not found".format(after))
         else:
             substring = string[startfrom:]
         if return_after_substring:
