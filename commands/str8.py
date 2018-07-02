@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.10.0"
+__version__ = "0.10.1"
 
 
 class Str:
@@ -163,7 +163,6 @@ class Str:
         """
         string = str(string)
         before = str(before)
-        after = str(after)
         startfrom = string.find(before)
         if startfrom != -1:
             startfrom = string.find(before) + len(before)
@@ -171,15 +170,18 @@ class Str:
             startfrom = 0
             if not safe:
                 raise KeyError("The line preceding ({}) the search string was not found".format(before))
-        if (after) or (after == ""):
+        if after:
+            after = str(after)
             end_at = string[startfrom:].find(after)
             if end_at != -1:
-                end_at = startfrom + string[startfrom:].find(after)
+                end_at += startfrom
                 substring = string[startfrom:end_at]
-                after_substring = string[end_at:]
+                if return_after_substring:
+                    after_substring = string[end_at:]
             else:
                 substring = string[startfrom:]
-                after_substring = ""
+                if return_after_substring:
+                    after_substring = ""
                 if not safe:
                     raise KeyError("The string ({}) that followed the search string was not found".format(after))
         else:
