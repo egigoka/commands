@@ -106,14 +106,14 @@ try:
                 copypaste.copy(string)
 
     class __build__:  # pylint: disable=too-few-public-methods, invalid-name
-        build_json_file = Path.extend(Path.commands8(), "buildnumber.json")  # pylint: disable=undefined-variable
-        build_json = Json(build_json_file)  # pylint: disable=undefined-variable
+        build_py_file = Path.extend(Path.commands8(), "buildnumber.py")  # pylint: disable=undefined-variable
         try:
-            build = build_json.string[0]
-        except:  # pylint: disable=bare-except
-            build = -65535
-        build_json.string = [build + 1]
-        build_json.save()
+            from .buildnumber import build
+        except ModuleNotFoundError:
+            build = -1
+        build += 1
+        File.write(build_py_file, f"#! python3{newline2}# -*- coding: utf-8 -*-{newline2}build = {build}")
+
 
     del CLASSES_SPEED_TWEAKING
     LOAD_TIME_BENCHMARK = get_Bench()  # pylint: disable=undefined-variable
