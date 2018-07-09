@@ -29,6 +29,7 @@ __version__ = "9.0.0-prealpha"
 #    rewerite Str.diff_simple
 #    Path.expand bug with "." and ".." in windows
 #    do better benchmarking of commands import
+#    Json throw exceptions
 
 # TODO version diff
 #   export script as json?

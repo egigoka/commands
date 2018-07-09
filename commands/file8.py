@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 # pylint: disable=c-extension-no-member
 
 
@@ -154,8 +154,15 @@ class File:
         :param path: string with path to file
         :return: pipe to file text content with utf-8 decoding
         """
-        with open(path, "r", encoding='utf-8') as file:
-            return file.read()
+        try:
+            with open(path, "r", encoding='utf-8') as file:
+                return file.read()
+        except UnicodeDecodeError:
+            import codecs
+            with codecs.open(path, encoding='cp1251', errors='replace') as file:
+                content = file.read()
+                file.close()
+                return content
 
     @staticmethod
     def write(filename, what_to_write, mode="a"):
