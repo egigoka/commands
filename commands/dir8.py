@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.6.1"
+__version__ = "0.7.0"
 
 
 class Dir:
@@ -141,3 +141,9 @@ class Dir:
                         if not quiet_PermissionError:
                             print(err)
 
+    @classmethod
+    def move(cls, src, dst, symlinks=False, ignore=None, skip_PermissionError=False, quiet_PermissionError=False):
+        cls.copy(cls, src=src, dst=dst, symlinks=symlinks, ignore=ignore,
+                 skip_PermissionError=skip_PermissionError,
+                 quiet_PermissionError=quiet_PermissionError)
+        cls.delete(src)
