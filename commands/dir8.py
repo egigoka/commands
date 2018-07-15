@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.7.2"
+__version__ = "0.7.3"
 
 
 class Dir:
@@ -156,7 +156,7 @@ class Dir:
         :param quiet_PermissionError: boolean, suppress console output when skip file by PermissionError
         :return: None
         """
-        cls.copy(cls, src=src_, dst=dst_, symlinks=symlinks_, ignore=ignore_,
+        cls.copy(src=src_, dst=dst_, symlinks=symlinks_, ignore=ignore_,
                  skip_PermissionError=skip_PermissionError_,
                  quiet_PermissionError=quiet_PermissionError_)
         cls.delete(src_)
