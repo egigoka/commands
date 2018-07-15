@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions that works only in macOS
 """
-__version__ = "0.1.2"
+__version__ = "0.2.0"
 
 
 class macOS:  # pylint: disable=invalid-name, too-few-public-methods
@@ -79,3 +79,14 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
         commands = Str.to_quotes(commands)  # applescript to quotes
         Process.start("osascript", "-e",
                       commands)  # f start(*arguments, new_window=False, debug=False, pureshell=False):
+
+    @staticmethod
+    def symlink(real_folder_or_file_path, symlink_path):
+        """Creates symlink in macOS
+        :param real_folder_or_file_path: string, path to real folder or file, where be linked symlink
+        :param symlink_path: string, path to new symlink
+        :return: None
+        """
+        from .process8 import Process
+        Process.start(f"ln -s {real_folder_or_file_path} {symlink_path}")
+
