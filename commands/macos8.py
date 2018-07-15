@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions that works only in macOS
 """
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 
 
 class macOS:  # pylint: disable=invalid-name, too-few-public-methods
@@ -88,5 +88,5 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
         :return: None
         """
         from .process8 import Process
-        Process.start(f"ln -s {real} {symlink}")
+        Process.start("ln", "-s", real, symlink)
 
