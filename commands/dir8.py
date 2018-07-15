@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.7.0"
+__version__ = "0.7.1"
 
 
 class Dir:
@@ -93,7 +93,8 @@ class Dir:
         os.removedirs(directory)
 
     @classmethod
-    def copy(cls, src, dst, symlinks=False, ignore=None, skip_PermissionError=False, quiet_PermissionError=False):
+    def copy(cls, src, dst, symlinks=False, ignore=None,
+             skip_PermissionError=False, quiet_PermissionError=False):
         """Same behavior as shutil.copytree, but can copy into existing directory
         https://stackoverflow.com/a/22331852/6519078
         :param src: string, source directory to copy
@@ -142,8 +143,9 @@ class Dir:
                             print(err)
 
     @classmethod
-    def move(cls, src, dst, symlinks=False, ignore=None, skip_PermissionError=False, quiet_PermissionError=False):
-        cls.copy(cls, src=src, dst=dst, symlinks=symlinks, ignore=ignore,
+    def move(cls, src, dst, symlinks=False, ignore=None,
+             skip_PermissionError=False, quiet_PermissionError=False):
+        cls.copy(cls, src, dst, symlinks=symlinks, ignore=ignore,
                  skip_PermissionError=skip_PermissionError,
                  quiet_PermissionError=quiet_PermissionError)
         cls.delete(src)
