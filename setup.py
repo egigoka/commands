@@ -5,7 +5,7 @@ with open("README.md", 'r') as f:
 
 setup(
     name='commands',
-    version='9.0.0-alpha54',
+    version='9.0.0-alpha55',
     description='Mine commands',
     license="MIT",
     long_description=long_description,
@@ -22,7 +22,7 @@ setup(
         ':platform_system=="Windows"': ['pywin32', 'colorama'],
         ':python_version < "3.6" and platform_system=="Windows"': ['win_unicode_console'],
         },
-    package_data={'': [r'commands/buildnumber.json']},
+    # package_data={'': [r'commands/buildnumber.json']},
     include_package_data=True,
     # scripts=[
     #         'scripts/cool',
