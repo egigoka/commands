@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.6.1"
+__version__ = "0.7.3"
 
 
 class Dir:
@@ -93,7 +93,8 @@ class Dir:
         os.removedirs(directory)
 
     @classmethod
-    def copy(cls, src, dst, symlinks=False, ignore=None, skip_PermissionError=False, quiet_PermissionError=False):
+    def copy(cls, src, dst, symlinks=False, ignore=None,
+             skip_PermissionError=False, quiet_PermissionError=False):
         """Same behavior as shutil.copytree, but can copy into existing directory
         https://stackoverflow.com/a/22331852/6519078
         :param src: string, source directory to copy
@@ -141,3 +142,21 @@ class Dir:
                         if not quiet_PermissionError:
                             print(err)
 
+    @classmethod
+    def move(cls, src_, dst_, symlinks_=False, ignore_=None,
+             skip_PermissionError_=False, quiet_PermissionError_=False):
+        """Copies folder, than delete source folder
+        :param src: string, source directory to copy
+        :param dst: stirng, destination
+        :param symlinks: boolean, following symlinks
+        :param ignore: You can define any function with any name you like before calling copytree function. This
+        function (which could also be a lambda expression) takes two arguments: a directory name and the files in it, it
+        should return an iterable of ignore files.
+        :param skip_PermissionError: boolean, if True, skips files with denied permissions to read|write
+        :param quiet_PermissionError: boolean, suppress console output when skip file by PermissionError
+        :return: None
+        """
+        cls.copy(src=src_, dst=dst_, symlinks=symlinks_, ignore=ignore_,
+                 skip_PermissionError=skip_PermissionError_,
+                 quiet_PermissionError=quiet_PermissionError_)
+        cls.delete(src_)

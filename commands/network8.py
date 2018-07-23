@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 
 class Network:
@@ -15,8 +15,9 @@ class Network:
         :return: string, URL domain
         """
         from .str8 import Str
-        url_output = Str.substring(url, "://", "/")
-        if url_output == "":
+        try:
+            url_output = Str.substring(url, "://", "/")
+        except KeyError:
             url_output = Str.substring(url, "://")
         return url_output
 

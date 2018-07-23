@@ -112,7 +112,7 @@ try:
         except ModuleNotFoundError:
             build = -1
         build += 1
-        File.write(build_py_file, f"#! python3{newline2}# -*- coding: utf-8 -*-{newline2}build = {build}")
+        File.write(build_py_file, f"#! python3{newline2}# -*- coding: utf-8 -*-{newline2}build = {build}", mode="w")
 
 
     del CLASSES_SPEED_TWEAKING

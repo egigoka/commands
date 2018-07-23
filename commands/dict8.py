@@ -2,20 +2,23 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with dicts
 """
-__version__ = "0.0.4"
+__version__ = "0.1.0"
 
 
 class Dict:
     """Class to work with dicts
     """
     @staticmethod
-    def iterable(dict_):
+    def iterable(dict_, copy_dict=False):
         """Return iterable dict
         :param dict_: input dict
+        :param copy_dict: bool, if True, return iterable copy of dict
         :return: iterable dict
         """
         if not isinstance(dict_, dict):
             raise TypeError("There must be dict in input")
+        if copy_dict:
+            return dict_.copy().items()
         return dict_.items()
 
     @staticmethod
