@@ -17,6 +17,7 @@ __version__ = "9.0.0-prealpha"
 #    !done! docstrings for all
 #    make tests for all
 #    PEP8 check for all
+#    Network.ping fix names with integers like EGGG-2008
 #    Console.get_output make output even if exit status != 0
 #    new dir_c
 #    Internal.rel update to reload all

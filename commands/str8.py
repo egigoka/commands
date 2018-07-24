@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.10.1"
+__version__ = "0.10.2"
 
 
 class Str:
@@ -83,10 +83,8 @@ class Str:
         """
         from .const8 import newline, newline2
         if isinstance(string, str):  # if input is string
-            string = str(string)
-            strings = string.split(newline2)
-            if len(strings) == 1:
-                strings = strings[0].split(newline)
+            string = string.replace(newline2, newline)
+            strings = string.split(newline)
             return strings
         else:
             raise TypeError(str(type(string)) + " can't be splitted")
