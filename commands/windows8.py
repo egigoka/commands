@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.1.2"
+__version__ = "0.2.0"
 
 
 class Windows:
@@ -31,3 +31,41 @@ class Windows:
             quiet = " > null"
         os.system("chcp 65001" + quiet)
         os.system("set PYTHONIOENCODING = utf - 8")
+
+    @classmethod
+    def create_user(cls, username, password):
+        """Creates user using net user command
+        :param username: string
+        :param password: string
+        :return: None
+        """
+        import subprocess
+        from .console8 import Console
+        try:
+            output = Console.get_output("net user " + username + " " + password + " /ADD")
+            if "The command completed successfully." in output:
+                return
+            else:
+                raise OSError(f"User {username} failed to create. {output}")
+        except subprocess.CalledProcessError as output:
+            return cls.create_user()
+
+    @classmethod
+    def remove_user(cls, username):  # remove only users from json file
+        """Removes user using net user command
+        :param username: string
+        :param password: string
+        :return: None
+        """
+        import subprocess
+        import time
+        from .console8 import Console
+        try:
+            output = Console.get_output("net user " + username + " /DELETE")
+            time.sleep(0.1)
+            if "The command completed successfully." in output:
+                return
+            else:
+                raise OSError(f"User {username} failed to remove. {output}")
+        except subprocess.CalledProcessError as output:
+            return cls.remove_user()
