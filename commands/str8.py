@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.10.2"
+__version__ = "0.11.0"
 
 
 class Str:
@@ -282,3 +282,18 @@ class Str:
         if words == [""]:
             words = []
         return words
+
+    @staticmethod
+    def guid_from_seed(seed):
+        """
+        :param seed: string, seed to generate guid
+        :return: string, guid-like
+        """
+        import hashlib
+        bseed = bytes(seed, "utf-8")
+        hash = hashlib.sha256(bseed)
+        hashhex = hash.hexdigest()
+        strhashhex = str(hashhex)
+        symbols = strhashhex.zfill(32)[-32:]  # adds zeros if needed and cut unneded symbols
+        string = symbols[:8] + "-" + symbols[8:12] + "-" + symbols[12:16] + "-" + symbols[16:20] + "-" + symbols[20:]
+        return string
