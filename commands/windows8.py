@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.2.0"
+__version__ = "0.2.2"
 
 
 class Windows:
@@ -42,13 +42,13 @@ class Windows:
         import subprocess
         from .console8 import Console
         try:
-            output = Console.get_output("net user " + username + " " + password + " /ADD")
+            output = Console.get_output(f"net user {username} {password} /ADD")
             if "The command completed successfully." in output:
                 return
             else:
                 raise OSError(f"User {username} failed to create. {output}")
         except subprocess.CalledProcessError as output:
-            return cls.create_user()
+            return cls.create_user(username, password)
 
     @classmethod
     def remove_user(cls, username):  # remove only users from json file
@@ -61,11 +61,11 @@ class Windows:
         import time
         from .console8 import Console
         try:
-            output = Console.get_output("net user " + username + " /DELETE")
+            output = Console.get_output(f"net user {username} /DELETE")
             time.sleep(0.1)
             if "The command completed successfully." in output:
                 return
             else:
                 raise OSError(f"User {username} failed to remove. {output}")
         except subprocess.CalledProcessError as output:
-            return cls.remove_user()
+            return cls.remove_user(username)
