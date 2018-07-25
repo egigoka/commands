@@ -6,4 +6,3 @@
 import sys
 sys.path.insert(0, ".")
 from commands import *
-__version__ = "1.0.0"

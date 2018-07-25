@@ -7,35 +7,6 @@ Otherwise I every time search how to do some thing and just copy-paste it withou
 """
 import datetime
 START_TIME = datetime.datetime.now()
-__version__ = "9.0.0-prealpha"
-# TODO for 9.0.0 release:
-#    !done! OS class vars not strings, but booleans
-#    !done! lazy load for all modules
-#    !done! all submodules lazy load
-#    !done! fix Str.get_integers!!!!!!!!!!!!!!!!!!
-#    !done! remove Time.rustime, change time format in log8
-#    !done! docstrings for all
-#    make tests for all
-#    PEP8 check for all
-#    Network.ping fix names with integers like EGGG-2008
-#    Console.get_output make output even if exit status != 0
-#    new dir_c
-#    Internal.rel update to reload all
-#    Json.save update check of corectness save json with int keys in dict
-#    change all docstring to "Class with functions"
-#    check docstrings for first Capitalized letter, dot at end, no more capitalized letter, for all parameters
-#    check parameters to define types
-#    fix OS.display
-#    test all in linux
-#    rewerite Str.diff_simple
-#    Path.expand bug with "." and ".." in windows
-#    do better benchmarking of commands import
-#    Json throw exceptions
-
-# TODO version diff
-#   export script as json?
-#   compare json's?
-#   save changes as commit message?
 
 CLASSES_SPEED_TWEAKING = False
 # CLASSES_SPEED_TWEAKING = True
@@ -80,7 +51,7 @@ try:
         """
 
         @staticmethod
-        def dir_c():
+        def help():
             """Print all functionality of commands8
             """
             raise NotImplementedError
@@ -106,20 +77,28 @@ try:
                 import copypaste
                 copypaste.copy(string)
 
-    class __build__:  # pylint: disable=too-few-public-methods, invalid-name
-        build_py_file = Path.extend(Path.commands8(), "buildnumber.py")  # pylint: disable=undefined-variable
-        try:
-            from .buildnumber import build
-        except ModuleNotFoundError:
-            build = -1
-        build += 1
-        File.write(build_py_file, f"#! python3{newline2}# -*- coding: utf-8 -*-{newline2}build = {build}", mode="w")
+    class __version__:  # pylint: disable=too-few-public-methods, invalid-name
+        @classmethod
+        def get_version(self):
+            from ._version import __version__
+            return __version__
+        def __str__(self):
+            return self.get_version()
+        __repr__ = __str__
+        version_path = Path.extend(Path.commands(), "_version.py")
+        version_text = File.read(version_path)
+        from ._version import __version__
+        buildnumber = Str.get_integers(__version__)[-1]
+        old_version = '__version__ = "'+__version__+'"'
+        new_version = '__version__ = "'+__version__.rstrip(str(buildnumber))+str(buildnumber+1)+'"'
+        File.write(version_path, version_text.replace(old_version, new_version), mode="w")
 
+    __version__ = __version__() # oh fucc
 
     del CLASSES_SPEED_TWEAKING
     LOAD_TIME_BENCHMARK = get_Bench()  # pylint: disable=undefined-variable
     LOAD_TIME_BENCHMARK.time_start = START_TIME
-    LOAD_TIME_BENCHMARK.end("commands v" + __version__ + "-'build'-" + str(__build__.build) + " loaded in")
+    LOAD_TIME_BENCHMARK.end(f"commands {__version__} loaded in")
     del START_TIME
     del LOAD_TIME_BENCHMARK
 except ModuleNotFoundError as err:

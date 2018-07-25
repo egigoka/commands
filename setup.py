@@ -2,10 +2,11 @@ from setuptools import setup
 
 with open("README.md", 'r') as f:
     long_description = f.read()
+exec(open('commands/_version.py').read())
 
 setup(
     name='commands',
-    version='9.0.0-alpha72',
+    version=__version__,
     description='Mine commands',
     license="MIT",
     long_description=long_description,

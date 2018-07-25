@@ -18,7 +18,7 @@ class Path:
         return os.path.abspath(path)
 
     @staticmethod
-    def commands8():
+    def commands():
         """Used for store some settings(?)
         :return: string, path of this module
         """
