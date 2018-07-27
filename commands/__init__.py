@@ -79,11 +79,8 @@ try:
 
     class __version__:  # pylint: disable=too-few-public-methods, invalid-name
         @classmethod
-        def get_version(self):
-            from ._version import __version__
-            return __version__
         def __str__(self):
-            return self.get_version()
+            return self.new_version
         __repr__ = __str__
         version_path = Path.extend(Path.commands(), "_version.py")
         version_text = File.read(version_path)

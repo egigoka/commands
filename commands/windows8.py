@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.2.3"
+__version__ = "0.2.4"
 
 
 class Windows:
@@ -33,6 +33,20 @@ class Windows:
         os.system("set PYTHONIOENCODING = utf - 8")
 
     @classmethod
+    def user_exists(cls, username):
+        """
+        :param username: string
+        :return: boolean, existance of local user
+        """
+        import subprocess
+        from .console8 import Console
+        try:
+            Console.get_output(f"net user {username}")
+            return True
+        except subprocess.CalledProcessError:
+            return False
+
+    @classmethod
     def _user(cls, username, password=None, create=False, remove=False, retry_cnt=0):
         """Creates or removes user user using net user command
         :param username: string
@@ -47,10 +61,14 @@ class Windows:
         retry_times = 5
         try:
             if create:
+                if cls.user_exists(username):
+                    raise OSError(f"User {username} already exists.")
                 if not password:
                     raise ValueError("Password can't be empty")
                 command = f"net user {username} {password} /ADD"
             elif remove:
+                if not cls.user_exists(username):
+                    raise OSError(f"User {username} already doesn't exists.")
                 command = f"net user {username} /DELETE"
             output = Console.get_output(command)
             if "The command completed successfully." in output:
