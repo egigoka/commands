@@ -1,5 +1,6 @@
 from setuptools import setup
 
+__version__ = "undefined"  # if setup fails read it from _version.py and to please PyCharm
 with open("README.md", 'r') as f:
     long_description = f.read()
 exec(open('commands/_version.py').read())

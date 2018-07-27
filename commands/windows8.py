@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.2.2"
+__version__ = "0.2.3"
 
 
 class Windows:
@@ -33,39 +33,56 @@ class Windows:
         os.system("set PYTHONIOENCODING = utf - 8")
 
     @classmethod
+    def _user(cls, username, password=None, create=False, remove=False, retry_cnt=0):
+        """Creates or removes user user using net user command
+        :param username: string
+        :param password: string
+        :param create: boolean, True for create user
+        :param remove: boolean, True for remove user
+        :param retry_cnt: int, internally used to not raise RecursionError
+        :return: None
+        """
+        import subprocess
+        from .console8 import Console
+        retry_times = 5
+        try:
+            if create:
+                if not password:
+                    raise ValueError("Password can't be empty")
+                command = f"net user {username} {password} /ADD"
+            elif remove:
+                command = f"net user {username} /DELETE"
+            output = Console.get_output(command)
+            if "The command completed successfully." in output:
+                return
+            else:
+                if create:
+                    raise OSError(f"User {username} failed to create. {output}")
+                elif remove:
+                    raise OSError(f"User {username} failed to remove. {output}")
+        except subprocess.CalledProcessError as output:
+            if retry_cnt < retry_times:
+                retry_cnt += 1
+                return cls._user(username, password, create, remove, retry_cnt)
+            else:
+                if create:
+                    raise OSError(f"User {username} failed to create.")
+                elif remove:
+                    raise OSError(f"User {username} failed to remove.")
+
+    @classmethod
     def create_user(cls, username, password):
         """Creates user using net user command
         :param username: string
         :param password: string
         :return: None
         """
-        import subprocess
-        from .console8 import Console
-        try:
-            output = Console.get_output(f"net user {username} {password} /ADD")
-            if "The command completed successfully." in output:
-                return
-            else:
-                raise OSError(f"User {username} failed to create. {output}")
-        except subprocess.CalledProcessError as output:
-            return cls.create_user(username, password)
+        return cls._user(username=username, password=password, create=True)
 
     @classmethod
     def remove_user(cls, username):  # remove only users from json file
         """Removes user using net user command
         :param username: string
-        :param password: string
         :return: None
         """
-        import subprocess
-        import time
-        from .console8 import Console
-        try:
-            output = Console.get_output(f"net user {username} /DELETE")
-            time.sleep(0.1)
-            if "The command completed successfully." in output:
-                return
-            else:
-                raise OSError(f"User {username} failed to remove. {output}")
-        except subprocess.CalledProcessError as output:
-            return cls.remove_user(username)
+        return cls._user(username=username, remove=True)
