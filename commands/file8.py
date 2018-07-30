@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "0.4.1"
+__version__ = "0.4.3"
 # pylint: disable=c-extension-no-member
 
 
@@ -10,9 +10,10 @@ class File:
     """Class to work with files
     """
     @classmethod
-    def create(cls, filename):
+    def create(cls, filename, quiet=True):
         """Creates subdirs, if needed
         :param filename: string with path to creating file
+        :param quiet: boolean, if True, suppress output to console
         :return: None
         """
         import os
@@ -21,6 +22,8 @@ class File:
         filename = Path.full(filename)
         if os.path.split(filename)[0] != "":
             Dir.create(os.path.split(filename)[0])
+        if not quiet:
+            print(f"Creating file {filename}")
         if not cls.exists(filename):
             with open(filename, 'a'):  # open file and close after
                 os.utime(filename, None)  # change time of file modification
@@ -30,6 +33,8 @@ class File:
             import sys
             raise FileNotFoundError("error while creating file " + filename +
                                     "try to repair script at " + Path.full(sys.argv[0]))
+        elif not quiet:
+            print(f"File {filename} created")
 
     @classmethod
     def delete(cls, path, quiet=False):
@@ -165,19 +170,24 @@ class File:
                 return content
 
     @staticmethod
-    def write(filename, what_to_write, mode="a"):
+    def write(filename, what_to_write, mode="a", quiet=True):
         """Write to end of file if "mode" arg isn't redefined
         :param filename: string with path to file
         :param what_to_write: string to write
         :param mode: string with any mode that supported by python open() func
+        :param quiet: boolean, if True, suppress output to console
         :return: None
         """
+        if not quiet:
+            print(f"Writing to file {filename}")
         if "b" not in mode and isinstance(what_to_write, str):
             with open(filename, mode=mode+"b") as file:  # open file then closes it
                 file.write(what_to_write.encode("utf-8"))
         else:
             with open(filename, mode=mode) as file:  # open file then closes it
                 file.write(what_to_write)
+        if not quiet:
+            print(f"Writed to file {filename}")
 
     @staticmethod
     def get_size(filename):  # return size in bytes

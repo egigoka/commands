@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.2.4"
+__version__ = "0.2.6"
 
 
 class Windows:
@@ -21,7 +21,7 @@ class Windows:
             raise OSError("Locking work only on Windows < 10")
 
     @staticmethod
-    def fix_unicode_encode_error(quiet=""):
+    def fix_unicode_encode_error(quiet=False):
         """Fix UnicodeConsoleError on old versions of Python
         :param quiet: boolean, suppress print to console
         :return: None
@@ -59,6 +59,10 @@ class Windows:
         import subprocess
         from .console8 import Console
         retry_times = 5
+
+        if not isinstance(username, str):
+            raise TypeError(f"Username must be string, got {username}, of {type(username)}")
+
         try:
             if create:
                 if cls.user_exists(username):
