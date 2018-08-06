@@ -12,7 +12,7 @@ version_prefix = '__version__ = "'
 version_suffix = '"'
 version_path = Path.extend(Path.working(), "commands", "_version.py")
 version_text = File.read(version_path)
-__version__ = Str.substring(version_text, "")
+__version__ = Str.substring(version_text, version_prefix, version_suffix)
 alphanumber = Str.get_integers(__version__)[-2]
 old_version = version_prefix + __version__ + version_suffix
 new_version = version_prefix + __version__.replace("-alpha"+str(alphanumber),"-alpha"+str(alphanumber+1))+version_suffix
