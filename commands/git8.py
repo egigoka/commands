@@ -9,7 +9,7 @@ from commands.process8 import Process
 from commands.bash8 import Bash
 from commands.file8 import File
 from commands.str8 import Str
-__version__ = "1.2.0"
+__version__ = "2.0.1"
 
 
 def get_name_of_repo():
@@ -70,34 +70,4 @@ class Git:
         cls.push(path, upstream=True)
 
 
-if __name__ == "__main__":
 
-    # CHANGING VERSION
-    version_path = Path.extend(Path.working(), "_version.py")
-    version_text = File.read(version_path)
-    from ._version import __version__
-    alphanumber = Str.get_integers(__version__)[-2]
-    old_version = '__version__ = "' + __version__ + '"'
-    new_version = '__version__ = "' + __version__.replace("-alpha"+str(alphanumber)) + "-alpha"+str(alphanumber + 1)+'"'
-    new_version_text = version_text.replace(old_version, new_version)
-    from .print8 import Print
-    Print.debug("version_text", version_text, "alphanumber", alphanumber, "old_version", old_version,
-                "new_version", new_version, "new_version_text", new_version_text)
-    File.write(version_path, new_version_text, mode="w")
-    # CHANGING VERSION END
-
-
-    ARGUMENTS = list(sys.argv)
-    ARGUMENTS.pop(0)
-    STRING = "small update (default message)"
-    try:
-        ARGUMENTS[0]  # pylint: disable=pointless-statement
-        STRING = ""
-        for arg in ARGUMENTS:
-            STRING += arg + " "
-        STRING = STRING.rstrip(" ")
-    except IndexError:
-        INPUT_STRING = input("Enter a description or press Enter to default message: ")
-        if INPUT_STRING:
-            STRING = INPUT_STRING
-    Git.update(STRING)
