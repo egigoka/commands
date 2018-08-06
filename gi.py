@@ -17,8 +17,13 @@ alphanumber = Str.get_integers(__version__)[-2]
 old_version = version_prefix + __version__ + version_suffix
 new_version = version_prefix + __version__.replace("-alpha"+str(alphanumber),"-alpha"+str(alphanumber+1))+version_suffix
 new_version_text = version_text.replace(old_version, new_version)
-Print.debug("version_text", version_text, "alphanumber", alphanumber, "old_version", old_version,
-            "new_version", new_version, "new_version_text", new_version_text)
+# Print.debug("version_text", version_text)
+Print.debug("alphanumber", alphanumber)
+Print.debug("__version__", __version__)
+Print.debug("Str.get_integers(__version__)", Str.get_integers(__version__))
+Print.debug("old_version", old_version)
+Print.debug("new_version", new_version)
+# Print.debug("new_version_text", new_version_text)
 File.write(version_path, new_version_text, mode="w")
 # CHANGING VERSION END
 
