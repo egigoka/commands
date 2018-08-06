@@ -7,7 +7,9 @@ import sys
 from commands.path8 import Path
 from commands.process8 import Process
 from commands.bash8 import Bash
-__version__ = "1.1.4"
+from commands.file8 import File
+from commands.str8 import Str
+__version__ = "1.2.0"
 
 
 def get_name_of_repo():
@@ -69,6 +71,18 @@ class Git:
 
 
 if __name__ == "__main__":
+
+    # CHANGING VERSION
+    version_path = Path.extend(Path.working(), "_version.py")
+    version_text = File.read(version_path)
+    from ._version import __version__
+    alphanumber = Str.get_integers(__version__)[-2]
+    old_version = '__version__ = "' + __version__ + '"'
+    new_version = '__version__ = "' + __version__.replace("-alpha"+str(alphanumber)) + "-alpha"+str(alphanumber + 1)+'"'
+    File.write(version_path, version_text.replace(old_version, new_version), mode="w")
+    # CHANGING VERSION END
+
+
     ARGUMENTS = list(sys.argv)
     ARGUMENTS.pop(0)
     STRING = "small update (default message)"

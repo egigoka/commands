@@ -2,14 +2,13 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.3.2"
+__version__ = "2.3.3"
 
 
 class Json:
     """Class to work with JSON
     """
 
-    @classmethod
     def __init__(cls, filename, quiet=True):
         cls.filename = filename
         if cls._check_file(filename):
@@ -18,7 +17,6 @@ class Json:
             cls.string = {}
             cls._save_to_file(cls.filename, cls.string, quiet=quiet)
 
-    @classmethod
     def load(cls, quiet=True):
         """Loads json from file, defined in class init to class var "string"
         :param quiet: boolean, suppress print to console
@@ -26,7 +24,6 @@ class Json:
         """
         cls.string = cls._load_from_file(cls.filename, quiet=quiet)
 
-    @classmethod
     def save(cls, quiet=True, debug=False):
         """Saves json to file, defined in class init from class var "string"
         :param quiet: boolean, suppress print to console
@@ -37,7 +34,6 @@ class Json:
             print(cls.string)
         cls._save_to_file(cls.filename, cls.string, quiet=quiet, debug=debug)
 
-    @classmethod
     def _check_file(cls, filename, quiet=True):
         """
         :param filename: string with path to JSON file
@@ -51,7 +47,6 @@ class Json:
                 print("JSON is bad")
             return False
 
-    @classmethod
     def _save_to_file(cls, filename, json_string, quiet=False, debug=False):
         """
         :param filename: path of file, where JSON will be saved
@@ -85,7 +80,6 @@ class Json:
             raise IOError("error while saving JSON, try to repair script at path " +
                           Path.full(sys.argv[0]))
 
-    @classmethod
     def _load_from_file(cls, filename, quiet=False, debug=False):
         """
         :param filename: path of file, from load JSON
