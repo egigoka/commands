@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.2.1"
+__version__ = "2.3.0"
 
 
 class Json:
@@ -27,12 +27,13 @@ class Json:
         cls.string = cls._load_from_file(cls.filename, quiet=quiet)
 
     @classmethod
-    def save(cls, quiet=True):
+    def save(cls, quiet=True, debug=False):
         """Saves json to file, defined in class init from class var "string"
         :param quiet: boolean, suppress print to console
+        :param debug: boolean, prints some more info
         :return: None
         """
-        cls._save_to_file(cls.filename, cls.string, quiet=quiet)
+        cls._save_to_file(cls.filename, cls.string, quiet=quiet, debug=debug)
 
     @classmethod
     def _check_file(cls, filename, quiet=True):
@@ -80,7 +81,7 @@ class Json:
             from .print8 import Print
             Print.debug("jsonstring_to_save", json_string, "json_test_string_from_file", json_test_string)
             raise IOError("error while saving JSON, try to repair script at path " +
-                          Path.full(sys.argv[0]))  # exception
+                          Path.full(sys.argv[0]))
 
     @classmethod
     def _load_from_file(cls, filename, quiet=False, debug=False):
