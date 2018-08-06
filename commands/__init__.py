@@ -45,6 +45,7 @@ try:
     from .cli8 import CLI
     from .cs8 import dirify
     from .const8 import backslash, newline, newline2, ruble
+    from ._version import __version__
 
     class Internal:
         """Internal class with internal functions
@@ -56,41 +57,6 @@ try:
             """
             raise NotImplementedError
             # commands.__dict__
-
-        @staticmethod
-        def rel(quiet=False):
-            """Reload commands8, if you use it not in REPL, activate quiet argument require additional line of code
-            after reload if you import not entrie commands8 you need manually add "from commands8 import *" to
-            script/REPL if you import like "import commands", additional line of code not needed
-            :param quiet: boolean, True suppress print to terminal and interaction with clipboard
-            :return: None
-            """
-            import importlib
-            import commands  # pylint: disable=import-self, redefined-outer-name
-
-            commands = importlib.reload(commands)
-
-            del commands
-            string = "from commands import *"  # d you need to manually add this <<< string to code :(
-            if not quiet:
-                print('"' + string + '" copied to clipboard')
-                import copypaste
-                copypaste.copy(string)
-
-    class __version__:  # pylint: disable=too-few-public-methods, invalid-name
-        @classmethod
-        def __str__(self):
-            return self.new_version.lstrip('__version__ = "').rstrip('"')
-        __repr__ = __str__
-        version_path = Path.extend(Path.commands(), "_version.py")
-        version_text = File.read(version_path)
-        from ._version import __version__
-        buildnumber = Str.get_integers(__version__)[-1]
-        old_version = '__version__ = "'+__version__+'"'
-        new_version = '__version__ = "'+__version__.rstrip(str(buildnumber))+str(buildnumber+1)+'"'
-        File.write(version_path, version_text.replace(old_version, new_version), mode="w")
-
-    __version__ = __version__() # oh fucc
 
     del CLASSES_SPEED_TWEAKING
     LOAD_TIME_BENCHMARK = get_Bench()  # pylint: disable=undefined-variable

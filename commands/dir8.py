@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.7.4"
+__version__ = "0.8.0"
 
 
 class Dir:
@@ -160,3 +160,12 @@ class Dir:
                  skip_PermissionError=skip_PermissionError_,
                  quiet_PermissionError=quiet_PermissionError_)
         cls.delete(src_)
+
+    @staticmethod
+    def exists(filename):
+        """
+        :param filename: string with path to file
+        :return: boolean that means existence of file
+        """
+        import os
+        return os.path.isdir(filename)

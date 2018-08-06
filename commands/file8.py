@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "0.5.0"
+__version__ = "0.5.1"
 # pylint: disable=c-extension-no-member
 
 
@@ -208,7 +208,7 @@ class File:
         :return: boolean that means existence of file
         """
         import os
-        return os.path.exists(filename)
+        return os.path.isfile(filename)
 
     @staticmethod
     def get_modification_time(filename):
