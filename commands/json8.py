@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.3.0"
+__version__ = "2.3.1"
 
 
 class Json:
@@ -61,6 +61,9 @@ class Json:
         import json
         import sys
         from .file8 import File
+        if debug:
+            print("sys.argv[0] =", sys.argv[0])
+            print(json_string)
         try:
             File.wipe(filename)
             settings_json_text_io = open(filename, "w")
@@ -68,9 +71,6 @@ class Json:
             settings_json_text_io.close()
             if not quiet:
                 print("JSON succesfull saved")
-            if debug:
-                print("sys.argv[0] =", sys.argv[0])
-                print(json_string)
         except:
             from .path8 import Path
             raise IOError("error while saving JSON, try to repair script at path " +
