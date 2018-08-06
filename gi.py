@@ -20,7 +20,7 @@ new_version = version_prefix + __version__.replace("-alpha"+str(alphanumber),"-a
 new_version_text = version_text.replace(old_version, new_version)
 File.write(version_path, new_version_text, mode="w")
 
-Print.colored("uploadin" + new_version.lstrip(version_prefix).rstrip(version_suffix), "grey", "on_white")
+Print.colored("uploadin",  new_version.lstrip(version_prefix).rstrip(version_suffix), "grey", "on_white")
 # CHANGING VERSION END
 
 
