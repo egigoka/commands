@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "0.4.3"
+__version__ = "0.5.0"
 # pylint: disable=c-extension-no-member
 
 
@@ -37,10 +37,12 @@ class File:
             print(f"File {filename} created")
 
     @classmethod
-    def delete(cls, path, quiet=False):
+    def delete(cls, path, quiet=False, no_sleep=False):
         """
         :param path: string with path to deleting file
-        :param quiet: suppress print to console
+        :param quiet: boolean, suppress print to console
+        :param no_sleep: boolean, if True - function skip sleep in 0.05 seconds after deleting file (to ensure than file
+        deleted before next code run)
         :return: None
         """
         import time
@@ -54,9 +56,10 @@ class File:
                 print("file", path, "is not exist")
         if not quiet:
             print("file", path, "is deleted")
-        time.sleep(0.05)
-        if cls.exists(path):
-            raise FileExistsError(path + " is not deleted")
+        if not no_sleep:
+            time.sleep(0.05)
+            if cls.exists(path):
+                raise FileExistsError(path + " is not deleted")
 
     @staticmethod
     def move(input_file, output_file):

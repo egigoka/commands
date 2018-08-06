@@ -1,6 +1,6 @@
 #! python3
 # -*- coding: utf-8 -*-
-__version__ = "9.0.0-alpha80.build445"
+__version__ = "9.0.0-alpha81.build446"
 
 # TODO for 9.0.0 release:
 #    !done! OS class vars not strings, but booleans
