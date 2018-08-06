@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.3.1"
+__version__ = "2.3.2"
 
 
 class Json:
@@ -33,6 +33,8 @@ class Json:
         :param debug: boolean, prints some more info
         :return: None
         """
+        if debug:
+            print(cls.string)
         cls._save_to_file(cls.filename, cls.string, quiet=quiet, debug=debug)
 
     @classmethod
