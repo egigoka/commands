@@ -6,6 +6,7 @@
 import sys
 from commands import *
 from commands.git8 import Git
+from commands.print8 import Print
 
 # CHANGING VERSION
 version_prefix = '__version__ = "'
@@ -18,6 +19,7 @@ old_version = version_prefix + __version__ + version_suffix
 new_version = version_prefix + __version__.replace("-alpha"+str(alphanumber),"-alpha"+str(alphanumber+1))+version_suffix
 new_version_text = version_text.replace(old_version, new_version)
 File.write(version_path, new_version_text, mode="w")
+Print.colored("new version:", new_version)
 # CHANGING VERSION END
 
 
