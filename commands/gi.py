@@ -79,7 +79,11 @@ if __name__ == "__main__":
     alphanumber = Str.get_integers(__version__)[-2]
     old_version = '__version__ = "' + __version__ + '"'
     new_version = '__version__ = "' + __version__.replace("-alpha"+str(alphanumber)) + "-alpha"+str(alphanumber + 1)+'"'
-    File.write(version_path, version_text.replace(old_version, new_version), mode="w")
+    new_version_text = version_text.replace(old_version, new_version)
+    from .print8 import Print
+    Print.debug("version_text", version_text, "alphanumber", alphanumber, "old_version", old_version,
+                "new_version", new_version, "new_version_text", new_version_text)
+    File.write(version_path, new_version_text, mode="w")
     # CHANGING VERSION END
 
 
