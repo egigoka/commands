@@ -2,52 +2,53 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.3.4"
+__version__ = "2.4.0"
 
 
 class Json:
     """Class to work with JSON
     """
 
-    def __init__(cls, filename, quiet=True):
-        cls.filename = filename
-        if cls._check_file(filename):
-            cls.string = cls._load_from_file(cls.filename, quiet=quiet)
+    def __init__(self, filename, quiet=True, ensure_ascii=False):
+        self.filename = filename
+        self.ensure_ascii = ensure_ascii
+        if self._check_file(filename):
+            self.string = self._load_from_file(self.filename, quiet=quiet)
         else:
-            cls.string = {}
-            cls._save_to_file(cls.filename, cls.string, quiet=quiet)
+            self.string = {}
+            self._save_to_file(self.filename, self.string, quiet=quiet)
 
-    def load(cls, quiet=True):
+    def load(self, quiet=True):
         """Loads json from file, defined in class init to class var "string"
         :param quiet: boolean, suppress print to console
         :return: None
         """
-        cls.string = cls._load_from_file(cls.filename, quiet=quiet)
+        self.string = self._load_from_file(self.filename, quiet=quiet)
 
-    def save(cls, quiet=True, debug=False):
+    def save(self, quiet=True, debug=False):
         """Saves json to file, defined in class init from class var "string"
         :param quiet: boolean, suppress print to console
         :param debug: boolean, prints some more info
         :return: None
         """
         if debug:
-            print(cls.string)
-        cls._save_to_file(cls.filename, cls.string, quiet=quiet, debug=debug)
+            print(self.string)
+        self._save_to_file(self.filename, self.string, quiet=quiet, debug=debug)
 
-    def _check_file(cls, filename, quiet=True):
+    def _check_file(self, filename, quiet=True):
         """
         :param filename: string with path to JSON file
         :return: boolean with state of JSON correctness
         """
         try:
-            cls._load_from_file(filename, quiet=quiet)
+            self._load_from_file(filename, quiet=quiet)
             return True
         except:  # pylint: disable=bare-except
             if not quiet:
                 print("JSON is bad")
             return False
 
-    def _save_to_file(cls, filename, json_string, quiet=False, debug=False):
+    def _save_to_file(self, filename, json_string, quiet=False, debug=False):
         """
         :param filename: path of file, where JSON will be saved
         :param json_string: list or dict to save in file
@@ -64,7 +65,7 @@ class Json:
         try:
             File.wipe(filename)
             settings_json_text_io = open(filename, "w")
-            json.dump(json_string, settings_json_text_io, ensure_ascii=False)
+            json.dump(json_string, settings_json_text_io, ensure_ascii=self.ensure_ascii)
             settings_json_text_io.close()
             if not quiet:
                 print("JSON succesfull saved")
@@ -72,7 +73,7 @@ class Json:
             from .path8 import Path
             raise IOError("error while saving JSON, try to repair script at path " +
                           Path.full(sys.argv[0]))
-        json_test_string = cls._load_from_file(filename, quiet=True)
+        json_test_string = self._load_from_file(filename, quiet=True)
         if json_string != json_test_string:
             from .path8 import Path
             from .print8 import Print
@@ -80,7 +81,7 @@ class Json:
             raise IOError("error while saving JSON, try to repair script at path " +
                           Path.full(sys.argv[0]))
 
-    def _load_from_file(cls, filename, quiet=False, debug=False):
+    def _load_from_file(self, filename, quiet=False, debug=False):
         """
         :param filename: path of file, from load JSON
         :param quiet: suppress print to console
@@ -94,7 +95,7 @@ class Json:
                 from .file8 import File
                 File.create(filename)
                 cleanjson = {}
-                cls.save(filename, cleanjson)
+                self.save(filename, cleanjson)
             settings_json_text_io = open(filename)
             json_string_in_memory = json.load(settings_json_text_io)
             settings_json_text_io.close()
