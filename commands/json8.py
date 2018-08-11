@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.3.3"
+__version__ = "2.3.4"
 
 
 class Json:
@@ -64,7 +64,7 @@ class Json:
         try:
             File.wipe(filename)
             settings_json_text_io = open(filename, "w")
-            json.dump(json_string, settings_json_text_io)
+            json.dump(json_string, settings_json_text_io, ensure_ascii=False)
             settings_json_text_io.close()
             if not quiet:
                 print("JSON succesfull saved")
