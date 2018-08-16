@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "0.5.1"
+__version__ = "0.5.2"
 # pylint: disable=c-extension-no-member
 
 
@@ -28,7 +28,7 @@ class File:
             with open(filename, 'a'):  # open file and close after
                 os.utime(filename, None)  # change time of file modification
         else:
-            raise FileExistsError("file" + str(filename) + "exists")
+            raise FileExistsError("file " + str(filename) + " exists")
         if not cls.exists(filename):
             import sys
             raise FileNotFoundError("error while creating file " + filename +
