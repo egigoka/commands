@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with Bench factory function
 """
-__version__ = "0.5.0"
+__version__ = "0.5.1"
 
 
 class Bench:
@@ -10,15 +10,21 @@ class Bench:
     """
 
     def __init__(self, prefix="Bench passed in", quiet=False, fraction_digits=3, time_start=None):
+        """
+        :param prefix: string, prints when ending of benchmark
+        :param quiet: boolean, suppress output to console
+        :param fraction_digits: integer, define how much digits after dot print
+        :param time_start: datetime.datetime, set custom start time
+        """
         import datetime
         if time_start:
             self.time_start = time_start
         else:
             self.time_start = datetime.datetime.now()
         self.time_end = None
-        self.quiet = quiet  # d argument for disable print to terminal
-        self.prefix = prefix  # d what have been done, will print if
-        self.fraction_digits = fraction_digits  # how much digits after dot print
+        self.quiet = quiet
+        self.prefix = prefix
+        self.fraction_digits = fraction_digits
 
     def start(self):  # set time of begin to now
         """Set time of start benchmarking to current

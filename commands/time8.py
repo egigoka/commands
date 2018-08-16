@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with time
 """
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 
 
 class Time:
@@ -67,9 +67,8 @@ class Time:
         :return: None
         """
         from .print8 import Print
-        from .bench8 import get_Bench
-        benchmark = get_Bench()
-        benchmark.start()
+        from .bench8 import Bench
+        benchmark = Bench()
         secs_second_var = int(seconds)
         while benchmark.get() < seconds:
             import time
