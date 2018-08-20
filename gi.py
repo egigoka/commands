@@ -6,7 +6,6 @@
 import sys
 from commands import *
 from commands.git8 import Git
-from commands.print8 import Print
 
 # CHANGING VERSION
 version_prefix = '__version__ = "'
@@ -18,6 +17,9 @@ alphanumber = Str.get_integers(__version__)[-1]  # get only integer of alpha ver
 old_version = version_prefix + __version__ + version_suffix  # old string, that currently in file
 new_version = version_prefix + __version__.replace("-alpha"+str(alphanumber),"-alpha"+str(alphanumber+1))+version_suffix  # new string to replace old version
 new_version_text = version_text.replace(old_version, new_version)  # replacing
+# for not annoying git message about mess with LF and CRLF
+if OS.windows:
+    new_version_text = new_version_text.replace(newline, newline2)
 File.write(version_path, new_version_text, mode="w")  # write result to file
 
 Print.colored("uploadin",  new_version.lstrip(version_prefix).rstrip(version_suffix), "grey", "on_white")  # print to notice difference
