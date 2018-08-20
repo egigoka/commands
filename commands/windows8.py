@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.2.6"
+__version__ = "0.3.3"
 
 
 class Windows:
@@ -32,8 +32,8 @@ class Windows:
         os.system("chcp 65001" + quiet)
         os.system("set PYTHONIOENCODING = utf - 8")
 
-    @classmethod
-    def user_exists(cls, username):
+    @staticmethod
+    def user_exists(self, username):
         """
         :param username: string
         :return: boolean, existance of local user
@@ -46,8 +46,7 @@ class Windows:
         except subprocess.CalledProcessError:
             return False
 
-    @classmethod
-    def _user(cls, username, password=None, create=False, remove=False, retry_cnt=0):
+    def _user(self, username, password=None, create=False, remove=False, retry_cnt=0):
         """Creates or removes user user using net user command
         :param username: string
         :param password: string
@@ -65,13 +64,13 @@ class Windows:
 
         try:
             if create:
-                if cls.user_exists(username):
+                if self.user_exists(username):
                     raise OSError(f"User {username} already exists.")
                 if not password:
                     raise ValueError("Password can't be empty")
                 command = f"net user {username} {password} /ADD"
             elif remove:
-                if not cls.user_exists(username):
+                if not self.user_exists(username):
                     raise OSError(f"User {username} already doesn't exists.")
                 command = f"net user {username} /DELETE"
             output = Console.get_output(command)
@@ -85,26 +84,42 @@ class Windows:
         except subprocess.CalledProcessError as output:
             if retry_cnt < retry_times:
                 retry_cnt += 1
-                return cls._user(username, password, create, remove, retry_cnt)
+                return self._user(username, password, create, remove, retry_cnt)
             else:
                 if create:
                     raise OSError(f"User {username} failed to create.")
                 elif remove:
                     raise OSError(f"User {username} failed to remove.")
 
-    @classmethod
-    def create_user(cls, username, password):
+    def create_user(self, username, password):
         """Creates user using net user command
         :param username: string
         :param password: string
         :return: None
         """
-        return cls._user(username=username, password=password, create=True)
+        return self._user(username=username, password=password, create=True)
 
-    @classmethod
-    def remove_user(cls, username):  # remove only users from json file
+    def remove_user(self, username):  # remove only users from json file
         """Removes user using net user command
         :param username: string
         :return: None
         """
-        return cls._user(username=username, remove=True)
+        return self._user(username=username, remove=True)
+
+    @staticmethod
+    def dump_auditpol(filename=None, category="*", fastname=None, quiet=False):
+        from .file8 import File
+        from .console8 import Console
+        from .time8 import Time
+        import subprocess
+        if not filename:
+            filename = f"auditpol_{Time.dotted()}.txt"
+        if fastname:
+            filename = f"auditpol_{Time.dotted()}--{fastname}.txt"
+        try:
+            output = Console.get_output(f"auditpol /get /category:{category}")
+        except subprocess.CalledProcessError:
+            raise OSError("Try to run under elevated commandline")
+        File.write(filename, output)
+        if not quiet:
+            print(f"Audit politics saved to {filename}")
