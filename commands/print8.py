@@ -2,12 +2,16 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for print to console.
 """
-__version__ = "0.8.0"
+__version__ = "0.9.0"
 
 
 class Print:
     """Class with functions for print to console.
     """
+
+    def __call__(self, *args, **kwargs):
+        print(*args, **kwargs)
+
     @staticmethod
     def debug(*strings, raw=False):
         """More notable print, used only for debugging
@@ -103,3 +107,6 @@ class Print:
             string = strings[0]
         # run termcolor
         termcolor.cprint(string, color=color, on_color=highlight, attrs=attributes, end=end)
+
+
+Print = Print()

@@ -72,6 +72,7 @@ class Process:
                         elif OS.macos:
                             from .gui8 import Gui
                             Gui.warning("macOS doesn't support creating new window now")
+                            # p = subprocess.Popen(["python","second.py"])
                             # command = "" +
                     else:
                         command = argument_
