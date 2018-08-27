@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.4.2"
+__version__ = "0.5.0"
 
 
 class Network:
@@ -150,3 +150,17 @@ class Network:
         data = response.read()  # a `bytes` object
         File.write(out, data, mode="wb")
         return Path.full(out)
+
+    @staticmethod
+    def get_ip(extended=False):
+        try:
+            import ipgetter
+        except ImportError:
+            from .pip8 import Pip
+            Pip.install("ipgetter")
+            import ipgetter
+
+        if extended:
+            return ipgetter.IPgetter().test()
+        else:
+            return ipgetter.myip()
