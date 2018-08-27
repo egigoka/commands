@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.9.0"
+__version__ = "0.9.1"
 
 
 class Dir:
@@ -17,14 +17,6 @@ class Dir:
         import os
         if not os.path.isdir(dirname):
             os.makedirs(dirname)
-
-    @staticmethod
-    def working():
-        """
-        :return: string with working directory
-        """
-        from .path8 import Path
-        return Path.working()
 
     @staticmethod
     def list_of_files(path):
