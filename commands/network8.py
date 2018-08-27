@@ -153,7 +153,7 @@ class Network:
 
     @staticmethod
     def get_ip(fast=True, quiet=True):
-        # much code by phoemur@gmail.com
+        # much code by phoemur@gmail.com (ipgetter)
         import re
         import random
         import ssl

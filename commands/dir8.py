@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.8.0"
+__version__ = "0.9.0"
 
 
 class Dir:
@@ -17,14 +17,6 @@ class Dir:
         import os
         if not os.path.isdir(dirname):
             os.makedirs(dirname)
-
-    @staticmethod
-    def commands():
-        """Used to store configs(?)
-        :return: path to this module
-        """
-        from .path8 import Path
-        return Path.commands8()
 
     @staticmethod
     def working():
@@ -79,18 +71,28 @@ class Dir:
                     print(filename, "renamed to", final_name)
 
     @classmethod
-    def delete(cls, directory):
-        """Removes all content in directory
-        :param directory: string with path to directory
+    def delete(cls, path, cleanup=False):
+        """Remove directorye
+        :param path: string
+        :param cleanup: boolean, True doesn't delete "path" folder, only content
         :return: None
         """
         import os
-        for root, dirs, files in os.walk(directory):  # , topdown=False):
+        for root, dirs, files in os.walk(path):  # , topdown=False):
             for name in files:
                 os.remove(os.path.join(root, name))
             for name in dirs:
                 cls.delete(os.path.join(root, name))
-        os.removedirs(directory)
+        if not cleanup:
+            os.removedirs(path)
+
+    @classmethod
+    def cleanup(cls, path):
+        """Removes all content in directory
+        :param path: string
+        :return: None
+        """
+        cls.delete(path, cleanup=True)
 
     @classmethod
     def copy(cls, src, dst, symlinks=False, ignore=None,
