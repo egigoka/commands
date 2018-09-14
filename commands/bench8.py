@@ -46,7 +46,7 @@ class Bench:
         """End benchmarking:
         return time difference between start and end of bencmarking, print string with prefix
         and time difference.
-        :param prefix_string: string, used in print output
+        :param prefix_string: string, used in print outp    ut
         :param quiet_if_zero: suppress print if time interval between start and stop = 0.0 in accuracy, defined in
         cls.fraction_digits
         :param start_immediately: change start time of current Bench class to current time

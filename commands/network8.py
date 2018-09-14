@@ -321,7 +321,7 @@ class Network:
             if not quiet:
                 Print.rewrite()
 
-            if most_frequent_ip:
+            if most_frequent_ip:  # do not return empty ip
                 return most_frequent_ip
             else:
                 raise LookupError("IP not found")

@@ -68,7 +68,7 @@ class Random:
             (0x0370, 0x0377),
             (0x037A, 0x037E),
             (0x0384, 0x038A),
-            (0x038C, 0x038C),]
+            (0x038C, 0x038C)]
 
         alphabet = [get_char(code_point) for current_range in include_ranges
             for code_point in range(current_range[0], current_range[1] + 1)]

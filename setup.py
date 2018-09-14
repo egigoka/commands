@@ -18,6 +18,7 @@ setup(
     install_requires=[
         'termcolor',
         'copypaste',
+        'pyperclip',
         'paramiko'],
     extras_require={
         ':platform_system!="Linux"': ['pyautogui'],
