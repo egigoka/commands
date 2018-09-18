@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "0.5.2"
+__version__ = "0.5.3"
 # pylint: disable=c-extension-no-member
 
 
@@ -19,6 +19,8 @@ class File:
         import os
         from .path8 import Path
         from .dir8 import Dir
+        if not isinstance(quiet, bool):
+            raise TypeError("argument 'quiet' must be boolean")
         filename = Path.full(filename)
         if os.path.split(filename)[0] != "":
             Dir.create(os.path.split(filename)[0])
