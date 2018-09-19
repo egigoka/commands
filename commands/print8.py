@@ -63,7 +63,8 @@ class Print:
 
                 # cut line
                 cut_cnt = len_all - len(line)
-                new_longest_string = longest_string[:-cut_cnt]
+                new_longest_string = longest_string[cut_cnt:]
+                new_longest_string = ">>" + new_longest_string[2:]
 
                 # replace
                 from .list8 import List
