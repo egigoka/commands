@@ -75,11 +75,11 @@ class Dir:
                 os.remove(os.path.join(root, name))
                 if not quiet:
                     from .cli8 import CLI
-                    print(CLI.wait_update(quiet=True), "f", name, "deleted")
+                    print(CLI.wait_update(quiet=True), "f", os.path.join(root, name), "deleted")
             for name in dirs:
                 if not quiet:
                     from .cli8 import CLI
-                    print(CLI.wait_update(quiet=True), "try to delete dir", name, "deleted")
+                    print(CLI.wait_update(quiet=True), "try to delete dir", os.path.join(root, name))
                 cls.delete(os.path.join(root, name), quiet=quiet)
         if not cleanup:
             os.removedirs(path)
