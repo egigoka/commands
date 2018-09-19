@@ -32,7 +32,7 @@ class Print:
         print("<<<End of debug sheet>>>")
 
     @staticmethod
-    def rewrite(*strings, sep=" "):
+    def rewrite(*strings, sep=" ", fit=True):
         """Print rewritable string. note, that you need to rewrite string to remove previous characters
         :param strings: strings, work as builtin print()
         :param sep: sep as builtin print(sep)
@@ -44,7 +44,32 @@ class Print:
         if OS.windows:  # windows add symbol to end of string :(
             line = line[:-1]
         print(line, end="\r")
+        if fit:
+            # count len of all
+            len_all = 0
+            for string in strings:
+                len_all += len(string) + len(sep)
+            len_all -= len(sep)
+
+            # check for fit
+            if len_all <= len(line):
+                pass
+            else:
+                # get longest line
+                longest_string = ""
+                for string in strings:
+                    if len(string) > len(longest_string):
+                        longest_string = string
+
+                # cut line
+                cut_cnt = len_all - len(line)
+                new_longest_string = longest_string[:-cut_cnt]
+
+                # replace
+                strings = [string.replace(longest_string, new_longest_string) for string in strings]
+
         print(*strings, sep=sep, end="\r")
+
 
     @staticmethod
     def prettify(object_, indent=4, quiet=False):
