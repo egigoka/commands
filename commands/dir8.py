@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.11.0"
+__version__ = "0.11.1"
 
 
 class Dir:
@@ -69,7 +69,6 @@ class Dir:
         :param cleanup: boolean, True doesn't delete "path" folder, only content
         :return: None
         """
-
         import os
         for root, dirs, files in os.walk(path):  # , topdown=False):
             for name in files:
@@ -78,11 +77,10 @@ class Dir:
                     try:
                         os.remove(os.path.join(root, name))
                     except PermissionError:
-                        # path contains the path of the file that couldn't be removed
                         # let's just assume that it's read-only and unlink it.
                         import stat
                         os.chmod(file_path, stat.S_IWRITE)
-                        os.unlink(file_path)
+                        # os.unlink(file_path)
                         os.remove(file_path)
                 else:
                     os.remove(file_path)
