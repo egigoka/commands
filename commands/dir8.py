@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.10.0"
+__version__ = "0.11.0"
 
 
 class Dir:
@@ -63,16 +63,29 @@ class Dir:
                     print(filename, "renamed to", final_name)
 
     @classmethod
-    def delete(cls, path, cleanup=False):
+    def delete(cls, path, cleanup=False, remove_readonly=True):
         """Remove directory
         :param path: string
         :param cleanup: boolean, True doesn't delete "path" folder, only content
         :return: None
         """
+
         import os
         for root, dirs, files in os.walk(path):  # , topdown=False):
             for name in files:
-                os.remove(os.path.join(root, name))
+                file_path = os.path.join(root, name)
+                if remove_readonly:
+                    try:
+                        os.remove(os.path.join(root, name))
+                    except PermissionError:
+                        # path contains the path of the file that couldn't be removed
+                        # let's just assume that it's read-only and unlink it.
+                        import stat
+                        os.chmod(file_path, stat.S_IWRITE)
+                        os.unlink(file_path)
+                        os.remove(file_path)
+                else:
+                    os.remove(file_path)
             for name in dirs:
                 cls.delete(os.path.join(root, name))
         if not cleanup:
