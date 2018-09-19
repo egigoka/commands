@@ -66,7 +66,8 @@ class Print:
                 new_longest_string = longest_string[:-cut_cnt]
 
                 # replace
-                strings = [string.replace(longest_string, new_longest_string) for string in strings]
+                from .list8 import List
+                strings = List.replace_string(strings, longest_string, new_longest_string)
 
         print(*strings, sep=sep, end="\r")
 
