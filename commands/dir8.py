@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.9.1"
+__version__ = "0.9.2"
 
 
 class Dir:
@@ -70,7 +70,7 @@ class Dir:
         :return: None
         """
         import os
-        for root, dirs, files in os.walk(path):  # , topdown=False):
+        for root, dirs, files in os.walk(path, topdown=False):
             for name in files:
                 os.remove(os.path.join(root, name))
             for name in dirs:
