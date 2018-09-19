@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.11.1"
+__version__ = "0.11.2"
 
 
 class Dir:
@@ -87,7 +87,12 @@ class Dir:
             for name in dirs:
                 cls.delete(os.path.join(root, name))
         if not cleanup:
-            os.rmdir(path)
+            try:
+                os.rmdir(path)
+            except OSError:
+                import time
+                time.sleep(0.05)
+                os.rmdir(path)
 
 
     @classmethod
