@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "0.5.3"
+__version__ = "0.5.4"
 # pylint: disable=c-extension-no-member
 
 
@@ -72,6 +72,7 @@ class File:
         """
         import shutil
         shutil.move(input_file, output_file)
+        return output_file
 
     @staticmethod
     def copy(input_file, output_file):
@@ -88,9 +89,9 @@ class File:
         """
         :param input_file: string with path to previous file place
         :param output_file: string with path to new file place
-        :return: None
+        :return: string with path to new file place
         """
-        cls.move(input_file, output_file)
+        return cls.move(input_file, output_file)
 
     @classmethod
     def hide(cls, filename, quiet=True):
@@ -108,11 +109,14 @@ class File:
             import win32api
             import win32con
             win32api.SetFileAttributes(filename, win32con.FILE_ATTRIBUTE_HIDDEN)  # hiding file like windows do
-        dotted_file = Path.extend(os.path.split(filename)[0], "." + os.path.split(filename)[1])  # adding dot
-        cls.rename(filename, dotted_file)
+        elif OS.unix_family:
+            dotted_file = Path.extend(os.path.split(filename)[0], "." + os.path.split(filename)[1])  # adding dot
+            filename = cls.rename(filename, dotted_file)  # adding dot
+        else:
+            raise NotImplementedError("Your OS doesn't supported")
         if not quiet:
             print("file", filename, "is hidden now")
-        return dotted_file
+        return filename
 
     @classmethod
     def backup(cls, filename, subfolder="bak", hide=True, quiet=False):
