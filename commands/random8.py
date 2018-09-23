@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for creating some random values.
 """
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 
 
 class Random:
@@ -40,6 +40,15 @@ class Random:
             string_of_symbols = string.ascii_uppercase + string.ascii_lowercase + string.digits
         import random
         return ''.join(random.choices(string_of_symbols, k=length))
+
+    @staticmethod
+    def item(o):
+        import random
+        if isinstance(o, dict):
+            key, value = random.choice(list(o.items()))
+            return key, value
+        else:
+            return random.choice(o)
 
     @staticmethod
     def string_unicode(length):
