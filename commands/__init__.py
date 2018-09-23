@@ -42,6 +42,7 @@ from .wget8 import Wget
 from .int8 import Int
 from .cli8 import CLI
 from .cs8 import dirify
+from .zip import Zip, Unzip
 from .const8 import backslash, newline, newline2, ruble
 from ._version import __version__
 

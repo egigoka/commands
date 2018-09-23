@@ -1,6 +1,6 @@
 #! python3
 # -*- coding: utf-8 -*-
-__version__ = "9.0.0-alpha100"
+__version__ = "9.0.0-alpha125"
 
 # TODO for 9.0.0 release:
 #    !done! OS class vars not strings, but booleans
@@ -25,6 +25,7 @@ __version__ = "9.0.0-alpha100"
 #    Path.expand bug with "." and ".." in windows
 #    do better benchmarking of commands import
 #    Json throw exceptions
+#    quiet change to verbose
 
 # TODO version diff
 #   export script as json?

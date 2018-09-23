@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.8.0"
+__version__ = "0.11.2"
 
 
 class Dir:
@@ -17,22 +17,6 @@ class Dir:
         import os
         if not os.path.isdir(dirname):
             os.makedirs(dirname)
-
-    @staticmethod
-    def commands():
-        """Used to store configs(?)
-        :return: path to this module
-        """
-        from .path8 import Path
-        return Path.commands8()
-
-    @staticmethod
-    def working():
-        """
-        :return: string with working directory
-        """
-        from .path8 import Path
-        return Path.working()
 
     @staticmethod
     def list_of_files(path):
@@ -79,18 +63,45 @@ class Dir:
                     print(filename, "renamed to", final_name)
 
     @classmethod
-    def delete(cls, directory):
-        """Removes all content in directory
-        :param directory: string with path to directory
+    def delete(cls, path, cleanup=False, remove_readonly=True):
+        """Remove directory
+        :param path: string
+        :param cleanup: boolean, True doesn't delete "path" folder, only content
         :return: None
         """
         import os
-        for root, dirs, files in os.walk(directory):  # , topdown=False):
+        for root, dirs, files in os.walk(path):  # , topdown=False):
             for name in files:
-                os.remove(os.path.join(root, name))
+                file_path = os.path.join(root, name)
+                if remove_readonly:
+                    try:
+                        os.remove(os.path.join(root, name))
+                    except PermissionError:
+                        # let's just assume that it's read-only and unlink it.
+                        import stat
+                        os.chmod(file_path, stat.S_IWRITE)
+                        # os.unlink(file_path)
+                        os.remove(file_path)
+                else:
+                    os.remove(file_path)
             for name in dirs:
                 cls.delete(os.path.join(root, name))
-        os.removedirs(directory)
+        if not cleanup:
+            try:
+                os.rmdir(path)
+            except OSError:
+                import time
+                time.sleep(0.05)
+                os.rmdir(path)
+
+
+    @classmethod
+    def cleanup(cls, path):
+        """Removes all content in directory
+        :param path: string
+        :return: None
+        """
+        cls.delete(path, cleanup=True)
 
     @classmethod
     def copy(cls, src, dst, symlinks=False, ignore=None,
