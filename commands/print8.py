@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for print to console.
 """
-__version__ = "0.9.1"
+__version__ = "0.9.2"
 
 
 class Print:
@@ -110,16 +110,16 @@ class Print:
         highlight = None
         color = None
         color_args = 0
-        if str(strings)[-1] in termcolor.HIGHLIGHTS:
+        if str(strings[-1]) in termcolor.HIGHLIGHTS:
             highlight = strings[-1]
             color_args += 1
-            if str(strings)[-2] in termcolor.COLORS:
+            if str(strings[-2]) in termcolor.COLORS:
                 color = strings[-2]
                 color_args += 1
-        elif str(strings)[-1] in termcolor.COLORS:
+        elif str(strings[-1]) in termcolor.COLORS:
             color = strings[-1]
             color_args += 1
-            if str(strings)[-2] in termcolor.HIGHLIGHTS:
+            if str(strings[-2]) in termcolor.HIGHLIGHTS:
                 highlight = strings[-2]
                 color_args += 1
         # create single string to pass it into termcolor
