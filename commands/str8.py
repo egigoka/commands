@@ -298,6 +298,24 @@ class Str:
         string = symbols[:8] + "-" + symbols[8:12] + "-" + symbols[12:16] + "-" + symbols[16:20] + "-" + symbols[20:]
         return string
 
+    @staticmethod
+    def encrypt(string, password):
+        int_list = []
+        password_len = len(password)
+        for cnt, sym in enumerate(string):
+            password_sym = password[cnt % password_len]
+            int_list.append(ord(sym) - ord(password_sym))
+        return int_list
+
+    @staticmethod
+    def decrypt(int_list, password):
+        output_string = ""
+        password_len = len(password)
+        for cnt, numb in enumerate(int_list):
+            password_sym = password[cnt % password_len]
+            output_string += chr(numb + ord(password_sym))
+        return output_string
+
     python_encodings = ['ascii', 'big5', 'big5hkscs', 'cp037', 'cp424', 'cp437', 'cp500', 'cp737', 'cp775', 'cp850',
                         'cp852', 'cp855', 'cp856', 'cp857', 'cp860', 'cp861', 'cp862', 'cp863', 'cp864', 'cp865',
                         'cp866', 'cp869', 'cp874', 'cp875', 'cp932', 'cp949', 'cp950', 'cp1006', 'cp1026', 'cp1140',
