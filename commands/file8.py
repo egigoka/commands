@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "0.5.4"
+__version__ = "0.6.0"
 # pylint: disable=c-extension-no-member
 
 
@@ -224,3 +224,12 @@ class File:
         """
         import os
         return os.path.getmtime(filename)
+
+    @staticmethod
+    def sha256_checksum(filename, block_size=65536):
+        import hashlib
+        sha256 = hashlib.sha256()
+        with open(filename, 'rb') as f:
+            for block in iter(lambda: f.read(block_size), b''):
+                sha256.update(block)
+        return sha256.hexdigest()
