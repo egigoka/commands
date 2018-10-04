@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for print to console.
 """
-__version__ = "0.9.2"
+__version__ = "0.9.3"
 
 
 class Print:
@@ -101,6 +101,8 @@ class Print:
         :return: None
         """
         import termcolor
+        termcolor.COLORS["gray"] = termcolor.COLORS["black"] = 30
+        termcolor.HIGHLIGHTS["on_gray"] = termcolor.HIGHLIGHTS["on_black"] = 40
         from .os8 import OS
         if OS.windows and not cls.colorama_inited:
             import colorama
@@ -134,6 +136,11 @@ class Print:
             string = strings[0]
         # run termcolor
         termcolor.cprint(string, color=color, on_color=highlight, attrs=attributes, end=end)
+
+        termcolor.COLORS.pop("gray")
+        termcolor.COLORS.pop("black")
+        termcolor.HIGHLIGHTS.pop("on_gray")
+        termcolor.HIGHLIGHTS.pop("on_black")
 
 
 Print = Print()
