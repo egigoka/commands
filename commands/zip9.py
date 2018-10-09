@@ -35,8 +35,8 @@ class Zip:
                 temp_zip.write(file_path, os.path.relpath(os.path.join(root, file), input_dir),
                                compress_type=zipfile.ZIP_DEFLATED)
                 if not quiet:
-                    from .print8 import Print
-                    from .cli8 import CLI
+                    from .print9 import Print
+                    from .cli9 import CLI
                     Print.rewrite(CLI.wait_update(quiet=True), file_path, "zipped")
 
         temp_zip.close()

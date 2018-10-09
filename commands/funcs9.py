@@ -12,7 +12,7 @@ def dirify(object_, regexp="*", quiet=False):
     :param quiet: suppress output to console
     :return: list of object public attributes
     """
-    from .list8 import List
+    from .list9 import List
     output = []
     for subobj in List.wildcard_search(dir(object_), regexp):
         if "__" not in subobj:
@@ -20,6 +20,7 @@ def dirify(object_, regexp="*", quiet=False):
                 print(subobj)
             output.append(subobj)
     return output
+
 
 def multiple(*types):
     from typing import Union

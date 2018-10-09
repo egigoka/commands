@@ -68,7 +68,7 @@ class Mouse:  # pylint: disable=too-few-public-methods
             :param quiet: boolean, suppress print to console
             :return: None
             """
-            from .time8 import Time
+            from .time9 import Time
             Time.sleep(SettingsMouse.sleep_before_click, quiet_small=quiet)
             if position:
                 pyautogui.click(x=position[0], y=position[1], button=button)

@@ -5,7 +5,7 @@
 # pylint: disable=unused-wildcard-import, wildcard-import
 import sys
 from commands import *
-from commands.git8 import Git
+from commands.git9 import Git
 
 # CHANGING VERSION
 version_prefix = '__version__ = "'

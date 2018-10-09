@@ -19,7 +19,7 @@ class Ssh:
         :return: string, output from 'command' execution
         """
         # todo authorisation by key.
-        from .os8 import OS
+        from .os9 import OS
         if OS.python_implementation != "pypy":
             import paramiko
         else:
@@ -42,8 +42,8 @@ class Ssh:
         :param safe: boolean, do not crash if connection unsuccessful
         :return: string with average loads of SSH linux server.
         """
-        from .str8 import Str
-        from .const8 import newline
+        from .str9 import Str
+        from .const9 import newline
         output = cls.get_output(host=host, username=username, password=password, command="uptime", safe=safe)
         output = Str.substring(output, before="load average: ", after=newline)
         output = output.split(", ")
@@ -58,7 +58,7 @@ class Ssh:
         :param safe: boolean, do not crash if connection unsuccessful
         :return: string with uptime of SSH linux server.
         """
-        from .str8 import Str
+        from .str9 import Str
         output = cls.get_output(host=host, username=username, password=password, command="uptime", safe=safe)
         output = Str.substring(output, before=" up ", after=", ")
         return output

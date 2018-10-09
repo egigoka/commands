@@ -17,8 +17,8 @@ class File:
         :return: None
         """
         import os
-        from .path8 import Path
-        from .dir8 import Dir
+        from .path9 import Path
+        from .dir9 import Dir
         if not isinstance(quiet, bool):
             raise TypeError("argument 'quiet' must be boolean")
         filename = Path.full(filename)
@@ -102,8 +102,8 @@ class File:
         :return: string with new filename
         """
         import os
-        from .path8 import Path
-        from .os8 import OS
+        from .path9 import Path
+        from .os9 import OS
         filename = Path.full(filename)
         if OS.windows:
             import win32api
@@ -129,9 +129,9 @@ class File:
         """
         import os
         import shutil
-        from .path8 import Path
-        from .dir8 import Dir
-        from .time8 import Time
+        from .path9 import Path
+        from .dir9 import Dir
+        from .time9 import Time
         filename = Path.full(filename)  # normalize filename
         backup_filename = str(filename) + "." + Time.dotted() + ".bak"  # add dotted time to backup filename
         backup_filename = os.path.split(backup_filename)  # splitting filename to folder and file

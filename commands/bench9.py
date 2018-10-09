@@ -38,7 +38,7 @@ class Bench:
         :return: float, time difference between start and this function call time
         """
         import datetime
-        from .time8 import Time
+        from .time9 import Time
         self.time_end = datetime.datetime.now()
         return Time.delta(self.time_start, self.time_end)
 
@@ -62,7 +62,7 @@ class Bench:
             # (not quiet_if_zero) and (str(round(delta, cls.fraction_digits)) != "0.0"))
             if (not quiet_if_zero) or (str(round(delta, self.fraction_digits)) != "0.0"):
                 try:
-                    from .print8 import Print
+                    from .print9 import Print
                     Print.colored(self.prefix, str(round(delta, self.fraction_digits)), "seconds", "grey", "on_white")
                 except TypeError:
                     print(self.prefix, str(round(delta, self.fraction_digits)), "seconds")

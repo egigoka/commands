@@ -19,7 +19,7 @@ class Print:
         :param raw: print representation of raw strings
         :return:
         """
-        from .console8 import Console
+        from .console9 import Console
         line = "-" * Console.width()
         print("<<<Debug sheet:>>>")
         for str_ in strings:
@@ -38,8 +38,8 @@ class Print:
         :param sep: sep as builtin print(sep)
         :return:
         """
-        from .os8 import OS
-        from .console8 import Console
+        from .os9 import OS
+        from .console9 import Console
         line = " " * Console.width()
         if OS.windows:  # windows add symbol to end of string :(
             line = line[:-1]
@@ -67,7 +67,7 @@ class Print:
                 new_longest_string = ">>" + new_longest_string[2:]
 
                 # replace
-                from .list8 import List
+                from .list9 import List
                 strings = List.replace_string(strings, longest_string, new_longest_string)
 
         print(*strings, sep=sep, end="\r")
@@ -103,7 +103,7 @@ class Print:
         import termcolor
         termcolor.COLORS["gray"] = termcolor.COLORS["black"] = 30
         termcolor.HIGHLIGHTS["on_gray"] = termcolor.HIGHLIGHTS["on_black"] = 40
-        from .os8 import OS
+        from .os9 import OS
         if OS.windows and not cls.colorama_inited:
             import colorama
             colorama.init()

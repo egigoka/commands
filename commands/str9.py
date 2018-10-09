@@ -81,7 +81,7 @@ class Str:
         :param quiet: boolean suppress print to console
         :return: list of strings
         """
-        from .const8 import newline, newline2
+        from .const9 import newline, newline2
         if isinstance(string, str):  # if input is string
             string = string.replace(newline2, newline)
             strings = string.split(newline)

@@ -11,39 +11,39 @@ START_TIME = datetime.datetime.now()
 CLASSES_SPEED_TWEAKING = False
 # CLASSES_SPEED_TWEAKING = True
 
-from .bench8 import Bench
+from .bench9 import Bench
 if CLASSES_SPEED_TWEAKING:
     CLASSES_BENCHMARK = Bench(fraction_digits=4)
-from .str8 import Str
-from .os8 import OS
-from .print8 import Print
-from .console8 import Console
-from .ssh8 import Ssh
-from .file8 import File
-from .locations8 import Locations
-from .dir8 import Dir
-from .path8 import Path
-from .file8 import File
-from .time8 import Time
-from .json8 import Json
-from .list8 import List
-from .process8 import Process
-from .dict8 import Dict
-from .codegen8 import Codegen
-from .log8 import plog
-from .network8 import Network
-from .bash8 import Bash
-from .macos8 import macOS
-from .windows8 import Windows
-from .gui8 import Gui
-from .tkinter8 import Tkinter
-from .random8 import Random
-from .wget8 import Wget
-from .int8 import Int
-from .cli8 import CLI
-from .cs8 import dirify
-from .zip import Zip, Unzip
-from .const8 import backslash, newline, newline2, ruble
+from .str9 import Str
+from .os9 import OS
+from .print9 import Print
+from .console9 import Console
+from .ssh9 import Ssh
+from .file9 import File
+from .locations9 import Locations
+from .dir9 import Dir
+from .path9 import Path
+from .file9 import File
+from .time9 import Time
+from .json9 import Json
+from .list9 import List
+from .process9 import Process
+from .dict9 import Dict
+from .codegen9 import Codegen
+from .log9 import plog
+from .network9 import Network
+from .bash9 import Bash
+from .macos9 import macOS
+from .windows9 import Windows
+from .gui9 import Gui
+from .tkinter9 import Tkinter
+from .random9 import Random
+from .wget9 import Wget
+from .int9 import Int
+from .cli9 import CLI
+from .funcs9 import dirify
+from .zip9 import Zip, Unzip
+from .const9 import backslash, newline, newline2, ruble
 from ._version import __version__
 
 class Internal:

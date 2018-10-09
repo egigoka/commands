@@ -17,7 +17,7 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
             :param string: string input
             :return: string with escaped symbols
             """
-            from .const8 import backslash
+            from .const9 import backslash
             quote_1 = '"'
             # quote_2 = "'"
             # if there any already escaped symbols:
@@ -39,9 +39,9 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
         :param quiet: suppress print to console
         :return: list of all sounds
         """
-        from .print8 import Print
-        from .dir8 import Dir
-        from .path8 import Path
+        from .print9 import Print
+        from .dir9 import Dir
+        from .path9 import Path
         global_sounds = Dir.list_of_files(Path.extend("System", "Library", "Sounds"))
         local_sounds = Dir.list_of_files(Path.extend("~", "Library", "Sounds"))
         if not quiet:
@@ -64,8 +64,8 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
         # advanced commandline tool - https://github.com/vjeantet/alerter
         # simpler commandline tool - https://github.com/vjeantet/alerter
         # commands = "display notification \"message\" with title \"title\" subtitle \"subtitle\" sound name \"Sosumi\""
-        from .str8 import Str
-        from .process8 import Process
+        from .str9 import Str
+        from .process9 import Process
         commands = "display notification " + Str.to_quotes(cls.OSAScript.quotes_escape(message))
         if title or subtitle:
             commands += " with "
@@ -87,6 +87,6 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
         :param symlink: string, path to new symlink
         :return: None
         """
-        from .process8 import Process
+        from .process9 import Process
         Process.start("ln", "-s", "'"+real+"'", "'"+symlink+"'")
 

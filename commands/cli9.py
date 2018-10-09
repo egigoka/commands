@@ -45,7 +45,7 @@ class CLI:
         :param quiet: boolean, suppress print to console
         :return: string with 'stick' in new position
         """
-        from .const8 import backslash
+        from .const9 import backslash
         if cls.wait_update_pos == 0:
             stick = "|"
         elif cls.wait_update_pos == 1:
@@ -57,7 +57,7 @@ class CLI:
             cls.wait_update_pos = -1
         cls.wait_update_pos += 1
         if not quiet:
-            from .print8 import Print
+            from .print9 import Print
             Print.rewrite(stick)
         return stick
 
@@ -70,5 +70,5 @@ class CLI:
         :return:
         """
         raise NotImplementedError
-        from .console8 import Console  # pylint: disable=unreachable
+        from .console9 import Console  # pylint: disable=unreachable
         Console.width()

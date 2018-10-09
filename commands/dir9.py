@@ -56,7 +56,7 @@ class Dir:
         """
         for filename in cls.list_of_files(directory):
             if previous_name_substring in filename:
-                from .file8 import File
+                from .file9 import File
                 final_name = filename.replace(previous_name_substring, new_name_substring)
                 File.rename(filename, final_name)
                 if not quiet:

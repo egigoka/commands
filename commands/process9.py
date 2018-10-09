@@ -15,7 +15,7 @@ class Process:
         :return: None
         """
         import os
-        from .os8 import OS
+        from .os9 import OS
         if OS.windows:
             try:
                 int(process)
@@ -34,7 +34,7 @@ class Process:
         else:
             raise NotImplementedError("OS not supported, now only Windows and macOS")
         if quiet:
-            from .console8 import Console
+            from .console9 import Console
             Console.get_output(command_)
         else:
             os.system(command_)
@@ -49,12 +49,12 @@ class Process:
         :return: None
         """
         import os
-        from .list8 import List
-        from .os8 import OS
-        from .str8 import Str
+        from .list9 import List
+        from .os9 import OS
+        from .str9 import Str
         arguments = List.flatterize(arguments)
         if debug:
-            from .print8 import Print
+            from .print9 import Print
             Print.debug("Process.start arguments", arguments)
         if new_window or pureshell:
             for argument_ in arguments:
@@ -70,7 +70,7 @@ class Process:
                         if OS.windows:
                             command = 'start "' + window_name + '" ' + argument_
                         elif OS.macos:
-                            from .gui8 import Gui
+                            from .gui9 import Gui
                             Gui.warning("macOS doesn't support creating new window now")
                             # p = subprocess.Popen(["python","second.py"])
                             # command = "" +

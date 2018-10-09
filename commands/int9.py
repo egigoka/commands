@@ -14,8 +14,8 @@ class Int:  # pylint: disable=too-few-public-methods
         "to_str" activated, return list of strings with equal length
         if "list" arg activated, list will be returned, otherwise, it will be iterable obj
         """
-        from .str8 import Str
-        from .os8 import OS
+        from .str9 import Str
+        from .os9 import OS
         if OS.is_python3:
             roots = range(start, end + 1)
         else:

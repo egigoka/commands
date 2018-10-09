@@ -12,7 +12,7 @@ class Time:
     def _lp2(string, length=2):
         """Internal alias to Str.leftpad
         """
-        from .str8 import Str
+        from .str9 import Str
         return Str.leftpad(string, length, 0)
 
     @staticmethod
@@ -66,8 +66,8 @@ class Time:
         :param check_per_sec: int|float, how often check time
         :return: None
         """
-        from .print8 import Print
-        from .bench8 import Bench
+        from .print9 import Print
+        from .bench9 import Bench
         benchmark = Bench()
         secs_second_var = int(seconds)
         while benchmark.get() < seconds:

@@ -1,11 +1,11 @@
 #! python3
 # -*- coding: utf-8 -*-
 # pylint: disable=wildcard-import, unused-wildcard-import, missing-docstring, too-many-nested-blocks,
-from .os8 import *
-from .print8 import *
-from .str8 import *
-from .random8 import *
-from .int8 import *
+from .os9 import *
+from .print9 import *
+from .str9 import *
+from .random9 import *
+from .int9 import *
 __version__ = "1.0.3"
 
 

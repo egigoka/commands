@@ -13,7 +13,7 @@ class Windows:
         """Locking windows workstation, doesn't work with Windows 10
         :return: None
         """
-        from .os8 import OS
+        from .os9 import OS
         if OS.windows_version and (OS.windows_version != 10):
             import ctypes
             ctypes.windll.LockWorkStation()  # todo fix Windows 10
@@ -39,7 +39,7 @@ class Windows:
         :return: boolean, existance of local user
         """
         import subprocess
-        from .console8 import Console
+        from .console9 import Console
         try:
             Console.get_output(f"net user {username}")
             return True
@@ -56,7 +56,7 @@ class Windows:
         :return: None
         """
         import subprocess
-        from .console8 import Console
+        from .console9 import Console
         retry_times = 5
 
         if not isinstance(username, str):
@@ -108,9 +108,9 @@ class Windows:
 
     @staticmethod
     def dump_auditpol(filename=None, category="*", fastname=None, quiet=False):
-        from .file8 import File
-        from .console8 import Console
-        from .time8 import Time
+        from .file9 import File
+        from .console9 import Console
+        from .time9 import Time
         import subprocess
         if not filename:
             filename = f"auditpol_{Time.dotted()}.txt"

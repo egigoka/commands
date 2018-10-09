@@ -31,7 +31,7 @@ class Pip:
         :return: None
         """
         import time
-        from .list8 import List
+        from .list9 import List
         commands = ["install"]
         if uninstall:
             commands = ["uninstall", "-y"]
@@ -58,7 +58,7 @@ class Pip:
         :return: None
         """
         if "pip" not in cls.list_of_modules:
-            from .os8 import OS
+            from .os9 import OS
             if OS.linux:
                 import os
                 os.system("sudo apt-get install python" + OS.python_commandline_version + "-pip")
@@ -69,14 +69,14 @@ class Pip:
         Update _all_ installed packages at once
         :return: None
         """
-        from .str8 import Str
-        from .console8 import Console
+        from .str9 import Str
+        from .console9 import Console
         packages = Str.nl(Console.get_output("pip list"))
         packages_names = []
         for package in packages[3:]:
             if ("Package" not in package) and ("---" not in package) and package != "":
                 packages_names.append(Str.get_words(package)[0])
-        from .print8 import Print
+        from .print9 import Print
         Print.debug(packages_names)
         cls.install(*packages_names, upgrade=True)
 

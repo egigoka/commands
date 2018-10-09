@@ -15,12 +15,12 @@ class Console:
         :return: None
         """
         import os
-        from .os8 import OS
+        from .os9 import OS
         if OS.windows:
             os.system("cls")
         elif OS.linux:
             import shutil
-            from .const8 import newline
+            from .const9 import newline
             print(newline * shutil.get_terminal_size().lines)
         elif OS.macos:
             os.system(r"clear && printf '\e[3J'")
@@ -30,12 +30,12 @@ class Console:
         """
         :return: int width of opened console in chars
         """
-        from .os8 import OS
+        from .os9 import OS
         if OS.windows:
             import shutil
             width_ = shutil.get_terminal_size().columns
         elif OS.unix_family:
-            from .str8 import Str
+            from .str9 import Str
             io_string = Console.get_output("stty size")
             width_ = Str.get_integers(io_string)[1]
         return int(width_)
@@ -45,12 +45,12 @@ class Console:
         """
         :return: int height of opened console in chars
         """
-        from .os8 import OS
+        from .os9 import OS
         if OS.windows:
             import shutil
             height = shutil.get_terminal_size().lines
         elif OS.unix_family:
-            from .str8 import Str
+            from .str9 import Str
             sttysize = Console.get_output("stty size")
             height = Str.get_integers(sttysize)[0]
         return int(height)
@@ -66,8 +66,8 @@ class Console:
         :return:
         """
         import random
-        from .os8 import OS
-        from .print8 import Print
+        from .os9 import OS
+        from .print9 import Print
         if (width is not None) and (height is not None) and OS.windows:
             import os
             os.system("mode con cols=" + str(width) + " lines=" + str(height))
@@ -106,7 +106,7 @@ class Console:
         :return: single string with output of executing command.
         """
         import subprocess
-        from .os8 import OS
+        from .os9 import OS
         io_string = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
         if OS.windows:
             output = io_string.decode("cp866")

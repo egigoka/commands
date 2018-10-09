@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with some predefined paths
 """
-from .os8 import OS
+from .os9 import OS
 __version__ = "0.0.3"
 
 

@@ -15,8 +15,8 @@ class Gui:  # pylint: disable=too-few-public-methods
         :return: None
         """
         import sys
-        from .print8 import Print
-        from .os8 import OS
+        from .print9 import Print
+        from .os9 import OS
         try:
             try:
                 not_dot_py = sys.argv[0][-3:] != ".py"  # todo check logic
@@ -29,7 +29,7 @@ class Gui:  # pylint: disable=too-few-public-methods
             Print.debug("sys.argv", sys.argv)
             raise RuntimeError("Something wrong with sys.argv. Tkinter doesn't like it!")
         if OS.macos:
-            from .macos8 import macOS
+            from .macos9 import macOS
             macOS.notification(message)
         if (not OS.macos) and (OS.python_implementation != "pypy"):
             import pyautogui

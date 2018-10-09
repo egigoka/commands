@@ -14,9 +14,9 @@ def plog(logfile, description, custom_time=None, quiet=False, backup=True):
     :param backup: boolean, means to backup log before new event adding or not (too much backups can use all disk space)
     :return:
     """
-    from .file8 import File
-    from .time8 import Time
-    from .const8 import newline
+    from .file9 import File
+    from .time9 import Time
+    from .const9 import newline
     if not quiet:
         print(description)
     File.create(logfile)

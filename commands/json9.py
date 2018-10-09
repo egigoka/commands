@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.4.0"
+__version__ = "2.4.1"
 
 
 class Json:
@@ -40,13 +40,13 @@ class Json:
         :param filename: string with path to JSON file
         :return: boolean with state of JSON correctness
         """
-        try:
-            self._load_from_file(filename, quiet=quiet)
-            return True
-        except:  # pylint: disable=bare-except
-            if not quiet:
-                print("JSON is bad")
-            return False
+        # try:
+        self._load_from_file(filename, quiet=quiet)
+        return True
+        # except:  # pylint: disable=bare-except
+        #     if not quiet:
+        #         print("JSON is bad")
+        #     return False
 
     def _save_to_file(self, filename, json_string, quiet=False, debug=False):
         """
@@ -58,25 +58,25 @@ class Json:
         """
         import json
         import sys
-        from .file8 import File
+        from .file9 import File
         if debug:
             print("sys.argv[0] =", sys.argv[0])
             print(json_string)
-        try:
-            File.wipe(filename)
-            settings_json_text_io = open(filename, "w")
-            json.dump(json_string, settings_json_text_io, ensure_ascii=self.ensure_ascii)
-            settings_json_text_io.close()
-            if not quiet:
-                print("JSON succesfull saved")
-        except:
-            from .path8 import Path
-            raise IOError("error while saving JSON, try to repair script at path " +
-                          Path.full(sys.argv[0]))
+        # try:
+        File.wipe(filename)
+        settings_json_text_io = open(filename, "w")
+        json.dump(json_string, settings_json_text_io, ensure_ascii=self.ensure_ascii)
+        settings_json_text_io.close()
+        if not quiet:
+            print("JSON succesfull saved")
+        # except:
+        #     from .path import Path
+        #     raise IOError("error while saving JSON, try to repair script at path " +
+        #                   Path.full(sys.argv[0]))
         json_test_string = self._load_from_file(filename, quiet=True)
         if json_string != json_test_string:
-            from .path8 import Path
-            from .print8 import Print
+            from .path9 import Path
+            from .print9 import Print
             Print.debug("jsonstring_to_save", json_string, "json_test_string_from_file", json_test_string)
             raise IOError("error while saving JSON, try to repair script at path " +
                           Path.full(sys.argv[0]))
@@ -90,22 +90,22 @@ class Json:
         """
         import json
         import os
-        try:
-            if not os.path.isfile(filename):
-                from .file8 import File
-                File.create(filename)
-                cleanjson = {}
-                self.save(filename, cleanjson)
-            settings_json_text_io = open(filename)
-            json_string_in_memory = json.load(settings_json_text_io)
-            settings_json_text_io.close()
-            if not quiet:
-                print("JSON succesfull loaded")
-            if debug:
-                print(json_string_in_memory)
-            return json_string_in_memory
-        except:
-            import sys
-            from .path8 import Path
-            raise IOError("error while loading JSON, try to repair script at path " +
-                          Path.full(sys.argv[0]))
+        # try:
+        if not os.path.isfile(filename):
+            from .file9 import File
+            File.create(filename)
+            clean_json = {}
+            self._save_to_file(filename, clean_json)
+        settings_json_text_io = open(filename)
+        json_string_in_memory = json.load(settings_json_text_io)
+        settings_json_text_io.close()
+        if not quiet:
+            print("JSON succesfull loaded")
+        if debug:
+            print(json_string_in_memory)
+        return json_string_in_memory
+        # except:
+        #     import sys
+        #     from .path import Path
+        #     raise IOError("error while loading JSON, try to repair script at path " +
+        #                   Path.full(sys.argv[0]))

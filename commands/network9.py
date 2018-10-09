@@ -14,7 +14,7 @@ class Network:
         :param url: string, URL
         :return: string, URL domain
         """
-        from .str8 import Str
+        from .str9 import Str
         if "/" in url:
             try:
                 url_output = Str.substring(url, "://", "/")
@@ -56,12 +56,12 @@ class Network:
                  from ping command
         """
         # todo properly work with exception
-        from .os8 import OS
-        from .console8 import Console
+        from .os9 import OS
+        from .console9 import Console
         domain = cls.get_domain_of_url(domain)
         backup_ping_output = ""
         if not quiet:
-            from .print8 import Print
+            from .print9 import Print
             Print.rewrite("Pinging", domain, count, "times...")
             up_message = domain + " is up!"
             down_message = domain + " is down."
@@ -93,7 +93,7 @@ class Network:
         if logfile or (not quiet):
             import termcolor
         if logfile:
-            from .log8 import plog
+            from .log9 import plog
             if up:
                 plog(logfile, domain + " is up!", quiet=True)
                 termcolor.cprint(up_message, "white", "on_green")
@@ -109,7 +109,7 @@ class Network:
                 termcolor.cprint(down_message, "white", "on_red")
         ip = None  # pylint: disable=invalid-name
         if return_ip:
-            from .str8 import Str
+            from .str9 import Str
             try:
                 for line in Str.nl(ping_output + backup_ping_output):
                     if len(Str.get_integers(line, float_support=False)) >= 4:
@@ -141,8 +141,8 @@ class Network:
     @staticmethod
     def download_file(url, out=None, quiet=None):
         import os
-        from .file8 import File
-        from .path8 import Path
+        from .file9 import File
+        from .path9 import Path
         if not out:
             out = os.path.split(url)[1]
         import urllib.request
@@ -302,9 +302,9 @@ class Network:
 
         if not fast:
             if not quiet:
-                from .print8 import Print
+                from .print9 import Print
                 Print.rewrite("Getting IP...")
-            from .dict8 import Dict
+            from .dict9 import Dict
             tempdict = {}
             for server, ip in Dict.iterable(ipgetter.test()):
                 try:

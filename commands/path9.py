@@ -45,10 +45,10 @@ class Path:
             try:
                 path = os.path.join(str(path), str(path_part))  # pylint: disable=used-before-assignment
             except NameError:  # first path piece is very important
-                from .os8 import OS
-                from .const8 import backslash
-                from .print8 import Print
-                if (OS.windows) and path_part == backslash:  # support for smb windows paths like \\ip_or_pc\dir\
+                from .os9 import OS
+                from .const9 import backslash
+                from .print9 import Print
+                if OS.windows and path_part == backslash:  # support for smb windows paths like \\ip_or_pc\dir\
                     path = backslash * 2
                 elif (OS.windows) and (len(path_part) <= 3):  # todo bug with "." and ".."
                     path = os.path.join(path_part, os.sep)
@@ -74,14 +74,14 @@ class Path:
         """
         :return: string, home directory of user
         """
-        from .os8 import OS
-        from .console8 import Console
-        from .const8 import newline, newline2
+        from .os9 import OS
+        from .console9 import Console
+        from .const9 import newline, newline2
         if OS.windows:
             path = Console.get_output(r"echo %userprofile%")
             path = path.rstrip(newline2)
         else:
-            from .str8 import Str
+            from .str9 import Str
             path = Str.nl(Console.get_output("echo $HOME")[0])
             path = path.rstrip(newline)
         return path
@@ -97,5 +97,5 @@ class Path:
         import os
         os.chdir(path)
         if not quiet:
-            from .print8 import Print
+            from .print9 import Print
             Print.debug("os.getcwd()  # current directory is", os.getcwd())

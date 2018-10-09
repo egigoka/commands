@@ -4,11 +4,11 @@
 """
 # pylint: disable=unused-wildcard-import, wildcard-import
 import sys
-from commands.path8 import Path
-from commands.process8 import Process
-from commands.bash8 import Bash
-from commands.file8 import File
-from commands.str8 import Str
+from commands.path9 import Path
+from commands.process9 import Process
+from commands.bash9 import Bash
+from commands.file9 import File
+from commands.str9 import Str
 __version__ = "2.0.1"
 
 

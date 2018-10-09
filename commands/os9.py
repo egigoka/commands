@@ -56,6 +56,7 @@ class OS:  # pylint: disable=too-few-public-methods
         display = False
         print("Your system haven't display -_-")
 
+    @staticmethod
     def running_in_repl():
         try:
             sys.ps1  # pylint: disable = pointless-statement, no-member
@@ -66,16 +67,16 @@ class OS:  # pylint: disable=too-few-public-methods
 
     try:
         #if windows:
-        #cyrline = "йцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ"
-        cyrline = "йЙ"
+        #cyr_line = "йцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ"
+        cyr_line = "йЙ"
         if windows and sys.version_info < (3, 6):
             try:
                 import win_unicode_console  # pylint: disable=import-error
                 win_unicode_console.enable()
             except:  # pylint: disable=bare-except
                 pass
-        for cyrsybol in cyrline:
-            print(cyrsybol*2, end="\r")
+        for cyr_symbol in cyr_line:
+            print(cyr_symbol * 2, end="\r")
         print("  ", end="\r")
         cyrillic_support = True
     except UnicodeEncodeError as err:
