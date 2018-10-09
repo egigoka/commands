@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for print to console.
 """
-__version__ = "0.9.3"
+__version__ = "0.9.4"
 
 
 class Print:
@@ -48,7 +48,7 @@ class Print:
             # count len of all
             len_all = 0
             for string in strings:
-                len_all += len(string) + len(sep)
+                len_all += len(str(string)) + len(sep)
             len_all -= len(sep)
 
             # check for fit
