@@ -199,15 +199,6 @@ class File:
             print(f"Writed to file {filename}")
 
     @staticmethod
-    def get_size(filename):  # return size in bytes
-        """
-        :param filename: string with path to file
-        :return: int with filesize in bytes
-        """
-        import os
-        return os.stat(filename).st_size
-
-    @staticmethod
     def exists(filename):
         """
         :param filename: string with path to file
@@ -215,6 +206,15 @@ class File:
         """
         import os
         return os.path.isfile(filename)
+
+    @staticmethod
+    def get_size(filename):  # return size in bytes
+        """
+        :param filename: string with path to file
+        :return: int with filesize in bytes
+        """
+        import os
+        return os.stat(filename).st_size
 
     @staticmethod
     def get_modification_time(filename):
@@ -226,6 +226,12 @@ class File:
         return os.path.getmtime(filename)
 
     @staticmethod
+    def get_extension(filepath):
+        import os
+        filename, file_extension = os.path.splitext(filepath)
+        return file_extension
+
+    @staticmethod
     def sha256_checksum(filename, block_size=65536):
         import hashlib
         sha256 = hashlib.sha256()
@@ -233,3 +239,4 @@ class File:
             for block in iter(lambda: f.read(block_size), b''):
                 sha256.update(block)
         return sha256.hexdigest()
+
