@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "0.6.0"
+__version__ = "0.6.1"
 # pylint: disable=c-extension-no-member
 
 
@@ -163,13 +163,18 @@ class File:
         file.close()
 
     @staticmethod
-    def read(path):  # return pipe to file content
+    def read(path, encoding="utf-8", auto_detect_encoding=False):  # return pipe to file content
         """
         :param path: string with path to file
         :return: pipe to file text content with utf-8 decoding
         """
         try:
-            with open(path, "r", encoding='utf-8') as file:
+            if auto_detect_encoding:
+                import chardet
+                with open(path, "rb") as rawfile:
+                    rawdata = rawfile.read()
+                encoding = chardet.detect(rawdata)["encoding"]
+            with open(path, "r", encoding=encoding) as file:
                 return file.read()
         except UnicodeDecodeError:
             import codecs

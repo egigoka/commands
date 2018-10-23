@@ -19,7 +19,8 @@ setup(
         'termcolor',
         'copypaste',
         'pyperclip',
-        'paramiko'],
+        'paramiko',
+        'chardet'],
     extras_require={
         ':platform_system!="Linux"': ['pyautogui'],
         ':platform_system=="Windows"': ['pywin32', 'colorama'],
