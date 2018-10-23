@@ -163,7 +163,7 @@ class File:
         file.close()
 
     @staticmethod
-    def read(path, encoding="utf-8", auto_detect_encoding=False):  # return pipe to file content
+    def read(path, encoding="utf-8", auto_detect_encoding=False, quiet=True):  # return pipe to file content
         """
         :param path: string with path to file
         :return: pipe to file text content with utf-8 decoding
@@ -173,7 +173,10 @@ class File:
                 import chardet
                 with open(path, "rb") as rawfile:
                     rawdata = rawfile.read()
-                encoding = chardet.detect(rawdata)["encoding"]
+                chardet_encoding = chardet.detect(rawdata)["encoding"]
+                if not quiet:
+                    print(f"chardet_encoding {chardet_encoding}")
+                encoding = chardet_encoding
             with open(path, "r", encoding=encoding) as file:
                 return file.read()
         except UnicodeDecodeError:
