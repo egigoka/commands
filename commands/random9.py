@@ -2,21 +2,26 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for creating some random values.
 """
-__version__ = "0.5.0"
+__version__ = "0.6.0"
 
 
 class Random:
     """Class with functions for creating some random values.
     """
     @staticmethod
-    def integer(minimum, maximum):
+    def integer(minimum, maximum, to_str=False):
         """
         :param minimum: int, minimum value
         :param maximum: int, maximum value
-        :return: int, random from 'minimum' to 'maximum'
+        :param to_str: bool, if True - return string with len of str(maximum) param
+        :return: int|str, random from 'minimum' to 'maximum'
         """
         import random
-        return random.randrange(minimum, maximum + 1)
+        result = random.randrange(minimum, maximum + 1)
+        if to_str:
+            from .str9 import Str
+            result = Str.leftpad(result, len(str(maximum)))
+        return result
 
     @staticmethod
     def float(minimum, maximum):  # return random floating number

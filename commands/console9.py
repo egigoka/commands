@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 
 class Console:
@@ -107,11 +107,12 @@ class Console:
         """
         import subprocess
         from .os9 import OS
-        io_string = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
+        # out = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
+        out, err = subprocess.Popen("ping ya.ru", stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
         if OS.windows:
-            output = io_string.decode("cp866")
+            output = out.decode("cp866")
         elif OS.unix_family:
-            output = io_string.decode("utf8")
+            output = out.decode("utf8")
         return output
 
 # Popen work with todo implement
