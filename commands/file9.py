@@ -180,7 +180,7 @@ class File:
                     count_of_symbols = 10000
                 with open(path, "rb") as rawfile:
                     slice_of_raw_data = rawfile.read(count_of_symbols)
-                # start check for utf-16-le :(
+                # start check for utf-16-le :( only ascii characters, what a fool :(
                 utf_16_le = True
                 for cnt, sym in enumerate(slice_of_raw_data):
                     if cnt % 2 != 0:
