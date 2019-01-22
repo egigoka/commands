@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "0.7.1"
+__version__ = "0.7.2"
 # pylint: disable=c-extension-no-member
 
 
@@ -165,15 +165,19 @@ class File:
     @staticmethod
     def read(path, encoding="utf-8", auto_detect_encoding=False, quiet=True):  # return pipe to file content
         """
-        :param path: string with path to file
-        :return: pipe to file text content with utf-8 decoding
+        :param path: string, with path to file
+        :param auto_detect_encoding: bool or int, how much symbols use to auto define decoding, if True, uses 1000
+        :return: pipe, to file text content with utf-8 decoding
         """
         try:
             if auto_detect_encoding:
                 import chardet
                 with open(path, "rb") as rawfile:
                     raw_data = rawfile.read()
-                slice_of_raw_data = raw_data[0:1000]
+                count_of_symbols = auto_detect_encoding
+                if auto_detect_encoding is True:  # you can define how much symbols use to define encoding
+                    count_of_symbols = 1000
+                slice_of_raw_data = raw_data[0:count_of_symbols]
                 encoding = chardet.detect(slice_of_raw_data)["encoding"]
                 if not quiet:
                     print(f"encoding defined by chardet: {encoding}")
