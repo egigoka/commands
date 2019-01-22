@@ -174,7 +174,7 @@ class File:
             if auto_detect_encoding:
                 if not quiet:
                     from .bench9 import Bench
-                    define_encoding_bench = Bench("Defined encoding in")
+                    define_encoding_bench = Bench()
                 import chardet
                 with open(path, "rb") as rawfile:
                     raw_data = rawfile.read()
@@ -185,8 +185,7 @@ class File:
 
                 encoding = chardet.detect(slice_of_raw_data)["encoding"]
                 if not quiet:
-                    print(f"encoding defined by chardet: [{encoding}] by [{count_of_symbols}] first symbols")
-                    define_encoding_bench.end()
+                    define_encoding_bench.end(f"encoding defined by chardet: [{encoding}] by [{count_of_symbols}] first symbols in")
             with open(path, "r", encoding=encoding) as file:
                 return file.read()
         except UnicodeDecodeError:
