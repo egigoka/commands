@@ -175,17 +175,28 @@ class File:
                 if not quiet:
                     from .bench9 import Bench
                     define_encoding_bench = Bench()
-                import chardet
-                with open(path, "rb") as rawfile:
-                    raw_data = rawfile.read()
                 count_of_symbols = auto_detect_encoding
                 if auto_detect_encoding is True:  # you can define how much symbols use to define encoding
                     count_of_symbols = 10000
-                slice_of_raw_data = raw_data[0:count_of_symbols]
-
-                encoding = chardet.detect(slice_of_raw_data)["encoding"]
-                if not quiet:
-                    define_encoding_bench.end(f"encoding defined by chardet: [{encoding}] by [{count_of_symbols}] first symbols in")
+                with open(path, "rb") as rawfile:
+                    slice_of_raw_data = rawfile.read(count_of_symbols)
+                # start check for utf-16-le :(
+                utf_16_le = True
+                for cnt, sym in enumerate(slice_of_raw_data):
+                    if cnt % 2 != 0:
+                        if sym != 0:
+                            utf_16_le = False
+                            break
+                if utf_16_le:
+                    encoding = "utf-16-le"
+                    if not quiet:
+                        define_encoding_bench.end(f"encoding defined by egigoka: [{encoding}] by [{count_of_symbols}] first symbols in")
+                # end check for utf-16-le :(
+                else:
+                    import chardet
+                    encoding = chardet.detect(slice_of_raw_data)["encoding"]
+                    if not quiet:
+                        define_encoding_bench.end(f"encoding defined by chardet: [{encoding}] by [{count_of_symbols}] first symbols in")
             with open(path, "r", encoding=encoding) as file:
                 return file.read()
         except UnicodeDecodeError:
