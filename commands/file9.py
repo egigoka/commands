@@ -167,6 +167,7 @@ class File:
         """
         :param path: string, with path to file
         :param auto_detect_encoding: bool or int, how much symbols use to auto define decoding, if True, uses 1000
+        :param quiet: bool, if True, suppress output to console
         :return: pipe, to file text content with utf-8 decoding
         """
         try:
@@ -180,7 +181,7 @@ class File:
                 slice_of_raw_data = raw_data[0:count_of_symbols]
                 encoding = chardet.detect(slice_of_raw_data)["encoding"]
                 if not quiet:
-                    print(f"encoding defined by chardet: {encoding}")
+                    print(f"encoding defined by chardet: [{encoding}] by [{count_of_symbols}] first symbols")
             with open(path, "r", encoding=encoding) as file:
                 return file.read()
         except UnicodeDecodeError:
