@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "0.7.0"
+__version__ = "0.7.1"
 # pylint: disable=c-extension-no-member
 
 
@@ -172,11 +172,11 @@ class File:
             if auto_detect_encoding:
                 import chardet
                 with open(path, "rb") as rawfile:
-                    rawdata = rawfile.read()
-                chardet_encoding = chardet.detect(rawdata)["encoding"]
+                    raw_data = rawfile.read()
+                slice_of_raw_data = raw_data[0:1000]
+                encoding = chardet.detect(slice_of_raw_data)["encoding"]
                 if not quiet:
-                    print(f"chardet_encoding {chardet_encoding}")
-                encoding = chardet_encoding
+                    print(f"encoding defined by chardet: {encoding}")
             with open(path, "r", encoding=encoding) as file:
                 return file.read()
         except UnicodeDecodeError:

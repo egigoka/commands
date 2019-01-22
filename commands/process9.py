@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing processes.
 """
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 
 class Process:
@@ -85,9 +85,7 @@ class Process:
                     commands.append(str(argument_))
                 subprocess.call(commands)
             elif OS.macos:
-                commands = ""
-                for argument_ in arguments:
-                    commands += str(argument_) + " "
+                commands = " ".join(arguments)
                 # print(commands)
                 os.system(commands)
 # Popen work with todo implement
