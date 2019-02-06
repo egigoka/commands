@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with funtions to work with path strings
 """
-__version__ = "0.1.3"
+__version__ = "1.0.0"
 
 
 class Path:
@@ -34,7 +34,7 @@ class Path:
         return os.getcwd()
 
     @classmethod
-    def extend(cls, *paths, debug=False):
+    def combine(cls, *paths, debug=False):
         """Create full path string from strings
         :param paths: strings, path shards to create full path string
         :param debug: boolean, print all movements

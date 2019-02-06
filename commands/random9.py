@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for creating some random values.
 """
-__version__ = "0.6.0"
+__version__ = "0.6.1"
 
 
 class Random:
@@ -47,13 +47,18 @@ class Random:
         return ''.join(random.choices(string_of_symbols, k=length))
 
     @staticmethod
-    def item(o):
+    def item(*objects, **kwargs):
         import random
-        if isinstance(o, dict):
-            key, value = random.choice(list(o.items()))
+        if len(objects) == 1:
+            objects = objects[0]
+        if kwargs:
+            objects = kwargs
+
+        if isinstance(objects, dict):
+            key, value = random.choice(list(objects.items()))
             return key, value
         else:
-            return random.choice(o)
+            return random.choice(objects)
 
     @staticmethod
     def string_unicode(length):

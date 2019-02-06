@@ -185,7 +185,7 @@ class File:
                 for cnt, sym in enumerate(slice_of_raw_data):
                     if cnt % 2 != 0:
                         if sym != 0:
-                            utf_16_le = False
+                            utf_16_le = False  # todo count percentage of symbols
                             break
                 if utf_16_le:
                     encoding = "utf-16-le"

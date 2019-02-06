@@ -10,7 +10,7 @@ from commands.git9 import Git
 # CHANGING VERSION
 version_prefix = '__version__ = "'
 version_suffix = '"'
-version_path = Path.extend(Path.working(), "commands", "_version.py")  # path to version file
+version_path = Path.combine(Path.working(), "commands", "_version.py")  # path to version file
 version_text = File.read(version_path)  # text from version file
 __version__ = Str.substring(version_text, version_prefix, version_suffix)  # get version from plane text
 alphanumber = Str.get_integers(__version__)[-1]  # get only integer of alpha version
