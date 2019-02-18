@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "0.7.2"
+__version__ = "1.0.0"
 # pylint: disable=c-extension-no-member
 
 
@@ -227,7 +227,7 @@ class File:
             print(f"Writed to file {filename}")
 
     @staticmethod
-    def exists(filename):
+    def exist(filename):
         """
         :param filename: string with path to file
         :return: boolean that means existence of file
