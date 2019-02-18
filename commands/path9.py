@@ -87,7 +87,7 @@ class Path:
         return path
 
     @staticmethod
-    def get_parrent(path):
+    def get_parent(path):
         """Return parent folder of given path
         :param path: string (with path)
         :return: string (parent path to input one)
