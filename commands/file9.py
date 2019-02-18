@@ -26,12 +26,12 @@ class File:
             Dir.create(os.path.split(filename)[0])
         if not quiet:
             print(f"Creating file {filename}")
-        if not cls.exists(filename):
+        if not cls.exist(filename):
             with open(filename, 'a'):  # open file and close after
                 os.utime(filename, None)  # change time of file modification
         else:
-            raise FileExistsError("file " + str(filename) + " exists")
-        if not cls.exists(filename):
+            raise FileExistsError("file " + str(filename) + " exist")
+        if not cls.exist(filename):
             import sys
             raise FileNotFoundError("error while creating file " + filename +
                                     "try to repair script at " + Path.full(sys.argv[0]))
@@ -60,7 +60,7 @@ class File:
             print("file", path, "is deleted")
         if not no_sleep:
             time.sleep(0.05)
-            if cls.exists(path):
+            if cls.exist(path):
                 raise FileExistsError(path + " is not deleted")
 
     @staticmethod
