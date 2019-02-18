@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with funtions to work with path strings
 """
-__version__ = "1.0.0"
+__version__ = "2.1.0"
 
 
 class Path:
@@ -87,7 +87,16 @@ class Path:
         return path
 
     @staticmethod
-    def set_current(path, quiet=True):
+    def get_parrent_folder(path):
+        """Return parent folder of given path
+        :param path: string (with path)
+        :return: string (parent path to input one)
+        """
+        import os
+        return os.path.split(path)[0]
+
+    @staticmethod
+    def set_working(path, quiet=True):
         """Changes current working directory. If quiet is disabled, prints
         directory.
         :param path: string, path to new working directory
