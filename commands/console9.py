@@ -92,32 +92,19 @@ class Console:
                 cls.clean()
                 break
 
-
     @staticmethod
-    def get_output(command):
-        # from subprocess import Popen, PIPE
-        #
-        # out, err = Popen('ping ya.ru', stdout=PIPE, stderr=PIPE).communicate()
-        # print(out)
-        # print(err)
+    def get_output(*commands):
         """Return output of executing command. Doesn't output it to terminal in
         realtime.
-        :param command: single string with command
+        :param commands: list with command and arguments
         :return: single string with output of executing command.
         """
         import subprocess
         from .os9 import OS
         # out = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
-        out, err = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+        out, err = subprocess.Popen(commands, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
         if OS.windows:
-            output = out.decode("cp866")
+            output = out.decode("cp866") + err.decode("cp866")
         elif OS.unix_family:
-            output = out.decode("utf8")
+            output = out.decode("utf8") + err.decode("utf8")
         return output
-
-# Popen work with todo implement
-#     try:
-#         command = 'netsh advfirewall firewall delete rule name="Open Port ' + str(grafana_port) + '" protocol=tcp localport=' + str(grafana_port) + ''
-#         out, err = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
-#     except:
-#         pass
