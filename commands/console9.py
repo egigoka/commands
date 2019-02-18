@@ -101,7 +101,6 @@ class Console:
         """
         import subprocess
         from .os9 import OS
-        # out = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
         out, err = subprocess.Popen(commands, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
         if OS.windows:
             output = out.decode("cp866") + err.decode("cp866")
