@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with funtions to work with path strings
 """
-__version__ = "2.1.0"
+__version__ = "2.2.0"
 
 
 class Path:
@@ -108,3 +108,14 @@ class Path:
         if not quiet:
             from .print9 import Print
             Print.debug("os.getcwd()  # current directory is", os.getcwd())
+
+    def add_before_extension(self, filepath, infix):
+        """
+        :param path:
+        :param infix:
+        :return:
+        """
+        from .file9 import File
+        extension = File.get_extension(filepath)
+        filepath_without_extension = filepath.rstrip(extension)
+        return filepath_without_extension + infix + extension
