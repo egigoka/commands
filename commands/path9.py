@@ -118,4 +118,4 @@ class Path:
         from .file9 import File
         extension = File.get_extension(filepath)
         filepath_without_extension = filepath.rstrip(extension)
-        return filepath_without_extension + infix + extension
+        return filepath_without_extension + str(infix) + extension
