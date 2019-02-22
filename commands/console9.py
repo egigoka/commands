@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.4.2"
+__version__ = "0.4.3"
 
 
 class Console:
@@ -113,6 +113,11 @@ class Console:
         """Fit strings to console
         :return: strings, that can be fit in one line print
         """
+        from .os9 import OS
+        console_width = cls.width()
+        if OS.windows:  # windows add symbol to end of string :(
+            console_width -= 1
+
         # count len of all
         len_all = 0
         for string in strings:
@@ -120,7 +125,7 @@ class Console:
         len_all -= len(sep)
 
         # check for fit
-        if len_all <= cls.width():
+        if len_all <= console_width:
             pass
         else:
             # get longest line
@@ -130,7 +135,7 @@ class Console:
                     longest_string = string
 
             # cut line
-            cut_cnt = len_all - cls.width()
+            cut_cnt = len_all - console_width
             new_longest_string = longest_string[cut_cnt:]
             new_longest_string = ">>" + new_longest_string[2:]
 
