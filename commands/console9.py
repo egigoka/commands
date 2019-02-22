@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 
 class Console:
@@ -119,7 +119,7 @@ class Console:
         len_all -= len(sep)
 
         # check for fit
-        if len_all <= self.width():
+        if len_all <= Console.width():
             pass
         else:
             # get longest line
