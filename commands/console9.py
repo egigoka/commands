@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.4.1"
+__version__ = "0.4.2"
 
 
 class Console:
@@ -108,7 +108,8 @@ class Console:
             output = out.decode("utf8") + err.decode("utf8")
         return output
 
-    def fit(self, *strings, sep=" "):
+    @classmethod
+    def fit(cls, *strings, sep=" "):
         """Fit strings to console
         :return: strings, that can be fit in one line print
         """
@@ -119,7 +120,7 @@ class Console:
         len_all -= len(sep)
 
         # check for fit
-        if len_all <= Console.width():
+        if len_all <= cls.width():
             pass
         else:
             # get longest line
@@ -129,7 +130,7 @@ class Console:
                     longest_string = string
 
             # cut line
-            cut_cnt = len_all - self.width()
+            cut_cnt = len_all - cls.width()
             new_longest_string = longest_string[cut_cnt:]
             new_longest_string = ">>" + new_longest_string[2:]
 
