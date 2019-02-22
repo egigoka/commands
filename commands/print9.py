@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for print to console.
 """
-__version__ = "0.9.4"
+__version__ = "0.9.5"
 
 
 class Print:
@@ -45,31 +45,7 @@ class Print:
             line = line[:-1]
         print(line, end="\r")
         if fit:
-            # count len of all
-            len_all = 0
-            for string in strings:
-                len_all += len(str(string)) + len(sep)
-            len_all -= len(sep)
-
-            # check for fit
-            if len_all <= len(line):
-                pass
-            else:
-                # get longest line
-                longest_string = ""
-                for string in strings:
-                    if len(string) > len(longest_string):
-                        longest_string = string
-
-                # cut line
-                cut_cnt = len_all - len(line)
-                new_longest_string = longest_string[cut_cnt:]
-                new_longest_string = ">>" + new_longest_string[2:]
-
-                # replace
-                from .list9 import List
-                strings = List.replace_string(strings, longest_string, new_longest_string)
-
+            strings = Console.fit(*strings, sep=sep)
         print(*strings, sep=sep, end="\r")
 
 

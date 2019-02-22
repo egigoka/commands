@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.3.1"
+__version__ = "0.4.0"
 
 
 class Console:
@@ -107,3 +107,34 @@ class Console:
         elif OS.unix_family:
             output = out.decode("utf8") + err.decode("utf8")
         return output
+
+    def fit(self, *strings, sep=" "):
+        """Fit strings to console
+        :return: strings, that can be fit in one line print
+        """
+        # count len of all
+        len_all = 0
+        for string in strings:
+            len_all += len(str(string)) + len(sep)
+        len_all -= len(sep)
+
+        # check for fit
+        if len_all <= self.width():
+            pass
+        else:
+            # get longest line
+            longest_string = ""
+            for string in strings:
+                if len(string) > len(longest_string):
+                    longest_string = string
+
+            # cut line
+            cut_cnt = len_all - self.width()
+            new_longest_string = longest_string[cut_cnt:]
+            new_longest_string = ">>" + new_longest_string[2:]
+
+            # replace
+            from .list9 import List
+            strings = List.replace_string(strings, longest_string, new_longest_string)
+
+        return strings

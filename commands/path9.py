@@ -34,7 +34,7 @@ class Path:
         return os.getcwd()
 
     @classmethod
-    def combine(cls, *paths, debug=False):
+    def combine(cls, *paths, debug=False):  # todo add support for \\? on Windows
         """Create full path string from strings
         :param paths: strings, path shards to create full path string
         :param debug: boolean, print all movements
