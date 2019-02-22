@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.11.2"
+__version__ = "0.12.0"
 
 
 class Dir:
@@ -63,7 +63,7 @@ class Dir:
                     print(filename, "renamed to", final_name)
 
     @classmethod
-    def delete(cls, path, cleanup=False, remove_readonly=True):
+    def delete(cls, path, cleanup=False, remove_readonly=True, no_sleep=False):
         """Remove directory
         :param path: string
         :param cleanup: boolean, True doesn't delete "path" folder, only content
@@ -90,8 +90,9 @@ class Dir:
             try:
                 os.rmdir(path)
             except OSError:
-                import time
-                time.sleep(0.05)
+                if not no_sleep:
+                    import time
+                    time.sleep(0.05)
                 os.rmdir(path)
 
 
