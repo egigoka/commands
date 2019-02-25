@@ -142,7 +142,12 @@ class Console:
 
         #debug
         from .print9 import Print
-        Print.debug("len(sep.join(strings))", len(sep.join(strings)), "console_width", console_width)
+        manual_count = 0
+        for string in strings:
+            manual_count += len(string)
+            manual_count += len(sep)
+        manual_count -= len(sep)
+        Print.debug("manual_count", manual_count, "sep", sep, "len(sep.join(strings))", len(sep.join(strings)), "console_width", console_width)
         #end debug
 
         return strings
