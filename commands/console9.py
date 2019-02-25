@@ -140,14 +140,4 @@ class Console:
             # replace
             strings = List.replace_string(strings, longest_string, new_longest_string)
 
-        #debug
-        from .print9 import Print
-        manual_count = 0
-        for string in strings:
-            manual_count += len(string)
-            manual_count += len(sep)
-        manual_count -= len(sep)
-        Print.debug("sep.join(strings)", sep.join(strings), "manual_count", manual_count, "sep", sep, "len(sep.join(strings))", len(sep.join(strings)), "console_width", console_width)
-        #end debug
-
         return strings
