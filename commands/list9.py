@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with lists
 """
-__version__ = "0.2.1"
+__version__ = "0.3.0"
 
 
 class List:
@@ -52,3 +52,7 @@ class List:
     @staticmethod
     def replace_string(list, old_string, new_string):
         return [str(string).replace(old_string, new_string) for string in list]
+
+    @staticmethod
+    def to_strings(list):
+        return [str(string) for string in list]

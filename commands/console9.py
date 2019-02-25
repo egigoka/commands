@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.4.4"
+__version__ = "0.4.5"
 
 
 class Console:
@@ -114,15 +114,12 @@ class Console:
         :return: strings, that can be fit in one line print
         """
         from .os9 import OS
+        from .list9 import List
         console_width = cls.width()
         if OS.windows:  # windows add symbol to end of string :(
             console_width -= 1
-
-        # count len of all
-        len_all = 0
-        for string in strings:
-            len_all += len(str(string)) + len(sep)
-        len_all -= len(sep)
+        strings = List.to_strings(strings)  # replace all to strings
+        len_all = len(sep.join(strings))  # count len of all
 
         # check for fit
         if len_all <= console_width:
@@ -141,7 +138,11 @@ class Console:
             new_longest_string = ">>" + new_longest_string[2:]
 
             # replace
-            from .list9 import List
             strings = List.replace_string(strings, longest_string, new_longest_string)
+
+        #debug
+        from .print9 import Print
+        Print.debug("len(sep.join(strings))", len(sep.join(strings)), "console_width", console_width)
+        #end debug
 
         return strings
