@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.4.3"
+__version__ = "0.4.4"
 
 
 class Console:
@@ -131,6 +131,7 @@ class Console:
             # get longest line
             longest_string = ""
             for string in strings:
+                string = str(string)
                 if len(string) > len(longest_string):
                     longest_string = string
 
