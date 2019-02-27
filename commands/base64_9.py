@@ -2,13 +2,10 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with base64
 """
-__version__ = "2.0.0"
-
+__version__ = "2.0.1"
 
 class Base64:
-    """Class to work with base64
-    """
-    @classmethod
+    """Class to work with base64"""
     
     @staticmethod
     def to_bytes(input):

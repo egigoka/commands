@@ -108,8 +108,9 @@ class Path:
         if not quiet:
             from .print9 import Print
             Print.debug("os.getcwd()  # current directory is", os.getcwd())
-
-    def add_before_extension(self, filepath, infix):
+    
+    @staticmethod
+    def add_before_extension(filepath, infix):
         """
         :param path:
         :param infix:

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions that works only in macOS
 """
-__version__ = "0.2.3"
+__version__ = "0.2.4"
 
 
 class macOS:  # pylint: disable=invalid-name, too-few-public-methods
@@ -42,8 +42,8 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
         from .print9 import Print
         from .dir9 import Dir
         from .path9 import Path
-        global_sounds = Dir.list_of_files(Path.extend("System", "Library", "Sounds"))
-        local_sounds = Dir.list_of_files(Path.extend("~", "Library", "Sounds"))
+        global_sounds = Dir.list_of_files(Path.combine("System", "Library", "Sounds"))
+        local_sounds = Dir.list_of_files(Path.combine("~", "Library", "Sounds"))
         if not quiet:
             Print.debug("global sounds", global_sounds, "local sounds", local_sounds)
         return global_sounds + local_sounds
