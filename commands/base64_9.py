@@ -5,7 +5,7 @@
 __version__ = "2.0.0"
 
 
-class Base64:  # pylint: disable=too-few-public-methods
+class Base64:
     """Class to work with base64
     """
     @classmethod
