@@ -41,6 +41,7 @@ from .random9 import Random
 from .wget9 import Wget
 from .int9 import Int
 from .cli9 import CLI
+from .base64_9 import Base64
 from .funcs9 import dirify
 from .zip9 import Zip, Unzip
 from .const9 import backslash, newline, newline2, ruble
