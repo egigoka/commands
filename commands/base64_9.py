@@ -2,28 +2,13 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with base64
 """
-__version__ = "1.1.3"
+__version__ = "2.0.0"
 
 
 class Base64:  # pylint: disable=too-few-public-methods
     """Class to work with base64
     """
     @classmethod
-    def to_png(cls, string, filename):
-        """
-        :param string: string base64
-        :param filename: filename to save png
-        :return: None
-        """
-        
-        
-        filename = str(filename)
-        if not filename.endswith(".png"):
-            filename = filename + ".png"
-        png_recovered = cls.to_bytes(string)
-        file = open(filename, "wb")
-        file.write(png_recovered)
-        file.close()
     
     @staticmethod
     def to_bytes(input):
