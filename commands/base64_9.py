@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with base64
 """
-__version__ = "1.1.0"
+__version__ = "1.1.3"
 
 
 class Base64:  # pylint: disable=too-few-public-methods
@@ -20,18 +20,21 @@ class Base64:  # pylint: disable=too-few-public-methods
         filename = str(filename)
         if not filename.endswith(".png"):
             filename = filename + ".png"
-        png_recovered = cls.to
+        png_recovered = cls.to_bytes(string)
         file = open(filename, "wb")
         file.write(png_recovered)
         file.close()
     
     @staticmethod
-    def to_bytes(string):
+    def to_bytes(input):
         import base64
-        return base64.decodebytes(string.encode('ascii'))
+        if isinstance(input, str):
+            return base64.decodebytes(input.encode('ascii'))
+        else:
+            return base64.decodebytes(input)
     
     @staticmethod
-    def to_string(bytes_):
+    def from_bytes(bytes_):
         import base64
         return base64.encodebytes(bytes_)
     
@@ -39,10 +42,10 @@ class Base64:  # pylint: disable=too-few-public-methods
     def to_file(cls, string, filename):
         from .file9 import File
         file_bytes = cls.to_bytes(string)
-        File.write(filename, string, mode="wb")
+        File.write(filename, file_bytes, mode="wb")
     
     @classmethod
     def from_file(cls, filename):
         with open(filename, mode="rb") as file:
             file_bytes = file.read()
-        return cls.to_string(file_bytes)
+        return cls.from_bytes(file_bytes)
