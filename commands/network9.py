@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.5.1"
+__version__ = "0.5.2"
 
 
 class Network:
@@ -93,13 +93,14 @@ class Network:
         if logfile or (not quiet):
             import termcolor
         if logfile:
-            from .log9 import plog
-            if up:
-                plog(logfile, domain + " is up!", quiet=True)
-                termcolor.cprint(up_message, "white", "on_green")
-            else:
-                plog(logfile, down_message, quiet=True)
-                termcolor.cprint(down_message, "white", "on_red")
+            raise NotImplementedError()
+        #    from .log9 import plog
+        #    if up:
+        #        plog(logfile, domain + " is up!", quiet=True)
+        #        termcolor.cprint(up_message, "white", "on_green")
+        #    else:
+        #        plog(logfile, down_message, quiet=True)
+        #        termcolor.cprint(down_message, "white", "on_red")
 
         elif not quiet:
             Print.rewrite("")
