@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.5.0"
+__version__ = "0.5.1"
 
 
 class Console:
@@ -101,6 +101,8 @@ class Console:
         """
         import subprocess
         from .os9 import OS
+        if len(commands) == 1:
+            commands = commands[0]
         out, err = subprocess.Popen(commands, shell=pureshell, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
         if OS.windows:
             output = out.decode("cp866") + err.decode("cp866")
