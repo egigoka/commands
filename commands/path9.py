@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with funtions to work with path strings
 """
-__version__ = "2.2.1"
+__version__ = "2.2.0"
 
 
 class Path:
@@ -78,11 +78,11 @@ class Path:
         from .console9 import Console
         from .const9 import newline, newline2
         if OS.windows:
-            path = Console.get_output("echo", "%userprofile%")
+            path = Console.get_output("echo %userprofile%", pureshell=True)
             path = path.rstrip(newline2)
         else:
             from .str9 import Str
-            path = Str.nl(Console.get_output("echo", "$HOME")[0])
+            path = Str.nl(Console.get_output("echo $HOME", pureshell=True))
             path = path.rstrip(newline)
         return path
 

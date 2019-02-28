@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.4.5"
+__version__ = "0.5.0"
 
 
 class Console:
@@ -93,7 +93,7 @@ class Console:
                 break
 
     @staticmethod
-    def get_output(*commands):
+    def get_output(*commands, pureshell=False):
         """Return output of executing command. Doesn't output it to terminal in
         realtime.
         :param commands: list with command and arguments
@@ -101,7 +101,7 @@ class Console:
         """
         import subprocess
         from .os9 import OS
-        out, err = subprocess.Popen(commands, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+        out, err = subprocess.Popen(commands, shell=pureshell, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
         if OS.windows:
             output = out.decode("cp866") + err.decode("cp866")
         elif OS.unix_family:
