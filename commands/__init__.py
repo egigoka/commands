@@ -48,4 +48,4 @@ class Internal:
         raise NotImplementedError
         # commands.__dict__
 
-print(f"commands {__version__} loaded")
+Print.colored(f"commands {__version__} loaded", "grey", "on_white")
