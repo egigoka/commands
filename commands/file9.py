@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 # pylint: disable=c-extension-no-member
 
 
@@ -180,18 +180,20 @@ class File:
                     count_of_symbols = 10000
                 with open(path, "rb") as rawfile:
                     slice_of_raw_data = rawfile.read(count_of_symbols)
-                # start check for utf-16-le :( only ascii characters, what a fool :(
-                utf_16_le = True
+                # check for utf-16-le
+                fail_symbols = 0
                 for cnt, sym in enumerate(slice_of_raw_data):
                     if cnt % 2 != 0:
                         if sym != 0:
-                            utf_16_le = False  # todo count percentage of symbols
-                            break
+                            fail_symbols += 1
+                utf_16_le = False
+                if fail_symbols/(len(slice_of_raw_data)/2) < 0.99:
+                    utf_16_le = True
                 if utf_16_le:
                     encoding = "utf-16-le"
                     if not quiet:
                         define_encoding_bench.end(f"encoding defined by egigoka: [{encoding}] by [{count_of_symbols}] first symbols in")
-                # end check for utf-16-le :(
+                # end check for utf-16-le
                 else:
                     import chardet
                     encoding = chardet.detect(slice_of_raw_data)["encoding"]

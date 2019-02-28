@@ -1,5 +1,5 @@
 import os
-from commands import *
+from commands import Process, Path, backslash
 
 command = "pylint "
 for root, dirs, files in os.walk('.'):
@@ -7,5 +7,5 @@ for root, dirs, files in os.walk('.'):
         if file.endswith(".py"):
             command += fr"{Path.combine(root, file).lstrip('.').lstrip(backslash)} "
 command += fr"--max-line-length=120"
-                    
+
 Process.start(command, pureshell=True)

@@ -29,8 +29,8 @@ if os.system("git --version"):  # if get error while checking git version
     else:
         raise NotImplementedError("OS " + sys.platform + " is not supported")
 try:  # getting commands
-    from commands import *
+    import commands
 except ModuleNotFoundError:
     os.system("pip install git+https://github.com/egigoka/commands")
-    from commands import *
+    import commands
 # # # end bootstrap # # #
