@@ -28,22 +28,17 @@ class Dir:
         return os.listdir(path)
 
     @classmethod
-    def number_of_files(cls, path, quiet=False):
+    def number_of_files(cls, path, quiet=True):
         """
         :param path: string with paht
         :param quiet: suppress print to console
         :return: int count of files in directory
         """
         import os
-        try:
-            dir_contents = cls.list_of_files(path)
-            if not quiet:
-                print(os.path.split(path)[1], "contain", len(dir_contents), "files")
-            return len(dir_contents)
-        except FileNotFoundError:
-            if not quiet:
-                print("Path", path, "isn't found")
-            return None
+        dir_contents = cls.list_of_files(path)
+        if not quiet:
+            print(os.path.split(path)[1], "contain", len(dir_contents), "files")
+        return len(dir_contents)
 
     @classmethod
     def batch_rename(cls, directory, previous_name_substring, new_name_substring, quiet=False):
@@ -63,46 +58,71 @@ class Dir:
                     print(filename, "renamed to", final_name)
 
     @classmethod
-    def delete(cls, path, cleanup=False, remove_readonly=True, no_sleep=False):
+    def delete(cls, path, cleanup=False, remove_readonly=True, no_sleep=False, 
+               skip_PermissionError=False, quiet_PermissionError=False):
         """Remove directory
         :param path: string
         :param cleanup: boolean, True doesn't delete "path" folder, only content
+        :param skip_PermissionError: boolean, if True, skips files with denied permissions to read|write
+        :param quiet_PermissionError: boolean, suppress console output when skip file by PermissionError
         :return: None
         """
         import os
+        if quiet_PermissionError:
+            skip_PermissionError = True
         for root, dirs, files in os.walk(path):  # , topdown=False):
             for name in files:
                 file_path = os.path.join(root, name)
                 if remove_readonly:
                     try:
-                        os.remove(os.path.join(root, name))
+                        os.remove(os.path.join(root, name))  # unsafe
                     except PermissionError:
-                        # let's just assume that it's read-only and unlink it.
+                        # let's just assume that it's read-only and chmod it.
                         import stat
-                        os.chmod(file_path, stat.S_IWRITE)
-                        # os.unlink(file_path)
-                        os.remove(file_path)
+                        if not skip_PermissionError:
+                            os.chmod(file_path, stat.S_IWRITE)
+                            os.remove(file_path)
+                        else:
+                            try:
+                                os.chmod(file_path, stat.S_IWRITE)
+                                os.remove(file_path)
+                            except PermissionError as err:
+                                if not quiet_PermissionError:
+                                    print(err)
                 else:
-                    os.remove(file_path)
+                    if not skip_PermissionError:
+                        os.remove(file_path)  # unsafe
+                    else:
+                        try:
+                            os.remove(file_path)  # unsafe
+                        except PermissionError as err:
+                            if not quiet_PermissionError:
+                                print(err)
             for name in dirs:
-                cls.delete(os.path.join(root, name))
+                cls.delete(os.path.join(root, name))  # recursion
         if not cleanup:
             try:
-                os.rmdir(path)
+                
+                os.rmdir(path)  # unsafe
             except OSError:
                 if not no_sleep:
                     import time
                     time.sleep(0.05)
-                os.rmdir(path)
+                os.rmdir(path)  # unsafe
 
 
     @classmethod
-    def cleanup(cls, path):
+    def cleanup(cls, path, skip_PermissionError=False, quiet_PermissionError=False):
         """Removes all content in directory
         :param path: string
+        :param skip_PermissionError: boolean, if True, skips files with denied permissions to read|write
+        :param quiet_PermissionError: boolean, suppress console output when skip file by PermissionError
         :return: None
         """
-        cls.delete(path, cleanup=True)
+        if quiet_PermissionError:
+            skip_PermissionError = True
+        cls.delete(path, cleanup=True, 
+                   skip_PermissionError=skip_PermissionError, quiet_PermissionError=quiet_PermissionError)
 
     @classmethod
     def copy(cls, src, dst, symlinks=False, ignore=None,
@@ -122,6 +142,8 @@ class Dir:
         import os
         import shutil
         import stat
+        if quiet_PermissionError:
+            skip_PermissionError = True
         if not os.path.exists(dst):
             os.makedirs(dst)
             shutil.copystat(src, dst)
@@ -156,7 +178,7 @@ class Dir:
 
     @classmethod
     def move(cls, src_, dst_, symlinks_=False, ignore_=None,
-             skip_PermissionError_=False, quiet_PermissionError_=False):
+             skip_PermissionError=False, quiet_PermissionError=False):
         """Copies folder, than delete source folder
         :param src: string, source directory to copy
         :param dst: stirng, destination
@@ -168,9 +190,11 @@ class Dir:
         :param quiet_PermissionError: boolean, suppress console output when skip file by PermissionError
         :return: None
         """
+        if quiet_PermissionError:
+            skip_PermissionError = True
         cls.copy(src=src_, dst=dst_, symlinks=symlinks_, ignore=ignore_,
-                 skip_PermissionError=skip_PermissionError_,
-                 quiet_PermissionError=quiet_PermissionError_)
+                 skip_PermissionError=skip_PermissionError,
+                 quiet_PermissionError=quiet_PermissionError)
         cls.delete(src_)
 
     @staticmethod
