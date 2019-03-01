@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "0.12.0"
+__version__ = "1.0.0"
 
 
 class Dir:
@@ -174,10 +174,10 @@ class Dir:
         cls.delete(src_)
 
     @staticmethod
-    def exists(filename):
+    def exist(filename):
         """
-        :param filename: string with path to file
-        :return: boolean that means existence of file
+        :param filename: string with path to dir
+        :return: boolean that means existence of dir
         """
         import os
         return os.path.isdir(filename)
