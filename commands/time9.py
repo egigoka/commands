@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with time
 """
-__version__ = "0.1.4"
+__version__ = "0.2.0"
 
 
 class Time:
@@ -30,6 +30,12 @@ class Time:
         :return: datetime.datetime time object
         """
         import datetime
+        if isinstance(timestamp, str):
+            timestamp = float(timestamp)
+        elif isinstance(timestamp, float):
+            pass
+        else:
+            raise TypeError("timestamp must be float or str")
         if isinstance(timestamp, datetime.datetime):
             return timestamp
         return datetime.datetime.fromtimestamp(timestamp)
@@ -41,6 +47,8 @@ class Time:
         :return: float, timestamp
         """
         import time
+        if isinstance(datetime_object, float):
+            return datetime_object
         return time.mktime(datetime_object.timetuple())
 
     @classmethod

@@ -20,7 +20,7 @@ class List:
         output_list = copy.deepcopy(list(input_list))
         cnt = 0
         for object_ in output_list:
-            if not isinstance(object_, (str, int)):
+            if not isinstance(object_, (str, int, float)):
                 output_list.pop(cnt)
                 for item in reversed(object_):
                     output_list.insert(cnt, item)
