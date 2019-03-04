@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with time
 """
-__version__ = "0.2.0"
+__version__ = "0.1.5"
 
 
 class Time:
@@ -34,10 +34,10 @@ class Time:
             timestamp = float(timestamp)
         elif isinstance(timestamp, float):
             pass
-        else:
-            raise TypeError("timestamp must be float or str")
-        if isinstance(timestamp, datetime.datetime):
+        elif isinstance(timestamp, datetime.datetime):
             return timestamp
+        else:
+            raise TypeError(f"timestamp must be float or str, not {type(timestamp)}")
         return datetime.datetime.fromtimestamp(timestamp)
 
     @staticmethod
