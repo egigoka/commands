@@ -79,6 +79,7 @@ class OS:  # pylint: disable=too-few-public-methods
         print("  ", end="\r")
         cyrillic_support = True
     except UnicodeEncodeError as err:
+        print(err)
         cyrillic_support = False
         # print (err)
         print("Your system doesn't properly work with cyrillic -_-")
