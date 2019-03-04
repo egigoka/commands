@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 
 class Dir:
@@ -99,7 +99,8 @@ class Dir:
                             if not quiet_PermissionError:
                                 print(err)
             for name in dirs:
-                cls.delete(os.path.join(root, name))  # recursion
+                cls.delete(os.path.join(root, name), cleanup, remove_readonly, no_sleep,
+                           skip_PermissionError, quiet_PermissionError)  # recursion
         if not cleanup:
             try:
                 
