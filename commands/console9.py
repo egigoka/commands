@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.7.0"
+__version__ = "0.7.1"
 
 
 class Console:
@@ -94,7 +94,7 @@ class Console:
 
     @staticmethod
     def get_output(*commands, pureshell=False, print_std=False, decoding=None, universal_newlines=False,
-                   auto_decoding=True, auto_disable_py_buffering=True, output_merged=True):
+                   auto_decoding=True, auto_disable_py_buffering=True, return_merged=True):
         """Return output of executing command.
         :param commands: list[string if pureshell is True] with command and arguments
         :param pureshell: boolean, if True, the specified command will be executed through the shell
@@ -160,7 +160,7 @@ class Console:
                 if print_std:
                     print(line, end='')
 
-        if output_merged:
+        if return_merged:
             return out + err
         return out, err
 
