@@ -110,6 +110,8 @@ class Console:
         # disable buffering for python
         if ("py" in commands or "py" in commands[0]) and print_std and auto_disable_py_buffering:
             if "-u" not in commands:
+                from .print9 import Print
+                Print.debug("Console.get_output", "type(commands)", type(commands))
                 if isinstance(commands, str):
                     import shlex
                     list_commands = shlex.split(commands, posix=False)
