@@ -88,9 +88,3 @@ class Process:
                 commands = " ".join(arguments)
                 # print(commands)
                 os.system(commands)
-# Popen work with todo implement
-#     try:
-#         command = 'netsh advfirewall firewall delete rule name="Open Port ' + str(grafana_port) + '" protocol=tcp localport=' + str(grafana_port) + ''
-#         out, err = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
-#     except:
-#         pass
