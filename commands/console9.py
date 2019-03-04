@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.5.1"
+__version__ = "0.7.0"
 
 
 class Console:
@@ -93,7 +93,79 @@ class Console:
                 break
 
     @staticmethod
-    def get_output(*commands, pureshell=False):
+    def get_output(*commands, pureshell=False, print_std=False, decoding=None, universal_newlines=False,
+                   auto_decoding=True, auto_disable_py_buffering=True, output_merged=True):
+        """Return output of executing command.
+        :param commands: list[string if pureshell is True] with command and arguments
+        :param pureshell: boolean, if True, the specified command will be executed through the shell
+        :param print_std: boolean, if True, output from command will be printed immideately (also adds argument -u to
+        'py' or 'python' firs arg.)
+        :return: typle with strings stdout and stderr
+        """
+        import subprocess
+        from .os9 import OS
+        if len(commands) == 1:
+                commands = commands[0]
+
+        # disable buffering for python
+        if ("py" in commands or "py" in commands[0]) and print_std and auto_disable_py_buffering:
+            if "-u" not in commands:
+                if isinstance(commands, str):
+                    import shlex
+                    list_commands = shlex.split(commands, posix=False)
+                else:
+                    list_commands = list(commands)
+
+                list_commands.insert(1, "-u")
+                commands = list_commands
+
+                if isinstance(commands, str):
+                    commands = " ".join(list_commands)
+        # end disabling buffering for python
+
+        # set decoding and init
+        if auto_decoding and not decoding and not universal_newlines:
+            if OS.windows:
+                decoding = "cp866"
+            elif OS.unix_family:
+                decoding = "utf8"
+            else:
+                universal_newlines = True
+
+        if decoding and universal_newlines:
+            raise TypeError("can't decode str to str, set universal_newlines to False for manually set decoding")
+
+        if decoding:
+            out = ""
+            err = ""
+        else:
+            out = b''
+            err = b''
+        # end setting decoding and init
+
+        with subprocess.Popen(commands, shell=pureshell, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=1,
+                              universal_newlines=universal_newlines) as popen_object:
+
+            for line in popen_object.stdout:
+                if decoding:
+                    line.decode(decoding)
+                out += line
+                if print_std:
+                    print(line, end='')
+
+            for line in popen_object.stderr:
+                if decoding:
+                    line.decode(decoding)
+                err += line
+                if print_std:
+                    print(line, end='')
+
+        if output_merged:
+            return out + err
+        return out, err
+
+    @staticmethod
+    def get_output_old(*commands, pureshell=False):
         """Return output of executing command. Doesn't output it to terminal in
         realtime.
         :param commands: list with command and arguments
@@ -101,13 +173,13 @@ class Console:
         """
         import subprocess
         from .os9 import OS
-        if len(commands) == 1:
-            commands = commands[0]
         out, err = subprocess.Popen(commands, shell=pureshell, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
         if OS.windows:
             output = out.decode("cp866") + err.decode("cp866")
         elif OS.unix_family:
             output = out.decode("utf8") + err.decode("utf8")
+        else:
+            output = out.decode() + err.decode()
         return output
 
     @classmethod
