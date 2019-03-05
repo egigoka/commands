@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 # pylint: disable=c-extension-no-member
 
 
@@ -63,15 +63,16 @@ class File:
             if cls.exist(path):
                 raise FileExistsError(path + " is not deleted")
 
-    @staticmethod
-    def move(input_file, output_file):
+    @classmethod
+    def move(cls, input_file, output_file):
         """
         :param input_file: string with path to previous file place
         :param output_file: string with path to new file place
         :return: None
         """
-        import shutil
-        shutil.move(input_file, output_file)
+        # shutil.move gives 2 exceptions when file not found, so don't use it
+        cls.copy(input_file=input_file, output_file=output_file)
+        cls.delete(input_file)
         return output_file
 
     @staticmethod
