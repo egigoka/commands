@@ -2,20 +2,20 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing processes.
 """
-__version__ = "0.3.1"
+__version__ = "1.0.0"
 
 
 class Process:
     """Class with functions for managing processes.
     """
     @staticmethod
-    def kill(process, quiet=False):
+    def kill(process):
         """
         :param process: process name or PID
         :return: None
         """
-        import os
         from .os9 import OS
+        from .console9 import Console
         if OS.windows:
             try:
                 int(process)
@@ -33,11 +33,8 @@ class Process:
                 pass
         else:
             raise NotImplementedError("OS not supported, now only Windows and macOS")
-        if quiet:
-            from .console9 import Console
-            Console.get_output(command_)
-        else:
-            os.system(command_)
+        return Console.get_output(command_)
+
 
     @staticmethod
     def start(*arguments, new_window=False, debug=False, pureshell=False, window_name=""):  # pylint: disable=too-many-branches
