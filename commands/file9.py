@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 # pylint: disable=c-extension-no-member
 
 
@@ -72,7 +72,7 @@ class File:
         """
         # shutil.move gives 2 exceptions when file not found, so don't use it
         cls.copy(input_file=input_file, output_file=output_file)
-        cls.delete(input_file)
+        cls.delete(input_file, quiet=True, no_sleep=True)
         return output_file
 
     @staticmethod
