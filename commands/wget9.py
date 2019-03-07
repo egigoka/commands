@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module wrapper to cli wget
 """
-__version__ = "0.0.5"
+__version__ = "0.0.6"
 
 
 class Wget:  # pylint: disable=too-few-public-methods
@@ -19,13 +19,14 @@ class Wget:  # pylint: disable=too-few-public-methods
         arguments = '--header="Accept: text/html" ' + \
                     '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) ' + \
                     'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3167.0 Safari/537.36"'
-        if quiet:
-            from .console9 import Console
-            command = "wget '" + url + "' -O " + output_filename + " " + arguments
-            return Console.get_output(command)
-        else:
-            from .process9 import Process
-            from .const9 import backslash
-            url = url.replace("&", backslash + "&")
-            Process.start("wget", url, "-O", output_filename, arguments, pureshell=True)
+
+        from .console9 import Console
+        from .const9 import backslash
+        url = url.replace("&", backslash + "&")
+        command = "wget '" + url + "' -O " + output_filename + " " + arguments
+        try:
+            return Console.get_output(command, print_std=not quiet)
+        except FileNotFoundError:
+            Console.get_output("pip install wget")
+            return Console.get_output(command, print_std=not quiet)
         # Another way to fix blocks by creating ~/.wgetrc file https://stackoverflow.com/a/34166756
