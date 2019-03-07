@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 """Internal module wrapper to cli wget
 """
-__version__ = "0.0.8"
+__version__ = "0.1.0"
 
 
 class Wget:  # pylint: disable=too-few-public-methods
     """Class wrapper to cli wget
     """
     @staticmethod
-    def download(url, output_filename, quiet=False):  # pylint: disable=inconsistent-return-statements
+    def download(url, output_filename, quiet=False, no_check_certificate=False):  # pylint: disable=inconsistent-return-statements
         """Wrapper to wget cli
         :param url: string, url to some file
         :param output_filename: string, path to filename
@@ -25,8 +25,12 @@ class Wget:  # pylint: disable=too-few-public-methods
         from .dir9 import Dir
         import os
 
+        no_check_certificate_cli_arg = ""
+        if no_check_certificate:
+            no_check_certificate_cli_arg = "--no-check-certificate"
+
         # url = url.replace("&", backslash + "&")
-        command = "wget '" + url + "' -O " + output_filename + " " + arguments
+        command = f"wget {no_check_certificate_cli_arg} '{url}' -O {output_filename} {arguments}"
         if not Dir.exist(os.path.split(output_filename)[0]):
             Dir.create(os.path.split(output_filename)[0])
         try:
