@@ -28,7 +28,7 @@ class Wget:  # pylint: disable=too-few-public-methods
         url = url.replace("&", backslash + "&")
         command = "wget '" + url + "' -O " + output_filename + " " + arguments
         if not Dir.exist(os.path.split(output_filename)[0]):
-            Dir.create(output_filename)
+            Dir.create(os.path.split(output_filename)[0])
         try:
             return Console.get_output(command, print_std=not quiet)
         except FileNotFoundError:
