@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.7.2"
+__version__ = "0.7.3"
 
 
 class Console:
@@ -142,24 +142,29 @@ class Console:
             out = b''
             err = b''
         # end setting decoding and init
+        try:
+            with subprocess.Popen(commands, shell=pureshell, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=1,
+                                  universal_newlines=universal_newlines) as popen_object:
 
-        with subprocess.Popen(commands, shell=pureshell, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=1,
-                              universal_newlines=universal_newlines) as popen_object:
+                for line in popen_object.stdout:
+                    if decoding:
+                        line = line.decode(decoding)
+                    out += line
+                    if print_std:
+                        print(line, end='')
 
-            for line in popen_object.stdout:
-                if decoding:
-                    line = line.decode(decoding)
-                out += line
-                if print_std:
-                    print(line, end='')
-
-            for line in popen_object.stderr:
-                if decoding:
-                    line = line.decode(decoding)
-                err += line
-                if print_std:
-                    print(line, end='')
-
+                for line in popen_object.stderr:
+                    if decoding:
+                        line = line.decode(decoding)
+                    err += line
+                    if print_std:
+                        print(line, end='')
+        except FileNotFoundError as exception:
+            from .print9 import Print
+            Print.debug("commands", commands, "pureshell", pureshell, "print_std", print_std, "decoding", decoding,
+                        "universal_newlines", universal_newlines, "auto_decoding", auto_decoding,
+                        "auto_disable_py_buffering", auto_disable_py_buffering, "return_merged", return_merged)
+            raise FileNotFoundError(exception)
         if return_merged:
             return out + err
         return out, err
