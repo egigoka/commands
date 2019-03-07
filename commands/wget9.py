@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module wrapper to cli wget
 """
-__version__ = "0.0.7"
+__version__ = "0.0.8"
 
 
 class Wget:  # pylint: disable=too-few-public-methods
@@ -25,13 +25,12 @@ class Wget:  # pylint: disable=too-few-public-methods
         from .dir9 import Dir
         import os
 
-        url = url.replace("&", backslash + "&")
+        # url = url.replace("&", backslash + "&")
         command = "wget '" + url + "' -O " + output_filename + " " + arguments
         if not Dir.exist(os.path.split(output_filename)[0]):
             Dir.create(os.path.split(output_filename)[0])
         try:
             return Console.get_output(command, print_std=not quiet)
-        except FileNotFoundError:
-            Console.get_output("pip install wget")
-            return Console.get_output(command, print_std=not quiet)
+        except FileNotFoundError as exception:
+            raise OSError(exception, "install wget")
         # Another way to fix blocks by creating ~/.wgetrc file https://stackoverflow.com/a/34166756
