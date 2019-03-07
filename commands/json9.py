@@ -96,7 +96,7 @@ class Json:
             File.create(filename)
             clean_json = {}
             self._save_to_file(filename, clean_json)
-        settings_json_text_io = open(filename)
+        settings_json_text_io = open(filename, encoding="utf8")
         json_string_in_memory = json.load(settings_json_text_io)
         settings_json_text_io.close()
         if not quiet:
