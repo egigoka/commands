@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.4.3"
+__version__ = "2.4.4"
 
 
 class Json:
