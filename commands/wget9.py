@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module wrapper to cli wget
 """
-__version__ = "0.0.6"
+__version__ = "0.0.7"
 
 
 class Wget:  # pylint: disable=too-few-public-methods
@@ -22,8 +22,13 @@ class Wget:  # pylint: disable=too-few-public-methods
 
         from .console9 import Console
         from .const9 import backslash
+        from .dir9 import Dir
+        import os
+
         url = url.replace("&", backslash + "&")
         command = "wget '" + url + "' -O " + output_filename + " " + arguments
+        if not Dir.exist(os.path.split(output_filename)[0]):
+            Dir.create(output_filename)
         try:
             return Console.get_output(command, print_std=not quiet)
         except FileNotFoundError:
