@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "1.0.1"
+__version__ = "1.1.0"
 
 
 class Dir:
@@ -19,13 +19,23 @@ class Dir:
             os.makedirs(dirname)
 
     @staticmethod
-    def list_of_files(path):
+    def list_of_entries(path):
         """
         :param path: string with path to folder
-        :return: list of files in folder
+        :return: list of files and folders in path
         """
         import os
         return os.listdir(path)
+
+    @staticmethod
+    def list_of_files(path):
+        import os
+        return [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+
+    @staticmethod
+    def list_of_dirs(path):
+        import os
+        return [f for f in os.listdir(path) if os.path.isdir(os.path.join(path, f))]
 
     @classmethod
     def number_of_files(cls, path, quiet=True):
