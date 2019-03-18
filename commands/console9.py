@@ -36,7 +36,7 @@ class Console:
             width_ = shutil.get_terminal_size().columns
         elif OS.unix_family:
             from .str9 import Str
-            io_string = Console.get_output("stty size")
+            io_string = Console.get_output("stty", "size")
             width_ = Str.get_integers(io_string)[1]
         return int(width_)
 
