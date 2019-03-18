@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.7.3"
+__version__ = "0.7.4"
 
 
 class Console:
@@ -107,14 +107,14 @@ class Console:
         if len(commands) == 1:
                 commands = commands[0]
 
+        if isinstance(commands, str):
+            import shlex
+            commands = shlex.split(commands, posix=False)
+
         # disable buffering for python
         if ("py" in commands or "py" in commands[0]) and print_std and auto_disable_py_buffering:
             if "-u" not in commands:
-                if isinstance(commands, str):
-                    import shlex
-                    list_commands = shlex.split(commands, posix=False)
-                else:
-                    list_commands = list(commands)
+                list_commands = list(commands)
 
                 list_commands.insert(1, "-u")
                 commands = list_commands
@@ -142,6 +142,7 @@ class Console:
             out = b''
             err = b''
         # end setting decoding and init
+
         try:
             with subprocess.Popen(commands, shell=pureshell, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=1,
                                   universal_newlines=universal_newlines) as popen_object:
@@ -178,7 +179,8 @@ class Console:
         """
         import subprocess
         from .os9 import OS
-        out, err = subprocess.Popen(commands, shell=pureshell, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+        popen_object = subprocess.Popen(commands, shell=pureshell, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = popen_object.communicate()
         if OS.windows:
             output = out.decode("cp866") + err.decode("cp866")
         elif OS.unix_family:
