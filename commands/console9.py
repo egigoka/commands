@@ -272,7 +272,7 @@ class Console:
                 if not cls.windows_utf16:
                     from .windows9 import Windows
                     Windows.fix_unicode_encode_error(quiet=True)
-                decoding = "utf_16"
+                decoding = "utf_8"
             elif OS.unix_family:
                 decoding = "utf8"
             else:
@@ -291,9 +291,9 @@ class Console:
                     commands_old = commands
                     commands = []
                     commands.append("cmd")
-                    commands.append("/U")
+                    # commands.append("/U")  # only cmd applications output in utf16,
+                    #                          other applications output in default encoding D:
                     commands.append("/C")
-                    #commands.append(f'''"{" ".join(commands_old).replace('"', backslash+'"')}"''')
                     commands.append(" ".join(commands_old))
             from .print9 import Print
             output = cls._get_output_with_timeout(*commands, print_std=print_std, decoding=decoding,
