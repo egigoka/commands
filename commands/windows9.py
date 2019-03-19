@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.3.4"
+__version__ = "0.3.5"
 
 
 class Windows:
@@ -27,8 +27,8 @@ class Windows:
         :return: None
         """
         import os
-        from .console9 import Console
-        Console.get_output("chcp 65001", print_std=not quiet)
+        import subprocess
+        subprocess.Popen("chcp 65001".split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         os.system("set PYTHONIOENCODING = utf - 8")
 
     @staticmethod
