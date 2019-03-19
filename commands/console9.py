@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.8.6"
+__version__ = "0.8.7"
 
 
 class Console:
@@ -97,6 +97,7 @@ class Console:
         import asyncio
         import sys
         import time
+        import psutil
         from asyncio.subprocess import PIPE
         from contextlib import suppress
 
@@ -142,11 +143,10 @@ class Console:
 
             # read line (sequence of bytes ending with b'\n') asynchronously
             end_time = time.monotonic() + timeout
-            with suppress(ProcessLookupError):
+            with suppress(ProcessLookupError, psutil.NoSuchProcess):
                 # it throws if process already killed, but python try to kill it one more time
 
                 def kill_by_pid(proc_pid):
-                    import psutil
                     process = psutil.Process(proc_pid)
                     for proc in process.children(recursive=True):
                         proc.kill()
