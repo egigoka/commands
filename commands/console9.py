@@ -232,6 +232,8 @@ class Console:
             raise FileNotFoundError(exception)
         return out, err
 
+    windows_utf16=False
+
     @classmethod
     def get_output(cls, *commands, pureshell=False, print_std=False, decoding=None, universal_newlines=False,
                    auto_decoding=True, auto_disable_py_buffering=True, return_merged=True, timeout=None):
@@ -267,9 +269,10 @@ class Console:
         # set decoding and init
         if auto_decoding and not decoding and not universal_newlines:
             if OS.windows:
-                decoding = "cp866"
-                if timeout and pureshell:
-                    decoding = "utf_16"
+                if not cls.windows_utf16:
+                    from .windows9 import Windows
+                    Windows.fix_unicode_encode_error(quiet=True)
+                decoding = "utf_16"
             elif OS.unix_family:
                 decoding = "utf8"
             else:
