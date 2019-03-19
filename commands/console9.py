@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.8.5"
+__version__ = "0.8.6"
 
 
 class Console:
@@ -111,6 +111,7 @@ class Console:
                 stdout = b''
                 stderr = b''
             timeout_exception = False
+            stderr_timeout = 10
 
         def do_something(line):
             if decoding:
@@ -141,30 +142,44 @@ class Console:
 
             # read line (sequence of bytes ending with b'\n') asynchronously
             end_time = time.monotonic() + timeout
-            with suppress(
-                    ProcessLookupError):  # it throws if process already killed, but python try to kill it one more time
+            with suppress(ProcessLookupError):
+                # it throws if process already killed, but python try to kill it one more time
+
+                def kill_by_pid(proc_pid):
+                    import psutil
+                    process = psutil.Process(proc_pid)
+                    for proc in process.children(recursive=True):
+                        proc.kill()
+                    process.kill()
+
                 while True:
                     timeout = end_time - time.monotonic()
                     try:
                         line = await asyncio.wait_for(process.stdout.readline(), timeout)
                     except asyncio.TimeoutError as exc:
+                        kill_by_pid(process.pid)
                         process.kill()
-                        save_stderr(await asyncio.wait_for(process.stderr.read(), timeout=1))
+                        from .print9 import Print
+                        save_stderr(await asyncio.wait_for(process.stderr.read(), timeout=State.stderr_timeout))
                         State.timeout_exception = True
                         break
                     else:
                         if not line:  # EOF
                             try:
+                                kill_by_pid(process.pid)
                                 process.kill()
-                                save_stderr(await asyncio.wait_for(process.stderr.read(), timeout=1))
+                                from .print9 import Print
+                                save_stderr(await asyncio.wait_for(process.stderr.read(), timeout=State.stderr_timeout))
                             except TimeoutError:
                                 pass
                             break
                         elif do_something(line):
                             continue  # while some criterium is satisfied
                     try:
+                        kill_by_pid(process.pid)
                         process.kill()
-                        save_stderr(await asyncio.wait_for(process.stderr.read(), timeout=1))
+                        from .print9 import Print
+                        save_stderr(await asyncio.wait_for(process.stderr.read(), timeout=State.stderr_timeout))
                     except TimeoutError:
                         pass
                     process.kill()  # timeout or some criterium is not satisfied
