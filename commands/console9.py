@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.8.7"
+__version__ = "0.8.9"
 
 
 class Console:
@@ -133,8 +133,8 @@ class Console:
             if decoding:
                 stderr = stderr.decode(decoding)
             State.stderr = stderr
-            if print_std:
-                print(f"stderr:{stderr}")
+            if print_std and stderr:
+                print(f"stderr:\n{stderr}")
 
         async def run_command(*args, timeout):
             # start child process
@@ -232,7 +232,7 @@ class Console:
             raise FileNotFoundError(exception)
         return out, err
 
-    windows_utf16=False
+    windows_utf8 = False
 
     @classmethod
     def get_output(cls, *commands, pureshell=False, print_std=False, decoding=None, universal_newlines=False,
@@ -269,9 +269,10 @@ class Console:
         # set decoding and init
         if auto_decoding and not decoding and not universal_newlines:
             if OS.windows:
-                if not cls.windows_utf16:
+                if not cls.windows_utf8:
                     from .windows9 import Windows
                     Windows.fix_unicode_encode_error(quiet=True)
+                    cls.windows_utf8 = True
                 decoding = "utf_8"
             elif OS.unix_family:
                 decoding = "utf8"
