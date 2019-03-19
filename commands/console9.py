@@ -112,7 +112,7 @@ class Console:
                 stdout = b''
                 stderr = b''
             timeout_exception = False
-            stderr_timeout = 10
+            stderr_timeout = 1
 
         def do_something(line):
             if decoding:
