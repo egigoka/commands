@@ -93,8 +93,122 @@ class Console:
                 break
 
     @staticmethod
-    def get_output(*commands, pureshell=False, print_std=False, decoding=None, universal_newlines=False,
-                   auto_decoding=True, auto_disable_py_buffering=True, return_merged=True):
+    def _get_output_with_timeout(*commands, print_std, decoding, pureshell, timeout):
+        import asyncio
+        import sys
+        import time
+        from asyncio.subprocess import PIPE
+        from contextlib import suppress
+
+        class State:
+            if decoding:
+                stdout = ""
+                stderr = ""
+            else:
+                stdout = ''
+                stderr = ''
+            timeout_exception = False
+
+        def do_something(line):
+            if decoding:
+                line = line.decode(decoding)
+            State.stdout += line
+            if print_std:
+                print(line, end="")
+            return True
+
+        def save_stderr(stderr):
+            if decoding:
+                stderr = stderr.decode(decoding)
+            State.stderr = stderr
+            if print_std:
+                print(f"stderr:{stderr}")
+
+        async def run_command(*args, timeout):
+            # start child process
+            # NOTE: universal_newlines parameter is not supported
+            process = await asyncio.create_subprocess_exec(*args, stdout=PIPE, stderr=PIPE, shell=pureshell)
+
+            # read line (sequence of bytes ending with b'\n') asynchronously
+            end_time = time.monotonic() + timeout
+            with suppress(
+                    ProcessLookupError):  # it throws if process already killed, but python try to kill it one more time
+                while True:
+                    timeout = end_time - time.monotonic()
+                    try:
+                        line = await asyncio.wait_for(process.stdout.readline(), timeout)
+                    except asyncio.TimeoutError as exc:
+                        process.kill()
+                        save_stderr(await asyncio.wait_for(process.stderr.read(), timeout=1))
+                        State.timeout_exception = True
+                        break
+                    else:
+                        if not line:  # EOF
+                            try:
+                                process.kill()
+                                save_stderr(await asyncio.wait_for(process.stderr.read(), timeout=1))
+                            except TimeoutError:
+                                pass
+                            break
+                        elif do_something(line):
+                            continue  # while some criterium is satisfied
+                    try:
+                        process.kill()
+                        save_stderr(await asyncio.wait_for(process.stderr.read(), timeout=1))
+                    except TimeoutError:
+                        pass
+                    process.kill()  # timeout or some criterium is not satisfied
+                    await process.communicate()
+                    break
+            return await process.wait()  # wait for the child process to exit
+
+        if sys.platform == "win32":
+            loop = asyncio.ProactorEventLoop()  # for subprocess' pipes on Windows
+            asyncio.set_event_loop(loop)
+        else:
+            loop = asyncio.get_event_loop()
+
+        return_code = loop.run_until_complete(run_command(*commands, timeout=timeout))
+        print("return_code", return_code)
+        loop.close()
+        return State.stdout, State.stderr, return_code, State.timeout_exception
+
+    @staticmethod
+    def _get_output(*commands, print_std, decoding, pureshell, universal_newlines):
+        import subprocess
+        if decoding:
+            out = ""
+            err = ""
+        else:
+            out = b''
+            err = b''
+        # end setting decoding and init
+
+        try:
+            with subprocess.Popen(commands, shell=pureshell, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=1,
+                                  universal_newlines=universal_newlines) as popen_object:
+
+                for line in popen_object.stdout:
+                    if decoding:
+                        line = line.decode(decoding)
+                    out += line
+                    if print_std:
+                        print(line, end='')
+
+                for line in popen_object.stderr:
+                    if decoding:
+                        line = line.decode(decoding)
+                    err += line
+                    if print_std:
+                        print(line, end='')
+        except FileNotFoundError as exception:
+            from .print9 import Print
+            Print.debug("commands", commands, "pureshell", pureshell, "print_std", print_std, "decoding", decoding,
+                        "universal_newlines", universal_newlines)
+            raise FileNotFoundError(exception)
+
+    def get_output(self, *commands, pureshell=False, print_std=False, decoding=None, universal_newlines=False,
+                   auto_decoding=True, auto_disable_py_buffering=True, return_merged=True, timeout=None):
         """Return output of executing command.
         :param commands: list[string if pureshell is True] with command and arguments
         :param pureshell: boolean, if True, the specified command will be executed through the shell
@@ -102,7 +216,6 @@ class Console:
         'py' or 'python' firs arg.)
         :return: typle with strings stdout and stderr
         """
-        import subprocess
         from .os9 import OS
         if len(commands) == 1:
                 commands = commands[0]
@@ -133,61 +246,23 @@ class Console:
                 universal_newlines = True
 
         if decoding and universal_newlines:
-            raise TypeError("can't decode str to str, set universal_newlines to False for manually set decoding")
+            raise TypeError("can't decode 'str' to 'str', set universal_newlines to False for manually set decoding")
+        if timeout and universal_newlines:
+            raise NotImplementedError("asyncio.subprocess doesn't support 'universal_newlines', disable 'auto_decoding'"
+                                      " or set 'decoding'")
 
-        if decoding:
-            out = ""
-            err = ""
+        if timeout:
+            output = self._get_output_with_timeout(*commands, print_std=print_std, decoding=decoding,
+                                                   pureshell=pureshell, timeout=timeout)
         else:
-            out = b''
-            err = b''
-        # end setting decoding and init
+            output = self._get_output(*commands, print_std=print_std, decoding=decoding, pureshell=pureshell,
+                                      universal_newlines=universal_newlines)
 
-        try:
-            with subprocess.Popen(commands, shell=pureshell, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=1,
-                                  universal_newlines=universal_newlines) as popen_object:
-
-                for line in popen_object.stdout:
-                    if decoding:
-                        line = line.decode(decoding)
-                    out += line
-                    if print_std:
-                        print(line, end='')
-
-                for line in popen_object.stderr:
-                    if decoding:
-                        line = line.decode(decoding)
-                    err += line
-                    if print_std:
-                        print(line, end='')
-        except FileNotFoundError as exception:
-            from .print9 import Print
-            Print.debug("commands", commands, "pureshell", pureshell, "print_std", print_std, "decoding", decoding,
-                        "universal_newlines", universal_newlines, "auto_decoding", auto_decoding,
-                        "auto_disable_py_buffering", auto_disable_py_buffering, "return_merged", return_merged)
-            raise FileNotFoundError(exception)
+        out = output[0]
+        err = output[1]
         if return_merged:
             return out + err
         return out, err
-
-    @staticmethod
-    def get_output_old(*commands, pureshell=False):
-        """Return output of executing command. Doesn't output it to terminal in
-        realtime.
-        :param commands: list with command and arguments
-        :return: single string with output of executing command.
-        """
-        import subprocess
-        from .os9 import OS
-        popen_object = subprocess.Popen(commands, shell=pureshell, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        out, err = popen_object.communicate()
-        if OS.windows:
-            output = out.decode("cp866") + err.decode("cp866")
-        elif OS.unix_family:
-            output = out.decode("utf8") + err.decode("utf8")
-        else:
-            output = out.decode() + err.decode()
-        return output
 
     @classmethod
     def fit(cls, *strings, sep=" "):
