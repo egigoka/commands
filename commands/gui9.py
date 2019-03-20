@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with gui
 """
-__version__ = "0.3.2"
+__version__ = "0.4.0"
 
 
 class Gui:  # pylint: disable=too-few-public-methods
@@ -37,3 +37,19 @@ class Gui:  # pylint: disable=too-few-public-methods
         else:
             Print.debug("PyPy doesn't support pyautogui, so warning is here:", message)
             input("Press Enter to continue")
+
+    @classmethod
+    def notification(cls, message, title="python3", subtitle=None, sound=None):
+        from .os9 import OS
+        if OS.macos:
+            from .macos9 import macOS
+            macOS.notification(cls, message, title=title, subtitle=subtitle, sound=sound)
+        elif OS.windows:
+            if OS.windows_version >= 10:
+                from win10toast import ToastNotifier
+                toaster = ToastNotifier()
+                toaster.show_toast(title, message, icon_path=None, duration=5, threaded=True)
+            else:
+                raise NotImplementedError()
+        else:
+            raise NotImplementedError()

@@ -23,13 +23,8 @@ setup(
         'chardet'],
     extras_require={
         ':platform_system!="Linux"': ['pyautogui'],
-        ':platform_system=="Windows"': ['pywin32', 'colorama'],
+        ':platform_system=="Windows"': ['pywin32', 'colorama', 'win10toast'],
         ':python_version < "3.6" and platform_system=="Windows"': ['win_unicode_console'],
         },
-    # package_data={'': [r'commands/buildnumber.json']},
     include_package_data=True,
-    # scripts=[
-    #         'scripts/cool',
-    #         'scripts/skype',
-    #        ]
 )
