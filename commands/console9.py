@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.7.4"
+__version__ = "0.8.5"
 
 
 class Console:
@@ -93,7 +93,7 @@ class Console:
                 break
 
     @staticmethod
-    def _get_output_with_timeout(*commands, print_std, decoding, pureshell, timeout):
+    def _get_output_with_timeout(*commands, print_std, decoding, timeout):
         import asyncio
         import sys
         import time
@@ -101,17 +101,27 @@ class Console:
         from contextlib import suppress
 
         class State:
+            #debug#
+            temp = b''
+            # debug#
             if decoding:
                 stdout = ""
                 stderr = ""
             else:
-                stdout = ''
-                stderr = ''
+                stdout = b''
+                stderr = b''
             timeout_exception = False
 
         def do_something(line):
             if decoding:
-                line = line.decode(decoding)
+                try:
+                    line = line.decode(decoding)
+                # if it's output from Windows cmd and utf-16 cant decode last byte (truncated data)
+                except UnicodeDecodeError:
+                    if line[:-1]:
+                        line = line[:-1].decode(decoding) + '\n'
+                    else:
+                        line = ''
             State.stdout += line
             if print_std:
                 print(line, end="")
@@ -127,7 +137,7 @@ class Console:
         async def run_command(*args, timeout):
             # start child process
             # NOTE: universal_newlines parameter is not supported
-            process = await asyncio.create_subprocess_exec(*args, stdout=PIPE, stderr=PIPE, shell=pureshell)
+            process = await asyncio.create_subprocess_exec(*args, stdout=PIPE, stderr=PIPE)
 
             # read line (sequence of bytes ending with b'\n') asynchronously
             end_time = time.monotonic() + timeout
@@ -169,7 +179,6 @@ class Console:
             loop = asyncio.get_event_loop()
 
         return_code = loop.run_until_complete(run_command(*commands, timeout=timeout))
-        print("return_code", return_code)
         loop.close()
         return State.stdout, State.stderr, return_code, State.timeout_exception
 
@@ -206,8 +215,10 @@ class Console:
             Print.debug("commands", commands, "pureshell", pureshell, "print_std", print_std, "decoding", decoding,
                         "universal_newlines", universal_newlines)
             raise FileNotFoundError(exception)
+        return out, err
 
-    def get_output(self, *commands, pureshell=False, print_std=False, decoding=None, universal_newlines=False,
+    @classmethod
+    def get_output(cls, *commands, pureshell=False, print_std=False, decoding=None, universal_newlines=False,
                    auto_decoding=True, auto_disable_py_buffering=True, return_merged=True, timeout=None):
         """Return output of executing command.
         :param commands: list[string if pureshell is True] with command and arguments
@@ -219,10 +230,14 @@ class Console:
         from .os9 import OS
         if len(commands) == 1:
                 commands = commands[0]
-
         if isinstance(commands, str):
             import shlex
             commands = shlex.split(commands, posix=False)
+
+        try:
+            commands[0]
+        except IndexError:
+            raise IndexError("commands must not be empty")
 
         # disable buffering for python
         if ("py" in commands or "py" in commands[0]) and print_std and auto_disable_py_buffering:
@@ -232,14 +247,14 @@ class Console:
                 list_commands.insert(1, "-u")
                 commands = list_commands
 
-                if isinstance(commands, str):
-                    commands = " ".join(list_commands)
         # end disabling buffering for python
 
         # set decoding and init
         if auto_decoding and not decoding and not universal_newlines:
             if OS.windows:
                 decoding = "cp866"
+                if timeout and pureshell:
+                    decoding = "utf_16"
             elif OS.unix_family:
                 decoding = "utf8"
             else:
@@ -252,11 +267,22 @@ class Console:
                                       " or set 'decoding'")
 
         if timeout:
-            output = self._get_output_with_timeout(*commands, print_std=print_std, decoding=decoding,
-                                                   pureshell=pureshell, timeout=timeout)
+            if pureshell:
+                if OS.windows:
+                    from .const9 import backslash
+                    commands_old = commands
+                    commands = []
+                    commands.append("cmd")
+                    commands.append("/U")
+                    commands.append("/C")
+                    #commands.append(f'''"{" ".join(commands_old).replace('"', backslash+'"')}"''')
+                    commands.append(" ".join(commands_old))
+            from .print9 import Print
+            output = cls._get_output_with_timeout(*commands, print_std=print_std, decoding=decoding,
+                                                  timeout=timeout)
         else:
-            output = self._get_output(*commands, print_std=print_std, decoding=decoding, pureshell=pureshell,
-                                      universal_newlines=universal_newlines)
+            output = cls._get_output(*commands, print_std=print_std, decoding=decoding, pureshell=pureshell,
+                                     universal_newlines=universal_newlines)
 
         out = output[0]
         err = output[1]
@@ -297,3 +323,4 @@ class Console:
             strings = List.replace_string(strings, longest_string, new_longest_string)
 
         return strings
+
