@@ -11,10 +11,10 @@ class Wget:  # pylint: disable=too-few-public-methods
     @staticmethod
     def download(url, output_filename, quiet=False, no_check_certificate=False):  # pylint: disable=inconsistent-return-statements
         """Wrapper to wget cli
-        `param url` string, url to some file
-        `param output_filename` string, path to filename
-        `param quiet` boolean, suppress print to console
-        `return` output from wget if 'quiet' argument is True
+        <br>`param url` string, url to some file
+        <br>`param output_filename` string, path to filename
+        <br>`param quiet` boolean, suppress print to console
+        <br>`return` output from wget if 'quiet' argument is True
         """
         arguments = '--header="Accept: text/html" ' + \
                     '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) ' + \

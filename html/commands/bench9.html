@@ -36,10 +36,10 @@ class Bench:
 
     def __init__(self, prefix=&#34;Bench passed in&#34;, quiet=False, fraction_digits=3, time_start=None):
         &#34;&#34;&#34;
-        :param prefix: string, prints when ending of benchmark
-        :param quiet: boolean, suppress output to console
-        :param fraction_digits: integer, define how much digits after dot print
-        :param time_start: datetime.datetime, set custom start time
+        `param prefix` string, prints when ending of benchmark
+        `param quiet` boolean, suppress output to console
+        `param fraction_digits` integer, define how much digits after dot print
+        `param time_start` datetime.datetime, set custom start time
         &#34;&#34;&#34;
         import datetime
         if time_start:
@@ -53,14 +53,14 @@ class Bench:
 
     def start(self):  # set time of begin to now
         &#34;&#34;&#34;Set time of start benchmarking to current
-        :return: None
+        `return` None
         &#34;&#34;&#34;
         import datetime
         self.time_start = datetime.datetime.now()
 
     def get(self):
         &#34;&#34;&#34;
-        :return: float, time difference between start and this function call time
+        `return` float, time difference between start and this function call time
         &#34;&#34;&#34;
         import datetime
         from .time9 import Time
@@ -68,14 +68,14 @@ class Bench:
         return Time.delta(self.time_start, self.time_end)
 
     def end(self, prefix_string=None, quiet_if_zero=False, start_immediately=False):
-        &#34;&#34;&#34;End benchmarking:
+        &#34;&#34;&#34;End benchmarking`
         return time difference between start and end of bencmarking, print string with prefix
         and time difference.
-        :param prefix_string: string, used in print output
-        :param quiet_if_zero: suppress print if time interval between start and stop = 0.0 in accuracy, defined in
+        `param prefix_string` string, used in print output
+        `param quiet_if_zero` suppress print if time interval between start and stop = 0.0 in accuracy, defined in
         cls.fraction_digits
-        :param start_immediately: change start time of current Bench class to current time
-        :return: float, delta between start and end
+        `param start_immediately` change start time of current Bench class to current time
+        `return` float, delta between start and end
         &#34;&#34;&#34;
         delta = self.get()
         self.start()
@@ -120,10 +120,10 @@ class Bench:
 
     def __init__(self, prefix=&#34;Bench passed in&#34;, quiet=False, fraction_digits=3, time_start=None):
         &#34;&#34;&#34;
-        :param prefix: string, prints when ending of benchmark
-        :param quiet: boolean, suppress output to console
-        :param fraction_digits: integer, define how much digits after dot print
-        :param time_start: datetime.datetime, set custom start time
+        `param prefix` string, prints when ending of benchmark
+        `param quiet` boolean, suppress output to console
+        `param fraction_digits` integer, define how much digits after dot print
+        `param time_start` datetime.datetime, set custom start time
         &#34;&#34;&#34;
         import datetime
         if time_start:
@@ -137,14 +137,14 @@ class Bench:
 
     def start(self):  # set time of begin to now
         &#34;&#34;&#34;Set time of start benchmarking to current
-        :return: None
+        `return` None
         &#34;&#34;&#34;
         import datetime
         self.time_start = datetime.datetime.now()
 
     def get(self):
         &#34;&#34;&#34;
-        :return: float, time difference between start and this function call time
+        `return` float, time difference between start and this function call time
         &#34;&#34;&#34;
         import datetime
         from .time9 import Time
@@ -152,14 +152,14 @@ class Bench:
         return Time.delta(self.time_start, self.time_end)
 
     def end(self, prefix_string=None, quiet_if_zero=False, start_immediately=False):
-        &#34;&#34;&#34;End benchmarking:
+        &#34;&#34;&#34;End benchmarking`
         return time difference between start and end of bencmarking, print string with prefix
         and time difference.
-        :param prefix_string: string, used in print output
-        :param quiet_if_zero: suppress print if time interval between start and stop = 0.0 in accuracy, defined in
+        `param prefix_string` string, used in print output
+        `param quiet_if_zero` suppress print if time interval between start and stop = 0.0 in accuracy, defined in
         cls.fraction_digits
-        :param start_immediately: change start time of current Bench class to current time
-        :return: float, delta between start and end
+        `param start_immediately` change start time of current Bench class to current time
+        `return` float, delta between start and end
         &#34;&#34;&#34;
         delta = self.get()
         self.start()
@@ -187,18 +187,18 @@ class Bench:
 <span>def <span class="ident">__init__</span></span>(<span>self, prefix=&#39;Bench passed in&#39;, quiet=False, fraction_digits=3, time_start=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>:param prefix: string, prints when ending of benchmark
-:param quiet: boolean, suppress output to console
-:param fraction_digits: integer, define how much digits after dot print
-:param time_start: datetime.datetime, set custom start time</p></section>
+<section class="desc"><p><code>param prefix</code> string, prints when ending of benchmark
+<code>param quiet</code> boolean, suppress output to console
+<code>param fraction_digits</code> integer, define how much digits after dot print
+<code>param time_start</code> datetime.datetime, set custom start time</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">def __init__(self, prefix=&#34;Bench passed in&#34;, quiet=False, fraction_digits=3, time_start=None):
     &#34;&#34;&#34;
-    :param prefix: string, prints when ending of benchmark
-    :param quiet: boolean, suppress output to console
-    :param fraction_digits: integer, define how much digits after dot print
-    :param time_start: datetime.datetime, set custom start time
+    `param prefix` string, prints when ending of benchmark
+    `param quiet` boolean, suppress output to console
+    `param fraction_digits` integer, define how much digits after dot print
+    `param time_start` datetime.datetime, set custom start time
     &#34;&#34;&#34;
     import datetime
     if time_start:
@@ -215,25 +215,20 @@ class Bench:
 <span>def <span class="ident">end</span></span>(<span>self, prefix_string=None, quiet_if_zero=False, start_immediately=False)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>End benchmarking:
-return time difference between start and end of bencmarking, print string with prefix
-and time difference.
-:param prefix_string: string, used in print output
-:param quiet_if_zero: suppress print if time interval between start and stop = 0.0 in accuracy, defined in
-cls.fraction_digits
-:param start_immediately: change start time of current Bench class to current time
-:return: float, delta between start and end</p></section>
+<section class="desc"><p>End benchmarking<code>return time difference between start and end of bencmarking, print string with prefix
+and time difference.</code>param prefix_string<code>string, used in print output</code>param quiet_if_zero<code>suppress print if time interval between start and stop = 0.0 in accuracy, defined in
+cls.fraction_digits</code>param start_immediately<code>change start time of current Bench class to current time</code>return` float, delta between start and end</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">def end(self, prefix_string=None, quiet_if_zero=False, start_immediately=False):
-    &#34;&#34;&#34;End benchmarking:
+    &#34;&#34;&#34;End benchmarking`
     return time difference between start and end of bencmarking, print string with prefix
     and time difference.
-    :param prefix_string: string, used in print output
-    :param quiet_if_zero: suppress print if time interval between start and stop = 0.0 in accuracy, defined in
+    `param prefix_string` string, used in print output
+    `param quiet_if_zero` suppress print if time interval between start and stop = 0.0 in accuracy, defined in
     cls.fraction_digits
-    :param start_immediately: change start time of current Bench class to current time
-    :return: float, delta between start and end
+    `param start_immediately` change start time of current Bench class to current time
+    `return` float, delta between start and end
     &#34;&#34;&#34;
     delta = self.get()
     self.start()
@@ -260,12 +255,12 @@ cls.fraction_digits
 <span>def <span class="ident">get</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>:return: float, time difference between start and this function call time</p></section>
+<section class="desc"><p><code>return</code> float, time difference between start and this function call time</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">def get(self):
     &#34;&#34;&#34;
-    :return: float, time difference between start and this function call time
+    `return` float, time difference between start and this function call time
     &#34;&#34;&#34;
     import datetime
     from .time9 import Time
@@ -278,12 +273,12 @@ cls.fraction_digits
 </code></dt>
 <dd>
 <section class="desc"><p>Set time of start benchmarking to current
-:return: None</p></section>
+<code>return</code> None</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">def start(self):  # set time of begin to now
     &#34;&#34;&#34;Set time of start benchmarking to current
-    :return: None
+    `return` None
     &#34;&#34;&#34;
     import datetime
     self.time_start = datetime.datetime.now()</code></pre>

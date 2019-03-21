@@ -36,8 +36,8 @@ class Path:
     @staticmethod
     def full(path):
         &#34;&#34;&#34;
-        :param path: string, partial path
-        :return: string, full path
+        `param path` string, partial path
+        `return` string, full path
         &#34;&#34;&#34;
         import os
         return os.path.abspath(path)
@@ -45,7 +45,7 @@ class Path:
     @staticmethod
     def commands():
         &#34;&#34;&#34;Used for store some settings(?)
-        :return: string, path of this module
+        `return` string, path of this module
         &#34;&#34;&#34;
         import os
         return os.path.dirname(os.path.realpath(__file__))
@@ -53,7 +53,7 @@ class Path:
     @staticmethod
     def working():
         &#34;&#34;&#34;
-        :return: string, path to working directory
+        `return` string, path to working directory
         &#34;&#34;&#34;
         import os
         return os.getcwd()
@@ -61,9 +61,9 @@ class Path:
     @classmethod
     def combine(cls, *paths, debug=False):  # todo add support for \\? on Windows
         &#34;&#34;&#34;Create full path string from strings
-        :param paths: strings, path shards to create full path string
-        :param debug: boolean, print all movements
-        :return: string, path that can be used in shell or whatever
+        `param paths` strings, path shards to create full path string
+        `param debug` boolean, print all movements
+        `return` string, path that can be used in shell or whatever
         &#34;&#34;&#34;
         import os
         for path_part in paths:
@@ -97,7 +97,7 @@ class Path:
     @staticmethod
     def home():
         &#34;&#34;&#34;
-        :return: string, home directory of user
+        `return` string, home directory of user
         &#34;&#34;&#34;
         from .os9 import OS
         from .console9 import Console
@@ -114,8 +114,8 @@ class Path:
     @staticmethod
     def get_parent(path):
         &#34;&#34;&#34;Return parent folder of given path
-        :param path: string (with path)
-        :return: string (parent path to input one)
+        `param path` string (with path)
+        `return` string (parent path to input one)
         &#34;&#34;&#34;
         import os
         return os.path.split(path)[0]
@@ -124,9 +124,9 @@ class Path:
     def set_working(path, quiet=True):
         &#34;&#34;&#34;Changes current working directory. If quiet is disabled, prints
         directory.
-        :param path: string, path to new working directory
-        :param quiet: boolean, suppress print to console
-        :return: None
+        `param path` string, path to new working directory
+        `param quiet` boolean, suppress print to console
+        `return` None
         &#34;&#34;&#34;
         import os
         os.chdir(path)
@@ -137,9 +137,9 @@ class Path:
     @staticmethod
     def add_before_extension(filepath, infix):
         &#34;&#34;&#34;
-        :param path:
-        :param infix:
-        :return:
+        `param path`
+        `param infix`
+        `return`
         &#34;&#34;&#34;
         from .file9 import File
         extension = File.get_extension(filepath)
@@ -169,8 +169,8 @@ class Path:
     @staticmethod
     def full(path):
         &#34;&#34;&#34;
-        :param path: string, partial path
-        :return: string, full path
+        `param path` string, partial path
+        `return` string, full path
         &#34;&#34;&#34;
         import os
         return os.path.abspath(path)
@@ -178,7 +178,7 @@ class Path:
     @staticmethod
     def commands():
         &#34;&#34;&#34;Used for store some settings(?)
-        :return: string, path of this module
+        `return` string, path of this module
         &#34;&#34;&#34;
         import os
         return os.path.dirname(os.path.realpath(__file__))
@@ -186,7 +186,7 @@ class Path:
     @staticmethod
     def working():
         &#34;&#34;&#34;
-        :return: string, path to working directory
+        `return` string, path to working directory
         &#34;&#34;&#34;
         import os
         return os.getcwd()
@@ -194,9 +194,9 @@ class Path:
     @classmethod
     def combine(cls, *paths, debug=False):  # todo add support for \\? on Windows
         &#34;&#34;&#34;Create full path string from strings
-        :param paths: strings, path shards to create full path string
-        :param debug: boolean, print all movements
-        :return: string, path that can be used in shell or whatever
+        `param paths` strings, path shards to create full path string
+        `param debug` boolean, print all movements
+        `return` string, path that can be used in shell or whatever
         &#34;&#34;&#34;
         import os
         for path_part in paths:
@@ -230,7 +230,7 @@ class Path:
     @staticmethod
     def home():
         &#34;&#34;&#34;
-        :return: string, home directory of user
+        `return` string, home directory of user
         &#34;&#34;&#34;
         from .os9 import OS
         from .console9 import Console
@@ -247,8 +247,8 @@ class Path:
     @staticmethod
     def get_parent(path):
         &#34;&#34;&#34;Return parent folder of given path
-        :param path: string (with path)
-        :return: string (parent path to input one)
+        `param path` string (with path)
+        `return` string (parent path to input one)
         &#34;&#34;&#34;
         import os
         return os.path.split(path)[0]
@@ -257,9 +257,9 @@ class Path:
     def set_working(path, quiet=True):
         &#34;&#34;&#34;Changes current working directory. If quiet is disabled, prints
         directory.
-        :param path: string, path to new working directory
-        :param quiet: boolean, suppress print to console
-        :return: None
+        `param path` string, path to new working directory
+        `param quiet` boolean, suppress print to console
+        `return` None
         &#34;&#34;&#34;
         import os
         os.chdir(path)
@@ -270,9 +270,9 @@ class Path:
     @staticmethod
     def add_before_extension(filepath, infix):
         &#34;&#34;&#34;
-        :param path:
-        :param infix:
-        :return:
+        `param path`
+        `param infix`
+        `return`
         &#34;&#34;&#34;
         from .file9 import File
         extension = File.get_extension(filepath)
@@ -285,17 +285,17 @@ class Path:
 <span>def <span class="ident">add_before_extension</span></span>(<span>filepath, infix)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>:param path:
-:param infix:
-:return:</p></section>
+<section class="desc"><p><code>param path</code>
+<code>param infix</code>
+<code>return</code></p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def add_before_extension(filepath, infix):
     &#34;&#34;&#34;
-    :param path:
-    :param infix:
-    :return:
+    `param path`
+    `param infix`
+    `return`
     &#34;&#34;&#34;
     from .file9 import File
     extension = File.get_extension(filepath)
@@ -308,17 +308,17 @@ def add_before_extension(filepath, infix):
 </code></dt>
 <dd>
 <section class="desc"><p>Create full path string from strings
-:param paths: strings, path shards to create full path string
-:param debug: boolean, print all movements
-:return: string, path that can be used in shell or whatever</p></section>
+<code>param paths</code> strings, path shards to create full path string
+<code>param debug</code> boolean, print all movements
+<code>return</code> string, path that can be used in shell or whatever</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def combine(cls, *paths, debug=False):  # todo add support for \\? on Windows
     &#34;&#34;&#34;Create full path string from strings
-    :param paths: strings, path shards to create full path string
-    :param debug: boolean, print all movements
-    :return: string, path that can be used in shell or whatever
+    `param paths` strings, path shards to create full path string
+    `param debug` boolean, print all movements
+    `return` string, path that can be used in shell or whatever
     &#34;&#34;&#34;
     import os
     for path_part in paths:
@@ -355,13 +355,13 @@ def combine(cls, *paths, debug=False):  # todo add support for \\? on Windows
 </code></dt>
 <dd>
 <section class="desc"><p>Used for store some settings(?)
-:return: string, path of this module</p></section>
+<code>return</code> string, path of this module</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def commands():
     &#34;&#34;&#34;Used for store some settings(?)
-    :return: string, path of this module
+    `return` string, path of this module
     &#34;&#34;&#34;
     import os
     return os.path.dirname(os.path.realpath(__file__))</code></pre>
@@ -371,15 +371,15 @@ def commands():
 <span>def <span class="ident">full</span></span>(<span>path)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>:param path: string, partial path
-:return: string, full path</p></section>
+<section class="desc"><p><code>param path</code> string, partial path
+<code>return</code> string, full path</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def full(path):
     &#34;&#34;&#34;
-    :param path: string, partial path
-    :return: string, full path
+    `param path` string, partial path
+    `return` string, full path
     &#34;&#34;&#34;
     import os
     return os.path.abspath(path)</code></pre>
@@ -390,15 +390,15 @@ def full(path):
 </code></dt>
 <dd>
 <section class="desc"><p>Return parent folder of given path
-:param path: string (with path)
-:return: string (parent path to input one)</p></section>
+<code>param path</code> string (with path)
+<code>return</code> string (parent path to input one)</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def get_parent(path):
     &#34;&#34;&#34;Return parent folder of given path
-    :param path: string (with path)
-    :return: string (parent path to input one)
+    `param path` string (with path)
+    `return` string (parent path to input one)
     &#34;&#34;&#34;
     import os
     return os.path.split(path)[0]</code></pre>
@@ -408,13 +408,13 @@ def get_parent(path):
 <span>def <span class="ident">home</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>:return: string, home directory of user</p></section>
+<section class="desc"><p><code>return</code> string, home directory of user</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def home():
     &#34;&#34;&#34;
-    :return: string, home directory of user
+    `return` string, home directory of user
     &#34;&#34;&#34;
     from .os9 import OS
     from .console9 import Console
@@ -435,18 +435,18 @@ def home():
 <dd>
 <section class="desc"><p>Changes current working directory. If quiet is disabled, prints
 directory.
-:param path: string, path to new working directory
-:param quiet: boolean, suppress print to console
-:return: None</p></section>
+<code>param path</code> string, path to new working directory
+<code>param quiet</code> boolean, suppress print to console
+<code>return</code> None</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def set_working(path, quiet=True):
     &#34;&#34;&#34;Changes current working directory. If quiet is disabled, prints
     directory.
-    :param path: string, path to new working directory
-    :param quiet: boolean, suppress print to console
-    :return: None
+    `param path` string, path to new working directory
+    `param quiet` boolean, suppress print to console
+    `return` None
     &#34;&#34;&#34;
     import os
     os.chdir(path)
@@ -459,13 +459,13 @@ def set_working(path, quiet=True):
 <span>def <span class="ident">working</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>:return: string, path to working directory</p></section>
+<section class="desc"><p><code>return</code> string, path to working directory</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def working():
     &#34;&#34;&#34;
-    :return: string, path to working directory
+    `return` string, path to working directory
     &#34;&#34;&#34;
     import os
     return os.getcwd()</code></pre>

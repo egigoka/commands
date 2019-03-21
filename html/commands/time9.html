@@ -43,7 +43,7 @@ class Time:
     @staticmethod
     def stamp():
         &#34;&#34;&#34;
-        :return: float, timestamp
+        `return` float, timestamp
         &#34;&#34;&#34;
         import time
         return time.time()
@@ -51,8 +51,8 @@ class Time:
     @staticmethod
     def timestamp_to_datetime(timestamp):
         &#34;&#34;&#34;
-        :param timestamp: float, timestamp
-        :return: datetime.datetime time object
+        `param timestamp` float, timestamp
+        `return` datetime.datetime time object
         &#34;&#34;&#34;
         import datetime
         if isinstance(timestamp, str):
@@ -68,8 +68,8 @@ class Time:
     @staticmethod
     def datetime_to_timestamp(datetime_object):
         &#34;&#34;&#34;
-        :param datetime_object: datetime.datetime time object
-        :return: float, timestamp
+        `param datetime_object` datetime.datetime time object
+        `return` float, timestamp
         &#34;&#34;&#34;
         import time
         if isinstance(datetime_object, float):
@@ -79,8 +79,8 @@ class Time:
     @classmethod
     def dotted(cls, custom_time=None):
         &#34;&#34;&#34;
-        :param custom_time: datetime.datetime time object|float of timestamp
-        :return: string with time in format &#34;1999.12.31_at_12.59.59.999999&#34;
+        `param custom_time` datetime.datetime time object|float of timestamp
+        `return` string with time in format &#34;1999.12.31_at_12.59.59.999999&#34;
         &#34;&#34;&#34;
         import datetime
         if custom_time:
@@ -95,9 +95,9 @@ class Time:
     @staticmethod
     def _timer(seconds, check_per_sec=10):
         &#34;&#34;&#34;Internal function to idle (used in Time.sleep). Print how much time left.
-        :param seconds: int|float, how long sleep
-        :param check_per_sec: int|float, how often check time
-        :return: None
+        `param seconds` int|float, how long sleep
+        `param check_per_sec` int|float, how often check time
+        `return` None
         &#34;&#34;&#34;
         from .print9 import Print
         from .bench9 import Bench
@@ -116,10 +116,10 @@ class Time:
     def sleep(cls, seconds, quiet_small=False, check_per_sec=10):
         &#34;&#34;&#34;Function to idle. If &#39;seconds more, than 1, running Time._timer. Otherwise run time.sleep and print time
         left.
-        :param seconds: int|float, how long sleep
-        :param quiet_small: boolean, suppress print for time len &lt;= 1 second
-        :param check_per_sec: int|float, how often check time
-        :return: None
+        `param seconds` int|float, how long sleep
+        `param quiet_small` boolean, suppress print for time len &lt;= 1 second
+        `param check_per_sec` int|float, how often check time
+        `return` None
         &#34;&#34;&#34;
         if seconds &lt; 0:
             raise ValueError(&#34;sleep time must be non-negative&#34;)
@@ -134,9 +134,9 @@ class Time:
     @classmethod
     def delta(cls, time_a, time_b):
         &#34;&#34;&#34;
-        :param time_a: datetime.datetime time object|float of timestamp
-        :param time_b: datetime.datetime time object|float of timestamp
-        :return: difference between two timestamps
+        `param time_a` datetime.datetime time object|float of timestamp
+        `param time_b` datetime.datetime time object|float of timestamp
+        `return` difference between two timestamps
         &#34;&#34;&#34;
         if time_a &gt; time_b:
             time_a, time_b = time_b, time_a
@@ -179,7 +179,7 @@ class Time:
     @staticmethod
     def stamp():
         &#34;&#34;&#34;
-        :return: float, timestamp
+        `return` float, timestamp
         &#34;&#34;&#34;
         import time
         return time.time()
@@ -187,8 +187,8 @@ class Time:
     @staticmethod
     def timestamp_to_datetime(timestamp):
         &#34;&#34;&#34;
-        :param timestamp: float, timestamp
-        :return: datetime.datetime time object
+        `param timestamp` float, timestamp
+        `return` datetime.datetime time object
         &#34;&#34;&#34;
         import datetime
         if isinstance(timestamp, str):
@@ -204,8 +204,8 @@ class Time:
     @staticmethod
     def datetime_to_timestamp(datetime_object):
         &#34;&#34;&#34;
-        :param datetime_object: datetime.datetime time object
-        :return: float, timestamp
+        `param datetime_object` datetime.datetime time object
+        `return` float, timestamp
         &#34;&#34;&#34;
         import time
         if isinstance(datetime_object, float):
@@ -215,8 +215,8 @@ class Time:
     @classmethod
     def dotted(cls, custom_time=None):
         &#34;&#34;&#34;
-        :param custom_time: datetime.datetime time object|float of timestamp
-        :return: string with time in format &#34;1999.12.31_at_12.59.59.999999&#34;
+        `param custom_time` datetime.datetime time object|float of timestamp
+        `return` string with time in format &#34;1999.12.31_at_12.59.59.999999&#34;
         &#34;&#34;&#34;
         import datetime
         if custom_time:
@@ -231,9 +231,9 @@ class Time:
     @staticmethod
     def _timer(seconds, check_per_sec=10):
         &#34;&#34;&#34;Internal function to idle (used in Time.sleep). Print how much time left.
-        :param seconds: int|float, how long sleep
-        :param check_per_sec: int|float, how often check time
-        :return: None
+        `param seconds` int|float, how long sleep
+        `param check_per_sec` int|float, how often check time
+        `return` None
         &#34;&#34;&#34;
         from .print9 import Print
         from .bench9 import Bench
@@ -252,10 +252,10 @@ class Time:
     def sleep(cls, seconds, quiet_small=False, check_per_sec=10):
         &#34;&#34;&#34;Function to idle. If &#39;seconds more, than 1, running Time._timer. Otherwise run time.sleep and print time
         left.
-        :param seconds: int|float, how long sleep
-        :param quiet_small: boolean, suppress print for time len &lt;= 1 second
-        :param check_per_sec: int|float, how often check time
-        :return: None
+        `param seconds` int|float, how long sleep
+        `param quiet_small` boolean, suppress print for time len &lt;= 1 second
+        `param check_per_sec` int|float, how often check time
+        `return` None
         &#34;&#34;&#34;
         if seconds &lt; 0:
             raise ValueError(&#34;sleep time must be non-negative&#34;)
@@ -270,9 +270,9 @@ class Time:
     @classmethod
     def delta(cls, time_a, time_b):
         &#34;&#34;&#34;
-        :param time_a: datetime.datetime time object|float of timestamp
-        :param time_b: datetime.datetime time object|float of timestamp
-        :return: difference between two timestamps
+        `param time_a` datetime.datetime time object|float of timestamp
+        `param time_b` datetime.datetime time object|float of timestamp
+        `return` difference between two timestamps
         &#34;&#34;&#34;
         if time_a &gt; time_b:
             time_a, time_b = time_b, time_a
@@ -288,15 +288,15 @@ class Time:
 <span>def <span class="ident">datetime_to_timestamp</span></span>(<span>datetime_object)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>:param datetime_object: datetime.datetime time object
-:return: float, timestamp</p></section>
+<section class="desc"><p><code>param datetime_object</code> datetime.datetime time object
+<code>return</code> float, timestamp</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def datetime_to_timestamp(datetime_object):
     &#34;&#34;&#34;
-    :param datetime_object: datetime.datetime time object
-    :return: float, timestamp
+    `param datetime_object` datetime.datetime time object
+    `return` float, timestamp
     &#34;&#34;&#34;
     import time
     if isinstance(datetime_object, float):
@@ -308,17 +308,17 @@ def datetime_to_timestamp(datetime_object):
 <span>def <span class="ident">delta</span></span>(<span>cls, time_a, time_b)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>:param time_a: datetime.datetime time object|float of timestamp
-:param time_b: datetime.datetime time object|float of timestamp
-:return: difference between two timestamps</p></section>
+<section class="desc"><p><code>param time_a</code> datetime.datetime time object|float of timestamp
+<code>param time_b</code> datetime.datetime time object|float of timestamp
+<code>return</code> difference between two timestamps</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def delta(cls, time_a, time_b):
     &#34;&#34;&#34;
-    :param time_a: datetime.datetime time object|float of timestamp
-    :param time_b: datetime.datetime time object|float of timestamp
-    :return: difference between two timestamps
+    `param time_a` datetime.datetime time object|float of timestamp
+    `param time_b` datetime.datetime time object|float of timestamp
+    `return` difference between two timestamps
     &#34;&#34;&#34;
     if time_a &gt; time_b:
         time_a, time_b = time_b, time_a
@@ -333,15 +333,15 @@ def delta(cls, time_a, time_b):
 <span>def <span class="ident">dotted</span></span>(<span>cls, custom_time=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>:param custom_time: datetime.datetime time object|float of timestamp
-:return: string with time in format "1999.12.31_at_12.59.59.999999"</p></section>
+<section class="desc"><p><code>param custom_time</code> datetime.datetime time object|float of timestamp
+<code>return</code> string with time in format "1999.12.31_at_12.59.59.999999"</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def dotted(cls, custom_time=None):
     &#34;&#34;&#34;
-    :param custom_time: datetime.datetime time object|float of timestamp
-    :return: string with time in format &#34;1999.12.31_at_12.59.59.999999&#34;
+    `param custom_time` datetime.datetime time object|float of timestamp
+    `return` string with time in format &#34;1999.12.31_at_12.59.59.999999&#34;
     &#34;&#34;&#34;
     import datetime
     if custom_time:
@@ -360,20 +360,20 @@ def dotted(cls, custom_time=None):
 <dd>
 <section class="desc"><p>Function to idle. If 'seconds more, than 1, running Time._timer. Otherwise run time.sleep and print time
 left.
-:param seconds: int|float, how long sleep
-:param quiet_small: boolean, suppress print for time len &lt;= 1 second
-:param check_per_sec: int|float, how often check time
-:return: None</p></section>
+<code>param seconds</code> int|float, how long sleep
+<code>param quiet_small</code> boolean, suppress print for time len &lt;= 1 second
+<code>param check_per_sec</code> int|float, how often check time
+<code>return</code> None</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def sleep(cls, seconds, quiet_small=False, check_per_sec=10):
     &#34;&#34;&#34;Function to idle. If &#39;seconds more, than 1, running Time._timer. Otherwise run time.sleep and print time
     left.
-    :param seconds: int|float, how long sleep
-    :param quiet_small: boolean, suppress print for time len &lt;= 1 second
-    :param check_per_sec: int|float, how often check time
-    :return: None
+    `param seconds` int|float, how long sleep
+    `param quiet_small` boolean, suppress print for time len &lt;= 1 second
+    `param check_per_sec` int|float, how often check time
+    `return` None
     &#34;&#34;&#34;
     if seconds &lt; 0:
         raise ValueError(&#34;sleep time must be non-negative&#34;)
@@ -390,13 +390,13 @@ def sleep(cls, seconds, quiet_small=False, check_per_sec=10):
 <span>def <span class="ident">stamp</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>:return: float, timestamp</p></section>
+<section class="desc"><p><code>return</code> float, timestamp</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def stamp():
     &#34;&#34;&#34;
-    :return: float, timestamp
+    `return` float, timestamp
     &#34;&#34;&#34;
     import time
     return time.time()</code></pre>
@@ -406,15 +406,15 @@ def stamp():
 <span>def <span class="ident">timestamp_to_datetime</span></span>(<span>timestamp)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>:param timestamp: float, timestamp
-:return: datetime.datetime time object</p></section>
+<section class="desc"><p><code>param timestamp</code> float, timestamp
+<code>return</code> datetime.datetime time object</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def timestamp_to_datetime(timestamp):
     &#34;&#34;&#34;
-    :param timestamp: float, timestamp
-    :return: datetime.datetime time object
+    `param timestamp` float, timestamp
+    `return` datetime.datetime time object
     &#34;&#34;&#34;
     import datetime
     if isinstance(timestamp, str):

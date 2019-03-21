@@ -20,16 +20,16 @@ class Json:
 
     def load(self, quiet=True):
         """Loads json from file, defined in class init to class var "string"
-        `param quiet` boolean, suppress print to console
-        `return` None
+        <br>`param quiet` boolean, suppress print to console
+        <br>`return` None
         """
         self.string = self._load_from_file(self.filename, quiet=quiet)
 
     def save(self, quiet=True, debug=False):
         """Saves json to file, defined in class init from class var "string"
-        `param quiet` boolean, suppress print to console
-        `param debug` boolean, prints some more info
-        `return` None
+        <br>`param quiet` boolean, suppress print to console
+        <br>`param debug` boolean, prints some more info
+        <br>`return` None
         """
         if debug:
             print(self.string)
@@ -37,8 +37,8 @@ class Json:
 
     def _check_file(self, filename, quiet=True):
         """
-        `param filename` string with path to JSON file
-        `return` boolean with state of JSON correctness
+        <br>`param filename` string with path to JSON file
+        <br>`return` boolean with state of JSON correctness
         """
         # try:
         self._load_from_file(filename, quiet=quiet)
@@ -50,11 +50,11 @@ class Json:
 
     def _save_to_file(self, filename, json_string, quiet=False, debug=False):
         """
-        `param filename` path of file, where JSON will be saved
-        `param json_string` list or dict to save in file
-        `param quiet` boolean, suppress print to console
-        `param debug` boolean, needed for debugging
-        `return`
+        <br>`param filename` path of file, where JSON will be saved
+        <br>`param json_string` list or dict to save in file
+        <br>`param quiet` boolean, suppress print to console
+        <br>`param debug` boolean, needed for debugging
+        <br>`return`
         """
         import json
         import sys
@@ -83,10 +83,10 @@ class Json:
 
     def _load_from_file(self, filename, quiet=False, debug=False):
         """
-        `param filename` path of file, from load JSON
-        `param quiet` suppress print to console
-        `param debug` boolean, needed for debugging
-        `return`
+        <br>`param filename` path of file, from load JSON
+        <br>`param quiet` suppress print to console
+        <br>`param debug` boolean, needed for debugging
+        <br>`return`
         """
         import json
         import os

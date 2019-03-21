@@ -36,14 +36,14 @@ class CLI:
     @staticmethod
     def get_y_n(question, answer=None):
         &#34;&#34;&#34;Obtain answer yes or no from user in commandline.
-        :param question: string with question to user
-        :param answer: predefined string with answer, must be &#34;y&#34; or &#34;n&#34;
-        :return: boolean
+        `param question` string with question to user
+        `param answer` predefined string with answer, must be &#34;y&#34; or &#34;n&#34;
+        `return` boolean
         &#34;&#34;&#34;
         def check_answer(string):  #pylint: disable=inconsistent-return-statements
             &#34;&#34;&#34;Check input from user or argument &#34;answer&#34;
-            :param string: input string, check answer for &#34;y&#34; or &#34;n&#34;, for other values return None
-            :return: True|False|None
+            `param string` input string, check answer for &#34;y&#34; or &#34;n&#34;, for other values return None
+            `return` True|False|None
             &#34;&#34;&#34;
             if string.lower() == &#34;y&#34;:
                 return True
@@ -67,8 +67,8 @@ class CLI:
     def wait_update(cls, quiet=False):
         &#34;&#34;&#34;Print &#39;spinning&#39; (if function called multiple times) stick, used for long processes to show user that some
         progress are going.
-        :param quiet: boolean, suppress print to console
-        :return: string with &#39;stick&#39; in new position
+        `param quiet` boolean, suppress print to console
+        `return` string with &#39;stick&#39; in new position
         &#34;&#34;&#34;
         from .const9 import backslash
         if cls.wait_update_pos == 0:
@@ -89,10 +89,10 @@ class CLI:
     @staticmethod
     def progressbar(count, finish, width_of_output=None):
         &#34;&#34;&#34;Here must be realisation of progressbar
-        :param count: int|float current progress status value
-        :param finish: int|float finish progress value
-        :param width_of_output: int width of progressbar, by default it&#39;s width of console
-        :return:
+        `param count` int|float current progress status value
+        `param finish` int|float finish progress value
+        `param width_of_output` int width of progressbar, by default it&#39;s width of console
+        `return`
         &#34;&#34;&#34;
         raise NotImplementedError
         from .console9 import Console  # pylint: disable=unreachable
@@ -121,14 +121,14 @@ class CLI:
     @staticmethod
     def get_y_n(question, answer=None):
         &#34;&#34;&#34;Obtain answer yes or no from user in commandline.
-        :param question: string with question to user
-        :param answer: predefined string with answer, must be &#34;y&#34; or &#34;n&#34;
-        :return: boolean
+        `param question` string with question to user
+        `param answer` predefined string with answer, must be &#34;y&#34; or &#34;n&#34;
+        `return` boolean
         &#34;&#34;&#34;
         def check_answer(string):  #pylint: disable=inconsistent-return-statements
             &#34;&#34;&#34;Check input from user or argument &#34;answer&#34;
-            :param string: input string, check answer for &#34;y&#34; or &#34;n&#34;, for other values return None
-            :return: True|False|None
+            `param string` input string, check answer for &#34;y&#34; or &#34;n&#34;, for other values return None
+            `return` True|False|None
             &#34;&#34;&#34;
             if string.lower() == &#34;y&#34;:
                 return True
@@ -152,8 +152,8 @@ class CLI:
     def wait_update(cls, quiet=False):
         &#34;&#34;&#34;Print &#39;spinning&#39; (if function called multiple times) stick, used for long processes to show user that some
         progress are going.
-        :param quiet: boolean, suppress print to console
-        :return: string with &#39;stick&#39; in new position
+        `param quiet` boolean, suppress print to console
+        `return` string with &#39;stick&#39; in new position
         &#34;&#34;&#34;
         from .const9 import backslash
         if cls.wait_update_pos == 0:
@@ -174,10 +174,10 @@ class CLI:
     @staticmethod
     def progressbar(count, finish, width_of_output=None):
         &#34;&#34;&#34;Here must be realisation of progressbar
-        :param count: int|float current progress status value
-        :param finish: int|float finish progress value
-        :param width_of_output: int width of progressbar, by default it&#39;s width of console
-        :return:
+        `param count` int|float current progress status value
+        `param finish` int|float finish progress value
+        `param width_of_output` int width of progressbar, by default it&#39;s width of console
+        `return`
         &#34;&#34;&#34;
         raise NotImplementedError
         from .console9 import Console  # pylint: disable=unreachable
@@ -197,22 +197,22 @@ class CLI:
 </code></dt>
 <dd>
 <section class="desc"><p>Obtain answer yes or no from user in commandline.
-:param question: string with question to user
-:param answer: predefined string with answer, must be "y" or "n"
-:return: boolean</p></section>
+<code>param question</code> string with question to user
+<code>param answer</code> predefined string with answer, must be "y" or "n"
+<code>return</code> boolean</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def get_y_n(question, answer=None):
     &#34;&#34;&#34;Obtain answer yes or no from user in commandline.
-    :param question: string with question to user
-    :param answer: predefined string with answer, must be &#34;y&#34; or &#34;n&#34;
-    :return: boolean
+    `param question` string with question to user
+    `param answer` predefined string with answer, must be &#34;y&#34; or &#34;n&#34;
+    `return` boolean
     &#34;&#34;&#34;
     def check_answer(string):  #pylint: disable=inconsistent-return-statements
         &#34;&#34;&#34;Check input from user or argument &#34;answer&#34;
-        :param string: input string, check answer for &#34;y&#34; or &#34;n&#34;, for other values return None
-        :return: True|False|None
+        `param string` input string, check answer for &#34;y&#34; or &#34;n&#34;, for other values return None
+        `return` True|False|None
         &#34;&#34;&#34;
         if string.lower() == &#34;y&#34;:
             return True
@@ -236,19 +236,19 @@ def get_y_n(question, answer=None):
 </code></dt>
 <dd>
 <section class="desc"><p>Here must be realisation of progressbar
-:param count: int|float current progress status value
-:param finish: int|float finish progress value
-:param width_of_output: int width of progressbar, by default it's width of console
-:return:</p></section>
+<code>param count</code> int|float current progress status value
+<code>param finish</code> int|float finish progress value
+<code>param width_of_output</code> int width of progressbar, by default it's width of console
+<code>return</code></p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def progressbar(count, finish, width_of_output=None):
     &#34;&#34;&#34;Here must be realisation of progressbar
-    :param count: int|float current progress status value
-    :param finish: int|float finish progress value
-    :param width_of_output: int width of progressbar, by default it&#39;s width of console
-    :return:
+    `param count` int|float current progress status value
+    `param finish` int|float finish progress value
+    `param width_of_output` int width of progressbar, by default it&#39;s width of console
+    `return`
     &#34;&#34;&#34;
     raise NotImplementedError
     from .console9 import Console  # pylint: disable=unreachable
@@ -261,16 +261,16 @@ def progressbar(count, finish, width_of_output=None):
 <dd>
 <section class="desc"><p>Print 'spinning' (if function called multiple times) stick, used for long processes to show user that some
 progress are going.
-:param quiet: boolean, suppress print to console
-:return: string with 'stick' in new position</p></section>
+<code>param quiet</code> boolean, suppress print to console
+<code>return</code> string with 'stick' in new position</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def wait_update(cls, quiet=False):
     &#34;&#34;&#34;Print &#39;spinning&#39; (if function called multiple times) stick, used for long processes to show user that some
     progress are going.
-    :param quiet: boolean, suppress print to console
-    :return: string with &#39;stick&#39; in new position
+    `param quiet` boolean, suppress print to console
+    `return` string with &#39;stick&#39; in new position
     &#34;&#34;&#34;
     from .const9 import backslash
     if cls.wait_update_pos == 0:

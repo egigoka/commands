@@ -11,26 +11,26 @@ class Str:
     @staticmethod
     def to_quotes(some_string):
         """
-        `param some_string` string
-        `return` string, inside "" quotes
+        <br>`param some_string` string
+        <br>`return` string, inside "" quotes
         """
         return '"' + str(some_string) + '"'
 
     @staticmethod
     def to_quotes_2(some_string):
         """
-        `param some_string` string
-        `return` string, inside '' quotes
+        <br>`param some_string` string
+        <br>`return` string, inside '' quotes
         """
         return "'" + str(some_string) + "'"
 
     @classmethod
     def get_integers(cls, string, float_support=True, debug=False):
         """
-        `param string` string, with some integers or floats inside
-        `param float_support` boolean, enable float support
-        `param debug` boolean, debug print enable
-        `return` list of integers or floats
+        <br>`param string` string, with some integers or floats inside
+        <br>`param float_support` boolean, enable float support
+        <br>`param debug` boolean, debug print enable
+        <br>`return` list of integers or floats
         """
         string = cls.remove_spaces(string)
         integer_found = False
@@ -77,9 +77,9 @@ class Str:
     @staticmethod
     def newlines_to_strings(string):
         """
-        `param string` string, with some newlines
-        `param quiet` boolean suppress print to console
-        `return` list of strings
+        <br>`param string` string, with some newlines
+        <br>`param quiet` boolean suppress print to console
+        <br>`return` list of strings
         """
         from .const9 import newline, newline2
         if isinstance(string, str):  # if input is string
@@ -92,18 +92,18 @@ class Str:
     @classmethod
     def nl(cls, string):  # pylint: disable=invalid-name
         """
-        `param string` string, with some newlines
-        `param quiet` boolean suppress print to console
-        `return` list of strings
+        <br>`param string` string, with some newlines
+        <br>`param quiet` boolean suppress print to console
+        <br>`return` list of strings
         """
         return cls.newlines_to_strings(string=string)
 
     @staticmethod
     def split_every(string, chars):
         """Split line every N chars
-        `param string` string, input
-        `param chars` int, count of chars, that split line
-        `return` list of substring of 'chars' length
+        <br>`param string` string, input
+        <br>`param chars` int, count of chars, that split line
+        <br>`return` list of substring of 'chars' length
         """
         chars = int(chars)
         if chars <= 0:
@@ -123,11 +123,11 @@ class Str:
     @staticmethod
     def leftpad(string, length, char="0", rightpad=False):
         """Adds symbols from char str to left side of output string to change input string len to 'length'
-        `param string` string, input
-        `param length` int, len of output string
-        `param char` string, characters, added to left side of input string
-        `param rightpad` boolean, if True, adds symbols to right side
-        `return` string, with added characters to side of input string
+        <br>`param string` string, input
+        <br>`param length` int, len of output string
+        <br>`param char` string, characters, added to left side of input string
+        <br>`param rightpad` boolean, if True, adds symbols to right side
+        <br>`return` string, with added characters to side of input string
         """
         char = str(char)
         string = str(string)
@@ -142,22 +142,22 @@ class Str:
     @classmethod
     def rightpad(cls, string, leng, char="0"):
         """Adds symbols from char str to right side of output string to change input string len to 'length'
-        `param string` string, input
-        `param length` int, len of output string
-        `param char` string, characters, added to right side of input string
-        `return` string, with added characters to side of input string
+        <br>`param string` string, input
+        <br>`param length` int, len of output string
+        <br>`param char` string, characters, added to right side of input string
+        <br>`return` string, with added characters to side of input string
         """
         return cls.leftpad(string, leng, char=char, rightpad=True)
 
     @staticmethod
     def substring(string, before, after=None, return_after_substring=False, safe=False):
         """Get substring from string that between "before", and "after" strings, not including those.
-        `param string` string
-        `param before` string, that before output string
-        `param after` string, that after output string
-        `param return_after_substring` boolean, if True, return list of substring and part after substring
-        `param safe` boolean, suppress exceptions if something not found
-        `return` string, from string that between "before", and "after" arguments
+        <br>`param string` string
+        <br>`param before` string, that before output string
+        <br>`param after` string, that after output string
+        <br>`param return_after_substring` boolean, if True, return list of substring and part after substring
+        <br>`param safe` boolean, suppress exceptions if something not found
+        <br>`return` string, from string that between "before", and "after" arguments
         """
         string = str(string)
         before = str(before)
@@ -191,9 +191,9 @@ class Str:
     @staticmethod
     def diff_simple(string_a, string_b):
         """Print all different symbols. Code not all mine, so it's not so good (or bad).
-        `param string_a` string
-        `param string_b` string
-        `return` None
+        <br>`param string_a` string
+        <br>`param string_b` string
+        <br>`return` None
         """
         import difflib
         strings = [(string_a, string_b)]  # for furthurer support for unlimited srtings
@@ -211,8 +211,8 @@ class Str:
     @staticmethod
     def input_pass(string="Password:"):
         """Secure input password
-        `param string` string, with message to user, that asks password
-        `return` string, that returned from getpass lib
+        <br>`param string` string, with message to user, that asks password
+        <br>`return` string, that returned from getpass lib
         """
         import getpass
         return getpass.getpass(str(string))
@@ -220,12 +220,12 @@ class Str:
     @classmethod
     def input_int(cls, message="Input integer: ", minimum=None, maximum=None, default=None, debug=True):  # pylint: disable=too-many-arguments
         """Ask user to input integer.
-        `param message` string, message to user
-        `param minimum` minimum value of returned integer
-        `param maximum` maximum value of returned integer
-        `param default` default value if user just press Enter
-        `param debug` boolean, debug purposes
-        `return` int, input from user
+        <br>`param message` string, message to user
+        <br>`param minimum` minimum value of returned integer
+        <br>`param maximum` maximum value of returned integer
+        <br>`param default` default value if user just press Enter
+        <br>`param debug` boolean, debug purposes
+        <br>`return` int, input from user
         """
         output_int = "jabla fitta"
         if default:
@@ -262,8 +262,8 @@ class Str:
     @classmethod
     def remove_spaces(cls, string_):
         """Remove all duplicating spaces in string
-        `param string_` string, input
-        `return` string, without duplicated spaces
+        <br>`param string_` string, input
+        <br>`return` string, without duplicated spaces
         """
         string_ = str(string_)
         while '  ' in string_:
@@ -273,8 +273,8 @@ class Str:
     @staticmethod
     def get_words(string_):
         """
-        `param string_` string, with spaces to split it
-        `return` list of substrings, splitted by space|multiple space
+        <br>`param string_` string, with spaces to split it
+        <br>`return` list of substrings, splitted by space|multiple space
         """
         removed_spaces = ' '.join(string_.split())  # at least, it's fast https://stackoverflow.com/questions/2077897/
         # substitute-multiple-whitespace-with-single-whitespace-in-python
@@ -286,8 +286,8 @@ class Str:
     @staticmethod
     def guid_from_seed(seed):
         """
-        `param seed` string, seed to generate guid
-        `return` string, guid-like
+        <br>`param seed` string, seed to generate guid
+        <br>`return` string, guid-like
         """
         import hashlib
         bseed = bytes(seed, "utf-8")

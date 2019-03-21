@@ -11,14 +11,14 @@ class CLI:
     @staticmethod
     def get_y_n(question, answer=None):
         """Obtain answer yes or no from user in commandline.
-        `param question` string with question to user
-        `param answer` predefined string with answer, must be "y" or "n"
-        `return` boolean
+        <br>`param question` string with question to user
+        <br>`param answer` predefined string with answer, must be "y" or "n"
+        <br>`return` boolean
         """
         def check_answer(string):  #pylint: disable=inconsistent-return-statements
             """Check input from user or argument "answer"
-            `param string` input string, check answer for "y" or "n", for other values return None
-            `return` True|False|None
+            <br>`param string` input string, check answer for "y" or "n", for other values return None
+            <br>`return` True|False|None
             """
             if string.lower() == "y":
                 return True
@@ -42,8 +42,8 @@ class CLI:
     def wait_update(cls, quiet=False):
         """Print 'spinning' (if function called multiple times) stick, used for long processes to show user that some
         progress are going.
-        `param quiet` boolean, suppress print to console
-        `return` string with 'stick' in new position
+        <br>`param quiet` boolean, suppress print to console
+        <br>`return` string with 'stick' in new position
         """
         from .const9 import backslash
         if cls.wait_update_pos == 0:
@@ -64,10 +64,10 @@ class CLI:
     @staticmethod
     def progressbar(count, finish, width_of_output=None):
         """Here must be realisation of progressbar
-        `param count` int|float current progress status value
-        `param finish` int|float finish progress value
-        `param width_of_output` int width of progressbar, by default it's width of console
-        `return`
+        <br>`param count` int|float current progress status value
+        <br>`param finish` int|float finish progress value
+        <br>`param width_of_output` int width of progressbar, by default it's width of console
+        <br>`return`
         """
         raise NotImplementedError
         from .console9 import Console  # pylint: disable=unreachable

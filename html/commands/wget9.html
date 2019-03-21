@@ -36,10 +36,10 @@ class Wget:  # pylint: disable=too-few-public-methods
     @staticmethod
     def download(url, output_filename, quiet=False, no_check_certificate=False):  # pylint: disable=inconsistent-return-statements
         &#34;&#34;&#34;Wrapper to wget cli
-        :param url: string, url to some file
-        :param output_filename: string, path to filename
-        :param quiet: boolean, suppress print to console
-        :return: output from wget if &#39;quiet&#39; argument is True
+        `param url` string, url to some file
+        `param output_filename` string, path to filename
+        `param quiet` boolean, suppress print to console
+        `return` output from wget if &#39;quiet&#39; argument is True
         &#34;&#34;&#34;
         arguments = &#39;--header=&#34;Accept: text/html&#34; &#39; + \
                     &#39;--user-agent=&#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) &#39; + \
@@ -87,10 +87,10 @@ class Wget:  # pylint: disable=too-few-public-methods
     @staticmethod
     def download(url, output_filename, quiet=False, no_check_certificate=False):  # pylint: disable=inconsistent-return-statements
         &#34;&#34;&#34;Wrapper to wget cli
-        :param url: string, url to some file
-        :param output_filename: string, path to filename
-        :param quiet: boolean, suppress print to console
-        :return: output from wget if &#39;quiet&#39; argument is True
+        `param url` string, url to some file
+        `param output_filename` string, path to filename
+        `param quiet` boolean, suppress print to console
+        `return` output from wget if &#39;quiet&#39; argument is True
         &#34;&#34;&#34;
         arguments = &#39;--header=&#34;Accept: text/html&#34; &#39; + \
                     &#39;--user-agent=&#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) &#39; + \
@@ -121,19 +121,19 @@ class Wget:  # pylint: disable=too-few-public-methods
 </code></dt>
 <dd>
 <section class="desc"><p>Wrapper to wget cli
-:param url: string, url to some file
-:param output_filename: string, path to filename
-:param quiet: boolean, suppress print to console
-:return: output from wget if 'quiet' argument is True</p></section>
+<code>param url</code> string, url to some file
+<code>param output_filename</code> string, path to filename
+<code>param quiet</code> boolean, suppress print to console
+<code>return</code> output from wget if 'quiet' argument is True</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def download(url, output_filename, quiet=False, no_check_certificate=False):  # pylint: disable=inconsistent-return-statements
     &#34;&#34;&#34;Wrapper to wget cli
-    :param url: string, url to some file
-    :param output_filename: string, path to filename
-    :param quiet: boolean, suppress print to console
-    :return: output from wget if &#39;quiet&#39; argument is True
+    `param url` string, url to some file
+    `param output_filename` string, path to filename
+    `param quiet` boolean, suppress print to console
+    `return` output from wget if &#39;quiet&#39; argument is True
     &#34;&#34;&#34;
     arguments = &#39;--header=&#34;Accept: text/html&#34; &#39; + \
                 &#39;--user-agent=&#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) &#39; + \

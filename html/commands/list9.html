@@ -36,8 +36,8 @@ class List:
     @staticmethod
     def flatterize(input_list):
         &#34;&#34;&#34;Remove nesting from lists.
-        :param input_list: list
-        :return: list with all contents of input list but without nesting
+        `param input_list` list
+        `return` list with all contents of input list but without nesting
         &#34;&#34;&#34;
         import copy
         if not isinstance(input_list, (list, tuple)):
@@ -55,9 +55,9 @@ class List:
     @staticmethod
     def split_every(list_input, count):
         &#34;&#34;&#34;Split list to lists with N elements
-        :param list_input: list
-        :param count: int with N
-        :return: list of lists
+        `param list_input` list
+        `param count` int with N
+        `return` list of lists
         &#34;&#34;&#34;
         count = int(count)
         output_lists = [list_input[x:x+count] for x in range(0, len(list_input), count)]
@@ -67,9 +67,9 @@ class List:
     @staticmethod
     def wildcard_search(list_input, regexp):
         &#34;&#34;&#34;Search list shell-like
-        :param list_input: list
-        :param regexp: string with shell-like wildcards: ? for one character or * for multiple characters.
-        :return: list of result of search
+        `param list_input` list
+        `param regexp` string with shell-like wildcards` ? for one character or * for multiple characters.
+        `return` list of result of search
         &#34;&#34;&#34;
         import fnmatch
         return fnmatch.filter(list_input, regexp)
@@ -105,8 +105,8 @@ class List:
     @staticmethod
     def flatterize(input_list):
         &#34;&#34;&#34;Remove nesting from lists.
-        :param input_list: list
-        :return: list with all contents of input list but without nesting
+        `param input_list` list
+        `return` list with all contents of input list but without nesting
         &#34;&#34;&#34;
         import copy
         if not isinstance(input_list, (list, tuple)):
@@ -124,9 +124,9 @@ class List:
     @staticmethod
     def split_every(list_input, count):
         &#34;&#34;&#34;Split list to lists with N elements
-        :param list_input: list
-        :param count: int with N
-        :return: list of lists
+        `param list_input` list
+        `param count` int with N
+        `return` list of lists
         &#34;&#34;&#34;
         count = int(count)
         output_lists = [list_input[x:x+count] for x in range(0, len(list_input), count)]
@@ -136,9 +136,9 @@ class List:
     @staticmethod
     def wildcard_search(list_input, regexp):
         &#34;&#34;&#34;Search list shell-like
-        :param list_input: list
-        :param regexp: string with shell-like wildcards: ? for one character or * for multiple characters.
-        :return: list of result of search
+        `param list_input` list
+        `param regexp` string with shell-like wildcards` ? for one character or * for multiple characters.
+        `return` list of result of search
         &#34;&#34;&#34;
         import fnmatch
         return fnmatch.filter(list_input, regexp)
@@ -158,15 +158,15 @@ class List:
 </code></dt>
 <dd>
 <section class="desc"><p>Remove nesting from lists.
-:param input_list: list
-:return: list with all contents of input list but without nesting</p></section>
+<code>param input_list</code> list
+<code>return</code> list with all contents of input list but without nesting</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def flatterize(input_list):
     &#34;&#34;&#34;Remove nesting from lists.
-    :param input_list: list
-    :return: list with all contents of input list but without nesting
+    `param input_list` list
+    `return` list with all contents of input list but without nesting
     &#34;&#34;&#34;
     import copy
     if not isinstance(input_list, (list, tuple)):
@@ -199,17 +199,17 @@ def replace_string(list, old_string, new_string):
 </code></dt>
 <dd>
 <section class="desc"><p>Split list to lists with N elements
-:param list_input: list
-:param count: int with N
-:return: list of lists</p></section>
+<code>param list_input</code> list
+<code>param count</code> int with N
+<code>return</code> list of lists</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def split_every(list_input, count):
     &#34;&#34;&#34;Split list to lists with N elements
-    :param list_input: list
-    :param count: int with N
-    :return: list of lists
+    `param list_input` list
+    `param count` int with N
+    `return` list of lists
     &#34;&#34;&#34;
     count = int(count)
     output_lists = [list_input[x:x+count] for x in range(0, len(list_input), count)]
@@ -234,17 +234,16 @@ def to_strings(list):
 </code></dt>
 <dd>
 <section class="desc"><p>Search list shell-like
-:param list_input: list
-:param regexp: string with shell-like wildcards: ? for one character or * for multiple characters.
-:return: list of result of search</p></section>
+<code>param list_input</code> list
+<code>param regexp</code> string with shell-like wildcards<code>? for one character or * for multiple characters.</code>return` list of result of search</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def wildcard_search(list_input, regexp):
     &#34;&#34;&#34;Search list shell-like
-    :param list_input: list
-    :param regexp: string with shell-like wildcards: ? for one character or * for multiple characters.
-    :return: list of result of search
+    `param list_input` list
+    `param regexp` string with shell-like wildcards` ? for one character or * for multiple characters.
+    `return` list of result of search
     &#34;&#34;&#34;
     import fnmatch
     return fnmatch.filter(list_input, regexp)</code></pre>

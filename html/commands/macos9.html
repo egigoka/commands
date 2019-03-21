@@ -39,8 +39,8 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
         @staticmethod
         def quotes_escape(string):
             &#34;&#34;&#34;Trying to escape quotes to puch them through AppleScript
-            :param string: string input
-            :return: string with escaped symbols
+            `param string` string input
+            `return` string with escaped symbols
             &#34;&#34;&#34;
             from .const9 import backslash
             quote_1 = &#39;&#34;&#39;
@@ -61,8 +61,8 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
     @classmethod
     def get_list_of_sounds(cls, quiet=False):
         &#34;&#34;&#34;Print all sound names from current machine and user
-        :param quiet: suppress print to console
-        :return: list of all sounds
+        `param quiet` suppress print to console
+        `return` list of all sounds
         &#34;&#34;&#34;
         from .print9 import Print
         from .dir9 import Dir
@@ -76,12 +76,12 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
     @classmethod
     def notification(cls, message, title=&#34;python3&#34;, subtitle=None, sound=None):
         &#34;&#34;&#34;Create notification with AppleScript
-        :param message: string
-        :param title: string
-        :param subtitle: string
-        :param sound: string with sound name
-        :param list_of_sounds: boolean,
-        :return: None
+        `param message` string
+        `param title` string
+        `param subtitle` string
+        `param sound` string with sound name
+        `param list_of_sounds` boolean,
+        `return` None
         &#34;&#34;&#34;
         # https://apple.stackexchange.com/questions/57412/how-can-i-trigger-a-notification-center-notification-from-an-a
         # pplescript-or-shel# - just AppleScript
@@ -108,9 +108,9 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
     @staticmethod
     def symlink(real, symlink):
         &#34;&#34;&#34;Creates symlink in macOS
-        :param real: string, path to real folder or file, where be linked symlink
-        :param symlink: string, path to new symlink
-        :return: None
+        `param real` string, path to real folder or file, where be linked symlink
+        `param symlink` string, path to new symlink
+        `return` None
         &#34;&#34;&#34;
         from .process9 import Process
         Process.start(&#34;ln&#34;, &#34;-s&#34;, &#34;&#39;&#34;+real+&#34;&#39;&#34;, &#34;&#39;&#34;+symlink+&#34;&#39;&#34;)</code></pre>
@@ -141,8 +141,8 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
         @staticmethod
         def quotes_escape(string):
             &#34;&#34;&#34;Trying to escape quotes to puch them through AppleScript
-            :param string: string input
-            :return: string with escaped symbols
+            `param string` string input
+            `return` string with escaped symbols
             &#34;&#34;&#34;
             from .const9 import backslash
             quote_1 = &#39;&#34;&#39;
@@ -163,8 +163,8 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
     @classmethod
     def get_list_of_sounds(cls, quiet=False):
         &#34;&#34;&#34;Print all sound names from current machine and user
-        :param quiet: suppress print to console
-        :return: list of all sounds
+        `param quiet` suppress print to console
+        `return` list of all sounds
         &#34;&#34;&#34;
         from .print9 import Print
         from .dir9 import Dir
@@ -178,12 +178,12 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
     @classmethod
     def notification(cls, message, title=&#34;python3&#34;, subtitle=None, sound=None):
         &#34;&#34;&#34;Create notification with AppleScript
-        :param message: string
-        :param title: string
-        :param subtitle: string
-        :param sound: string with sound name
-        :param list_of_sounds: boolean,
-        :return: None
+        `param message` string
+        `param title` string
+        `param subtitle` string
+        `param sound` string with sound name
+        `param list_of_sounds` boolean,
+        `return` None
         &#34;&#34;&#34;
         # https://apple.stackexchange.com/questions/57412/how-can-i-trigger-a-notification-center-notification-from-an-a
         # pplescript-or-shel# - just AppleScript
@@ -210,9 +210,9 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
     @staticmethod
     def symlink(real, symlink):
         &#34;&#34;&#34;Creates symlink in macOS
-        :param real: string, path to real folder or file, where be linked symlink
-        :param symlink: string, path to new symlink
-        :return: None
+        `param real` string, path to real folder or file, where be linked symlink
+        `param symlink` string, path to new symlink
+        `return` None
         &#34;&#34;&#34;
         from .process9 import Process
         Process.start(&#34;ln&#34;, &#34;-s&#34;, &#34;&#39;&#34;+real+&#34;&#39;&#34;, &#34;&#39;&#34;+symlink+&#34;&#39;&#34;)</code></pre>
@@ -231,15 +231,15 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
 </code></dt>
 <dd>
 <section class="desc"><p>Print all sound names from current machine and user
-:param quiet: suppress print to console
-:return: list of all sounds</p></section>
+<code>param quiet</code> suppress print to console
+<code>return</code> list of all sounds</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def get_list_of_sounds(cls, quiet=False):
     &#34;&#34;&#34;Print all sound names from current machine and user
-    :param quiet: suppress print to console
-    :return: list of all sounds
+    `param quiet` suppress print to console
+    `return` list of all sounds
     &#34;&#34;&#34;
     from .print9 import Print
     from .dir9 import Dir
@@ -256,23 +256,23 @@ def get_list_of_sounds(cls, quiet=False):
 </code></dt>
 <dd>
 <section class="desc"><p>Create notification with AppleScript
-:param message: string
-:param title: string
-:param subtitle: string
-:param sound: string with sound name
-:param list_of_sounds: boolean,
-:return: None</p></section>
+<code>param message</code> string
+<code>param title</code> string
+<code>param subtitle</code> string
+<code>param sound</code> string with sound name
+<code>param list_of_sounds</code> boolean,
+<code>return</code> None</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def notification(cls, message, title=&#34;python3&#34;, subtitle=None, sound=None):
     &#34;&#34;&#34;Create notification with AppleScript
-    :param message: string
-    :param title: string
-    :param subtitle: string
-    :param sound: string with sound name
-    :param list_of_sounds: boolean,
-    :return: None
+    `param message` string
+    `param title` string
+    `param subtitle` string
+    `param sound` string with sound name
+    `param list_of_sounds` boolean,
+    `return` None
     &#34;&#34;&#34;
     # https://apple.stackexchange.com/questions/57412/how-can-i-trigger-a-notification-center-notification-from-an-a
     # pplescript-or-shel# - just AppleScript
@@ -302,17 +302,17 @@ def notification(cls, message, title=&#34;python3&#34;, subtitle=None, sound=Non
 </code></dt>
 <dd>
 <section class="desc"><p>Creates symlink in macOS
-:param real: string, path to real folder or file, where be linked symlink
-:param symlink: string, path to new symlink
-:return: None</p></section>
+<code>param real</code> string, path to real folder or file, where be linked symlink
+<code>param symlink</code> string, path to new symlink
+<code>return</code> None</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def symlink(real, symlink):
     &#34;&#34;&#34;Creates symlink in macOS
-    :param real: string, path to real folder or file, where be linked symlink
-    :param symlink: string, path to new symlink
-    :return: None
+    `param real` string, path to real folder or file, where be linked symlink
+    `param symlink` string, path to new symlink
+    `return` None
     &#34;&#34;&#34;
     from .process9 import Process
     Process.start(&#34;ln&#34;, &#34;-s&#34;, &#34;&#39;&#34;+real+&#34;&#39;&#34;, &#34;&#39;&#34;+symlink+&#34;&#39;&#34;)</code></pre>

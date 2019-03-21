@@ -11,8 +11,8 @@ class Gui:  # pylint: disable=too-few-public-methods
     @staticmethod
     def warning(message):
         """Starts Tkinter window with message to user
-        `param message` string with message to user
-        `return` None
+        <br>`param message` string with message to user
+        <br>`return` None
         """
         import sys
         from .print9 import Print

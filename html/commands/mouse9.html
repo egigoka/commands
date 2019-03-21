@@ -41,8 +41,8 @@ class SettingsMouse:  # pylint: disable=too-few-public-methods
     @classmethod
     def set_mouse_move_duration(cls, seconds):
         &#34;&#34;&#34;
-        :param seconds: int|float, seconds to move mouse
-        :return: None
+        `param seconds` int|float, seconds to move mouse
+        `return` None
         &#34;&#34;&#34;
         cls.mouse_move_duration = seconds
 
@@ -56,9 +56,9 @@ class Mouse:  # pylint: disable=too-few-public-methods
         @staticmethod
         def scroll(value, up):  # pylint: disable=invalid-name
             &#34;&#34;&#34;
-            :param value: int, how much to scroll, idk, how it work
-            :param up: boolean, scroll up or down
-            :return:
+            `param value` int, how much to scroll, idk, how it work
+            `param up` boolean, scroll up or down
+            `return`
             &#34;&#34;&#34;
             value = int(value)
             if not up:
@@ -69,16 +69,16 @@ class Mouse:  # pylint: disable=too-few-public-methods
         @classmethod
         def up(cls, value=100):  # pylint: disable=invalid-name
             &#34;&#34;&#34;
-            :param value: int, how much to scroll, idk, how it work
-            :return:
+            `param value` int, how much to scroll, idk, how it work
+            `return`
             &#34;&#34;&#34;
             cls.scroll(value, up=True)
 
         @classmethod
         def down(cls, value=100):
             &#34;&#34;&#34;
-            :param value: int, how much to scroll, idk, how it work
-            :return:
+            `param value` int, how much to scroll, idk, how it work
+            `return`
             &#34;&#34;&#34;
             cls.scroll(value, up=False)
 
@@ -88,10 +88,10 @@ class Mouse:  # pylint: disable=too-few-public-methods
         @staticmethod
         def click(button, position, quiet=False):
             &#34;&#34;&#34;
-            :param button: string with button name
-            :param position: list with two values x and y (pixels from up and left)
-            :param quiet: boolean, suppress print to console
-            :return: None
+            `param button` string with button name
+            `param position` list with two values x and y (pixels from up and left)
+            `param quiet` boolean, suppress print to console
+            `return` None
             &#34;&#34;&#34;
             from .time9 import Time
             Time.sleep(SettingsMouse.sleep_before_click, quiet_small=quiet)
@@ -105,18 +105,18 @@ class Mouse:  # pylint: disable=too-few-public-methods
         @classmethod
         def right(cls, position=None, quiet=False):
             &#34;&#34;&#34;
-            :param position: list with two values x and y (pixels from up and left)
-            :param quiet: boolean, suppress print to console
-            :return: None
+            `param position` list with two values x and y (pixels from up and left)
+            `param quiet` boolean, suppress print to console
+            `return` None
             &#34;&#34;&#34;
             cls.click(button=&#39;right&#39;, position=position, quiet=quiet)
 
         @classmethod
         def left(cls, position=None, quiet=False):
             &#34;&#34;&#34;
-            :param position: list with two values x and y (pixels from up and left)
-            :param quiet: boolean, suppress print to console
-            :return: None
+            `param position` list with two values x and y (pixels from up and left)
+            `param quiet` boolean, suppress print to console
+            `return` None
             &#34;&#34;&#34;
             cls.click(button=&#39;left&#39;, position=position, quiet=quiet)
 
@@ -124,15 +124,15 @@ class Mouse:  # pylint: disable=too-few-public-methods
     def move(x, y, x2=None, y2=None,  # pylint: disable=too-many-arguments, invalid-name
              duration=SettingsMouse.mouse_move_duration, tween=pyautogui.easeInOutQuad, rel=False, quiet=False):
         &#34;&#34;&#34;
-        :param x: int, position in pixels
-        :param y: int, position in pixels
-        :param x2: int, used if position is rectangle, so center will be found
-        :param y2: int, used if position is rectangle, so center will be found
-        :param duration: float|int, time to move mouse
-        :param tween: tween from pyautogui
-        :param rel: boolean, move relatively
-        :param quiet: boolean, suppress print to console
-        :return: None
+        `param x` int, position in pixels
+        `param y` int, position in pixels
+        `param x2` int, used if position is rectangle, so center will be found
+        `param y2` int, used if position is rectangle, so center will be found
+        `param duration` float|int, time to move mouse
+        `param tween` tween from pyautogui
+        `param rel` boolean, move relatively
+        `param quiet` boolean, suppress print to console
+        `return` None
         &#34;&#34;&#34;
         if isinstance(x, tuple):
             if len(x) == 2:
@@ -183,9 +183,9 @@ class Mouse:  # pylint: disable=too-few-public-methods
         @staticmethod
         def scroll(value, up):  # pylint: disable=invalid-name
             &#34;&#34;&#34;
-            :param value: int, how much to scroll, idk, how it work
-            :param up: boolean, scroll up or down
-            :return:
+            `param value` int, how much to scroll, idk, how it work
+            `param up` boolean, scroll up or down
+            `return`
             &#34;&#34;&#34;
             value = int(value)
             if not up:
@@ -196,16 +196,16 @@ class Mouse:  # pylint: disable=too-few-public-methods
         @classmethod
         def up(cls, value=100):  # pylint: disable=invalid-name
             &#34;&#34;&#34;
-            :param value: int, how much to scroll, idk, how it work
-            :return:
+            `param value` int, how much to scroll, idk, how it work
+            `return`
             &#34;&#34;&#34;
             cls.scroll(value, up=True)
 
         @classmethod
         def down(cls, value=100):
             &#34;&#34;&#34;
-            :param value: int, how much to scroll, idk, how it work
-            :return:
+            `param value` int, how much to scroll, idk, how it work
+            `return`
             &#34;&#34;&#34;
             cls.scroll(value, up=False)
 
@@ -215,10 +215,10 @@ class Mouse:  # pylint: disable=too-few-public-methods
         @staticmethod
         def click(button, position, quiet=False):
             &#34;&#34;&#34;
-            :param button: string with button name
-            :param position: list with two values x and y (pixels from up and left)
-            :param quiet: boolean, suppress print to console
-            :return: None
+            `param button` string with button name
+            `param position` list with two values x and y (pixels from up and left)
+            `param quiet` boolean, suppress print to console
+            `return` None
             &#34;&#34;&#34;
             from .time9 import Time
             Time.sleep(SettingsMouse.sleep_before_click, quiet_small=quiet)
@@ -232,18 +232,18 @@ class Mouse:  # pylint: disable=too-few-public-methods
         @classmethod
         def right(cls, position=None, quiet=False):
             &#34;&#34;&#34;
-            :param position: list with two values x and y (pixels from up and left)
-            :param quiet: boolean, suppress print to console
-            :return: None
+            `param position` list with two values x and y (pixels from up and left)
+            `param quiet` boolean, suppress print to console
+            `return` None
             &#34;&#34;&#34;
             cls.click(button=&#39;right&#39;, position=position, quiet=quiet)
 
         @classmethod
         def left(cls, position=None, quiet=False):
             &#34;&#34;&#34;
-            :param position: list with two values x and y (pixels from up and left)
-            :param quiet: boolean, suppress print to console
-            :return: None
+            `param position` list with two values x and y (pixels from up and left)
+            `param quiet` boolean, suppress print to console
+            `return` None
             &#34;&#34;&#34;
             cls.click(button=&#39;left&#39;, position=position, quiet=quiet)
 
@@ -251,15 +251,15 @@ class Mouse:  # pylint: disable=too-few-public-methods
     def move(x, y, x2=None, y2=None,  # pylint: disable=too-many-arguments, invalid-name
              duration=SettingsMouse.mouse_move_duration, tween=pyautogui.easeInOutQuad, rel=False, quiet=False):
         &#34;&#34;&#34;
-        :param x: int, position in pixels
-        :param y: int, position in pixels
-        :param x2: int, used if position is rectangle, so center will be found
-        :param y2: int, used if position is rectangle, so center will be found
-        :param duration: float|int, time to move mouse
-        :param tween: tween from pyautogui
-        :param rel: boolean, move relatively
-        :param quiet: boolean, suppress print to console
-        :return: None
+        `param x` int, position in pixels
+        `param y` int, position in pixels
+        `param x2` int, used if position is rectangle, so center will be found
+        `param y2` int, used if position is rectangle, so center will be found
+        `param duration` float|int, time to move mouse
+        `param tween` tween from pyautogui
+        `param rel` boolean, move relatively
+        `param quiet` boolean, suppress print to console
+        `return` None
         &#34;&#34;&#34;
         if isinstance(x, tuple):
             if len(x) == 2:
@@ -298,33 +298,33 @@ class Mouse:  # pylint: disable=too-few-public-methods
 <h3>Static methods</h3>
 <dl>
 <dt id="commands.mouse9.Mouse.move"><code class="name flex">
-<span>def <span class="ident">move</span></span>(<span>x, y, x2=None, y2=None, duration=0.5, tween=&lt;function easeInOutQuad at 0x000001F78F366730&gt;, rel=False, quiet=False)</span>
+<span>def <span class="ident">move</span></span>(<span>x, y, x2=None, y2=None, duration=0.5, tween=&lt;function easeInOutQuad at 0x000001D7A82E2730&gt;, rel=False, quiet=False)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>:param x: int, position in pixels
-:param y: int, position in pixels
-:param x2: int, used if position is rectangle, so center will be found
-:param y2: int, used if position is rectangle, so center will be found
-:param duration: float|int, time to move mouse
-:param tween: tween from pyautogui
-:param rel: boolean, move relatively
-:param quiet: boolean, suppress print to console
-:return: None</p></section>
+<section class="desc"><p><code>param x</code> int, position in pixels
+<code>param y</code> int, position in pixels
+<code>param x2</code> int, used if position is rectangle, so center will be found
+<code>param y2</code> int, used if position is rectangle, so center will be found
+<code>param duration</code> float|int, time to move mouse
+<code>param tween</code> tween from pyautogui
+<code>param rel</code> boolean, move relatively
+<code>param quiet</code> boolean, suppress print to console
+<code>return</code> None</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def move(x, y, x2=None, y2=None,  # pylint: disable=too-many-arguments, invalid-name
          duration=SettingsMouse.mouse_move_duration, tween=pyautogui.easeInOutQuad, rel=False, quiet=False):
     &#34;&#34;&#34;
-    :param x: int, position in pixels
-    :param y: int, position in pixels
-    :param x2: int, used if position is rectangle, so center will be found
-    :param y2: int, used if position is rectangle, so center will be found
-    :param duration: float|int, time to move mouse
-    :param tween: tween from pyautogui
-    :param rel: boolean, move relatively
-    :param quiet: boolean, suppress print to console
-    :return: None
+    `param x` int, position in pixels
+    `param y` int, position in pixels
+    `param x2` int, used if position is rectangle, so center will be found
+    `param y2` int, used if position is rectangle, so center will be found
+    `param duration` float|int, time to move mouse
+    `param tween` tween from pyautogui
+    `param rel` boolean, move relatively
+    `param quiet` boolean, suppress print to console
+    `return` None
     &#34;&#34;&#34;
     if isinstance(x, tuple):
         if len(x) == 2:
@@ -368,8 +368,8 @@ def move(x, y, x2=None, y2=None,  # pylint: disable=too-many-arguments, invalid-
     @classmethod
     def set_mouse_move_duration(cls, seconds):
         &#34;&#34;&#34;
-        :param seconds: int|float, seconds to move mouse
-        :return: None
+        `param seconds` int|float, seconds to move mouse
+        `return` None
         &#34;&#34;&#34;
         cls.mouse_move_duration = seconds</code></pre>
 </details>
@@ -390,15 +390,15 @@ def move(x, y, x2=None, y2=None,  # pylint: disable=too-many-arguments, invalid-
 <span>def <span class="ident">set_mouse_move_duration</span></span>(<span>cls, seconds)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>:param seconds: int|float, seconds to move mouse
-:return: None</p></section>
+<section class="desc"><p><code>param seconds</code> int|float, seconds to move mouse
+<code>return</code> None</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def set_mouse_move_duration(cls, seconds):
     &#34;&#34;&#34;
-    :param seconds: int|float, seconds to move mouse
-    :return: None
+    `param seconds` int|float, seconds to move mouse
+    `return` None
     &#34;&#34;&#34;
     cls.mouse_move_duration = seconds</code></pre>
 </details>

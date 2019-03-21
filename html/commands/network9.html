@@ -36,8 +36,8 @@ class Network:
     @staticmethod
     def get_domain_of_url(url):
         &#34;&#34;&#34;
-        :param url: string, URL
-        :return: string, URL domain
+        `param url` string, URL
+        `return` string, URL domain
         &#34;&#34;&#34;
         from .str9 import Str
         if &#34;/&#34; in url:
@@ -58,8 +58,8 @@ class Network:
     @staticmethod
     def dns_lookup(domain):
         &#34;&#34;&#34;Resolve IP from domain name with socket.gethostbyname
-        :param domain: string, domain name
-        :return: string, IP
+        `param domain` string, domain name
+        `return` string, IP
         &#34;&#34;&#34;
         import socket
         try:
@@ -71,13 +71,13 @@ class Network:
     def ping(cls,
              domain=&#34;127.0.0.1&#34;, count=1, quiet=False, logfile=None, timeout=10000, return_ip=False):
         &#34;&#34;&#34;Wrapper under default ping command
-        :param domain: string, domain or IP
-        :param count: int, count of attempts
-        :param quiet: boolean, suppress print to console
-        :param logfile: string, path to log file
-        :param timeout: int, timeout in milliseconds
-        :param return_ip: boolean, return string with IP
-        :return: boolean of availability of domain, or list of boolean domain availability, string ip and full output
+        `param domain` string, domain or IP
+        `param count` int, count of attempts
+        `param quiet` boolean, suppress print to console
+        `param logfile` string, path to log file
+        `param timeout` int, timeout in milliseconds
+        `param return_ip` boolean, return string with IP
+        `return` boolean of availability of domain, or list of boolean domain availability, string ip and full output
                  from ping command
         &#34;&#34;&#34;
         # todo properly work with exception
@@ -377,8 +377,8 @@ class Network:
     @staticmethod
     def get_domain_of_url(url):
         &#34;&#34;&#34;
-        :param url: string, URL
-        :return: string, URL domain
+        `param url` string, URL
+        `return` string, URL domain
         &#34;&#34;&#34;
         from .str9 import Str
         if &#34;/&#34; in url:
@@ -399,8 +399,8 @@ class Network:
     @staticmethod
     def dns_lookup(domain):
         &#34;&#34;&#34;Resolve IP from domain name with socket.gethostbyname
-        :param domain: string, domain name
-        :return: string, IP
+        `param domain` string, domain name
+        `return` string, IP
         &#34;&#34;&#34;
         import socket
         try:
@@ -412,13 +412,13 @@ class Network:
     def ping(cls,
              domain=&#34;127.0.0.1&#34;, count=1, quiet=False, logfile=None, timeout=10000, return_ip=False):
         &#34;&#34;&#34;Wrapper under default ping command
-        :param domain: string, domain or IP
-        :param count: int, count of attempts
-        :param quiet: boolean, suppress print to console
-        :param logfile: string, path to log file
-        :param timeout: int, timeout in milliseconds
-        :param return_ip: boolean, return string with IP
-        :return: boolean of availability of domain, or list of boolean domain availability, string ip and full output
+        `param domain` string, domain or IP
+        `param count` int, count of attempts
+        `param quiet` boolean, suppress print to console
+        `param logfile` string, path to log file
+        `param timeout` int, timeout in milliseconds
+        `param return_ip` boolean, return string with IP
+        `return` boolean of availability of domain, or list of boolean domain availability, string ip and full output
                  from ping command
         &#34;&#34;&#34;
         # todo properly work with exception
@@ -702,15 +702,15 @@ class Network:
 </code></dt>
 <dd>
 <section class="desc"><p>Resolve IP from domain name with socket.gethostbyname
-:param domain: string, domain name
-:return: string, IP</p></section>
+<code>param domain</code> string, domain name
+<code>return</code> string, IP</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def dns_lookup(domain):
     &#34;&#34;&#34;Resolve IP from domain name with socket.gethostbyname
-    :param domain: string, domain name
-    :return: string, IP
+    `param domain` string, domain name
+    `return` string, IP
     &#34;&#34;&#34;
     import socket
     try:
@@ -744,15 +744,15 @@ def download_file(url, out=None, quiet=None):
 <span>def <span class="ident">get_domain_of_url</span></span>(<span>url)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>:param url: string, URL
-:return: string, URL domain</p></section>
+<section class="desc"><p><code>param url</code> string, URL
+<code>return</code> string, URL domain</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def get_domain_of_url(url):
     &#34;&#34;&#34;
-    :param url: string, URL
-    :return: string, URL domain
+    `param url` string, URL
+    `return` string, URL domain
     &#34;&#34;&#34;
     from .str9 import Str
     if &#34;/&#34; in url:
@@ -991,13 +991,13 @@ def get_netbios(ip):
 </code></dt>
 <dd>
 <section class="desc"><p>Wrapper under default ping command
-:param domain: string, domain or IP
-:param count: int, count of attempts
-:param quiet: boolean, suppress print to console
-:param logfile: string, path to log file
-:param timeout: int, timeout in milliseconds
-:param return_ip: boolean, return string with IP
-:return: boolean of availability of domain, or list of boolean domain availability, string ip and full output
+<code>param domain</code> string, domain or IP
+<code>param count</code> int, count of attempts
+<code>param quiet</code> boolean, suppress print to console
+<code>param logfile</code> string, path to log file
+<code>param timeout</code> int, timeout in milliseconds
+<code>param return_ip</code> boolean, return string with IP
+<code>return</code> boolean of availability of domain, or list of boolean domain availability, string ip and full output
 from ping command</p></section>
 <details class="source">
 <summary>Source code</summary>
@@ -1005,13 +1005,13 @@ from ping command</p></section>
 def ping(cls,
          domain=&#34;127.0.0.1&#34;, count=1, quiet=False, logfile=None, timeout=10000, return_ip=False):
     &#34;&#34;&#34;Wrapper under default ping command
-    :param domain: string, domain or IP
-    :param count: int, count of attempts
-    :param quiet: boolean, suppress print to console
-    :param logfile: string, path to log file
-    :param timeout: int, timeout in milliseconds
-    :param return_ip: boolean, return string with IP
-    :return: boolean of availability of domain, or list of boolean domain availability, string ip and full output
+    `param domain` string, domain or IP
+    `param count` int, count of attempts
+    `param quiet` boolean, suppress print to console
+    `param logfile` string, path to log file
+    `param timeout` int, timeout in milliseconds
+    `param return_ip` boolean, return string with IP
+    `return` boolean of availability of domain, or list of boolean domain availability, string ip and full output
              from ping command
     &#34;&#34;&#34;
     # todo properly work with exception

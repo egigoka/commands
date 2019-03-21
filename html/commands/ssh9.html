@@ -35,13 +35,13 @@ class Ssh:
     &#34;&#34;&#34;
     @staticmethod
     def get_output(host, username, password, command, safe=False):
-        &#34;&#34;&#34;Return output from command, runned on SSH server. Support only username:password autorisation.
-        :param host: string, host or IP
-        :param username: string
-        :param password: string
-        :param command: string
-        :param safe: boolean, do not crash if connection unsuccessful
-        :return: string, output from &#39;command&#39; execution
+        &#34;&#34;&#34;Return output from command, runned on SSH server. Support only username`password autorisation.
+        `param host` string, host or IP
+        `param username` string
+        `param password` string
+        `param command` string
+        `param safe` boolean, do not crash if connection unsuccessful
+        `return` string, output from &#39;command&#39; execution
         &#34;&#34;&#34;
         # todo authorisation by key.
         from .os9 import OS
@@ -61,11 +61,11 @@ class Ssh:
     @classmethod
     def get_avg_load_lin(cls, host, username, password, safe=False):
         &#34;&#34;&#34;Shit, I know
-        :param host: string, host or IP
-        :param username: string
-        :param password: string
-        :param safe: boolean, do not crash if connection unsuccessful
-        :return: string with average loads of SSH linux server.
+        `param host` string, host or IP
+        `param username` string
+        `param password` string
+        `param safe` boolean, do not crash if connection unsuccessful
+        `return` string with average loads of SSH linux server.
         &#34;&#34;&#34;
         from .str9 import Str
         from .const9 import newline
@@ -77,11 +77,11 @@ class Ssh:
     @classmethod
     def get_uptime_lin(cls, host, username, password, safe=False):
         &#34;&#34;&#34;
-        :param host: string, host or IP
-        :param username: string
-        :param password: string
-        :param safe: boolean, do not crash if connection unsuccessful
-        :return: string with uptime of SSH linux server.
+        `param host` string, host or IP
+        `param username` string
+        `param password` string
+        `param safe` boolean, do not crash if connection unsuccessful
+        `return` string with uptime of SSH linux server.
         &#34;&#34;&#34;
         from .str9 import Str
         output = cls.get_output(host=host, username=username, password=password, command=&#34;uptime&#34;, safe=safe)
@@ -110,13 +110,13 @@ class Ssh:
     &#34;&#34;&#34;
     @staticmethod
     def get_output(host, username, password, command, safe=False):
-        &#34;&#34;&#34;Return output from command, runned on SSH server. Support only username:password autorisation.
-        :param host: string, host or IP
-        :param username: string
-        :param password: string
-        :param command: string
-        :param safe: boolean, do not crash if connection unsuccessful
-        :return: string, output from &#39;command&#39; execution
+        &#34;&#34;&#34;Return output from command, runned on SSH server. Support only username`password autorisation.
+        `param host` string, host or IP
+        `param username` string
+        `param password` string
+        `param command` string
+        `param safe` boolean, do not crash if connection unsuccessful
+        `return` string, output from &#39;command&#39; execution
         &#34;&#34;&#34;
         # todo authorisation by key.
         from .os9 import OS
@@ -136,11 +136,11 @@ class Ssh:
     @classmethod
     def get_avg_load_lin(cls, host, username, password, safe=False):
         &#34;&#34;&#34;Shit, I know
-        :param host: string, host or IP
-        :param username: string
-        :param password: string
-        :param safe: boolean, do not crash if connection unsuccessful
-        :return: string with average loads of SSH linux server.
+        `param host` string, host or IP
+        `param username` string
+        `param password` string
+        `param safe` boolean, do not crash if connection unsuccessful
+        `return` string with average loads of SSH linux server.
         &#34;&#34;&#34;
         from .str9 import Str
         from .const9 import newline
@@ -152,11 +152,11 @@ class Ssh:
     @classmethod
     def get_uptime_lin(cls, host, username, password, safe=False):
         &#34;&#34;&#34;
-        :param host: string, host or IP
-        :param username: string
-        :param password: string
-        :param safe: boolean, do not crash if connection unsuccessful
-        :return: string with uptime of SSH linux server.
+        `param host` string, host or IP
+        `param username` string
+        `param password` string
+        `param safe` boolean, do not crash if connection unsuccessful
+        `return` string with uptime of SSH linux server.
         &#34;&#34;&#34;
         from .str9 import Str
         output = cls.get_output(host=host, username=username, password=password, command=&#34;uptime&#34;, safe=safe)
@@ -170,21 +170,21 @@ class Ssh:
 </code></dt>
 <dd>
 <section class="desc"><p>Shit, I know
-:param host: string, host or IP
-:param username: string
-:param password: string
-:param safe: boolean, do not crash if connection unsuccessful
-:return: string with average loads of SSH linux server.</p></section>
+<code>param host</code> string, host or IP
+<code>param username</code> string
+<code>param password</code> string
+<code>param safe</code> boolean, do not crash if connection unsuccessful
+<code>return</code> string with average loads of SSH linux server.</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def get_avg_load_lin(cls, host, username, password, safe=False):
     &#34;&#34;&#34;Shit, I know
-    :param host: string, host or IP
-    :param username: string
-    :param password: string
-    :param safe: boolean, do not crash if connection unsuccessful
-    :return: string with average loads of SSH linux server.
+    `param host` string, host or IP
+    `param username` string
+    `param password` string
+    `param safe` boolean, do not crash if connection unsuccessful
+    `return` string with average loads of SSH linux server.
     &#34;&#34;&#34;
     from .str9 import Str
     from .const9 import newline
@@ -198,24 +198,18 @@ def get_avg_load_lin(cls, host, username, password, safe=False):
 <span>def <span class="ident">get_output</span></span>(<span>host, username, password, command, safe=False)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Return output from command, runned on SSH server. Support only username:password autorisation.
-:param host: string, host or IP
-:param username: string
-:param password: string
-:param command: string
-:param safe: boolean, do not crash if connection unsuccessful
-:return: string, output from 'command' execution</p></section>
+<section class="desc"><p>Return output from command, runned on SSH server. Support only username<code>password autorisation.</code>param host<code>string, host or IP</code>param username<code>string</code>param password<code>string</code>param command<code>string</code>param safe<code>boolean, do not crash if connection unsuccessful</code>return` string, output from 'command' execution</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def get_output(host, username, password, command, safe=False):
-    &#34;&#34;&#34;Return output from command, runned on SSH server. Support only username:password autorisation.
-    :param host: string, host or IP
-    :param username: string
-    :param password: string
-    :param command: string
-    :param safe: boolean, do not crash if connection unsuccessful
-    :return: string, output from &#39;command&#39; execution
+    &#34;&#34;&#34;Return output from command, runned on SSH server. Support only username`password autorisation.
+    `param host` string, host or IP
+    `param username` string
+    `param password` string
+    `param command` string
+    `param safe` boolean, do not crash if connection unsuccessful
+    `return` string, output from &#39;command&#39; execution
     &#34;&#34;&#34;
     # todo authorisation by key.
     from .os9 import OS
@@ -237,21 +231,21 @@ def get_output(host, username, password, command, safe=False):
 <span>def <span class="ident">get_uptime_lin</span></span>(<span>cls, host, username, password, safe=False)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>:param host: string, host or IP
-:param username: string
-:param password: string
-:param safe: boolean, do not crash if connection unsuccessful
-:return: string with uptime of SSH linux server.</p></section>
+<section class="desc"><p><code>param host</code> string, host or IP
+<code>param username</code> string
+<code>param password</code> string
+<code>param safe</code> boolean, do not crash if connection unsuccessful
+<code>return</code> string with uptime of SSH linux server.</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def get_uptime_lin(cls, host, username, password, safe=False):
     &#34;&#34;&#34;
-    :param host: string, host or IP
-    :param username: string
-    :param password: string
-    :param safe: boolean, do not crash if connection unsuccessful
-    :return: string with uptime of SSH linux server.
+    `param host` string, host or IP
+    `param username` string
+    `param password` string
+    `param safe` boolean, do not crash if connection unsuccessful
+    `return` string with uptime of SSH linux server.
     &#34;&#34;&#34;
     from .str9 import Str
     output = cls.get_output(host=host, username=username, password=password, command=&#34;uptime&#34;, safe=safe)
