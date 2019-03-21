@@ -11,10 +11,10 @@ class Bench:
 
     def __init__(self, prefix="Bench passed in", quiet=False, fraction_digits=3, time_start=None):
         """
-        :param prefix: string, prints when ending of benchmark
-        :param quiet: boolean, suppress output to console
-        :param fraction_digits: integer, define how much digits after dot print
-        :param time_start: datetime.datetime, set custom start time
+        `param prefix` string, prints when ending of benchmark
+        `param quiet` boolean, suppress output to console
+        `param fraction_digits` integer, define how much digits after dot print
+        `param time_start` datetime.datetime, set custom start time
         """
         import datetime
         if time_start:
@@ -28,14 +28,14 @@ class Bench:
 
     def start(self):  # set time of begin to now
         """Set time of start benchmarking to current
-        :return: None
+        `return` None
         """
         import datetime
         self.time_start = datetime.datetime.now()
 
     def get(self):
         """
-        :return: float, time difference between start and this function call time
+        `return` float, time difference between start and this function call time
         """
         import datetime
         from .time9 import Time
@@ -43,14 +43,14 @@ class Bench:
         return Time.delta(self.time_start, self.time_end)
 
     def end(self, prefix_string=None, quiet_if_zero=False, start_immediately=False):
-        """End benchmarking:
+        """End benchmarking`
         return time difference between start and end of bencmarking, print string with prefix
         and time difference.
-        :param prefix_string: string, used in print output
-        :param quiet_if_zero: suppress print if time interval between start and stop = 0.0 in accuracy, defined in
+        `param prefix_string` string, used in print output
+        `param quiet_if_zero` suppress print if time interval between start and stop = 0.0 in accuracy, defined in
         cls.fraction_digits
-        :param start_immediately: change start time of current Bench class to current time
-        :return: float, delta between start and end
+        `param start_immediately` change start time of current Bench class to current time
+        `return` float, delta between start and end
         """
         delta = self.get()
         self.start()

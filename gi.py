@@ -7,6 +7,9 @@ import sys
 from commands import *
 from commands.git9 import Git
 
+# updating doc
+# raise NotImplementedError("add doc update")
+
 # CHANGING VERSION
 version_prefix = '__version__ = "'
 version_suffix = '"'

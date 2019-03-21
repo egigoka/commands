@@ -11,9 +11,9 @@ class Tkinter:  # pylint: disable=too-few-public-methods
     @staticmethod
     def color(red, green, blue):
         """
-        :param red: red intensity (0-255)
-        :param green: green intensity (0-255)
-        :param blue: green intensity (0-255)
-        :return: string of color matching for use in Tkinter
+        `param red` red intensity (0-255)
+        `param green` green intensity (0-255)
+        `param blue` green intensity (0-255)
+        `return` string of color matching for use in Tkinter
         """
         return str('#%02x%02x%02x' % (red, green, blue))

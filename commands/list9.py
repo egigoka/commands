@@ -11,8 +11,8 @@ class List:
     @staticmethod
     def flatterize(input_list):
         """Remove nesting from lists.
-        :param input_list: list
-        :return: list with all contents of input list but without nesting
+        `param input_list` list
+        `return` list with all contents of input list but without nesting
         """
         import copy
         if not isinstance(input_list, (list, tuple)):
@@ -30,9 +30,9 @@ class List:
     @staticmethod
     def split_every(list_input, count):
         """Split list to lists with N elements
-        :param list_input: list
-        :param count: int with N
-        :return: list of lists
+        `param list_input` list
+        `param count` int with N
+        `return` list of lists
         """
         count = int(count)
         output_lists = [list_input[x:x+count] for x in range(0, len(list_input), count)]
@@ -42,9 +42,9 @@ class List:
     @staticmethod
     def wildcard_search(list_input, regexp):
         """Search list shell-like
-        :param list_input: list
-        :param regexp: string with shell-like wildcards: ? for one character or * for multiple characters.
-        :return: list of result of search
+        `param list_input` list
+        `param regexp` string with shell-like wildcards` ? for one character or * for multiple characters.
+        `return` list of result of search
         """
         import fnmatch
         return fnmatch.filter(list_input, regexp)

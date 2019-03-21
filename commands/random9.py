@@ -11,10 +11,10 @@ class Random:
     @staticmethod
     def integer(minimum, maximum, to_str=False):
         """
-        :param minimum: int, minimum value
-        :param maximum: int, maximum value
-        :param to_str: bool, if True - return string with len of str(maximum) param
-        :return: int|str, random from 'minimum' to 'maximum'
+        `param minimum` int, minimum value
+        `param maximum` int, maximum value
+        `param to_str` bool, if True - return string with len of str(maximum) param
+        `return` int|str, random from 'minimum' to 'maximum'
         """
         import random
         result = random.randrange(minimum, maximum + 1)
@@ -26,9 +26,9 @@ class Random:
     @staticmethod
     def float(minimum, maximum):  # return random floating number
         """
-        :param minimum: int|float, minimum value
-        :param maximum: int|float, maximum value
-        :return: float, random from 'minimum' to 'maximum'
+        `param minimum` int|float, minimum value
+        `param maximum` int|float, maximum value
+        `return` float, random from 'minimum' to 'maximum'
         """
         import random
         return random.uniform(minimum, maximum)
@@ -36,9 +36,9 @@ class Random:
     @staticmethod
     def string(length, string_of_symbols=None):
         """
-        :param length: int, length of output string
-        :param string_of_symbols: string, will be used to create output
-        :return: string, with random symbols
+        `param length` int, length of output string
+        `param string_of_symbols` string, will be used to create output
+        `return` string, with random symbols
         """
         if not string_of_symbols:
             import string
@@ -63,8 +63,8 @@ class Random:
     @staticmethod
     def string_unicode(length):
         """
-        :param length: int, length of output string
-        :return: string, with random unicode symbols
+        `param length` int, length of output string
+        `return` string, with random unicode symbols
         """
         import random
 
@@ -96,7 +96,7 @@ class Random:
     @staticmethod
     def boolean():
         """
-        :return: Boolean, random
+        `return` Boolean, random
         """
         import random
         return random.random() < 0.5
@@ -104,7 +104,7 @@ class Random:
     @classmethod
     def guid(cls):
         """
-        :return: string, guid in lowercase
+        `return` string, guid in lowercase
         """
         import string
         symbols = cls.string(32, string.digits + "abcdef")

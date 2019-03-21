@@ -11,8 +11,8 @@ class Network:
     @staticmethod
     def get_domain_of_url(url):
         """
-        :param url: string, URL
-        :return: string, URL domain
+        `param url` string, URL
+        `return` string, URL domain
         """
         from .str9 import Str
         if "/" in url:
@@ -33,8 +33,8 @@ class Network:
     @staticmethod
     def dns_lookup(domain):
         """Resolve IP from domain name with socket.gethostbyname
-        :param domain: string, domain name
-        :return: string, IP
+        `param domain` string, domain name
+        `return` string, IP
         """
         import socket
         try:
@@ -46,13 +46,13 @@ class Network:
     def ping(cls,
              domain="127.0.0.1", count=1, quiet=False, logfile=None, timeout=10000, return_ip=False):
         """Wrapper under default ping command
-        :param domain: string, domain or IP
-        :param count: int, count of attempts
-        :param quiet: boolean, suppress print to console
-        :param logfile: string, path to log file
-        :param timeout: int, timeout in milliseconds
-        :param return_ip: boolean, return string with IP
-        :return: boolean of availability of domain, or list of boolean domain availability, string ip and full output
+        `param domain` string, domain or IP
+        `param count` int, count of attempts
+        `param quiet` boolean, suppress print to console
+        `param logfile` string, path to log file
+        `param timeout` int, timeout in milliseconds
+        `param return_ip` boolean, return string with IP
+        `return` boolean of availability of domain, or list of boolean domain availability, string ip and full output
                  from ping command
         """
         # todo properly work with exception

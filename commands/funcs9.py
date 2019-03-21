@@ -7,10 +7,10 @@ __version__ = "2.3.0"
 
 def dirify(object_, regexp="*", quiet=False):
     """Print and return list of object public attributes
-    :param object_: object to input
-    :param regexp: string with shell-like wildcards for filtering
-    :param quiet: suppress output to console
-    :return: list of object public attributes
+    `param object_` object to input
+    `param regexp` string with shell-like wildcards for filtering
+    `param quiet` suppress output to console
+    `return` list of object public attributes
     """
     from .list9 import List
     output = []

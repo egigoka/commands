@@ -11,8 +11,8 @@ class Process:
     @staticmethod
     def kill(process):
         """
-        :param process: process name or PID
-        :return: None
+        `param process` process name or PID
+        `return` None
         """
         from .os9 import OS
         from .console9 import Console
@@ -39,11 +39,11 @@ class Process:
     @staticmethod
     def start(*arguments, new_window=False, debug=False, pureshell=False, window_name=""):  # pylint: disable=too-many-branches
         """
-        :param arguments: strings, arguments to start process, include name
-        :param new_window: boolean, open process in new window
-        :param debug: boolean, debug
-        :param pureshell: boolean, use only first argument from *arguments, not processing others
-        :return: None
+        `param arguments` strings, arguments to start process, include name
+        `param new_window` boolean, open process in new window
+        `param debug` boolean, debug
+        `param pureshell` boolean, use only first argument from *arguments, not processing others
+        `return` None
         """
         import os
         from .list9 import List

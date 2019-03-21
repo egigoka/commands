@@ -12,7 +12,7 @@ class Console:
     def clean():
         """Wipe terminal output. Not tested on linux
         todo test on linux, make better
-        :return: None
+        `return` None
         """
         import os
         from .os9 import OS
@@ -28,7 +28,7 @@ class Console:
     @staticmethod
     def width():
         """
-        :return: int width of opened console in chars
+        `return` int width of opened console in chars
         """
         from .os9 import OS
         if OS.windows:
@@ -43,7 +43,7 @@ class Console:
     @staticmethod
     def height():
         """
-        :return: int height of opened console in chars
+        `return` int height of opened console in chars
         """
         from .os9 import OS
         if OS.windows:
@@ -59,11 +59,11 @@ class Console:
     def blink(cls, width=None, height=None, symbol="#", sleep=0.5):  # pylint: disable=too-many-locals
         """Print to terminal reactangle with random color. Completely shit. Arguments width and height changing size of
         terminal, works only in Windows.
-        :param width: int width of blinking rectangle
-        :param height: int height of blinking rectangle
-        :param symbol: string of characters, that fill blinking rectangle
-        :param sleep: int|float define sleep between print new colored rectangle
-        :return:
+        `param width` int width of blinking rectangle
+        `param height` int height of blinking rectangle
+        `param symbol` string of characters, that fill blinking rectangle
+        `param sleep` int|float define sleep between print new colored rectangle
+        `return`
         """
         import random
         from .os9 import OS
@@ -238,11 +238,11 @@ class Console:
     def get_output(cls, *commands, pureshell=False, print_std=False, decoding=None, universal_newlines=False,
                    auto_decoding=True, auto_disable_py_buffering=True, return_merged=True, timeout=None):
         """Return output of executing command.
-        :param commands: list[string if pureshell is True] with command and arguments
-        :param pureshell: boolean, if True, the specified command will be executed through the shell
-        :param print_std: boolean, if True, output from command will be printed immideately (also adds argument -u to
+        `param commands` list[string if pureshell is True] with command and arguments
+        `param pureshell` boolean, if True, the specified command will be executed through the shell
+        `param print_std` boolean, if True, output from command will be printed immideately (also adds argument -u to
         'py' or 'python' firs arg.)
-        :return: typle with strings stdout and stderr
+        `return` typle with strings stdout and stderr
         """
         from .os9 import OS
         if len(commands) == 1:
@@ -312,7 +312,7 @@ class Console:
     @classmethod
     def fit(cls, *strings, sep=" "):
         """Fit strings to console
-        :return: strings, that can be fit in one line print
+        `return` strings, that can be fit in one line print
         """
         from .os9 import OS
         from .list9 import List

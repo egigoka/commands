@@ -14,7 +14,7 @@ __version__ = "2.0.1"
 
 def get_name_of_repo():
     """Return mine name of repo
-    :return: string, name of repo
+    `return` string, name of repo
     """
     import os
     if Path.working().split(os.sep)[-1] in ["t", "term"]:
@@ -28,16 +28,16 @@ class Git:
     @classmethod
     def add(cls, what):
         """Adds files to next commit
-        :param what: string, adding files
-        :return: None
+        `param what` string, adding files
+        `return` None
         """
         Process.start("git", "add", what)
 
     @classmethod
     def commit(cls, message=None):
         """Commit all added changes
-        :param message: string, message of commit
-        :return: None
+        `param message` string, message of commit
+        `return` None
         """
         commands = ["git", "commit"]
         if message:
@@ -48,9 +48,9 @@ class Git:
     @classmethod
     def push(cls, path, upstream=False):
         """Push commits to 'path' repo
-        :param path: string, path of repo
-        :param upstream: boolean, if True, adding argument '-u' to git
-        :return: None
+        `param path` string, path of repo
+        `param upstream` boolean, if True, adding argument '-u' to git
+        `return` None
         """
         commands = ["git", "push"]
         if upstream:
@@ -61,9 +61,9 @@ class Git:
     @classmethod
     def update(cls, message, path="https://github.com/egigoka/" + get_name_of_repo() + ".git"):
         """Automatization to mine git upload
-        :param message: string, commit message
-        :param path: string, path to repo
-        :return: None
+        `param message` string, commit message
+        `param path` string, path to repo
+        `return` None
         """
         cls.add(".")
         cls.commit(message)

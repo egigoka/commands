@@ -14,8 +14,8 @@ class Bash:  # pylint: disable=too-few-public-methods
     @classmethod
     def argument_escape(cls, argument):
         """
-        :param argument: import argument string that will be used in bash
-        :return: string with escaped symbols, defined in Bash.escape_chars
+        `param argument` import argument string that will be used in bash
+        `return` string with escaped symbols, defined in Bash.escape_chars
         """
         from .const9 import backslash
         from .str9 import Str

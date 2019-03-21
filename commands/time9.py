@@ -18,7 +18,7 @@ class Time:
     @staticmethod
     def stamp():
         """
-        :return: float, timestamp
+        `return` float, timestamp
         """
         import time
         return time.time()
@@ -26,8 +26,8 @@ class Time:
     @staticmethod
     def timestamp_to_datetime(timestamp):
         """
-        :param timestamp: float, timestamp
-        :return: datetime.datetime time object
+        `param timestamp` float, timestamp
+        `return` datetime.datetime time object
         """
         import datetime
         if isinstance(timestamp, str):
@@ -43,8 +43,8 @@ class Time:
     @staticmethod
     def datetime_to_timestamp(datetime_object):
         """
-        :param datetime_object: datetime.datetime time object
-        :return: float, timestamp
+        `param datetime_object` datetime.datetime time object
+        `return` float, timestamp
         """
         import time
         if isinstance(datetime_object, float):
@@ -54,8 +54,8 @@ class Time:
     @classmethod
     def dotted(cls, custom_time=None):
         """
-        :param custom_time: datetime.datetime time object|float of timestamp
-        :return: string with time in format "1999.12.31_at_12.59.59.999999"
+        `param custom_time` datetime.datetime time object|float of timestamp
+        `return` string with time in format "1999.12.31_at_12.59.59.999999"
         """
         import datetime
         if custom_time:
@@ -70,9 +70,9 @@ class Time:
     @staticmethod
     def _timer(seconds, check_per_sec=10):
         """Internal function to idle (used in Time.sleep). Print how much time left.
-        :param seconds: int|float, how long sleep
-        :param check_per_sec: int|float, how often check time
-        :return: None
+        `param seconds` int|float, how long sleep
+        `param check_per_sec` int|float, how often check time
+        `return` None
         """
         from .print9 import Print
         from .bench9 import Bench
@@ -91,10 +91,10 @@ class Time:
     def sleep(cls, seconds, quiet_small=False, check_per_sec=10):
         """Function to idle. If 'seconds more, than 1, running Time._timer. Otherwise run time.sleep and print time
         left.
-        :param seconds: int|float, how long sleep
-        :param quiet_small: boolean, suppress print for time len <= 1 second
-        :param check_per_sec: int|float, how often check time
-        :return: None
+        `param seconds` int|float, how long sleep
+        `param quiet_small` boolean, suppress print for time len <= 1 second
+        `param check_per_sec` int|float, how often check time
+        `return` None
         """
         if seconds < 0:
             raise ValueError("sleep time must be non-negative")
@@ -109,9 +109,9 @@ class Time:
     @classmethod
     def delta(cls, time_a, time_b):
         """
-        :param time_a: datetime.datetime time object|float of timestamp
-        :param time_b: datetime.datetime time object|float of timestamp
-        :return: difference between two timestamps
+        `param time_a` datetime.datetime time object|float of timestamp
+        `param time_b` datetime.datetime time object|float of timestamp
+        `return` difference between two timestamps
         """
         if time_a > time_b:
             time_a, time_b = time_b, time_a
