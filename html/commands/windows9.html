@@ -36,7 +36,7 @@ class Windows:
     @staticmethod
     def lock():
         &#34;&#34;&#34;Locking windows workstation, doesn&#39;t work with Windows 10
-        `return` None
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         from .os9 import OS
         if OS.windows_version and (OS.windows_version != 10):
@@ -48,8 +48,8 @@ class Windows:
     @staticmethod
     def fix_unicode_encode_error(quiet=False):
         &#34;&#34;&#34;Fix UnicodeConsoleError on old versions of Python
-        `param quiet` boolean, suppress print to console
-        `return` None
+        &lt;br&gt;`param quiet` boolean, suppress print to console
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         import os
         import subprocess
@@ -59,8 +59,8 @@ class Windows:
     @staticmethod
     def user_exists(self, username):
         &#34;&#34;&#34;
-        `param username` string
-        `return` boolean, existance of local user
+        &lt;br&gt;`param username` string
+        &lt;br&gt;`return` boolean, existance of local user
         &#34;&#34;&#34;
         import subprocess
         from .console9 import Console
@@ -72,12 +72,12 @@ class Windows:
 
     def _user(self, username, password=None, create=False, remove=False, retry_cnt=0):
         &#34;&#34;&#34;Creates or removes user user using net user command
-        `param username` string
-        `param password` string
-        `param create` boolean, True for create user
-        `param remove` boolean, True for remove user
-        `param retry_cnt` int, internally used to not raise RecursionError
-        `return` None
+        &lt;br&gt;`param username` string
+        &lt;br&gt;`param password` string
+        &lt;br&gt;`param create` boolean, True for create user
+        &lt;br&gt;`param remove` boolean, True for remove user
+        &lt;br&gt;`param retry_cnt` int, internally used to not raise RecursionError
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         import subprocess
         from .console9 import Console
@@ -117,16 +117,16 @@ class Windows:
 
     def create_user(self, username, password):
         &#34;&#34;&#34;Creates user using net user command
-        `param username` string
-        `param password` string
-        `return` None
+        &lt;br&gt;`param username` string
+        &lt;br&gt;`param password` string
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         return self._user(username=username, password=password, create=True)
 
     def remove_user(self, username):  # remove only users from json file
         &#34;&#34;&#34;Removes user using net user command
-        `param username` string
-        `return` None
+        &lt;br&gt;`param username` string
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         return self._user(username=username, remove=True)
 
@@ -171,7 +171,7 @@ class Windows:
     @staticmethod
     def lock():
         &#34;&#34;&#34;Locking windows workstation, doesn&#39;t work with Windows 10
-        `return` None
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         from .os9 import OS
         if OS.windows_version and (OS.windows_version != 10):
@@ -183,8 +183,8 @@ class Windows:
     @staticmethod
     def fix_unicode_encode_error(quiet=False):
         &#34;&#34;&#34;Fix UnicodeConsoleError on old versions of Python
-        `param quiet` boolean, suppress print to console
-        `return` None
+        &lt;br&gt;`param quiet` boolean, suppress print to console
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         import os
         import subprocess
@@ -194,8 +194,8 @@ class Windows:
     @staticmethod
     def user_exists(self, username):
         &#34;&#34;&#34;
-        `param username` string
-        `return` boolean, existance of local user
+        &lt;br&gt;`param username` string
+        &lt;br&gt;`return` boolean, existance of local user
         &#34;&#34;&#34;
         import subprocess
         from .console9 import Console
@@ -207,12 +207,12 @@ class Windows:
 
     def _user(self, username, password=None, create=False, remove=False, retry_cnt=0):
         &#34;&#34;&#34;Creates or removes user user using net user command
-        `param username` string
-        `param password` string
-        `param create` boolean, True for create user
-        `param remove` boolean, True for remove user
-        `param retry_cnt` int, internally used to not raise RecursionError
-        `return` None
+        &lt;br&gt;`param username` string
+        &lt;br&gt;`param password` string
+        &lt;br&gt;`param create` boolean, True for create user
+        &lt;br&gt;`param remove` boolean, True for remove user
+        &lt;br&gt;`param retry_cnt` int, internally used to not raise RecursionError
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         import subprocess
         from .console9 import Console
@@ -252,16 +252,16 @@ class Windows:
 
     def create_user(self, username, password):
         &#34;&#34;&#34;Creates user using net user command
-        `param username` string
-        `param password` string
-        `return` None
+        &lt;br&gt;`param username` string
+        &lt;br&gt;`param password` string
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         return self._user(username=username, password=password, create=True)
 
     def remove_user(self, username):  # remove only users from json file
         &#34;&#34;&#34;Removes user using net user command
-        `param username` string
-        `return` None
+        &lt;br&gt;`param username` string
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         return self._user(username=username, remove=True)
 
@@ -316,15 +316,15 @@ def dump_auditpol(filename=None, category=&#34;*&#34;, fastname=None, quiet=Fals
 </code></dt>
 <dd>
 <section class="desc"><p>Fix UnicodeConsoleError on old versions of Python
-<code>param quiet</code> boolean, suppress print to console
-<code>return</code> None</p></section>
+<br><code>param quiet</code> boolean, suppress print to console
+<br><code>return</code> None</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def fix_unicode_encode_error(quiet=False):
     &#34;&#34;&#34;Fix UnicodeConsoleError on old versions of Python
-    `param quiet` boolean, suppress print to console
-    `return` None
+    &lt;br&gt;`param quiet` boolean, suppress print to console
+    &lt;br&gt;`return` None
     &#34;&#34;&#34;
     import os
     import subprocess
@@ -337,13 +337,13 @@ def fix_unicode_encode_error(quiet=False):
 </code></dt>
 <dd>
 <section class="desc"><p>Locking windows workstation, doesn't work with Windows 10
-<code>return</code> None</p></section>
+<br><code>return</code> None</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def lock():
     &#34;&#34;&#34;Locking windows workstation, doesn&#39;t work with Windows 10
-    `return` None
+    &lt;br&gt;`return` None
     &#34;&#34;&#34;
     from .os9 import OS
     if OS.windows_version and (OS.windows_version != 10):
@@ -357,15 +357,15 @@ def lock():
 <span>def <span class="ident">user_exists</span></span>(<span>self, username)</span>
 </code></dt>
 <dd>
-<section class="desc"><p><code>param username</code> string
-<code>return</code> boolean, existance of local user</p></section>
+<section class="desc"><p><br><code>param username</code> string
+<br><code>return</code> boolean, existance of local user</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def user_exists(self, username):
     &#34;&#34;&#34;
-    `param username` string
-    `return` boolean, existance of local user
+    &lt;br&gt;`param username` string
+    &lt;br&gt;`return` boolean, existance of local user
     &#34;&#34;&#34;
     import subprocess
     from .console9 import Console
@@ -384,16 +384,16 @@ def user_exists(self, username):
 </code></dt>
 <dd>
 <section class="desc"><p>Creates user using net user command
-<code>param username</code> string
-<code>param password</code> string
-<code>return</code> None</p></section>
+<br><code>param username</code> string
+<br><code>param password</code> string
+<br><code>return</code> None</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">def create_user(self, username, password):
     &#34;&#34;&#34;Creates user using net user command
-    `param username` string
-    `param password` string
-    `return` None
+    &lt;br&gt;`param username` string
+    &lt;br&gt;`param password` string
+    &lt;br&gt;`return` None
     &#34;&#34;&#34;
     return self._user(username=username, password=password, create=True)</code></pre>
 </details>
@@ -403,14 +403,14 @@ def user_exists(self, username):
 </code></dt>
 <dd>
 <section class="desc"><p>Removes user using net user command
-<code>param username</code> string
-<code>return</code> None</p></section>
+<br><code>param username</code> string
+<br><code>return</code> None</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">def remove_user(self, username):  # remove only users from json file
     &#34;&#34;&#34;Removes user using net user command
-    `param username` string
-    `return` None
+    &lt;br&gt;`param username` string
+    &lt;br&gt;`return` None
     &#34;&#34;&#34;
     return self._user(username=username, remove=True)</code></pre>
 </details>

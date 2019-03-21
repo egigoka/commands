@@ -36,26 +36,26 @@ class Str:
     @staticmethod
     def to_quotes(some_string):
         &#34;&#34;&#34;
-        `param some_string` string
-        `return` string, inside &#34;&#34; quotes
+        &lt;br&gt;`param some_string` string
+        &lt;br&gt;`return` string, inside &#34;&#34; quotes
         &#34;&#34;&#34;
         return &#39;&#34;&#39; + str(some_string) + &#39;&#34;&#39;
 
     @staticmethod
     def to_quotes_2(some_string):
         &#34;&#34;&#34;
-        `param some_string` string
-        `return` string, inside &#39;&#39; quotes
+        &lt;br&gt;`param some_string` string
+        &lt;br&gt;`return` string, inside &#39;&#39; quotes
         &#34;&#34;&#34;
         return &#34;&#39;&#34; + str(some_string) + &#34;&#39;&#34;
 
     @classmethod
     def get_integers(cls, string, float_support=True, debug=False):
         &#34;&#34;&#34;
-        `param string` string, with some integers or floats inside
-        `param float_support` boolean, enable float support
-        `param debug` boolean, debug print enable
-        `return` list of integers or floats
+        &lt;br&gt;`param string` string, with some integers or floats inside
+        &lt;br&gt;`param float_support` boolean, enable float support
+        &lt;br&gt;`param debug` boolean, debug print enable
+        &lt;br&gt;`return` list of integers or floats
         &#34;&#34;&#34;
         string = cls.remove_spaces(string)
         integer_found = False
@@ -102,9 +102,9 @@ class Str:
     @staticmethod
     def newlines_to_strings(string):
         &#34;&#34;&#34;
-        `param string` string, with some newlines
-        `param quiet` boolean suppress print to console
-        `return` list of strings
+        &lt;br&gt;`param string` string, with some newlines
+        &lt;br&gt;`param quiet` boolean suppress print to console
+        &lt;br&gt;`return` list of strings
         &#34;&#34;&#34;
         from .const9 import newline, newline2
         if isinstance(string, str):  # if input is string
@@ -117,18 +117,18 @@ class Str:
     @classmethod
     def nl(cls, string):  # pylint: disable=invalid-name
         &#34;&#34;&#34;
-        `param string` string, with some newlines
-        `param quiet` boolean suppress print to console
-        `return` list of strings
+        &lt;br&gt;`param string` string, with some newlines
+        &lt;br&gt;`param quiet` boolean suppress print to console
+        &lt;br&gt;`return` list of strings
         &#34;&#34;&#34;
         return cls.newlines_to_strings(string=string)
 
     @staticmethod
     def split_every(string, chars):
         &#34;&#34;&#34;Split line every N chars
-        `param string` string, input
-        `param chars` int, count of chars, that split line
-        `return` list of substring of &#39;chars&#39; length
+        &lt;br&gt;`param string` string, input
+        &lt;br&gt;`param chars` int, count of chars, that split line
+        &lt;br&gt;`return` list of substring of &#39;chars&#39; length
         &#34;&#34;&#34;
         chars = int(chars)
         if chars &lt;= 0:
@@ -148,11 +148,11 @@ class Str:
     @staticmethod
     def leftpad(string, length, char=&#34;0&#34;, rightpad=False):
         &#34;&#34;&#34;Adds symbols from char str to left side of output string to change input string len to &#39;length&#39;
-        `param string` string, input
-        `param length` int, len of output string
-        `param char` string, characters, added to left side of input string
-        `param rightpad` boolean, if True, adds symbols to right side
-        `return` string, with added characters to side of input string
+        &lt;br&gt;`param string` string, input
+        &lt;br&gt;`param length` int, len of output string
+        &lt;br&gt;`param char` string, characters, added to left side of input string
+        &lt;br&gt;`param rightpad` boolean, if True, adds symbols to right side
+        &lt;br&gt;`return` string, with added characters to side of input string
         &#34;&#34;&#34;
         char = str(char)
         string = str(string)
@@ -167,22 +167,22 @@ class Str:
     @classmethod
     def rightpad(cls, string, leng, char=&#34;0&#34;):
         &#34;&#34;&#34;Adds symbols from char str to right side of output string to change input string len to &#39;length&#39;
-        `param string` string, input
-        `param length` int, len of output string
-        `param char` string, characters, added to right side of input string
-        `return` string, with added characters to side of input string
+        &lt;br&gt;`param string` string, input
+        &lt;br&gt;`param length` int, len of output string
+        &lt;br&gt;`param char` string, characters, added to right side of input string
+        &lt;br&gt;`return` string, with added characters to side of input string
         &#34;&#34;&#34;
         return cls.leftpad(string, leng, char=char, rightpad=True)
 
     @staticmethod
     def substring(string, before, after=None, return_after_substring=False, safe=False):
         &#34;&#34;&#34;Get substring from string that between &#34;before&#34;, and &#34;after&#34; strings, not including those.
-        `param string` string
-        `param before` string, that before output string
-        `param after` string, that after output string
-        `param return_after_substring` boolean, if True, return list of substring and part after substring
-        `param safe` boolean, suppress exceptions if something not found
-        `return` string, from string that between &#34;before&#34;, and &#34;after&#34; arguments
+        &lt;br&gt;`param string` string
+        &lt;br&gt;`param before` string, that before output string
+        &lt;br&gt;`param after` string, that after output string
+        &lt;br&gt;`param return_after_substring` boolean, if True, return list of substring and part after substring
+        &lt;br&gt;`param safe` boolean, suppress exceptions if something not found
+        &lt;br&gt;`return` string, from string that between &#34;before&#34;, and &#34;after&#34; arguments
         &#34;&#34;&#34;
         string = str(string)
         before = str(before)
@@ -216,9 +216,9 @@ class Str:
     @staticmethod
     def diff_simple(string_a, string_b):
         &#34;&#34;&#34;Print all different symbols. Code not all mine, so it&#39;s not so good (or bad).
-        `param string_a` string
-        `param string_b` string
-        `return` None
+        &lt;br&gt;`param string_a` string
+        &lt;br&gt;`param string_b` string
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         import difflib
         strings = [(string_a, string_b)]  # for furthurer support for unlimited srtings
@@ -236,8 +236,8 @@ class Str:
     @staticmethod
     def input_pass(string=&#34;Password:&#34;):
         &#34;&#34;&#34;Secure input password
-        `param string` string, with message to user, that asks password
-        `return` string, that returned from getpass lib
+        &lt;br&gt;`param string` string, with message to user, that asks password
+        &lt;br&gt;`return` string, that returned from getpass lib
         &#34;&#34;&#34;
         import getpass
         return getpass.getpass(str(string))
@@ -245,12 +245,12 @@ class Str:
     @classmethod
     def input_int(cls, message=&#34;Input integer: &#34;, minimum=None, maximum=None, default=None, debug=True):  # pylint: disable=too-many-arguments
         &#34;&#34;&#34;Ask user to input integer.
-        `param message` string, message to user
-        `param minimum` minimum value of returned integer
-        `param maximum` maximum value of returned integer
-        `param default` default value if user just press Enter
-        `param debug` boolean, debug purposes
-        `return` int, input from user
+        &lt;br&gt;`param message` string, message to user
+        &lt;br&gt;`param minimum` minimum value of returned integer
+        &lt;br&gt;`param maximum` maximum value of returned integer
+        &lt;br&gt;`param default` default value if user just press Enter
+        &lt;br&gt;`param debug` boolean, debug purposes
+        &lt;br&gt;`return` int, input from user
         &#34;&#34;&#34;
         output_int = &#34;jabla fitta&#34;
         if default:
@@ -287,8 +287,8 @@ class Str:
     @classmethod
     def remove_spaces(cls, string_):
         &#34;&#34;&#34;Remove all duplicating spaces in string
-        `param string_` string, input
-        `return` string, without duplicated spaces
+        &lt;br&gt;`param string_` string, input
+        &lt;br&gt;`return` string, without duplicated spaces
         &#34;&#34;&#34;
         string_ = str(string_)
         while &#39;  &#39; in string_:
@@ -298,8 +298,8 @@ class Str:
     @staticmethod
     def get_words(string_):
         &#34;&#34;&#34;
-        `param string_` string, with spaces to split it
-        `return` list of substrings, splitted by space|multiple space
+        &lt;br&gt;`param string_` string, with spaces to split it
+        &lt;br&gt;`return` list of substrings, splitted by space|multiple space
         &#34;&#34;&#34;
         removed_spaces = &#39; &#39;.join(string_.split())  # at least, it&#39;s fast https://stackoverflow.com/questions/2077897/
         # substitute-multiple-whitespace-with-single-whitespace-in-python
@@ -311,8 +311,8 @@ class Str:
     @staticmethod
     def guid_from_seed(seed):
         &#34;&#34;&#34;
-        `param seed` string, seed to generate guid
-        `return` string, guid-like
+        &lt;br&gt;`param seed` string, seed to generate guid
+        &lt;br&gt;`return` string, guid-like
         &#34;&#34;&#34;
         import hashlib
         bseed = bytes(seed, &#34;utf-8&#34;)
@@ -376,26 +376,26 @@ class Str:
     @staticmethod
     def to_quotes(some_string):
         &#34;&#34;&#34;
-        `param some_string` string
-        `return` string, inside &#34;&#34; quotes
+        &lt;br&gt;`param some_string` string
+        &lt;br&gt;`return` string, inside &#34;&#34; quotes
         &#34;&#34;&#34;
         return &#39;&#34;&#39; + str(some_string) + &#39;&#34;&#39;
 
     @staticmethod
     def to_quotes_2(some_string):
         &#34;&#34;&#34;
-        `param some_string` string
-        `return` string, inside &#39;&#39; quotes
+        &lt;br&gt;`param some_string` string
+        &lt;br&gt;`return` string, inside &#39;&#39; quotes
         &#34;&#34;&#34;
         return &#34;&#39;&#34; + str(some_string) + &#34;&#39;&#34;
 
     @classmethod
     def get_integers(cls, string, float_support=True, debug=False):
         &#34;&#34;&#34;
-        `param string` string, with some integers or floats inside
-        `param float_support` boolean, enable float support
-        `param debug` boolean, debug print enable
-        `return` list of integers or floats
+        &lt;br&gt;`param string` string, with some integers or floats inside
+        &lt;br&gt;`param float_support` boolean, enable float support
+        &lt;br&gt;`param debug` boolean, debug print enable
+        &lt;br&gt;`return` list of integers or floats
         &#34;&#34;&#34;
         string = cls.remove_spaces(string)
         integer_found = False
@@ -442,9 +442,9 @@ class Str:
     @staticmethod
     def newlines_to_strings(string):
         &#34;&#34;&#34;
-        `param string` string, with some newlines
-        `param quiet` boolean suppress print to console
-        `return` list of strings
+        &lt;br&gt;`param string` string, with some newlines
+        &lt;br&gt;`param quiet` boolean suppress print to console
+        &lt;br&gt;`return` list of strings
         &#34;&#34;&#34;
         from .const9 import newline, newline2
         if isinstance(string, str):  # if input is string
@@ -457,18 +457,18 @@ class Str:
     @classmethod
     def nl(cls, string):  # pylint: disable=invalid-name
         &#34;&#34;&#34;
-        `param string` string, with some newlines
-        `param quiet` boolean suppress print to console
-        `return` list of strings
+        &lt;br&gt;`param string` string, with some newlines
+        &lt;br&gt;`param quiet` boolean suppress print to console
+        &lt;br&gt;`return` list of strings
         &#34;&#34;&#34;
         return cls.newlines_to_strings(string=string)
 
     @staticmethod
     def split_every(string, chars):
         &#34;&#34;&#34;Split line every N chars
-        `param string` string, input
-        `param chars` int, count of chars, that split line
-        `return` list of substring of &#39;chars&#39; length
+        &lt;br&gt;`param string` string, input
+        &lt;br&gt;`param chars` int, count of chars, that split line
+        &lt;br&gt;`return` list of substring of &#39;chars&#39; length
         &#34;&#34;&#34;
         chars = int(chars)
         if chars &lt;= 0:
@@ -488,11 +488,11 @@ class Str:
     @staticmethod
     def leftpad(string, length, char=&#34;0&#34;, rightpad=False):
         &#34;&#34;&#34;Adds symbols from char str to left side of output string to change input string len to &#39;length&#39;
-        `param string` string, input
-        `param length` int, len of output string
-        `param char` string, characters, added to left side of input string
-        `param rightpad` boolean, if True, adds symbols to right side
-        `return` string, with added characters to side of input string
+        &lt;br&gt;`param string` string, input
+        &lt;br&gt;`param length` int, len of output string
+        &lt;br&gt;`param char` string, characters, added to left side of input string
+        &lt;br&gt;`param rightpad` boolean, if True, adds symbols to right side
+        &lt;br&gt;`return` string, with added characters to side of input string
         &#34;&#34;&#34;
         char = str(char)
         string = str(string)
@@ -507,22 +507,22 @@ class Str:
     @classmethod
     def rightpad(cls, string, leng, char=&#34;0&#34;):
         &#34;&#34;&#34;Adds symbols from char str to right side of output string to change input string len to &#39;length&#39;
-        `param string` string, input
-        `param length` int, len of output string
-        `param char` string, characters, added to right side of input string
-        `return` string, with added characters to side of input string
+        &lt;br&gt;`param string` string, input
+        &lt;br&gt;`param length` int, len of output string
+        &lt;br&gt;`param char` string, characters, added to right side of input string
+        &lt;br&gt;`return` string, with added characters to side of input string
         &#34;&#34;&#34;
         return cls.leftpad(string, leng, char=char, rightpad=True)
 
     @staticmethod
     def substring(string, before, after=None, return_after_substring=False, safe=False):
         &#34;&#34;&#34;Get substring from string that between &#34;before&#34;, and &#34;after&#34; strings, not including those.
-        `param string` string
-        `param before` string, that before output string
-        `param after` string, that after output string
-        `param return_after_substring` boolean, if True, return list of substring and part after substring
-        `param safe` boolean, suppress exceptions if something not found
-        `return` string, from string that between &#34;before&#34;, and &#34;after&#34; arguments
+        &lt;br&gt;`param string` string
+        &lt;br&gt;`param before` string, that before output string
+        &lt;br&gt;`param after` string, that after output string
+        &lt;br&gt;`param return_after_substring` boolean, if True, return list of substring and part after substring
+        &lt;br&gt;`param safe` boolean, suppress exceptions if something not found
+        &lt;br&gt;`return` string, from string that between &#34;before&#34;, and &#34;after&#34; arguments
         &#34;&#34;&#34;
         string = str(string)
         before = str(before)
@@ -556,9 +556,9 @@ class Str:
     @staticmethod
     def diff_simple(string_a, string_b):
         &#34;&#34;&#34;Print all different symbols. Code not all mine, so it&#39;s not so good (or bad).
-        `param string_a` string
-        `param string_b` string
-        `return` None
+        &lt;br&gt;`param string_a` string
+        &lt;br&gt;`param string_b` string
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         import difflib
         strings = [(string_a, string_b)]  # for furthurer support for unlimited srtings
@@ -576,8 +576,8 @@ class Str:
     @staticmethod
     def input_pass(string=&#34;Password:&#34;):
         &#34;&#34;&#34;Secure input password
-        `param string` string, with message to user, that asks password
-        `return` string, that returned from getpass lib
+        &lt;br&gt;`param string` string, with message to user, that asks password
+        &lt;br&gt;`return` string, that returned from getpass lib
         &#34;&#34;&#34;
         import getpass
         return getpass.getpass(str(string))
@@ -585,12 +585,12 @@ class Str:
     @classmethod
     def input_int(cls, message=&#34;Input integer: &#34;, minimum=None, maximum=None, default=None, debug=True):  # pylint: disable=too-many-arguments
         &#34;&#34;&#34;Ask user to input integer.
-        `param message` string, message to user
-        `param minimum` minimum value of returned integer
-        `param maximum` maximum value of returned integer
-        `param default` default value if user just press Enter
-        `param debug` boolean, debug purposes
-        `return` int, input from user
+        &lt;br&gt;`param message` string, message to user
+        &lt;br&gt;`param minimum` minimum value of returned integer
+        &lt;br&gt;`param maximum` maximum value of returned integer
+        &lt;br&gt;`param default` default value if user just press Enter
+        &lt;br&gt;`param debug` boolean, debug purposes
+        &lt;br&gt;`return` int, input from user
         &#34;&#34;&#34;
         output_int = &#34;jabla fitta&#34;
         if default:
@@ -627,8 +627,8 @@ class Str:
     @classmethod
     def remove_spaces(cls, string_):
         &#34;&#34;&#34;Remove all duplicating spaces in string
-        `param string_` string, input
-        `return` string, without duplicated spaces
+        &lt;br&gt;`param string_` string, input
+        &lt;br&gt;`return` string, without duplicated spaces
         &#34;&#34;&#34;
         string_ = str(string_)
         while &#39;  &#39; in string_:
@@ -638,8 +638,8 @@ class Str:
     @staticmethod
     def get_words(string_):
         &#34;&#34;&#34;
-        `param string_` string, with spaces to split it
-        `return` list of substrings, splitted by space|multiple space
+        &lt;br&gt;`param string_` string, with spaces to split it
+        &lt;br&gt;`return` list of substrings, splitted by space|multiple space
         &#34;&#34;&#34;
         removed_spaces = &#39; &#39;.join(string_.split())  # at least, it&#39;s fast https://stackoverflow.com/questions/2077897/
         # substitute-multiple-whitespace-with-single-whitespace-in-python
@@ -651,8 +651,8 @@ class Str:
     @staticmethod
     def guid_from_seed(seed):
         &#34;&#34;&#34;
-        `param seed` string, seed to generate guid
-        `return` string, guid-like
+        &lt;br&gt;`param seed` string, seed to generate guid
+        &lt;br&gt;`return` string, guid-like
         &#34;&#34;&#34;
         import hashlib
         bseed = bytes(seed, &#34;utf-8&#34;)
@@ -724,17 +724,17 @@ def decrypt(int_list, password):
 </code></dt>
 <dd>
 <section class="desc"><p>Print all different symbols. Code not all mine, so it's not so good (or bad).
-<code>param string_a</code> string
-<code>param string_b</code> string
-<code>return</code> None</p></section>
+<br><code>param string_a</code> string
+<br><code>param string_b</code> string
+<br><code>return</code> None</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def diff_simple(string_a, string_b):
     &#34;&#34;&#34;Print all different symbols. Code not all mine, so it&#39;s not so good (or bad).
-    `param string_a` string
-    `param string_b` string
-    `return` None
+    &lt;br&gt;`param string_a` string
+    &lt;br&gt;`param string_b` string
+    &lt;br&gt;`return` None
     &#34;&#34;&#34;
     import difflib
     strings = [(string_a, string_b)]  # for furthurer support for unlimited srtings
@@ -771,19 +771,19 @@ def encrypt(string, password):
 <span>def <span class="ident">get_integers</span></span>(<span>cls, string, float_support=True, debug=False)</span>
 </code></dt>
 <dd>
-<section class="desc"><p><code>param string</code> string, with some integers or floats inside
-<code>param float_support</code> boolean, enable float support
-<code>param debug</code> boolean, debug print enable
-<code>return</code> list of integers or floats</p></section>
+<section class="desc"><p><br><code>param string</code> string, with some integers or floats inside
+<br><code>param float_support</code> boolean, enable float support
+<br><code>param debug</code> boolean, debug print enable
+<br><code>return</code> list of integers or floats</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def get_integers(cls, string, float_support=True, debug=False):
     &#34;&#34;&#34;
-    `param string` string, with some integers or floats inside
-    `param float_support` boolean, enable float support
-    `param debug` boolean, debug print enable
-    `return` list of integers or floats
+    &lt;br&gt;`param string` string, with some integers or floats inside
+    &lt;br&gt;`param float_support` boolean, enable float support
+    &lt;br&gt;`param debug` boolean, debug print enable
+    &lt;br&gt;`return` list of integers or floats
     &#34;&#34;&#34;
     string = cls.remove_spaces(string)
     integer_found = False
@@ -832,15 +832,15 @@ def get_integers(cls, string, float_support=True, debug=False):
 <span>def <span class="ident">get_words</span></span>(<span>string_)</span>
 </code></dt>
 <dd>
-<section class="desc"><p><code>param string_</code> string, with spaces to split it
-<code>return</code> list of substrings, splitted by space|multiple space</p></section>
+<section class="desc"><p><br><code>param string_</code> string, with spaces to split it
+<br><code>return</code> list of substrings, splitted by space|multiple space</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def get_words(string_):
     &#34;&#34;&#34;
-    `param string_` string, with spaces to split it
-    `return` list of substrings, splitted by space|multiple space
+    &lt;br&gt;`param string_` string, with spaces to split it
+    &lt;br&gt;`return` list of substrings, splitted by space|multiple space
     &#34;&#34;&#34;
     removed_spaces = &#39; &#39;.join(string_.split())  # at least, it&#39;s fast https://stackoverflow.com/questions/2077897/
     # substitute-multiple-whitespace-with-single-whitespace-in-python
@@ -854,15 +854,15 @@ def get_words(string_):
 <span>def <span class="ident">guid_from_seed</span></span>(<span>seed)</span>
 </code></dt>
 <dd>
-<section class="desc"><p><code>param seed</code> string, seed to generate guid
-<code>return</code> string, guid-like</p></section>
+<section class="desc"><p><br><code>param seed</code> string, seed to generate guid
+<br><code>return</code> string, guid-like</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def guid_from_seed(seed):
     &#34;&#34;&#34;
-    `param seed` string, seed to generate guid
-    `return` string, guid-like
+    &lt;br&gt;`param seed` string, seed to generate guid
+    &lt;br&gt;`return` string, guid-like
     &#34;&#34;&#34;
     import hashlib
     bseed = bytes(seed, &#34;utf-8&#34;)
@@ -879,23 +879,23 @@ def guid_from_seed(seed):
 </code></dt>
 <dd>
 <section class="desc"><p>Ask user to input integer.
-<code>param message</code> string, message to user
-<code>param minimum</code> minimum value of returned integer
-<code>param maximum</code> maximum value of returned integer
-<code>param default</code> default value if user just press Enter
-<code>param debug</code> boolean, debug purposes
-<code>return</code> int, input from user</p></section>
+<br><code>param message</code> string, message to user
+<br><code>param minimum</code> minimum value of returned integer
+<br><code>param maximum</code> maximum value of returned integer
+<br><code>param default</code> default value if user just press Enter
+<br><code>param debug</code> boolean, debug purposes
+<br><code>return</code> int, input from user</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def input_int(cls, message=&#34;Input integer: &#34;, minimum=None, maximum=None, default=None, debug=True):  # pylint: disable=too-many-arguments
     &#34;&#34;&#34;Ask user to input integer.
-    `param message` string, message to user
-    `param minimum` minimum value of returned integer
-    `param maximum` maximum value of returned integer
-    `param default` default value if user just press Enter
-    `param debug` boolean, debug purposes
-    `return` int, input from user
+    &lt;br&gt;`param message` string, message to user
+    &lt;br&gt;`param minimum` minimum value of returned integer
+    &lt;br&gt;`param maximum` maximum value of returned integer
+    &lt;br&gt;`param default` default value if user just press Enter
+    &lt;br&gt;`param debug` boolean, debug purposes
+    &lt;br&gt;`return` int, input from user
     &#34;&#34;&#34;
     output_int = &#34;jabla fitta&#34;
     if default:
@@ -934,15 +934,15 @@ def input_int(cls, message=&#34;Input integer: &#34;, minimum=None, maximum=None
 </code></dt>
 <dd>
 <section class="desc"><p>Secure input password
-<code>param string</code> string, with message to user, that asks password
-<code>return</code> string, that returned from getpass lib</p></section>
+<br><code>param string</code> string, with message to user, that asks password
+<br><code>return</code> string, that returned from getpass lib</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def input_pass(string=&#34;Password:&#34;):
     &#34;&#34;&#34;Secure input password
-    `param string` string, with message to user, that asks password
-    `return` string, that returned from getpass lib
+    &lt;br&gt;`param string` string, with message to user, that asks password
+    &lt;br&gt;`return` string, that returned from getpass lib
     &#34;&#34;&#34;
     import getpass
     return getpass.getpass(str(string))</code></pre>
@@ -953,21 +953,21 @@ def input_pass(string=&#34;Password:&#34;):
 </code></dt>
 <dd>
 <section class="desc"><p>Adds symbols from char str to left side of output string to change input string len to 'length'
-<code>param string</code> string, input
-<code>param length</code> int, len of output string
-<code>param char</code> string, characters, added to left side of input string
-<code>param rightpad</code> boolean, if True, adds symbols to right side
-<code>return</code> string, with added characters to side of input string</p></section>
+<br><code>param string</code> string, input
+<br><code>param length</code> int, len of output string
+<br><code>param char</code> string, characters, added to left side of input string
+<br><code>param rightpad</code> boolean, if True, adds symbols to right side
+<br><code>return</code> string, with added characters to side of input string</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def leftpad(string, length, char=&#34;0&#34;, rightpad=False):
     &#34;&#34;&#34;Adds symbols from char str to left side of output string to change input string len to &#39;length&#39;
-    `param string` string, input
-    `param length` int, len of output string
-    `param char` string, characters, added to left side of input string
-    `param rightpad` boolean, if True, adds symbols to right side
-    `return` string, with added characters to side of input string
+    &lt;br&gt;`param string` string, input
+    &lt;br&gt;`param length` int, len of output string
+    &lt;br&gt;`param char` string, characters, added to left side of input string
+    &lt;br&gt;`param rightpad` boolean, if True, adds symbols to right side
+    &lt;br&gt;`return` string, with added characters to side of input string
     &#34;&#34;&#34;
     char = str(char)
     string = str(string)
@@ -984,17 +984,17 @@ def leftpad(string, length, char=&#34;0&#34;, rightpad=False):
 <span>def <span class="ident">newlines_to_strings</span></span>(<span>string)</span>
 </code></dt>
 <dd>
-<section class="desc"><p><code>param string</code> string, with some newlines
-<code>param quiet</code> boolean suppress print to console
-<code>return</code> list of strings</p></section>
+<section class="desc"><p><br><code>param string</code> string, with some newlines
+<br><code>param quiet</code> boolean suppress print to console
+<br><code>return</code> list of strings</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def newlines_to_strings(string):
     &#34;&#34;&#34;
-    `param string` string, with some newlines
-    `param quiet` boolean suppress print to console
-    `return` list of strings
+    &lt;br&gt;`param string` string, with some newlines
+    &lt;br&gt;`param quiet` boolean suppress print to console
+    &lt;br&gt;`return` list of strings
     &#34;&#34;&#34;
     from .const9 import newline, newline2
     if isinstance(string, str):  # if input is string
@@ -1009,17 +1009,17 @@ def newlines_to_strings(string):
 <span>def <span class="ident">nl</span></span>(<span>cls, string)</span>
 </code></dt>
 <dd>
-<section class="desc"><p><code>param string</code> string, with some newlines
-<code>param quiet</code> boolean suppress print to console
-<code>return</code> list of strings</p></section>
+<section class="desc"><p><br><code>param string</code> string, with some newlines
+<br><code>param quiet</code> boolean suppress print to console
+<br><code>return</code> list of strings</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def nl(cls, string):  # pylint: disable=invalid-name
     &#34;&#34;&#34;
-    `param string` string, with some newlines
-    `param quiet` boolean suppress print to console
-    `return` list of strings
+    &lt;br&gt;`param string` string, with some newlines
+    &lt;br&gt;`param quiet` boolean suppress print to console
+    &lt;br&gt;`return` list of strings
     &#34;&#34;&#34;
     return cls.newlines_to_strings(string=string)</code></pre>
 </details>
@@ -1029,15 +1029,15 @@ def nl(cls, string):  # pylint: disable=invalid-name
 </code></dt>
 <dd>
 <section class="desc"><p>Remove all duplicating spaces in string
-<code>param string_</code> string, input
-<code>return</code> string, without duplicated spaces</p></section>
+<br><code>param string_</code> string, input
+<br><code>return</code> string, without duplicated spaces</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def remove_spaces(cls, string_):
     &#34;&#34;&#34;Remove all duplicating spaces in string
-    `param string_` string, input
-    `return` string, without duplicated spaces
+    &lt;br&gt;`param string_` string, input
+    &lt;br&gt;`return` string, without duplicated spaces
     &#34;&#34;&#34;
     string_ = str(string_)
     while &#39;  &#39; in string_:
@@ -1050,19 +1050,19 @@ def remove_spaces(cls, string_):
 </code></dt>
 <dd>
 <section class="desc"><p>Adds symbols from char str to right side of output string to change input string len to 'length'
-<code>param string</code> string, input
-<code>param length</code> int, len of output string
-<code>param char</code> string, characters, added to right side of input string
-<code>return</code> string, with added characters to side of input string</p></section>
+<br><code>param string</code> string, input
+<br><code>param length</code> int, len of output string
+<br><code>param char</code> string, characters, added to right side of input string
+<br><code>return</code> string, with added characters to side of input string</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def rightpad(cls, string, leng, char=&#34;0&#34;):
     &#34;&#34;&#34;Adds symbols from char str to right side of output string to change input string len to &#39;length&#39;
-    `param string` string, input
-    `param length` int, len of output string
-    `param char` string, characters, added to right side of input string
-    `return` string, with added characters to side of input string
+    &lt;br&gt;`param string` string, input
+    &lt;br&gt;`param length` int, len of output string
+    &lt;br&gt;`param char` string, characters, added to right side of input string
+    &lt;br&gt;`return` string, with added characters to side of input string
     &#34;&#34;&#34;
     return cls.leftpad(string, leng, char=char, rightpad=True)</code></pre>
 </details>
@@ -1072,17 +1072,17 @@ def rightpad(cls, string, leng, char=&#34;0&#34;):
 </code></dt>
 <dd>
 <section class="desc"><p>Split line every N chars
-<code>param string</code> string, input
-<code>param chars</code> int, count of chars, that split line
-<code>return</code> list of substring of 'chars' length</p></section>
+<br><code>param string</code> string, input
+<br><code>param chars</code> int, count of chars, that split line
+<br><code>return</code> list of substring of 'chars' length</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def split_every(string, chars):
     &#34;&#34;&#34;Split line every N chars
-    `param string` string, input
-    `param chars` int, count of chars, that split line
-    `return` list of substring of &#39;chars&#39; length
+    &lt;br&gt;`param string` string, input
+    &lt;br&gt;`param chars` int, count of chars, that split line
+    &lt;br&gt;`return` list of substring of &#39;chars&#39; length
     &#34;&#34;&#34;
     chars = int(chars)
     if chars &lt;= 0:
@@ -1105,23 +1105,23 @@ def split_every(string, chars):
 </code></dt>
 <dd>
 <section class="desc"><p>Get substring from string that between "before", and "after" strings, not including those.
-<code>param string</code> string
-<code>param before</code> string, that before output string
-<code>param after</code> string, that after output string
-<code>param return_after_substring</code> boolean, if True, return list of substring and part after substring
-<code>param safe</code> boolean, suppress exceptions if something not found
-<code>return</code> string, from string that between "before", and "after" arguments</p></section>
+<br><code>param string</code> string
+<br><code>param before</code> string, that before output string
+<br><code>param after</code> string, that after output string
+<br><code>param return_after_substring</code> boolean, if True, return list of substring and part after substring
+<br><code>param safe</code> boolean, suppress exceptions if something not found
+<br><code>return</code> string, from string that between "before", and "after" arguments</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def substring(string, before, after=None, return_after_substring=False, safe=False):
     &#34;&#34;&#34;Get substring from string that between &#34;before&#34;, and &#34;after&#34; strings, not including those.
-    `param string` string
-    `param before` string, that before output string
-    `param after` string, that after output string
-    `param return_after_substring` boolean, if True, return list of substring and part after substring
-    `param safe` boolean, suppress exceptions if something not found
-    `return` string, from string that between &#34;before&#34;, and &#34;after&#34; arguments
+    &lt;br&gt;`param string` string
+    &lt;br&gt;`param before` string, that before output string
+    &lt;br&gt;`param after` string, that after output string
+    &lt;br&gt;`param return_after_substring` boolean, if True, return list of substring and part after substring
+    &lt;br&gt;`param safe` boolean, suppress exceptions if something not found
+    &lt;br&gt;`return` string, from string that between &#34;before&#34;, and &#34;after&#34; arguments
     &#34;&#34;&#34;
     string = str(string)
     before = str(before)
@@ -1157,15 +1157,15 @@ def substring(string, before, after=None, return_after_substring=False, safe=Fal
 <span>def <span class="ident">to_quotes</span></span>(<span>some_string)</span>
 </code></dt>
 <dd>
-<section class="desc"><p><code>param some_string</code> string
-<code>return</code> string, inside "" quotes</p></section>
+<section class="desc"><p><br><code>param some_string</code> string
+<br><code>return</code> string, inside "" quotes</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def to_quotes(some_string):
     &#34;&#34;&#34;
-    `param some_string` string
-    `return` string, inside &#34;&#34; quotes
+    &lt;br&gt;`param some_string` string
+    &lt;br&gt;`return` string, inside &#34;&#34; quotes
     &#34;&#34;&#34;
     return &#39;&#34;&#39; + str(some_string) + &#39;&#34;&#39;</code></pre>
 </details>
@@ -1174,15 +1174,15 @@ def to_quotes(some_string):
 <span>def <span class="ident">to_quotes_2</span></span>(<span>some_string)</span>
 </code></dt>
 <dd>
-<section class="desc"><p><code>param some_string</code> string
-<code>return</code> string, inside '' quotes</p></section>
+<section class="desc"><p><br><code>param some_string</code> string
+<br><code>return</code> string, inside '' quotes</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def to_quotes_2(some_string):
     &#34;&#34;&#34;
-    `param some_string` string
-    `return` string, inside &#39;&#39; quotes
+    &lt;br&gt;`param some_string` string
+    &lt;br&gt;`return` string, inside &#39;&#39; quotes
     &#34;&#34;&#34;
     return &#34;&#39;&#34; + str(some_string) + &#34;&#39;&#34;</code></pre>
 </details>

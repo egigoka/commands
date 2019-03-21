@@ -37,8 +37,8 @@ class Pip:
     def main(list_of_args):
         &#34;&#34;&#34;
         It&#39;s alias of pip.main function, it needed, because pip10 remove public API
-        `param list_of_args` must be list, same arguments as pip
-        `return` same as alias
+        &lt;br&gt;`param list_of_args` must be list, same arguments as pip
+        &lt;br&gt;`return` same as alias
         &#34;&#34;&#34;
         try:
             from pip import main as pip_main
@@ -50,10 +50,10 @@ class Pip:
     def install(cls, *module_names, upgrade=False, uninstall=False):
         &#34;&#34;&#34;
         Alias to &#39;pip install&#39;
-        `param module_names`
-        `param upgrade` boolean, if True, &#34;--upgrade&#34; argument will pass to pip
-        `param uninstall` boolean, if True, &#34;uninstall&#34;, &#34;-y&#34; arguments will pass to pip
-        `return` None
+        &lt;br&gt;`param module_names`
+        &lt;br&gt;`param upgrade` boolean, if True, &#34;--upgrade&#34; argument will pass to pip
+        &lt;br&gt;`param uninstall` boolean, if True, &#34;uninstall&#34;, &#34;-y&#34; arguments will pass to pip
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         import time
         from .list9 import List
@@ -71,8 +71,8 @@ class Pip:
     def uninstall(cls, *module_names):
         &#34;&#34;&#34;
         Alias to Pip.install with True passed to uninstall argument
-        `param module_names`
-        `return` None
+        &lt;br&gt;`param module_names`
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         cls.install(*module_names, uninstall=True)
 
@@ -80,7 +80,7 @@ class Pip:
     def check_pip_installation(cls):
         &#34;&#34;&#34;
         Checks pip installation on Linux, if hasn&#39;t, tries to install it with apt-get
-        `return` None
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         if &#34;pip&#34; not in cls.list_of_modules:
             from .os9 import OS
@@ -92,7 +92,7 @@ class Pip:
     def update_all_packages(cls):
         &#34;&#34;&#34;
         Update _all_ installed packages at once
-        `return` None
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         from .str9 import Str
         from .console9 import Console
@@ -111,7 +111,7 @@ class Pip:
     def _update_list_of_modules(cls):
         &#34;&#34;&#34;
         Internal method. Updates internal list of modules.
-        `return` None
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         import pkgutil
         cls.list_of_modules = []
@@ -145,8 +145,8 @@ Pip._update_list_of_modules()  # pylint: disable=protected-access</code></pre>
     def main(list_of_args):
         &#34;&#34;&#34;
         It&#39;s alias of pip.main function, it needed, because pip10 remove public API
-        `param list_of_args` must be list, same arguments as pip
-        `return` same as alias
+        &lt;br&gt;`param list_of_args` must be list, same arguments as pip
+        &lt;br&gt;`return` same as alias
         &#34;&#34;&#34;
         try:
             from pip import main as pip_main
@@ -158,10 +158,10 @@ Pip._update_list_of_modules()  # pylint: disable=protected-access</code></pre>
     def install(cls, *module_names, upgrade=False, uninstall=False):
         &#34;&#34;&#34;
         Alias to &#39;pip install&#39;
-        `param module_names`
-        `param upgrade` boolean, if True, &#34;--upgrade&#34; argument will pass to pip
-        `param uninstall` boolean, if True, &#34;uninstall&#34;, &#34;-y&#34; arguments will pass to pip
-        `return` None
+        &lt;br&gt;`param module_names`
+        &lt;br&gt;`param upgrade` boolean, if True, &#34;--upgrade&#34; argument will pass to pip
+        &lt;br&gt;`param uninstall` boolean, if True, &#34;uninstall&#34;, &#34;-y&#34; arguments will pass to pip
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         import time
         from .list9 import List
@@ -179,8 +179,8 @@ Pip._update_list_of_modules()  # pylint: disable=protected-access</code></pre>
     def uninstall(cls, *module_names):
         &#34;&#34;&#34;
         Alias to Pip.install with True passed to uninstall argument
-        `param module_names`
-        `return` None
+        &lt;br&gt;`param module_names`
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         cls.install(*module_names, uninstall=True)
 
@@ -188,7 +188,7 @@ Pip._update_list_of_modules()  # pylint: disable=protected-access</code></pre>
     def check_pip_installation(cls):
         &#34;&#34;&#34;
         Checks pip installation on Linux, if hasn&#39;t, tries to install it with apt-get
-        `return` None
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         if &#34;pip&#34; not in cls.list_of_modules:
             from .os9 import OS
@@ -200,7 +200,7 @@ Pip._update_list_of_modules()  # pylint: disable=protected-access</code></pre>
     def update_all_packages(cls):
         &#34;&#34;&#34;
         Update _all_ installed packages at once
-        `return` None
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         from .str9 import Str
         from .console9 import Console
@@ -219,7 +219,7 @@ Pip._update_list_of_modules()  # pylint: disable=protected-access</code></pre>
     def _update_list_of_modules(cls):
         &#34;&#34;&#34;
         Internal method. Updates internal list of modules.
-        `return` None
+        &lt;br&gt;`return` None
         &#34;&#34;&#34;
         import pkgutil
         cls.list_of_modules = []
@@ -240,14 +240,14 @@ Pip._update_list_of_modules()  # pylint: disable=protected-access</code></pre>
 </code></dt>
 <dd>
 <section class="desc"><p>Checks pip installation on Linux, if hasn't, tries to install it with apt-get
-<code>return</code> None</p></section>
+<br><code>return</code> None</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def check_pip_installation(cls):
     &#34;&#34;&#34;
     Checks pip installation on Linux, if hasn&#39;t, tries to install it with apt-get
-    `return` None
+    &lt;br&gt;`return` None
     &#34;&#34;&#34;
     if &#34;pip&#34; not in cls.list_of_modules:
         from .os9 import OS
@@ -261,20 +261,20 @@ def check_pip_installation(cls):
 </code></dt>
 <dd>
 <section class="desc"><p>Alias to 'pip install'
-<code>param module_names</code>
-<code>param upgrade</code> boolean, if True, "&ndash;upgrade" argument will pass to pip
-<code>param uninstall</code> boolean, if True, "uninstall", "-y" arguments will pass to pip
-<code>return</code> None</p></section>
+<br><code>param module_names</code>
+<br><code>param upgrade</code> boolean, if True, "&ndash;upgrade" argument will pass to pip
+<br><code>param uninstall</code> boolean, if True, "uninstall", "-y" arguments will pass to pip
+<br><code>return</code> None</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def install(cls, *module_names, upgrade=False, uninstall=False):
     &#34;&#34;&#34;
     Alias to &#39;pip install&#39;
-    `param module_names`
-    `param upgrade` boolean, if True, &#34;--upgrade&#34; argument will pass to pip
-    `param uninstall` boolean, if True, &#34;uninstall&#34;, &#34;-y&#34; arguments will pass to pip
-    `return` None
+    &lt;br&gt;`param module_names`
+    &lt;br&gt;`param upgrade` boolean, if True, &#34;--upgrade&#34; argument will pass to pip
+    &lt;br&gt;`param uninstall` boolean, if True, &#34;uninstall&#34;, &#34;-y&#34; arguments will pass to pip
+    &lt;br&gt;`return` None
     &#34;&#34;&#34;
     import time
     from .list9 import List
@@ -294,16 +294,16 @@ def install(cls, *module_names, upgrade=False, uninstall=False):
 </code></dt>
 <dd>
 <section class="desc"><p>It's alias of pip.main function, it needed, because pip10 remove public API
-<code>param list_of_args</code> must be list, same arguments as pip
-<code>return</code> same as alias</p></section>
+<br><code>param list_of_args</code> must be list, same arguments as pip
+<br><code>return</code> same as alias</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@staticmethod
 def main(list_of_args):
     &#34;&#34;&#34;
     It&#39;s alias of pip.main function, it needed, because pip10 remove public API
-    `param list_of_args` must be list, same arguments as pip
-    `return` same as alias
+    &lt;br&gt;`param list_of_args` must be list, same arguments as pip
+    &lt;br&gt;`return` same as alias
     &#34;&#34;&#34;
     try:
         from pip import main as pip_main
@@ -317,16 +317,16 @@ def main(list_of_args):
 </code></dt>
 <dd>
 <section class="desc"><p>Alias to Pip.install with True passed to uninstall argument
-<code>param module_names</code>
-<code>return</code> None</p></section>
+<br><code>param module_names</code>
+<br><code>return</code> None</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def uninstall(cls, *module_names):
     &#34;&#34;&#34;
     Alias to Pip.install with True passed to uninstall argument
-    `param module_names`
-    `return` None
+    &lt;br&gt;`param module_names`
+    &lt;br&gt;`return` None
     &#34;&#34;&#34;
     cls.install(*module_names, uninstall=True)</code></pre>
 </details>
@@ -336,14 +336,14 @@ def uninstall(cls, *module_names):
 </code></dt>
 <dd>
 <section class="desc"><p>Update <em>all</em> installed packages at once
-<code>return</code> None</p></section>
+<br><code>return</code> None</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">@classmethod
 def update_all_packages(cls):
     &#34;&#34;&#34;
     Update _all_ installed packages at once
-    `return` None
+    &lt;br&gt;`return` None
     &#34;&#34;&#34;
     from .str9 import Str
     from .console9 import Console
