@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with funtions to work with path strings
 """
-__version__ = "2.2.0"
+__version__ = "2.2.1"
 
 
 class Path:
@@ -34,39 +34,45 @@ class Path:
         return os.getcwd()
 
     @classmethod
-    def combine(cls, *paths, debug=False):  # todo add support for \\? on Windows
+    def combine(cls, path_first_path, *paths, debug=False):  # todo add support for \\? on Windows
         """Create full path string from strings
+        :param path_first_path: string, first part of path
         :param paths: strings, path shards to create full path string
         :param debug: boolean, print all movements
         :return: string, path that can be used in shell or whatever
         """
         import os
-        for path_part in paths:
-            try:
-                path = os.path.join(str(path), str(path_part))  # pylint: disable=used-before-assignment
-            except NameError:  # first path piece is very important
-                from .os9 import OS
-                from .const9 import backslash
+        from .os9 import OS
+        from .const9 import backslash
+        if OS.windows and path_first_path == backslash:  # support for smb windows paths like \\ip_or_pc\dir\
+            path = backslash * 2
+        elif OS.windows and len(path_first_path) <= 3:
+            if path_first_path == "..":
+                path = path_first_path
+            elif path_first_path == ".":
+                path = path_first_path
+            elif path_first_path == "~":
+                path = cls.home()
+            else:
+                path = os.path.join(path_first_path, os.sep)
+        elif OS.windows:
+            path = path_first_path
+            if debug:
                 from .print9 import Print
-                if OS.windows and path_part == backslash:  # support for smb windows paths like \\ip_or_pc\dir\
-                    path = backslash * 2
-                elif (OS.windows) and (len(path_part) <= 3):  # todo bug with "." and ".."
-                    path = os.path.join(path_part, os.sep)
-                elif OS.windows:
-                    path = path_part
-                    if debug:
-                        Print.debug("path", path, "path_part", path_part)
-                elif OS.unix_family:
-                    if path_part == "..":
-                        path = path_part
-                    elif path_part == ".":
-                        path = path_part
-                    elif path_part == "~":
-                        path = cls.home()
-                    else:
-                        path = os.path.join(os.sep, path_part)
-                else:
-                    raise FileNotFoundError("path_part" + str(path_part) + "is not expected")
+                Print.debug("path", path, "path_part", path_first_path)
+        elif OS.unix_family:
+            if path_first_path == "..":
+                path = path_first_path
+            elif path_first_path == ".":
+                path = path_first_path
+            elif path_first_path == "~":
+                path = cls.home()
+            else:
+                path = os.path.join(os.sep, path_first_path)
+        else:
+            raise OSError("OS doesn't supported")
+        for path_part in paths:
+            path = os.path.join(str(path), str(path_part))
         return path
 
     @staticmethod
