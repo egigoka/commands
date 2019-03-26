@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "1.0.0"
+__version__ = "1.0.4"
 # pylint: disable=c-extension-no-member
 
 
@@ -12,9 +12,9 @@ class File:
     @classmethod
     def create(cls, filename, quiet=True):
         """Creates subdirs, if needed
-        :param filename: string with path to creating file
-        :param quiet: boolean, if True, suppress output to console
-        :return: None
+        <br>`param filename` string with path to creating file
+        <br>`param quiet` boolean, if True, suppress output to console
+        <br>`return` None
         """
         import os
         from .path9 import Path
@@ -41,11 +41,11 @@ class File:
     @classmethod
     def delete(cls, path, quiet=False, no_sleep=False):
         """
-        :param path: string with path to deleting file
-        :param quiet: boolean, suppress print to console
-        :param no_sleep: boolean, if True - function skip sleep in 0.05 seconds after deleting file (to ensure than file
+        <br>`param path` string with path to deleting file
+        <br>`param quiet` boolean, suppress print to console
+        <br>`param no_sleep` boolean, if True - function skip sleep in 0.05 seconds after deleting file (to ensure than file
         deleted before next code run)
-        :return: None
+        <br>`return` None
         """
         import time
         import os
@@ -63,23 +63,25 @@ class File:
             if cls.exist(path):
                 raise FileExistsError(path + " is not deleted")
 
-    @staticmethod
-    def move(input_file, output_file):
+    @classmethod
+    def move(cls, input_file, output_file):
         """
-        :param input_file: string with path to previous file place
-        :param output_file: string with path to new file place
-        :return: None
+        <br>`param input_file` string with path to previous file place
+        <br>`param output_file` string with path to new file place
+        <br>`return` None
         """
-        import shutil
-        shutil.move(input_file, output_file)
+        # shutil.move gives 2 exceptions when file not found, so don't use it
+        cls.copy(input_file=input_file, output_file=output_file)
+        if input_file.lower() != output_file.lower():  # if rename change only register of names in case-insensitive FS
+            cls.delete(input_file, quiet=True, no_sleep=True)
         return output_file
 
     @staticmethod
     def copy(input_file, output_file):
         """
-        :param input_file: string with path to existing file
-        :param output_file: string with path to new file
-        :return: None
+        <br>`param input_file` string with path to existing file
+        <br>`param output_file` string with path to new file
+        <br>`return` None
         """
         import shutil
         shutil.copy2(input_file, output_file)
@@ -87,9 +89,9 @@ class File:
     @classmethod
     def rename(cls, input_file, output_file):
         """
-        :param input_file: string with path to previous file place
-        :param output_file: string with path to new file place
-        :return: string with path to new file place
+        <br>`param input_file` string with path to previous file place
+        <br>`param output_file` string with path to new file place
+        <br>`return` string with path to new file place
         """
         return cls.move(input_file, output_file)
 
@@ -97,9 +99,9 @@ class File:
     def hide(cls, filename, quiet=True):
         """Adding dot to filename and set attribute FILE_ATTRIBUTE_HIDDEN to
         file, if running on Windows
-        :param filename: string with path to file
-        :param quiet: suppress print to console
-        :return: string with new filename
+        <br>`param filename` string with path to file
+        <br>`param quiet` suppress print to console
+        <br>`return` string with new filename
         """
         import os
         from .path9 import Path
@@ -121,11 +123,11 @@ class File:
     @classmethod
     def backup(cls, filename, subfolder="bak", hide=True, quiet=False):
         """Move file to subfolder, adds sort of timestamp to filename and hide file if 'hide' argument is True
-        :param filename: string with path to file
-        :param subfolder: string with name of subfolder of backed up files
-        :param hide: boolean, define hide file or not
-        :param quiet: boolean, suppress print to console
-        :return:
+        <br>`param filename` string with path to file
+        <br>`param subfolder` string with name of subfolder of backed up files
+        <br>`param hide` boolean, define hide file or not
+        <br>`param quiet` boolean, suppress print to console
+        <br>`return`
         """
         import os
         import shutil
@@ -156,8 +158,8 @@ class File:
     @staticmethod
     def wipe(path):
         """Erase content of file
-        :param path: string with path to file
-        :return: None
+        <br>`param path` string with path to file
+        <br>`return` None
         """
         file = open(path, 'w')
         file.close()
@@ -165,10 +167,10 @@ class File:
     @staticmethod
     def read(path, encoding="utf-8", auto_detect_encoding=False, quiet=True):  # return pipe to file content
         """
-        :param path: string, with path to file
-        :param auto_detect_encoding: bool or int, how much symbols use to auto define decoding, if True, uses 10000
-        :param quiet: bool, if True, suppress output to console
-        :return: pipe, to file text content with utf-8 decoding
+        <br>`param path` string, with path to file
+        <br>`param auto_detect_encoding` bool or int, how much symbols use to auto define decoding, if True, uses 10000
+        <br>`param quiet` bool, if True, suppress output to console
+        <br>`return` pipe, to file text content with utf-8 decoding
         """
         try:
             if auto_detect_encoding:
@@ -180,18 +182,20 @@ class File:
                     count_of_symbols = 10000
                 with open(path, "rb") as rawfile:
                     slice_of_raw_data = rawfile.read(count_of_symbols)
-                # start check for utf-16-le :( only ascii characters, what a fool :(
-                utf_16_le = True
+                # check for utf-16-le
+                fail_symbols = 0
                 for cnt, sym in enumerate(slice_of_raw_data):
                     if cnt % 2 != 0:
                         if sym != 0:
-                            utf_16_le = False  # todo count percentage of symbols
-                            break
+                            fail_symbols += 1
+                utf_16_le = False
+                if fail_symbols/(len(slice_of_raw_data)/2) < 0.99:
+                    utf_16_le = True
                 if utf_16_le:
                     encoding = "utf-16-le"
                     if not quiet:
                         define_encoding_bench.end(f"encoding defined by egigoka: [{encoding}] by [{count_of_symbols}] first symbols in")
-                # end check for utf-16-le :(
+                # end check for utf-16-le
                 else:
                     import chardet
                     encoding = chardet.detect(slice_of_raw_data)["encoding"]
@@ -209,11 +213,11 @@ class File:
     @staticmethod
     def write(filename, what_to_write, mode="a", quiet=True):
         """Write to end of file if "mode" arg isn't redefined
-        :param filename: string with path to file
-        :param what_to_write: string to write
-        :param mode: string with any mode that supported by python open() func
-        :param quiet: boolean, if True, suppress output to console
-        :return: None
+        <br>`param filename` string with path to file
+        <br>`param what_to_write` string to write
+        <br>`param mode` string with any mode that supported by python open() func
+        <br>`param quiet` boolean, if True, suppress output to console
+        <br>`return` None
         """
         if not quiet:
             print(f"Writing to file {filename}")
@@ -229,8 +233,8 @@ class File:
     @staticmethod
     def exist(filename):
         """
-        :param filename: string with path to file
-        :return: boolean that means existence of file
+        <br>`param filename` string with path to file
+        <br>`return` boolean that means existence of file
         """
         import os
         return os.path.isfile(filename)
@@ -238,8 +242,8 @@ class File:
     @staticmethod
     def get_size(filename):  # return size in bytes
         """
-        :param filename: string with path to file
-        :return: int with filesize in bytes
+        <br>`param filename` string with path to file
+        <br>`return` int with filesize in bytes
         """
         import os
         return os.stat(filename).st_size
@@ -247,8 +251,8 @@ class File:
     @staticmethod
     def get_modification_time(filename):
         """
-        :param filename: string, path to file
-        :return: float,
+        <br>`param filename` string, path to file
+        <br>`return` float,
         """
         import os
         return os.path.getmtime(filename)

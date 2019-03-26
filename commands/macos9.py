@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions that works only in macOS
 """
-__version__ = "0.2.3"
+__version__ = "0.2.4"
 
 
 class macOS:  # pylint: disable=invalid-name, too-few-public-methods
@@ -14,8 +14,8 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
         @staticmethod
         def quotes_escape(string):
             """Trying to escape quotes to puch them through AppleScript
-            :param string: string input
-            :return: string with escaped symbols
+            <br>`param string` string input
+            <br>`return` string with escaped symbols
             """
             from .const9 import backslash
             quote_1 = '"'
@@ -36,14 +36,14 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
     @classmethod
     def get_list_of_sounds(cls, quiet=False):
         """Print all sound names from current machine and user
-        :param quiet: suppress print to console
-        :return: list of all sounds
+        <br>`param quiet` suppress print to console
+        <br>`return` list of all sounds
         """
         from .print9 import Print
         from .dir9 import Dir
         from .path9 import Path
-        global_sounds = Dir.list_of_files(Path.extend("System", "Library", "Sounds"))
-        local_sounds = Dir.list_of_files(Path.extend("~", "Library", "Sounds"))
+        global_sounds = Dir.list_of_files(Path.combine("System", "Library", "Sounds"))
+        local_sounds = Dir.list_of_files(Path.combine("~", "Library", "Sounds"))
         if not quiet:
             Print.debug("global sounds", global_sounds, "local sounds", local_sounds)
         return global_sounds + local_sounds
@@ -51,12 +51,12 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
     @classmethod
     def notification(cls, message, title="python3", subtitle=None, sound=None):
         """Create notification with AppleScript
-        :param message: string
-        :param title: string
-        :param subtitle: string
-        :param sound: string with sound name
-        :param list_of_sounds: boolean,
-        :return: None
+        <br>`param message` string
+        <br>`param title` string
+        <br>`param subtitle` string
+        <br>`param sound` string with sound name
+        <br>`param list_of_sounds` boolean,
+        <br>`return` None
         """
         # https://apple.stackexchange.com/questions/57412/how-can-i-trigger-a-notification-center-notification-from-an-a
         # pplescript-or-shel# - just AppleScript
@@ -83,9 +83,9 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
     @staticmethod
     def symlink(real, symlink):
         """Creates symlink in macOS
-        :param real: string, path to real folder or file, where be linked symlink
-        :param symlink: string, path to new symlink
-        :return: None
+        <br>`param real` string, path to real folder or file, where be linked symlink
+        <br>`param symlink` string, path to new symlink
+        <br>`return` None
         """
         from .process9 import Process
         Process.start("ln", "-s", "'"+real+"'", "'"+symlink+"'")

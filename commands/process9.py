@@ -2,20 +2,20 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing processes.
 """
-__version__ = "0.3.1"
+__version__ = "1.0.0"
 
 
 class Process:
     """Class with functions for managing processes.
     """
     @staticmethod
-    def kill(process, quiet=False):
+    def kill(process):
         """
-        :param process: process name or PID
-        :return: None
+        <br>`param process` process name or PID
+        <br>`return` None
         """
-        import os
         from .os9 import OS
+        from .console9 import Console
         if OS.windows:
             try:
                 int(process)
@@ -33,20 +33,17 @@ class Process:
                 pass
         else:
             raise NotImplementedError("OS not supported, now only Windows and macOS")
-        if quiet:
-            from .console9 import Console
-            Console.get_output(command_)
-        else:
-            os.system(command_)
+        return Console.get_output(command_)
+
 
     @staticmethod
     def start(*arguments, new_window=False, debug=False, pureshell=False, window_name=""):  # pylint: disable=too-many-branches
         """
-        :param arguments: strings, arguments to start process, include name
-        :param new_window: boolean, open process in new window
-        :param debug: boolean, debug
-        :param pureshell: boolean, use only first argument from *arguments, not processing others
-        :return: None
+        <br>`param arguments` strings, arguments to start process, include name
+        <br>`param new_window` boolean, open process in new window
+        <br>`param debug` boolean, debug
+        <br>`param pureshell` boolean, use only first argument from *arguments, not processing others
+        <br>`return` None
         """
         import os
         from .list9 import List
@@ -88,9 +85,3 @@ class Process:
                 commands = " ".join(arguments)
                 # print(commands)
                 os.system(commands)
-# Popen work with todo implement
-#     try:
-#         command = 'netsh advfirewall firewall delete rule name="Open Port ' + str(grafana_port) + '" protocol=tcp localport=' + str(grafana_port) + ''
-#         out, err = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
-#     except:
-#         pass

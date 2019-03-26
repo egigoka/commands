@@ -2,30 +2,39 @@
 # -*- coding: utf-8 -*-
 """Internal module wrapper to cli wget
 """
-__version__ = "0.0.5"
+__version__ = "0.1.1"
 
 
 class Wget:  # pylint: disable=too-few-public-methods
     """Class wrapper to cli wget
     """
     @staticmethod
-    def download(url, output_filename, quiet=False):  # pylint: disable=inconsistent-return-statements
+    def download(url, output_filename, quiet=False, no_check_certificate=False):  # pylint: disable=inconsistent-return-statements
         """Wrapper to wget cli
-        :param url: string, url to some file
-        :param output_filename: string, path to filename
-        :param quiet: boolean, suppress print to console
-        :return: output from wget if 'quiet' argument is True
+        <br>`param url` string, url to some file
+        <br>`param output_filename` string, path to filename
+        <br>`param quiet` boolean, suppress print to console
+        <br>`return` output from wget if 'quiet' argument is True
         """
         arguments = '--header="Accept: text/html" ' + \
                     '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) ' + \
                     'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3167.0 Safari/537.36"'
-        if quiet:
-            from .console9 import Console
-            command = "wget '" + url + "' -O " + output_filename + " " + arguments
-            return Console.get_output(command)
-        else:
-            from .process9 import Process
-            from .const9 import backslash
-            url = url.replace("&", backslash + "&")
-            Process.start("wget", url, "-O", output_filename, arguments, pureshell=True)
+
+        from .console9 import Console
+        # from .const9 import backslash
+        from .dir9 import Dir
+        import os
+
+        no_check_certificate_cli_arg = ""
+        if no_check_certificate:
+            no_check_certificate_cli_arg = "--no-check-certificate"
+
+        # url = url.replace("&", backslash + "&")
+        command = f"wget {no_check_certificate_cli_arg} {url} -O {output_filename} {arguments}"
+        if not Dir.exist(os.path.split(output_filename)[0]):
+            Dir.create(os.path.split(output_filename)[0])
+        try:
+            return Console.get_output(command, print_std=not quiet)
+        except FileNotFoundError as exception:
+            raise OSError(exception, "install wget")
         # Another way to fix blocks by creating ~/.wgetrc file https://stackoverflow.com/a/34166756

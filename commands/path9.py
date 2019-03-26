@@ -11,8 +11,8 @@ class Path:
     @staticmethod
     def full(path):
         """
-        :param path: string, partial path
-        :return: string, full path
+        <br>`param path` string, partial path
+        <br>`return` string, full path
         """
         import os
         return os.path.abspath(path)
@@ -20,7 +20,7 @@ class Path:
     @staticmethod
     def commands():
         """Used for store some settings(?)
-        :return: string, path of this module
+        <br>`return` string, path of this module
         """
         import os
         return os.path.dirname(os.path.realpath(__file__))
@@ -28,7 +28,7 @@ class Path:
     @staticmethod
     def working():
         """
-        :return: string, path to working directory
+        <br>`return` string, path to working directory
         """
         import os
         return os.getcwd()
@@ -36,10 +36,10 @@ class Path:
     @classmethod
     def combine(cls, path_first_path, *paths, debug=False):  # todo add support for \\? on Windows
         """Create full path string from strings
-        :param path_first_path: string, first part of path
-        :param paths: strings, path shards to create full path string
-        :param debug: boolean, print all movements
-        :return: string, path that can be used in shell or whatever
+        <br>`param path_first_path` string, first part of path
+        <br>`param paths` strings, path shards to create full path string
+        <br>`param debug` boolean, print all movements
+        <br>`return` string, path that can be used in shell or whatever
         """
         import os
         from .os9 import OS
@@ -78,25 +78,25 @@ class Path:
     @staticmethod
     def home():
         """
-        :return: string, home directory of user
+        <br>`return` string, home directory of user
         """
         from .os9 import OS
         from .console9 import Console
         from .const9 import newline, newline2
         if OS.windows:
-            path = Console.get_output(r"echo %userprofile%")
+            path = Console.get_output("echo %userprofile%", pureshell=True)
             path = path.rstrip(newline2)
         else:
             from .str9 import Str
-            path = Str.nl(Console.get_output("echo $HOME")[0])
+            path = Str.nl(Console.get_output("echo $HOME", pureshell=True))
             path = path.rstrip(newline)
         return path
 
     @staticmethod
     def get_parent(path):
         """Return parent folder of given path
-        :param path: string (with path)
-        :return: string (parent path to input one)
+        <br>`param path` string (with path)
+        <br>`return` string (parent path to input one)
         """
         import os
         return os.path.split(path)[0]
@@ -105,21 +105,22 @@ class Path:
     def set_working(path, quiet=True):
         """Changes current working directory. If quiet is disabled, prints
         directory.
-        :param path: string, path to new working directory
-        :param quiet: boolean, suppress print to console
-        :return: None
+        <br>`param path` string, path to new working directory
+        <br>`param quiet` boolean, suppress print to console
+        <br>`return` None
         """
         import os
         os.chdir(path)
         if not quiet:
             from .print9 import Print
             Print.debug("os.getcwd()  # current directory is", os.getcwd())
-
-    def add_before_extension(self, filepath, infix):
+    
+    @staticmethod
+    def add_before_extension(filepath, infix):
         """
-        :param path:
-        :param infix:
-        :return:
+        <br>`param path`
+        <br>`param infix`
+        <br>`return`
         """
         from .file9 import File
         extension = File.get_extension(filepath)

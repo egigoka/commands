@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.5.3" />
+<title>commands.os9 API documentation</title>
+<meta name="description" content="Internal module to check some environment properties" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.name small{font-weight:normal}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase;cursor:pointer}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title"><code>commands.os9</code> module</h1>
+</header>
+<section id="section-intro">
+<p>Internal module to check some environment properties</p>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">#! python3
+# -*- coding: utf-8 -*-
+&#34;&#34;&#34;Internal module to check some environment properties
+&#34;&#34;&#34;
+import sys  # static module
+import platform  # static module
+__version__ = &#34;2.3.0&#34;
+
+
+class OS:  # pylint: disable=too-few-public-methods
+    &#34;&#34;&#34;Class with some environment properties
+    &#34;&#34;&#34;
+    sys_version_info = sys.version_info
+    is_python3 = sys.version_info &gt;= (3, 0)
+    python_version_major = sys.version_info.major # int of major python version
+    python_commandline_version = &#34;&#34;
+    if is_python3:
+        python_commandline_version = &#34;3&#34; # string of addable &#34;3&#34; to commandline apps if python is 3rd version
+
+    nt_family = False
+    unix_family = False
+
+    windows = False
+    macos = False
+    linux = False
+
+    windows_version = None  # only on Windows, integer of major version of Windows
+
+    display = None  # didn&#39;t work yet
+    cyrillic_support = None  # boolean variable of cyrrilic output support
+
+    if sys.platform == &#34;linux&#34; or sys.platform == &#34;linux2&#34;:
+        linux = True
+    elif sys.platform == &#34;win32&#34; or sys.platform == &#34;cygwin&#34;:
+        windows = True
+        windows_version = sys.getwindowsversion().major
+    elif sys.platform == &#34;darwin&#34;:
+        macos = True
+
+    if platform.python_implementation == &#34;PyPy&#34;:
+        python_implementation = &#34;pypy&#34;
+    else:
+        python_implementation = &#34;cpython&#34;
+
+    if windows:
+        nt_family = True
+    elif macos or linux:
+        unix_family = True
+
+    try:
+        if linux:
+            from Xlib.display import Display
+        display = True
+    except ImportError:
+        display = False
+        print(&#34;Your system haven&#39;t display -_-&#34;)
+
+    @staticmethod
+    def running_in_repl():
+        try:
+            sys.ps1  # pylint: disable = pointless-statement, no-member
+            sys.ps2  # pylint: disable = pointless-statement, no-member
+            return True
+        except AttributeError:
+            return False
+
+    try:
+        #if windows:
+        #cyr_line = &#34;йцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ&#34;
+        cyr_line = &#34;йЙ&#34;
+        if windows and sys.version_info &lt; (3, 6):
+            try:
+                import win_unicode_console  # pylint: disable=import-error
+                win_unicode_console.enable()
+            except:  # pylint: disable=bare-except
+                pass
+        for cyr_symbol in cyr_line:
+            print(cyr_symbol * 2, end=&#34;\r&#34;)
+        print(&#34;  &#34;, end=&#34;\r&#34;)
+        cyrillic_support = True
+    except UnicodeEncodeError as err:
+        cyrillic_support = False</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="commands.os9.OS"><code class="flex name class">
+<span>class <span class="ident">OS</span></span>
+</code></dt>
+<dd>
+<section class="desc"><p>Class with some environment properties</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">class OS:  # pylint: disable=too-few-public-methods
+    &#34;&#34;&#34;Class with some environment properties
+    &#34;&#34;&#34;
+    sys_version_info = sys.version_info
+    is_python3 = sys.version_info &gt;= (3, 0)
+    python_version_major = sys.version_info.major # int of major python version
+    python_commandline_version = &#34;&#34;
+    if is_python3:
+        python_commandline_version = &#34;3&#34; # string of addable &#34;3&#34; to commandline apps if python is 3rd version
+
+    nt_family = False
+    unix_family = False
+
+    windows = False
+    macos = False
+    linux = False
+
+    windows_version = None  # only on Windows, integer of major version of Windows
+
+    display = None  # didn&#39;t work yet
+    cyrillic_support = None  # boolean variable of cyrrilic output support
+
+    if sys.platform == &#34;linux&#34; or sys.platform == &#34;linux2&#34;:
+        linux = True
+    elif sys.platform == &#34;win32&#34; or sys.platform == &#34;cygwin&#34;:
+        windows = True
+        windows_version = sys.getwindowsversion().major
+    elif sys.platform == &#34;darwin&#34;:
+        macos = True
+
+    if platform.python_implementation == &#34;PyPy&#34;:
+        python_implementation = &#34;pypy&#34;
+    else:
+        python_implementation = &#34;cpython&#34;
+
+    if windows:
+        nt_family = True
+    elif macos or linux:
+        unix_family = True
+
+    try:
+        if linux:
+            from Xlib.display import Display
+        display = True
+    except ImportError:
+        display = False
+        print(&#34;Your system haven&#39;t display -_-&#34;)
+
+    @staticmethod
+    def running_in_repl():
+        try:
+            sys.ps1  # pylint: disable = pointless-statement, no-member
+            sys.ps2  # pylint: disable = pointless-statement, no-member
+            return True
+        except AttributeError:
+            return False
+
+    try:
+        #if windows:
+        #cyr_line = &#34;йцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ&#34;
+        cyr_line = &#34;йЙ&#34;
+        if windows and sys.version_info &lt; (3, 6):
+            try:
+                import win_unicode_console  # pylint: disable=import-error
+                win_unicode_console.enable()
+            except:  # pylint: disable=bare-except
+                pass
+        for cyr_symbol in cyr_line:
+            print(cyr_symbol * 2, end=&#34;\r&#34;)
+        print(&#34;  &#34;, end=&#34;\r&#34;)
+        cyrillic_support = True
+    except UnicodeEncodeError as err:
+        cyrillic_support = False</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="commands.os9.OS.cyr_line"><code class="name">var <span class="ident">cyr_line</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="commands.os9.OS.cyr_symbol"><code class="name">var <span class="ident">cyr_symbol</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="commands.os9.OS.cyrillic_support"><code class="name">var <span class="ident">cyrillic_support</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="commands.os9.OS.display"><code class="name">var <span class="ident">display</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="commands.os9.OS.is_python3"><code class="name">var <span class="ident">is_python3</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="commands.os9.OS.linux"><code class="name">var <span class="ident">linux</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="commands.os9.OS.macos"><code class="name">var <span class="ident">macos</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="commands.os9.OS.nt_family"><code class="name">var <span class="ident">nt_family</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="commands.os9.OS.python_commandline_version"><code class="name">var <span class="ident">python_commandline_version</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="commands.os9.OS.python_implementation"><code class="name">var <span class="ident">python_implementation</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="commands.os9.OS.python_version_major"><code class="name">var <span class="ident">python_version_major</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="commands.os9.OS.sys_version_info"><code class="name">var <span class="ident">sys_version_info</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="commands.os9.OS.unix_family"><code class="name">var <span class="ident">unix_family</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="commands.os9.OS.windows"><code class="name">var <span class="ident">windows</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="commands.os9.OS.windows_version"><code class="name">var <span class="ident">windows_version</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="commands.os9.OS.running_in_repl"><code class="name flex">
+<span>def <span class="ident">running_in_repl</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">@staticmethod
+def running_in_repl():
+    try:
+        sys.ps1  # pylint: disable = pointless-statement, no-member
+        sys.ps2  # pylint: disable = pointless-statement, no-member
+        return True
+    except AttributeError:
+        return False</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="commands" href="index.html">commands</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="commands.os9.OS" href="#commands.os9.OS">OS</a></code></h4>
+<ul class="">
+<li><code><a title="commands.os9.OS.cyr_line" href="#commands.os9.OS.cyr_line">cyr_line</a></code></li>
+<li><code><a title="commands.os9.OS.cyr_symbol" href="#commands.os9.OS.cyr_symbol">cyr_symbol</a></code></li>
+<li><code><a title="commands.os9.OS.cyrillic_support" href="#commands.os9.OS.cyrillic_support">cyrillic_support</a></code></li>
+<li><code><a title="commands.os9.OS.display" href="#commands.os9.OS.display">display</a></code></li>
+<li><code><a title="commands.os9.OS.is_python3" href="#commands.os9.OS.is_python3">is_python3</a></code></li>
+<li><code><a title="commands.os9.OS.linux" href="#commands.os9.OS.linux">linux</a></code></li>
+<li><code><a title="commands.os9.OS.macos" href="#commands.os9.OS.macos">macos</a></code></li>
+<li><code><a title="commands.os9.OS.nt_family" href="#commands.os9.OS.nt_family">nt_family</a></code></li>
+<li><code><a title="commands.os9.OS.python_commandline_version" href="#commands.os9.OS.python_commandline_version">python_commandline_version</a></code></li>
+<li><code><a title="commands.os9.OS.python_implementation" href="#commands.os9.OS.python_implementation">python_implementation</a></code></li>
+<li><code><a title="commands.os9.OS.python_version_major" href="#commands.os9.OS.python_version_major">python_version_major</a></code></li>
+<li><code><a title="commands.os9.OS.running_in_repl" href="#commands.os9.OS.running_in_repl">running_in_repl</a></code></li>
+<li><code><a title="commands.os9.OS.sys_version_info" href="#commands.os9.OS.sys_version_info">sys_version_info</a></code></li>
+<li><code><a title="commands.os9.OS.unix_family" href="#commands.os9.OS.unix_family">unix_family</a></code></li>
+<li><code><a title="commands.os9.OS.windows" href="#commands.os9.OS.windows">windows</a></code></li>
+<li><code><a title="commands.os9.OS.windows_version" href="#commands.os9.OS.windows_version">windows_version</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.5.3</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

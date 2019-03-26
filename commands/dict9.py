@@ -11,9 +11,9 @@ class Dict:
     @staticmethod
     def iterable(dict_, copy_dict=False):
         """Return iterable dict
-        :param dict_: input dict
-        :param copy_dict: bool, if True, return iterable copy of dict
-        :return: iterable dict
+        <br>`param dict_` input dict
+        <br>`param copy_dict` bool, if True, return iterable copy of dict
+        <br>`return` iterable dict
         """
         if not isinstance(dict_, dict):
             raise TypeError("There must be dict in input")
@@ -24,9 +24,9 @@ class Dict:
     @staticmethod
     def sorted_by_key(dict_, case_insensitive=False):
         """Return sorted dict
-        :param dict_: input dict
-        :param case_insensitive: sort dict insensitive
-        :return:
+        <br>`param dict_` input dict
+        <br>`param case_insensitive` sort dict insensitive
+        <br>`return`
         """
         if case_insensitive:
             output = {}

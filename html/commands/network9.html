@@ -1,0 +1,1129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.5.3" />
+<title>commands.network9 API documentation</title>
+<meta name="description" content="Internal module with functions to work with network" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.name small{font-weight:normal}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase;cursor:pointer}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title"><code>commands.network9</code> module</h1>
+</header>
+<section id="section-intro">
+<p>Internal module with functions to work with network</p>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">#! python3
+# -*- coding: utf-8 -*-
+&#34;&#34;&#34;Internal module with functions to work with network
+&#34;&#34;&#34;
+__version__ = &#34;0.5.3&#34;
+
+
+class Network:
+    &#34;&#34;&#34;Class with functions to work with network
+    &#34;&#34;&#34;
+    @staticmethod
+    def get_domain_of_url(url):
+        &#34;&#34;&#34;
+        &lt;br&gt;`param url` string, URL
+        &lt;br&gt;`return` string, URL domain
+        &#34;&#34;&#34;
+        from .str9 import Str
+        if &#34;/&#34; in url:
+            try:
+                url_output = Str.substring(url, &#34;://&#34;, &#34;/&#34;)
+            except KeyError:
+                try:
+                    url_output = Str.substring(url, &#34;://&#34;)
+                except KeyError:
+                    try:
+                        url_output = Str.substring(url, None, &#34;/&#34;)
+                    except KeyError:
+                        url_output = url
+        else:
+            url_output = url
+        return url_output
+
+    @staticmethod
+    def dns_lookup(domain):
+        &#34;&#34;&#34;Resolve IP from domain name with socket.gethostbyname
+        &lt;br&gt;`param domain` string, domain name
+        &lt;br&gt;`return` string, IP
+        &#34;&#34;&#34;
+        import socket
+        try:
+            return socket.gethostbyname(domain)  # I don&#39;t how it work todo check code of &#39;socket&#39;
+        except socket.gaierror:
+            return &#34;not found&#34;
+
+    @classmethod
+    def ping(cls,
+             domain=&#34;127.0.0.1&#34;, count=1, quiet=False, logfile=None, timeout=10000, return_ip=False):
+        &#34;&#34;&#34;Wrapper under default ping command
+        &lt;br&gt;`param domain` string, domain or IP
+        &lt;br&gt;`param count` int, count of attempts
+        &lt;br&gt;`param quiet` boolean, suppress print to console
+        &lt;br&gt;`param logfile` string, path to log file
+        &lt;br&gt;`param timeout` int, timeout in milliseconds
+        &lt;br&gt;`param return_ip` boolean, return string with IP
+        &lt;br&gt;`return` boolean of availability of domain, or list of boolean domain availability, string ip and full output
+                 from ping command
+        &#34;&#34;&#34;
+        # todo properly work with exception
+        from .os9 import OS
+        from .console9 import Console
+        domain = cls.get_domain_of_url(domain)
+        backup_ping_output = &#34;&#34;
+        if not quiet:
+            from .print9 import Print
+            Print.rewrite(&#34;Pinging&#34;, domain, count, &#34;times...&#34;)
+            up_message = domain + &#34; is up!&#34;
+            down_message = domain + &#34; is down.&#34;
+        try:
+            if OS.windows:
+                count_arg = &#34;n&#34;
+                timeout_arg = &#34;w&#34;
+            if OS.unix_family:
+                count_arg = &#34;c&#34;
+                timeout_arg = &#34;W&#34;
+            if OS.linux:
+                timeout = int(timeout / 1000)
+            command = &#34;ping &#34; + domain + &#34; -&#34; + count_arg + &#34; &#34; + str(count) + \
+                      &#34; -&#34; + timeout_arg + &#34; &#34; + str(timeout)
+            ping_output = Console.get_output(command)
+
+        except KeyboardInterrupt:
+            import sys
+            sys.exit()
+        except:  # pylint: disable=bare-except
+            #  any exception is not good ping
+            try:
+                backup_ping_output = ping_output
+            except UnboundLocalError:
+                backup_ping_output = &#34;&#34;
+            ping_output = &#34;&#34;
+        uplink = ping_output.lower().count(&#34;ttl&#34;) &gt;= count
+
+        if logfile or (not quiet):
+            import termcolor
+        if logfile:
+            raise NotImplementedError()
+        #    from .log9 import plog
+        #    if uplink:
+        #        plog(logfile, domain + &#34; is up!&#34;, quiet=True)
+        #        termcolor.cprint(up_message, &#34;white&#34;, &#34;on_green&#34;)
+        #    else:
+        #        plog(logfile, down_message, quiet=True)
+        #        termcolor.cprint(down_message, &#34;white&#34;, &#34;on_red&#34;)
+
+        elif not quiet:
+            Print.rewrite(&#34;&#34;)
+            if uplink:
+                termcolor.cprint(up_message, &#34;white&#34;, &#34;on_green&#34;)
+            else:
+                termcolor.cprint(down_message, &#34;white&#34;, &#34;on_red&#34;)
+        ip = None  # pylint: disable=invalid-name
+        if return_ip:
+            from .str9 import Str
+            try:
+                for line in Str.nl(ping_output + backup_ping_output):
+                    if len(Str.get_integers(line, float_support=False)) &gt;= 4:
+                        octaves = Str.get_integers(line, float_support=False)  # todo change to regex!!!!!!!!!
+                        # pylint: disable=invalid-name
+                        ip = str(octaves[0]) + &#34;.&#34; + str(octaves[1]) + &#34;.&#34; + str(octaves[2]) + &#34;.&#34; + str(octaves[3])
+                        break
+            except TypeError:
+                pass
+            if not ip:
+                ip = cls.dns_lookup(domain)  # pylint: disable=invalid-name
+            return uplink, ip, ping_output
+        return uplink
+
+    @staticmethod
+    def get_fqdn(ip=None):
+        import socket
+        if ip:
+            return socket.getfqdn(ip)
+        return socket.getfqdn()
+
+    @staticmethod
+    def get_netbios(ip):
+        import socket
+        if ip:
+            socket.gethostbyaddr(ip)
+        return socket.gethostname()
+
+    @staticmethod
+    def download_file(url, out=None, quiet=None):
+        import os
+        from .file9 import File
+        from .path9 import Path
+        if not out:
+            out = os.path.split(url)[1]
+        import urllib.request
+        response = urllib.request.urlopen(url)
+        data = response.read()  # a `bytes` object
+        File.write(out, data, mode=&#34;wb&#34;)
+        return Path.full(out)
+
+    @staticmethod
+    def get_ip(fast=True, quiet=True):
+        # much code by phoemur@gmail.com (ipgetter)
+        import re
+        import random
+        import ssl
+
+        from sys import version_info
+
+        PY3K = version_info &gt;= (3, 0)
+
+        if PY3K:
+            import urllib.request as urllib
+            import http.cookiejar as cjar
+        else:
+            import urllib2 as urllib
+            import cookielib as cjar
+
+        __version__ = &#34;0.7&#34;
+        __version__ = &#34;0.8&#34;  # updated by egigoka@gmail.com
+
+        class IPgetter(object):
+
+            &#39;&#39;&#39;
+            This class is designed to fetch your external IP address from the internet.
+            It is used mostly when behind a NAT.
+            It picks your IP randomly from a serverlist to minimize request overhead
+            on a single server
+            &#39;&#39;&#39;
+
+            def __init__(self):
+                self.server_list = [&#39;http://ip.dnsexit.com&#39;,
+                                    # &#39;http://ifconfig.me/ip&#39;,
+                                    # &#39;http://ipecho.net/plain&#39;,
+                                    # &#39;http://checkip.dyndns.org/plain&#39;,
+                                    # &#39;http://websiteipaddress.com/WhatIsMyIp&#39;,
+                                    &#39;http://getmyipaddress.org/&#39;,
+                                    &#39;http://www.my-ip-address.net/&#39;,
+                                    &#39;http://myexternalip.com/raw&#39;,
+                                    &#39;http://www.canyouseeme.org/&#39;,
+                                    &#39;http://www.trackip.net/&#39;,
+                                    &#39;http://icanhazip.com/&#39;,
+                                    &#39;http://www.iplocation.net/&#39;,
+                                    &#39;http://www.ipchicken.com/&#39;,
+                                    &#39;http://whatsmyip.net/&#39;,
+                                    &#39;http://www.ip-adress.com/&#39;,
+                                    # &#39;http://checkmyip.com/&#39;,
+                                    &#39;http://www.tracemyip.org/&#39;,
+                                    &#39;http://www.lawrencegoetz.com/programs/ipinfo/&#39;,
+                                    &#39;http://www.findmyip.co/&#39;,
+                                    # &#39;http://ip-lookup.net/&#39;,
+                                    # &#39;http://www.mon-ip.com/en/my-ip/&#39;,
+                                    &#39;http://ipgoat.com/&#39;,
+                                    &#39;http://www.myipnumber.com/my-ip-address.asp&#39;,
+                                    # &#39;http://formyip.com/&#39;,
+                                    &#39;https://check.torproject.org/&#39;,
+                                    # &#39;http://www.displaymyip.com/&#39;,
+                                    # &#39;http://www.bobborst.com/tools/whatsmyip/&#39;,
+                                    &#39;http://www.geoiptool.com/&#39;,
+                                    &#39;https://www.whatsmydns.net/whats-my-ip-address.html&#39;,
+                                    &#39;https://www.privateinternetaccess.com/pages/whats-my-ip/&#39;,
+                                    &#39;http://checkip.dyndns.com/&#39;,
+                                    &#39;http://www.ip-adress.eu/&#39;,
+                                    &#39;http://www.infosniper.net/&#39;,
+                                    &#39;https://wtfismyip.com/text&#39;,
+                                    # &#39;http://ipinfo.io/&#39;,
+                                    &#39;http://httpbin.org/ip&#39;,
+                                    &#39;https://diagnostic.opendns.com/myip&#39;,
+                                    &#39;http://checkip.amazonaws.com&#39;,
+                                    &#39;https://api.ipify.org&#39;,
+                                    &#39;https://v4.ident.me&#39;]
+
+            def get_external_ip(self):
+                &#39;&#39;&#39;
+                This function gets your IP from a random server
+                &#39;&#39;&#39;
+
+                myip = &#39;&#39;
+                for i in range(7):
+                    myip = self.fetch(random.choice(self.server_list))
+                    if myip != &#39;&#39;:
+                        return myip
+                    else:
+                        continue
+                return &#39;&#39;
+
+            def fetch(self, server):
+                &#39;&#39;&#39;
+                This function gets your IP from a specific server.
+                &#39;&#39;&#39;
+                url = None
+                cj = cjar.CookieJar()
+                ctx = ssl.create_default_context()
+                ctx.check_hostname = False
+                ctx.verify_mode = ssl.CERT_NONE
+                opener = urllib.build_opener(urllib.HTTPCookieProcessor(cj), urllib.HTTPSHandler(context=ctx))
+                opener.addheaders = [
+                    (&#39;User-agent&#39;, &#34;Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0&#34;),
+                    (&#39;Accept&#39;, &#34;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#34;),
+                    (&#39;Accept-Language&#39;, &#34;en-US,en;q=0.5&#34;)]
+
+                try:
+                    url = opener.open(server, timeout=4)
+                    content = url.read()
+
+                    # Didn&#39;t want to import chardet. Prefered to stick to stdlib
+                    if PY3K:
+                        try:
+                            content = content.decode(&#39;UTF-8&#39;)
+                        except UnicodeDecodeError:
+                            content = content.decode(&#39;ISO-8859-1&#39;)
+
+                    m = re.search(
+                        &#39;(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)&#39;,
+                        content)
+                    myip = m.group(0)
+                    return myip if len(myip) &gt; 0 else &#39;&#39;
+                except Exception:
+                    return &#39;&#39;
+                finally:
+                    if url:
+                        url.close()
+
+            def test(self, quiet=True):
+                &#34;&#34;&#34;
+                This functions tests the consistency of the servers
+                on the list when retrieving your IP.
+                All results should be the same.
+                &#34;&#34;&#34;
+
+                resultdict = {}
+                for server in self.server_list:
+                    resultdict.update(**{server: self.fetch(server)})
+
+                if not quiet:
+                    ips = sorted(resultdict.values())
+                    ips_set = set(ips)
+                    print(&#39;\nNumber of servers: {}&#39;.format(len(self.server_list)))
+                    print(&#34;IP&#39;s :&#34;)
+                    for ip, ocorrencia in zip(ips_set, map(lambda x: ips.count(x), ips_set)):
+                        print(&#39;{0} = {1} ocurrenc{2}&#39;.format(ip if len(ip) &gt; 0 else &#39;broken server&#39;, ocorrencia,
+                                                            &#39;y&#39; if ocorrencia == 1 else &#39;ies&#39;))
+                    print(&#39;\n&#39;)
+                    print(resultdict)
+                return resultdict
+        # end code by phoemur@gmail.com
+
+        ipgetter = IPgetter()
+
+        if not fast:
+            if not quiet:
+                from .print9 import Print
+                Print.rewrite(&#34;Getting IP...&#34;)
+            from .dict9 import Dict
+            tempdict = {}
+            for server, ip in Dict.iterable(ipgetter.test()):
+                try:
+                    tempdict[ip] += 1
+                except KeyError:
+                    tempdict[ip] = 1
+
+            most_frequent_ip = 0
+            most_frequent_ip_cnt = 0
+            for ip, cnt in Dict.iterable(tempdict):
+                if cnt &gt; most_frequent_ip_cnt:
+                    most_frequent_ip = ip
+
+            if not quiet:
+                Print.rewrite()
+
+            if most_frequent_ip:  # do not return empty ip
+                return most_frequent_ip
+            else:
+                raise LookupError(&#34;IP not found&#34;)
+        else:
+            return ipgetter.get_external_ip()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="commands.network9.Network"><code class="flex name class">
+<span>class <span class="ident">Network</span></span>
+</code></dt>
+<dd>
+<section class="desc"><p>Class with functions to work with network</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">class Network:
+    &#34;&#34;&#34;Class with functions to work with network
+    &#34;&#34;&#34;
+    @staticmethod
+    def get_domain_of_url(url):
+        &#34;&#34;&#34;
+        &lt;br&gt;`param url` string, URL
+        &lt;br&gt;`return` string, URL domain
+        &#34;&#34;&#34;
+        from .str9 import Str
+        if &#34;/&#34; in url:
+            try:
+                url_output = Str.substring(url, &#34;://&#34;, &#34;/&#34;)
+            except KeyError:
+                try:
+                    url_output = Str.substring(url, &#34;://&#34;)
+                except KeyError:
+                    try:
+                        url_output = Str.substring(url, None, &#34;/&#34;)
+                    except KeyError:
+                        url_output = url
+        else:
+            url_output = url
+        return url_output
+
+    @staticmethod
+    def dns_lookup(domain):
+        &#34;&#34;&#34;Resolve IP from domain name with socket.gethostbyname
+        &lt;br&gt;`param domain` string, domain name
+        &lt;br&gt;`return` string, IP
+        &#34;&#34;&#34;
+        import socket
+        try:
+            return socket.gethostbyname(domain)  # I don&#39;t how it work todo check code of &#39;socket&#39;
+        except socket.gaierror:
+            return &#34;not found&#34;
+
+    @classmethod
+    def ping(cls,
+             domain=&#34;127.0.0.1&#34;, count=1, quiet=False, logfile=None, timeout=10000, return_ip=False):
+        &#34;&#34;&#34;Wrapper under default ping command
+        &lt;br&gt;`param domain` string, domain or IP
+        &lt;br&gt;`param count` int, count of attempts
+        &lt;br&gt;`param quiet` boolean, suppress print to console
+        &lt;br&gt;`param logfile` string, path to log file
+        &lt;br&gt;`param timeout` int, timeout in milliseconds
+        &lt;br&gt;`param return_ip` boolean, return string with IP
+        &lt;br&gt;`return` boolean of availability of domain, or list of boolean domain availability, string ip and full output
+                 from ping command
+        &#34;&#34;&#34;
+        # todo properly work with exception
+        from .os9 import OS
+        from .console9 import Console
+        domain = cls.get_domain_of_url(domain)
+        backup_ping_output = &#34;&#34;
+        if not quiet:
+            from .print9 import Print
+            Print.rewrite(&#34;Pinging&#34;, domain, count, &#34;times...&#34;)
+            up_message = domain + &#34; is up!&#34;
+            down_message = domain + &#34; is down.&#34;
+        try:
+            if OS.windows:
+                count_arg = &#34;n&#34;
+                timeout_arg = &#34;w&#34;
+            if OS.unix_family:
+                count_arg = &#34;c&#34;
+                timeout_arg = &#34;W&#34;
+            if OS.linux:
+                timeout = int(timeout / 1000)
+            command = &#34;ping &#34; + domain + &#34; -&#34; + count_arg + &#34; &#34; + str(count) + \
+                      &#34; -&#34; + timeout_arg + &#34; &#34; + str(timeout)
+            ping_output = Console.get_output(command)
+
+        except KeyboardInterrupt:
+            import sys
+            sys.exit()
+        except:  # pylint: disable=bare-except
+            #  any exception is not good ping
+            try:
+                backup_ping_output = ping_output
+            except UnboundLocalError:
+                backup_ping_output = &#34;&#34;
+            ping_output = &#34;&#34;
+        uplink = ping_output.lower().count(&#34;ttl&#34;) &gt;= count
+
+        if logfile or (not quiet):
+            import termcolor
+        if logfile:
+            raise NotImplementedError()
+        #    from .log9 import plog
+        #    if uplink:
+        #        plog(logfile, domain + &#34; is up!&#34;, quiet=True)
+        #        termcolor.cprint(up_message, &#34;white&#34;, &#34;on_green&#34;)
+        #    else:
+        #        plog(logfile, down_message, quiet=True)
+        #        termcolor.cprint(down_message, &#34;white&#34;, &#34;on_red&#34;)
+
+        elif not quiet:
+            Print.rewrite(&#34;&#34;)
+            if uplink:
+                termcolor.cprint(up_message, &#34;white&#34;, &#34;on_green&#34;)
+            else:
+                termcolor.cprint(down_message, &#34;white&#34;, &#34;on_red&#34;)
+        ip = None  # pylint: disable=invalid-name
+        if return_ip:
+            from .str9 import Str
+            try:
+                for line in Str.nl(ping_output + backup_ping_output):
+                    if len(Str.get_integers(line, float_support=False)) &gt;= 4:
+                        octaves = Str.get_integers(line, float_support=False)  # todo change to regex!!!!!!!!!
+                        # pylint: disable=invalid-name
+                        ip = str(octaves[0]) + &#34;.&#34; + str(octaves[1]) + &#34;.&#34; + str(octaves[2]) + &#34;.&#34; + str(octaves[3])
+                        break
+            except TypeError:
+                pass
+            if not ip:
+                ip = cls.dns_lookup(domain)  # pylint: disable=invalid-name
+            return uplink, ip, ping_output
+        return uplink
+
+    @staticmethod
+    def get_fqdn(ip=None):
+        import socket
+        if ip:
+            return socket.getfqdn(ip)
+        return socket.getfqdn()
+
+    @staticmethod
+    def get_netbios(ip):
+        import socket
+        if ip:
+            socket.gethostbyaddr(ip)
+        return socket.gethostname()
+
+    @staticmethod
+    def download_file(url, out=None, quiet=None):
+        import os
+        from .file9 import File
+        from .path9 import Path
+        if not out:
+            out = os.path.split(url)[1]
+        import urllib.request
+        response = urllib.request.urlopen(url)
+        data = response.read()  # a `bytes` object
+        File.write(out, data, mode=&#34;wb&#34;)
+        return Path.full(out)
+
+    @staticmethod
+    def get_ip(fast=True, quiet=True):
+        # much code by phoemur@gmail.com (ipgetter)
+        import re
+        import random
+        import ssl
+
+        from sys import version_info
+
+        PY3K = version_info &gt;= (3, 0)
+
+        if PY3K:
+            import urllib.request as urllib
+            import http.cookiejar as cjar
+        else:
+            import urllib2 as urllib
+            import cookielib as cjar
+
+        __version__ = &#34;0.7&#34;
+        __version__ = &#34;0.8&#34;  # updated by egigoka@gmail.com
+
+        class IPgetter(object):
+
+            &#39;&#39;&#39;
+            This class is designed to fetch your external IP address from the internet.
+            It is used mostly when behind a NAT.
+            It picks your IP randomly from a serverlist to minimize request overhead
+            on a single server
+            &#39;&#39;&#39;
+
+            def __init__(self):
+                self.server_list = [&#39;http://ip.dnsexit.com&#39;,
+                                    # &#39;http://ifconfig.me/ip&#39;,
+                                    # &#39;http://ipecho.net/plain&#39;,
+                                    # &#39;http://checkip.dyndns.org/plain&#39;,
+                                    # &#39;http://websiteipaddress.com/WhatIsMyIp&#39;,
+                                    &#39;http://getmyipaddress.org/&#39;,
+                                    &#39;http://www.my-ip-address.net/&#39;,
+                                    &#39;http://myexternalip.com/raw&#39;,
+                                    &#39;http://www.canyouseeme.org/&#39;,
+                                    &#39;http://www.trackip.net/&#39;,
+                                    &#39;http://icanhazip.com/&#39;,
+                                    &#39;http://www.iplocation.net/&#39;,
+                                    &#39;http://www.ipchicken.com/&#39;,
+                                    &#39;http://whatsmyip.net/&#39;,
+                                    &#39;http://www.ip-adress.com/&#39;,
+                                    # &#39;http://checkmyip.com/&#39;,
+                                    &#39;http://www.tracemyip.org/&#39;,
+                                    &#39;http://www.lawrencegoetz.com/programs/ipinfo/&#39;,
+                                    &#39;http://www.findmyip.co/&#39;,
+                                    # &#39;http://ip-lookup.net/&#39;,
+                                    # &#39;http://www.mon-ip.com/en/my-ip/&#39;,
+                                    &#39;http://ipgoat.com/&#39;,
+                                    &#39;http://www.myipnumber.com/my-ip-address.asp&#39;,
+                                    # &#39;http://formyip.com/&#39;,
+                                    &#39;https://check.torproject.org/&#39;,
+                                    # &#39;http://www.displaymyip.com/&#39;,
+                                    # &#39;http://www.bobborst.com/tools/whatsmyip/&#39;,
+                                    &#39;http://www.geoiptool.com/&#39;,
+                                    &#39;https://www.whatsmydns.net/whats-my-ip-address.html&#39;,
+                                    &#39;https://www.privateinternetaccess.com/pages/whats-my-ip/&#39;,
+                                    &#39;http://checkip.dyndns.com/&#39;,
+                                    &#39;http://www.ip-adress.eu/&#39;,
+                                    &#39;http://www.infosniper.net/&#39;,
+                                    &#39;https://wtfismyip.com/text&#39;,
+                                    # &#39;http://ipinfo.io/&#39;,
+                                    &#39;http://httpbin.org/ip&#39;,
+                                    &#39;https://diagnostic.opendns.com/myip&#39;,
+                                    &#39;http://checkip.amazonaws.com&#39;,
+                                    &#39;https://api.ipify.org&#39;,
+                                    &#39;https://v4.ident.me&#39;]
+
+            def get_external_ip(self):
+                &#39;&#39;&#39;
+                This function gets your IP from a random server
+                &#39;&#39;&#39;
+
+                myip = &#39;&#39;
+                for i in range(7):
+                    myip = self.fetch(random.choice(self.server_list))
+                    if myip != &#39;&#39;:
+                        return myip
+                    else:
+                        continue
+                return &#39;&#39;
+
+            def fetch(self, server):
+                &#39;&#39;&#39;
+                This function gets your IP from a specific server.
+                &#39;&#39;&#39;
+                url = None
+                cj = cjar.CookieJar()
+                ctx = ssl.create_default_context()
+                ctx.check_hostname = False
+                ctx.verify_mode = ssl.CERT_NONE
+                opener = urllib.build_opener(urllib.HTTPCookieProcessor(cj), urllib.HTTPSHandler(context=ctx))
+                opener.addheaders = [
+                    (&#39;User-agent&#39;, &#34;Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0&#34;),
+                    (&#39;Accept&#39;, &#34;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#34;),
+                    (&#39;Accept-Language&#39;, &#34;en-US,en;q=0.5&#34;)]
+
+                try:
+                    url = opener.open(server, timeout=4)
+                    content = url.read()
+
+                    # Didn&#39;t want to import chardet. Prefered to stick to stdlib
+                    if PY3K:
+                        try:
+                            content = content.decode(&#39;UTF-8&#39;)
+                        except UnicodeDecodeError:
+                            content = content.decode(&#39;ISO-8859-1&#39;)
+
+                    m = re.search(
+                        &#39;(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)&#39;,
+                        content)
+                    myip = m.group(0)
+                    return myip if len(myip) &gt; 0 else &#39;&#39;
+                except Exception:
+                    return &#39;&#39;
+                finally:
+                    if url:
+                        url.close()
+
+            def test(self, quiet=True):
+                &#34;&#34;&#34;
+                This functions tests the consistency of the servers
+                on the list when retrieving your IP.
+                All results should be the same.
+                &#34;&#34;&#34;
+
+                resultdict = {}
+                for server in self.server_list:
+                    resultdict.update(**{server: self.fetch(server)})
+
+                if not quiet:
+                    ips = sorted(resultdict.values())
+                    ips_set = set(ips)
+                    print(&#39;\nNumber of servers: {}&#39;.format(len(self.server_list)))
+                    print(&#34;IP&#39;s :&#34;)
+                    for ip, ocorrencia in zip(ips_set, map(lambda x: ips.count(x), ips_set)):
+                        print(&#39;{0} = {1} ocurrenc{2}&#39;.format(ip if len(ip) &gt; 0 else &#39;broken server&#39;, ocorrencia,
+                                                            &#39;y&#39; if ocorrencia == 1 else &#39;ies&#39;))
+                    print(&#39;\n&#39;)
+                    print(resultdict)
+                return resultdict
+        # end code by phoemur@gmail.com
+
+        ipgetter = IPgetter()
+
+        if not fast:
+            if not quiet:
+                from .print9 import Print
+                Print.rewrite(&#34;Getting IP...&#34;)
+            from .dict9 import Dict
+            tempdict = {}
+            for server, ip in Dict.iterable(ipgetter.test()):
+                try:
+                    tempdict[ip] += 1
+                except KeyError:
+                    tempdict[ip] = 1
+
+            most_frequent_ip = 0
+            most_frequent_ip_cnt = 0
+            for ip, cnt in Dict.iterable(tempdict):
+                if cnt &gt; most_frequent_ip_cnt:
+                    most_frequent_ip = ip
+
+            if not quiet:
+                Print.rewrite()
+
+            if most_frequent_ip:  # do not return empty ip
+                return most_frequent_ip
+            else:
+                raise LookupError(&#34;IP not found&#34;)
+        else:
+            return ipgetter.get_external_ip()</code></pre>
+</details>
+<h3>Static methods</h3>
+<dl>
+<dt id="commands.network9.Network.dns_lookup"><code class="name flex">
+<span>def <span class="ident">dns_lookup</span></span>(<span>domain)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Resolve IP from domain name with socket.gethostbyname
+<br><code>param domain</code> string, domain name
+<br><code>return</code> string, IP</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">@staticmethod
+def dns_lookup(domain):
+    &#34;&#34;&#34;Resolve IP from domain name with socket.gethostbyname
+    &lt;br&gt;`param domain` string, domain name
+    &lt;br&gt;`return` string, IP
+    &#34;&#34;&#34;
+    import socket
+    try:
+        return socket.gethostbyname(domain)  # I don&#39;t how it work todo check code of &#39;socket&#39;
+    except socket.gaierror:
+        return &#34;not found&#34;</code></pre>
+</details>
+</dd>
+<dt id="commands.network9.Network.download_file"><code class="name flex">
+<span>def <span class="ident">download_file</span></span>(<span>url, out=None, quiet=None)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">@staticmethod
+def download_file(url, out=None, quiet=None):
+    import os
+    from .file9 import File
+    from .path9 import Path
+    if not out:
+        out = os.path.split(url)[1]
+    import urllib.request
+    response = urllib.request.urlopen(url)
+    data = response.read()  # a `bytes` object
+    File.write(out, data, mode=&#34;wb&#34;)
+    return Path.full(out)</code></pre>
+</details>
+</dd>
+<dt id="commands.network9.Network.get_domain_of_url"><code class="name flex">
+<span>def <span class="ident">get_domain_of_url</span></span>(<span>url)</span>
+</code></dt>
+<dd>
+<section class="desc"><p><br><code>param url</code> string, URL
+<br><code>return</code> string, URL domain</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">@staticmethod
+def get_domain_of_url(url):
+    &#34;&#34;&#34;
+    &lt;br&gt;`param url` string, URL
+    &lt;br&gt;`return` string, URL domain
+    &#34;&#34;&#34;
+    from .str9 import Str
+    if &#34;/&#34; in url:
+        try:
+            url_output = Str.substring(url, &#34;://&#34;, &#34;/&#34;)
+        except KeyError:
+            try:
+                url_output = Str.substring(url, &#34;://&#34;)
+            except KeyError:
+                try:
+                    url_output = Str.substring(url, None, &#34;/&#34;)
+                except KeyError:
+                    url_output = url
+    else:
+        url_output = url
+    return url_output</code></pre>
+</details>
+</dd>
+<dt id="commands.network9.Network.get_fqdn"><code class="name flex">
+<span>def <span class="ident">get_fqdn</span></span>(<span>ip=None)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">@staticmethod
+def get_fqdn(ip=None):
+    import socket
+    if ip:
+        return socket.getfqdn(ip)
+    return socket.getfqdn()</code></pre>
+</details>
+</dd>
+<dt id="commands.network9.Network.get_ip"><code class="name flex">
+<span>def <span class="ident">get_ip</span></span>(<span>fast=True, quiet=True)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">@staticmethod
+def get_ip(fast=True, quiet=True):
+    # much code by phoemur@gmail.com (ipgetter)
+    import re
+    import random
+    import ssl
+
+    from sys import version_info
+
+    PY3K = version_info &gt;= (3, 0)
+
+    if PY3K:
+        import urllib.request as urllib
+        import http.cookiejar as cjar
+    else:
+        import urllib2 as urllib
+        import cookielib as cjar
+
+    __version__ = &#34;0.7&#34;
+    __version__ = &#34;0.8&#34;  # updated by egigoka@gmail.com
+
+    class IPgetter(object):
+
+        &#39;&#39;&#39;
+        This class is designed to fetch your external IP address from the internet.
+        It is used mostly when behind a NAT.
+        It picks your IP randomly from a serverlist to minimize request overhead
+        on a single server
+        &#39;&#39;&#39;
+
+        def __init__(self):
+            self.server_list = [&#39;http://ip.dnsexit.com&#39;,
+                                # &#39;http://ifconfig.me/ip&#39;,
+                                # &#39;http://ipecho.net/plain&#39;,
+                                # &#39;http://checkip.dyndns.org/plain&#39;,
+                                # &#39;http://websiteipaddress.com/WhatIsMyIp&#39;,
+                                &#39;http://getmyipaddress.org/&#39;,
+                                &#39;http://www.my-ip-address.net/&#39;,
+                                &#39;http://myexternalip.com/raw&#39;,
+                                &#39;http://www.canyouseeme.org/&#39;,
+                                &#39;http://www.trackip.net/&#39;,
+                                &#39;http://icanhazip.com/&#39;,
+                                &#39;http://www.iplocation.net/&#39;,
+                                &#39;http://www.ipchicken.com/&#39;,
+                                &#39;http://whatsmyip.net/&#39;,
+                                &#39;http://www.ip-adress.com/&#39;,
+                                # &#39;http://checkmyip.com/&#39;,
+                                &#39;http://www.tracemyip.org/&#39;,
+                                &#39;http://www.lawrencegoetz.com/programs/ipinfo/&#39;,
+                                &#39;http://www.findmyip.co/&#39;,
+                                # &#39;http://ip-lookup.net/&#39;,
+                                # &#39;http://www.mon-ip.com/en/my-ip/&#39;,
+                                &#39;http://ipgoat.com/&#39;,
+                                &#39;http://www.myipnumber.com/my-ip-address.asp&#39;,
+                                # &#39;http://formyip.com/&#39;,
+                                &#39;https://check.torproject.org/&#39;,
+                                # &#39;http://www.displaymyip.com/&#39;,
+                                # &#39;http://www.bobborst.com/tools/whatsmyip/&#39;,
+                                &#39;http://www.geoiptool.com/&#39;,
+                                &#39;https://www.whatsmydns.net/whats-my-ip-address.html&#39;,
+                                &#39;https://www.privateinternetaccess.com/pages/whats-my-ip/&#39;,
+                                &#39;http://checkip.dyndns.com/&#39;,
+                                &#39;http://www.ip-adress.eu/&#39;,
+                                &#39;http://www.infosniper.net/&#39;,
+                                &#39;https://wtfismyip.com/text&#39;,
+                                # &#39;http://ipinfo.io/&#39;,
+                                &#39;http://httpbin.org/ip&#39;,
+                                &#39;https://diagnostic.opendns.com/myip&#39;,
+                                &#39;http://checkip.amazonaws.com&#39;,
+                                &#39;https://api.ipify.org&#39;,
+                                &#39;https://v4.ident.me&#39;]
+
+        def get_external_ip(self):
+            &#39;&#39;&#39;
+            This function gets your IP from a random server
+            &#39;&#39;&#39;
+
+            myip = &#39;&#39;
+            for i in range(7):
+                myip = self.fetch(random.choice(self.server_list))
+                if myip != &#39;&#39;:
+                    return myip
+                else:
+                    continue
+            return &#39;&#39;
+
+        def fetch(self, server):
+            &#39;&#39;&#39;
+            This function gets your IP from a specific server.
+            &#39;&#39;&#39;
+            url = None
+            cj = cjar.CookieJar()
+            ctx = ssl.create_default_context()
+            ctx.check_hostname = False
+            ctx.verify_mode = ssl.CERT_NONE
+            opener = urllib.build_opener(urllib.HTTPCookieProcessor(cj), urllib.HTTPSHandler(context=ctx))
+            opener.addheaders = [
+                (&#39;User-agent&#39;, &#34;Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0&#34;),
+                (&#39;Accept&#39;, &#34;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#34;),
+                (&#39;Accept-Language&#39;, &#34;en-US,en;q=0.5&#34;)]
+
+            try:
+                url = opener.open(server, timeout=4)
+                content = url.read()
+
+                # Didn&#39;t want to import chardet. Prefered to stick to stdlib
+                if PY3K:
+                    try:
+                        content = content.decode(&#39;UTF-8&#39;)
+                    except UnicodeDecodeError:
+                        content = content.decode(&#39;ISO-8859-1&#39;)
+
+                m = re.search(
+                    &#39;(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)&#39;,
+                    content)
+                myip = m.group(0)
+                return myip if len(myip) &gt; 0 else &#39;&#39;
+            except Exception:
+                return &#39;&#39;
+            finally:
+                if url:
+                    url.close()
+
+        def test(self, quiet=True):
+            &#34;&#34;&#34;
+            This functions tests the consistency of the servers
+            on the list when retrieving your IP.
+            All results should be the same.
+            &#34;&#34;&#34;
+
+            resultdict = {}
+            for server in self.server_list:
+                resultdict.update(**{server: self.fetch(server)})
+
+            if not quiet:
+                ips = sorted(resultdict.values())
+                ips_set = set(ips)
+                print(&#39;\nNumber of servers: {}&#39;.format(len(self.server_list)))
+                print(&#34;IP&#39;s :&#34;)
+                for ip, ocorrencia in zip(ips_set, map(lambda x: ips.count(x), ips_set)):
+                    print(&#39;{0} = {1} ocurrenc{2}&#39;.format(ip if len(ip) &gt; 0 else &#39;broken server&#39;, ocorrencia,
+                                                        &#39;y&#39; if ocorrencia == 1 else &#39;ies&#39;))
+                print(&#39;\n&#39;)
+                print(resultdict)
+            return resultdict
+    # end code by phoemur@gmail.com
+
+    ipgetter = IPgetter()
+
+    if not fast:
+        if not quiet:
+            from .print9 import Print
+            Print.rewrite(&#34;Getting IP...&#34;)
+        from .dict9 import Dict
+        tempdict = {}
+        for server, ip in Dict.iterable(ipgetter.test()):
+            try:
+                tempdict[ip] += 1
+            except KeyError:
+                tempdict[ip] = 1
+
+        most_frequent_ip = 0
+        most_frequent_ip_cnt = 0
+        for ip, cnt in Dict.iterable(tempdict):
+            if cnt &gt; most_frequent_ip_cnt:
+                most_frequent_ip = ip
+
+        if not quiet:
+            Print.rewrite()
+
+        if most_frequent_ip:  # do not return empty ip
+            return most_frequent_ip
+        else:
+            raise LookupError(&#34;IP not found&#34;)
+    else:
+        return ipgetter.get_external_ip()</code></pre>
+</details>
+</dd>
+<dt id="commands.network9.Network.get_netbios"><code class="name flex">
+<span>def <span class="ident">get_netbios</span></span>(<span>ip)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">@staticmethod
+def get_netbios(ip):
+    import socket
+    if ip:
+        socket.gethostbyaddr(ip)
+    return socket.gethostname()</code></pre>
+</details>
+</dd>
+<dt id="commands.network9.Network.ping"><code class="name flex">
+<span>def <span class="ident">ping</span></span>(<span>cls, domain=&#39;127.0.0.1&#39;, count=1, quiet=False, logfile=None, timeout=10000, return_ip=False)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Wrapper under default ping command
+<br><code>param domain</code> string, domain or IP
+<br><code>param count</code> int, count of attempts
+<br><code>param quiet</code> boolean, suppress print to console
+<br><code>param logfile</code> string, path to log file
+<br><code>param timeout</code> int, timeout in milliseconds
+<br><code>param return_ip</code> boolean, return string with IP
+<br><code>return</code> boolean of availability of domain, or list of boolean domain availability, string ip and full output
+from ping command</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">@classmethod
+def ping(cls,
+         domain=&#34;127.0.0.1&#34;, count=1, quiet=False, logfile=None, timeout=10000, return_ip=False):
+    &#34;&#34;&#34;Wrapper under default ping command
+    &lt;br&gt;`param domain` string, domain or IP
+    &lt;br&gt;`param count` int, count of attempts
+    &lt;br&gt;`param quiet` boolean, suppress print to console
+    &lt;br&gt;`param logfile` string, path to log file
+    &lt;br&gt;`param timeout` int, timeout in milliseconds
+    &lt;br&gt;`param return_ip` boolean, return string with IP
+    &lt;br&gt;`return` boolean of availability of domain, or list of boolean domain availability, string ip and full output
+             from ping command
+    &#34;&#34;&#34;
+    # todo properly work with exception
+    from .os9 import OS
+    from .console9 import Console
+    domain = cls.get_domain_of_url(domain)
+    backup_ping_output = &#34;&#34;
+    if not quiet:
+        from .print9 import Print
+        Print.rewrite(&#34;Pinging&#34;, domain, count, &#34;times...&#34;)
+        up_message = domain + &#34; is up!&#34;
+        down_message = domain + &#34; is down.&#34;
+    try:
+        if OS.windows:
+            count_arg = &#34;n&#34;
+            timeout_arg = &#34;w&#34;
+        if OS.unix_family:
+            count_arg = &#34;c&#34;
+            timeout_arg = &#34;W&#34;
+        if OS.linux:
+            timeout = int(timeout / 1000)
+        command = &#34;ping &#34; + domain + &#34; -&#34; + count_arg + &#34; &#34; + str(count) + \
+                  &#34; -&#34; + timeout_arg + &#34; &#34; + str(timeout)
+        ping_output = Console.get_output(command)
+
+    except KeyboardInterrupt:
+        import sys
+        sys.exit()
+    except:  # pylint: disable=bare-except
+        #  any exception is not good ping
+        try:
+            backup_ping_output = ping_output
+        except UnboundLocalError:
+            backup_ping_output = &#34;&#34;
+        ping_output = &#34;&#34;
+    uplink = ping_output.lower().count(&#34;ttl&#34;) &gt;= count
+
+    if logfile or (not quiet):
+        import termcolor
+    if logfile:
+        raise NotImplementedError()
+    #    from .log9 import plog
+    #    if uplink:
+    #        plog(logfile, domain + &#34; is up!&#34;, quiet=True)
+    #        termcolor.cprint(up_message, &#34;white&#34;, &#34;on_green&#34;)
+    #    else:
+    #        plog(logfile, down_message, quiet=True)
+    #        termcolor.cprint(down_message, &#34;white&#34;, &#34;on_red&#34;)
+
+    elif not quiet:
+        Print.rewrite(&#34;&#34;)
+        if uplink:
+            termcolor.cprint(up_message, &#34;white&#34;, &#34;on_green&#34;)
+        else:
+            termcolor.cprint(down_message, &#34;white&#34;, &#34;on_red&#34;)
+    ip = None  # pylint: disable=invalid-name
+    if return_ip:
+        from .str9 import Str
+        try:
+            for line in Str.nl(ping_output + backup_ping_output):
+                if len(Str.get_integers(line, float_support=False)) &gt;= 4:
+                    octaves = Str.get_integers(line, float_support=False)  # todo change to regex!!!!!!!!!
+                    # pylint: disable=invalid-name
+                    ip = str(octaves[0]) + &#34;.&#34; + str(octaves[1]) + &#34;.&#34; + str(octaves[2]) + &#34;.&#34; + str(octaves[3])
+                    break
+        except TypeError:
+            pass
+        if not ip:
+            ip = cls.dns_lookup(domain)  # pylint: disable=invalid-name
+        return uplink, ip, ping_output
+    return uplink</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="commands" href="index.html">commands</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="commands.network9.Network" href="#commands.network9.Network">Network</a></code></h4>
+<ul class="two-column">
+<li><code><a title="commands.network9.Network.dns_lookup" href="#commands.network9.Network.dns_lookup">dns_lookup</a></code></li>
+<li><code><a title="commands.network9.Network.download_file" href="#commands.network9.Network.download_file">download_file</a></code></li>
+<li><code><a title="commands.network9.Network.get_domain_of_url" href="#commands.network9.Network.get_domain_of_url">get_domain_of_url</a></code></li>
+<li><code><a title="commands.network9.Network.get_fqdn" href="#commands.network9.Network.get_fqdn">get_fqdn</a></code></li>
+<li><code><a title="commands.network9.Network.get_ip" href="#commands.network9.Network.get_ip">get_ip</a></code></li>
+<li><code><a title="commands.network9.Network.get_netbios" href="#commands.network9.Network.get_netbios">get_netbios</a></code></li>
+<li><code><a title="commands.network9.Network.ping" href="#commands.network9.Network.ping">ping</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.5.3</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.4.2"
+__version__ = "2.4.4"
 
 
 class Json:
@@ -20,16 +20,16 @@ class Json:
 
     def load(self, quiet=True):
         """Loads json from file, defined in class init to class var "string"
-        :param quiet: boolean, suppress print to console
-        :return: None
+        <br>`param quiet` boolean, suppress print to console
+        <br>`return` None
         """
         self.string = self._load_from_file(self.filename, quiet=quiet)
 
     def save(self, quiet=True, debug=False):
         """Saves json to file, defined in class init from class var "string"
-        :param quiet: boolean, suppress print to console
-        :param debug: boolean, prints some more info
-        :return: None
+        <br>`param quiet` boolean, suppress print to console
+        <br>`param debug` boolean, prints some more info
+        <br>`return` None
         """
         if debug:
             print(self.string)
@@ -37,8 +37,8 @@ class Json:
 
     def _check_file(self, filename, quiet=True):
         """
-        :param filename: string with path to JSON file
-        :return: boolean with state of JSON correctness
+        <br>`param filename` string with path to JSON file
+        <br>`return` boolean with state of JSON correctness
         """
         # try:
         self._load_from_file(filename, quiet=quiet)
@@ -50,11 +50,11 @@ class Json:
 
     def _save_to_file(self, filename, json_string, quiet=False, debug=False):
         """
-        :param filename: path of file, where JSON will be saved
-        :param json_string: list or dict to save in file
-        :param quiet: boolean, suppress print to console
-        :param debug: boolean, needed for debugging
-        :return:
+        <br>`param filename` path of file, where JSON will be saved
+        <br>`param json_string` list or dict to save in file
+        <br>`param quiet` boolean, suppress print to console
+        <br>`param debug` boolean, needed for debugging
+        <br>`return`
         """
         import json
         import sys
@@ -64,7 +64,7 @@ class Json:
             print(json_string)
         # try:
         File.wipe(filename)
-        settings_json_text_io = open(filename, "w")
+        settings_json_text_io = open(filename, "w", encoding="utf8")
         json.dump(json_string, settings_json_text_io, ensure_ascii=self.ensure_ascii)
         settings_json_text_io.close()
         if not quiet:
@@ -83,10 +83,10 @@ class Json:
 
     def _load_from_file(self, filename, quiet=False, debug=False):
         """
-        :param filename: path of file, from load JSON
-        :param quiet: suppress print to console
-        :param debug: boolean, needed for debugging
-        :return:
+        <br>`param filename` path of file, from load JSON
+        <br>`param quiet` suppress print to console
+        <br>`param debug` boolean, needed for debugging
+        <br>`return`
         """
         import json
         import os
@@ -96,7 +96,7 @@ class Json:
             File.create(filename)
             clean_json = {}
             self._save_to_file(filename, clean_json)
-        settings_json_text_io = open(filename)
+        settings_json_text_io = open(filename, encoding="utf8")
         json_string_in_memory = json.load(settings_json_text_io)
         settings_json_text_io.close()
         if not quiet:

@@ -4,19 +4,18 @@
 """
 import sys  # static module
 import platform  # static module
-__version__ = "2.2.0"
+__version__ = "2.3.0"
 
 
 class OS:  # pylint: disable=too-few-public-methods
     """Class with some environment properties
     """
     sys_version_info = sys.version_info
-    is_python3 = sys.version_info >= (3, 0)  # d boolean
-    python_implementation = None # d string with name of python implementation: "cpython" or "pypy"
-    python_version_major = sys.version_info.major # d int of major python version
+    is_python3 = sys.version_info >= (3, 0)
+    python_version_major = sys.version_info.major # int of major python version
     python_commandline_version = ""
     if is_python3:
-        python_commandline_version = "3" # d string of addable "3" to commandline apps if python is 3rd version
+        python_commandline_version = "3" # string of addable "3" to commandline apps if python is 3rd version
 
     nt_family = False
     unix_family = False
@@ -25,10 +24,10 @@ class OS:  # pylint: disable=too-few-public-methods
     macos = False
     linux = False
 
-    windows_version = None  # d only on Windows, integer of major version of Windows
+    windows_version = None  # only on Windows, integer of major version of Windows
 
-    display = None  # d didn't work yet
-    cyrillic_support = None  # d boolean variable of cyrrilic output support
+    display = None  # didn't work yet
+    cyrillic_support = None  # boolean variable of cyrrilic output support
 
     if sys.platform == "linux" or sys.platform == "linux2":
         linux = True
@@ -81,5 +80,3 @@ class OS:  # pylint: disable=too-few-public-methods
         cyrillic_support = True
     except UnicodeEncodeError as err:
         cyrillic_support = False
-        # print (err)
-        print("Your system doesn't properly work with cyrillic -_-")

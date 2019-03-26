@@ -15,9 +15,9 @@ class Print:
     @staticmethod
     def debug(*strings, raw=False):
         """More notable print, used only for debugging
-        :param strings: strings, prints separately
-        :param raw: print representation of raw strings
-        :return:
+        <br>`param strings` strings, prints separately
+        <br>`param raw` print representation of raw strings
+        <br>`return`
         """
         from .console9 import Console
         line = "-" * Console.width()
@@ -34,9 +34,9 @@ class Print:
     @staticmethod
     def rewrite(*strings, sep=" ", fit=True):
         """Print rewritable string. note, that you need to rewrite string to remove previous characters
-        :param strings: strings, work as builtin print()
-        :param sep: sep as builtin print(sep)
-        :return:
+        <br>`param strings` strings, work as builtin print()
+        <br>`param sep` sep as builtin print(sep)
+        <br>`return`
         """
         from .os9 import OS
         from .console9 import Console
@@ -52,10 +52,10 @@ class Print:
     @staticmethod
     def prettify(object_, indent=4, quiet=False):
         """Pretty print of list, dicts, tuples
-        :param object_: list|dict|tuple
-        :param indent: int, indent to new nested level
-        :param quiet: boolean, suppress print to console
-        :return: string, from pprint.pformat
+        <br>`param object_` list|dict|tuple
+        <br>`param indent` int, indent to new nested level
+        <br>`param quiet` boolean, suppress print to console
+        <br>`return` string, from pprint.pformat
         """
         import pprint
         pretty_printer = pprint.PrettyPrinter(indent=indent)
@@ -67,14 +67,14 @@ class Print:
 
     @classmethod
     def colored(cls, *strings, attributes=None, end="\n", sep=" "):
-        """Wrapper for termcolor.cprint, added some smartness :3
-        Usage: Print.colored("text1", "text2", "red") or cls.colored("text", "text2", "red", "on_white").
+        """Wrapper for termcolor.cprint, added some smartness <br>`3
+        Usage` Print.colored("text1", "text2", "red") or cls.colored("text", "text2", "red", "on_white").
         You can pick colors from termcolor.COLORS, highlights from termcolor.HIGHLIGHTS.
-        :param strings: strings, work as builtin print()
-        :param attributes: list of attributes, going to tkinter.cprint(attrs) argument
-        :param end: string, same end, as builtin print(end)
-        :param sep: string, same end, as builtin print(sep)
-        :return: None
+        <br>`param strings` strings, work as builtin print()
+        <br>`param attributes` list of attributes, going to tkinter.cprint(attrs) argument
+        <br>`param end` string, same end, as builtin print(end)
+        <br>`param sep` string, same end, as builtin print(sep)
+        <br>`return` None
         """
         import termcolor
         termcolor.COLORS["gray"] = termcolor.COLORS["black"] = 30
