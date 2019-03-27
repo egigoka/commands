@@ -157,6 +157,7 @@ class Str:
         <br>`param after` string, that after output string
         <br>`param return_after_substring` boolean, if True, return list of substring and part after substring
         <br>`param safe` boolean, suppress exceptions if something not found
+        <br>`param exception_message` string, will be in exception that raised
         <br>`return` string, from string that between "before", and "after" arguments
         """
         string = str(string)
@@ -167,7 +168,9 @@ class Str:
         else:
             startfrom = 0
             if not safe:
-                raise KeyError("The line preceding ({}) the search string was not found".format(before))
+                if isinstance(exception_message, str):
+                    exception_message += '\n'
+                raise KeyError(f"{exception_message}The line preceding ({before}) the search string was not found")
         if after:
             after = str(after)
             end_at = string[startfrom:].find(after)
@@ -182,8 +185,8 @@ class Str:
                     after_substring = ""
                 if not safe:
                     if isinstance(exception_message, str):
-                        raise KeyError(exception_message)
-                    raise KeyError("The string ({}) that followed the search string was not found".format(after))
+                        exception_message += '\n'
+                    raise KeyError(f"{exception_message}The string ({after}) that followed the search string was not found")
         else:
             substring = string[startfrom:]
         if return_after_substring:
