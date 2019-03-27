@@ -26,6 +26,16 @@ new_version_string = new_version.lstrip(version_prefix).rstrip(version_suffix)
 Print.colored("uploadin", new_version_string, "grey", "on_white")  # print to notice difference
 # CHANGING VERSION END
 
+try:
+    # updating doc
+    os.system(r"pdoc3 --html commands --overwrite --html-dir ..\egigoka.github.io\ "[:-1])
+    os.chdir(r"..\egigoka.github.io")
+    os.system("git add .")
+    os.system(f'git commit -m "updating documentation for commands to v {new_version_string}"')
+    os.system("git push")
+    os.chdir(r"..\commands")
+except Exception as e:
+    print(e)
 
 ARGUMENTS = list(sys.argv)
 ARGUMENTS.pop(0)
@@ -41,11 +51,3 @@ except IndexError:
     if INPUT_STRING:
         STRING = INPUT_STRING
 Git.update(STRING)
-
-# updating doc
-os.system(r"pdoc3 --html commands --overwrite --html-dir ..\egigoka.github.io\ "[:-1])
-os.chdir(r"..\egigoka.github.io")
-os.system("git add .")
-os.system(f'git commit -m "updating documentation for commands to v {new_version_string}"')
-os.system("git push")
-os.chdir(r"..\commands")
