@@ -274,7 +274,7 @@ class Console:
                 else:
                     from .windows9 import Windows
                     try:
-                        Windows.fix_unicode_encode_error()
+                        Windows.fix_unicode_encode_error(safe=True)
                         cls.windows_utf8 = True
                         decoding = "utf_8"
                     except UnicodeEncodeError:  # if cp65001 cannot be setted

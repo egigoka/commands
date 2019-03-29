@@ -47,9 +47,10 @@ class Windows:
         """
         previous_codepage = cls.get_cmd_code_page()
         try:
-            cls.set_cmd_code_page(65001)
+            code_page = cls.set_cmd_code_page(65001)
             print("йЙ", end="\r")
             print("  ", end="\r")
+            return code_page
         except PermissionError:
             if previous_codepage >= 0:
                 cls.set_cmd_code_page(previous_codepage)
@@ -57,6 +58,7 @@ class Windows:
                 OS.cyrillic_support = False
             if not safe:
                 raise UnicodeEncodeError(f"Cannot use codepage 65001, returning to {previous_codepage}, you can set other by Windows.set_cmd_code_page")
+            return code_page
 
     @staticmethod
     def user_exists(self, username):
