@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.8.9"
+__version__ = "0.8.10"
 
 
 class Console:
@@ -233,6 +233,7 @@ class Console:
         return out, err
 
     windows_utf8 = False
+    windows_utf8_fail = False
 
     @classmethod
     def get_output(cls, *commands, pureshell=False, print_std=False, decoding=None, universal_newlines=False,
@@ -260,20 +261,25 @@ class Console:
         if ("py" in commands or "py" in commands[0]) and print_std and auto_disable_py_buffering:
             if "-u" not in commands:
                 list_commands = list(commands)
-
                 list_commands.insert(1, "-u")
                 commands = list_commands
-
-        # end disabling buffering for python
 
         # set decoding and init
         if auto_decoding and not decoding and not universal_newlines:
             if OS.windows:
-                if not cls.windows_utf8:
+                if cls.windows_utf8:
+                    decoding = "utf_8"
+                elif cls.windows_utf8_fail:
+                    decoding = "cp866"
+                else:
                     from .windows9 import Windows
-                    Windows.fix_unicode_encode_error(quiet=True)
-                    cls.windows_utf8 = True
-                decoding = "utf_8"
+                    try:
+                        Windows.fix_unicode_encode_error()
+                        cls.windows_utf8 = True
+                        decoding = "utf_8"
+                    except UnicodeEncodeError:  # if cp65001 cannot be setted
+                        cls.windows_utf8_fail = True
+                        decoding = f"cp{Windows.get_cmd_code_page()}"
             elif OS.unix_family:
                 decoding = "utf8"
             else:

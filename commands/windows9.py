@@ -21,15 +21,42 @@ class Windows:
             raise OSError("Locking work only on Windows < 10")
 
     @staticmethod
-    def fix_unicode_encode_error(quiet=False):
-        """Fix UnicodeConsoleError on old versions of Python
-        <br>`param quiet` boolean, suppress print to console
-        <br>`return` None
-        """
+    def set_cmd_code_page(code_page):
         import os
         import subprocess
-        subprocess.Popen("chcp 65001".split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        subprocess.Popen(f"chcp {code_page}".split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         os.system("set PYTHONIOENCODING = utf - 8")
+
+    @staticmethod
+    def get_cmd_code_page():
+        from .console9 import Console
+        from .str9 import Str
+        out, err = Console.get_output("chcp", return_merged=False)
+        if err:
+            return "Error getting current codepage"
+        try:
+            out = Str.substring(out.lower(), "active code page:").strip()
+            return out
+        except KeyError:
+            return "Cannot get current codepage"
+
+    @classmethod
+    def fix_unicode_encode_error(cls, safe=False):
+        """Fix UnicodeConsoleError on old versions of Python
+        <br>`return` None
+        """
+        previous_codepage = cls.get_cmd_code_page()
+        try:
+            cls.set_cmd_code_page(65001)
+            print("йЙ", end="\r")
+            print("  ", end="\r")
+        except PermissionError:
+            if previous_codepage >= 0:
+                cls.set_cmd_code_page(previous_codepage)
+                from .os9 import OS
+                OS.cyrillic_support = False
+            if not safe:
+                raise UnicodeEncodeError(f"Cannot use codepage 65001, returning to {previous_codepage}, you can set other by Windows.set_cmd_code_page")
 
     @staticmethod
     def user_exists(self, username):

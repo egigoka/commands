@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.12.0"
+__version__ = "0.12.1"
 
 
 class Str:
@@ -169,7 +169,7 @@ class Str:
             startfrom = 0
             if not safe:
                 if isinstance(exception_message, str):
-                    exception_message += '\n'
+                    exception_message += '. '
                 raise KeyError(f"{exception_message}The line preceding ({before}) the search string was not found")
         if after:
             after = str(after)
@@ -185,7 +185,7 @@ class Str:
                     after_substring = ""
                 if not safe:
                     if isinstance(exception_message, str):
-                        exception_message += '\n'
+                        exception_message += '. '
                     raise KeyError(f"{exception_message}The string ({after}) that followed the search string was not found")
         else:
             substring = string[startfrom:]
