@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.3.6"
+__version__ = "0.3.7"
 
 
 class Windows:
@@ -29,9 +29,9 @@ class Windows:
 
     @staticmethod
     def get_cmd_code_page():
-        from .console9 import Console
+        import subprocess
         from .str9 import Str
-        out, err = Console.get_output("chcp", return_merged=False)
+        out, err = subprocess.Popen("chcp", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
         if err:
             return "Error getting current codepage"
         try:

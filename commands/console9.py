@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.8.10"
+__version__ = "0.8.11"
 
 
 class Console:
