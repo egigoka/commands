@@ -29,13 +29,21 @@ class OS:  # pylint: disable=too-few-public-methods
     display = None  # didn't work yet
     cyrillic_support = None  # boolean variable of cyrrilic output support
 
-    if sys.platform == "linux" or sys.platform == "linux2":
+    sys_platfrom = sys.platform
+    if sys_platfrom == "linux" or sys_platfrom == "linux2":
         linux = True
-    elif sys.platform == "win32" or sys.platform == "cygwin":
+        name = "linux"
+    elif sys_platfrom == "win32" or sys_platfrom == "cygwin":
         windows = True
         windows_version = sys.getwindowsversion().major
-    elif sys.platform == "darwin":
+        name = "windows"
+    elif sys_platfrom == "darwin":
         macos = True
+        name = "macos"
+    else:
+        name = "unknown"
+
+    architecture = platform.architecture()[0]
 
     if platform.python_implementation == "PyPy":
         python_implementation = "pypy"
