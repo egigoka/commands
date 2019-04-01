@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "1.0.4"
+__version__ = "1.1.0"
 # pylint: disable=c-extension-no-member
 
 
@@ -165,14 +165,14 @@ class File:
         file.close()
 
     @staticmethod
-    def read(path, encoding="utf-8", auto_detect_encoding=False, quiet=True):  # return pipe to file content
+    def read(path, encoding="utf-8", auto_detect_encoding=False, quiet=True, mode='r'):  # return pipe to file content
         """
         <br>`param path` string, with path to file
         <br>`param auto_detect_encoding` bool or int, how much symbols use to auto define decoding, if True, uses 10000
         <br>`param quiet` bool, if True, suppress output to console
         <br>`return` pipe, to file text content with utf-8 decoding
         """
-        try:
+        if mode == "r":
             if auto_detect_encoding:
                 if not quiet:
                     from .bench9 import Bench
@@ -203,12 +203,12 @@ class File:
                         define_encoding_bench.end(f"encoding defined by chardet: [{encoding}] by [{count_of_symbols}] first symbols in")
             with open(path, "r", encoding=encoding) as file:
                 return file.read()
-        except UnicodeDecodeError:
-            import codecs
-            with codecs.open(path, encoding='cp1251', errors='replace') as file:
-                content = file.read()
-                file.close()
-                return content
+        elif mode == "b":
+            with open(path, "rb") as file:
+                return file.read()
+        else:
+            raise NotImplementedError(f"mode '{mode}' not supported")
+
 
     @staticmethod
     def write(filename, what_to_write, mode="a", quiet=True):
