@@ -1,19 +1,19 @@
 #! python3
 # -*- coding: utf-8 -*-
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 
 class Base65536:
     @staticmethod
-    def b65kencode(input):
+    def encode(input):
         import base65536
         bytes = input.encode()
         b65k = base65536.encode(bytes)
         return b65k
 
     @staticmethod
-    def b65kdecode(input):
+    def decode(input):
         import base65536
         bytes = base65536.decode(input)
         string = bytes.decode()
@@ -22,12 +22,12 @@ class Base65536:
     @classmethod
     def to_file(cls, string, file_path):
         from .file9 import File
-        encoded = cls.b65kencode(string)
-        File.write(file_path, encoded)
+        decoded = cls.decode(string)
+        File.write(file_path, decoded)
 
     @classmethod
     def from_file(cls, file_path, encoding=None, auto_detect_encoding=True):
         from .file9 import File
-        encoded = File.read(file_path, encoding=encoding, auto_detect_encoding=auto_detect_encoding)
-        decoded = cls.b65kdecode(encoded)
-        return decoded
+        decoded = File.read(file_path, encoding=encoding, auto_detect_encoding=auto_detect_encoding)
+        encoded = cls.encode(decoded)
+        return encoded
