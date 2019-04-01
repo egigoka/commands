@@ -1,14 +1,14 @@
 #! python3
 # -*- coding: utf-8 -*-
 
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
 class Resources:
     @classmethod
     def to_file(cls, name, path):
         from .os9 import OS
         from .base65536_9 import Base65536
-        string = cls.resources_dict[f"{name}_{OS.name}_{OS.architecture}"]
+        string = cls.resources_dict[f"{name.lower()}_{OS.name}_{OS.architecture}"]
         return Base65536.to_file(string, path)
 
     resources_dict = {
