@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module wrapper to cli wget
 """
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 
 class Wget:  # pylint: disable=too-few-public-methods
@@ -31,7 +31,7 @@ class Wget:  # pylint: disable=too-few-public-methods
 
         # url = url.replace("&", backslash + "&")
         command = f"wget {no_check_certificate_cli_arg} {url} -O {output_filename} {arguments}"
-        if not Dir.exist(os.path.split(output_filename)[0]):
+        if not Dir.exist(os.path.split(output_filename)[0]) and os.path.split(output_filename)[0]:
             Dir.create(os.path.split(output_filename)[0])
         try:
             return Console.get_output(command, print_std=not quiet)
