@@ -189,7 +189,7 @@ class File:
                         if sym != 0:
                             fail_symbols += 1
                 utf_16_le = False
-                if fail_symbols/(len(slice_of_raw_data)/2) < 0.99:
+                if fail_symbols/(len(slice_of_raw_data)/2) < 0.3:
                     utf_16_le = True
                 if utf_16_le:
                     encoding = "utf-16-le"

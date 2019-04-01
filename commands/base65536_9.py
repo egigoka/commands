@@ -26,8 +26,8 @@ class Base65536:
         File.write(file_path, encoded)
 
     @classmethod
-    def from_file(cls, file_path):
+    def from_file(cls, file_path, encoding=None, auto_detect_encoding=True):
         from .file9 import File
-        encoded = File.read(file_path, auto_detect_encoding=True)
+        encoded = File.read(file_path, encoding=encoding, auto_detect_encoding=auto_detect_encoding)
         decoded = cls.b65kdecode(encoded)
         return decoded
