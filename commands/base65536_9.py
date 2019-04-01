@@ -29,4 +29,4 @@ class Base65536:
         from .file9 import File
         encoded = File.read(file_path)
         decoded = cls.b65kdecode(encoded)
-        return encoded
+        return decoded
