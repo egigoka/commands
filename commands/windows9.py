@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.3.8"
+__version__ = "0.3.9"
 
 
 class Windows:
@@ -59,6 +59,7 @@ class Windows:
         except Exception as e:
             if int(previous_codepage) >= 0:
                 cls.set_cmd_code_page(previous_codepage)
+                print("  ", end="\r")
                 from .os9 import OS
                 OS.cyrillic_support = False
                 if not safe:
