@@ -4,7 +4,7 @@
 """
 import sys  # static module
 import platform  # static module
-__version__ = "2.3.0"
+__version__ = "2.3.1"
 
 
 class OS:  # pylint: disable=too-few-public-methods
@@ -86,5 +86,5 @@ class OS:  # pylint: disable=too-few-public-methods
             print(cyr_symbol * 2, end="\r")
         print("  ", end="\r")
         cyrillic_support = True
-    except UnicodeEncodeError as err:
+    except (UnicodeEncodeError, PermissionError) as err:
         cyrillic_support = False
