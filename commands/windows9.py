@@ -26,6 +26,7 @@ class Windows:
         import subprocess
         subprocess.Popen(f"chcp {code_page}".split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         os.system("set PYTHONIOENCODING = utf - 8")
+        return code_page
 
     @staticmethod
     def get_cmd_code_page():
@@ -51,7 +52,10 @@ class Windows:
             print("йЙ", end="\r")
             print("  ", end="\r")
             return code_page
-        except (PermissionError, UnicodeDecodeError, UnicodeEncodeError):
+        except:
+            from .print9 import Print
+
+            Print.debug(previous_codepage)
             if previous_codepage >= 0:
                 cls.set_cmd_code_page(previous_codepage)
                 from .os9 import OS
