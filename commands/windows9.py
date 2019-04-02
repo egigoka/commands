@@ -51,7 +51,7 @@ class Windows:
             print("йЙ", end="\r")
             print("  ", end="\r")
             return code_page
-        except PermissionError:
+        except (PermissionError, UnicodeDecodeError, UnicodeEncodeError):
             if previous_codepage >= 0:
                 cls.set_cmd_code_page(previous_codepage)
                 from .os9 import OS
