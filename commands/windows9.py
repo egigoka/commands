@@ -49,17 +49,17 @@ class Windows:
         previous_codepage = cls.get_cmd_code_page()
         try:
             code_page = cls.set_cmd_code_page(65001)
-            print("йЙ", end="\r")
-            print("  ", end="\r")
+            print("йЙ", end="\n")
+            print("  ", end="\n")
             return code_page
         except:
             from .print9 import Print
-
             Print.debug(previous_codepage)
             if previous_codepage >= 0:
                 cls.set_cmd_code_page(previous_codepage)
                 from .os9 import OS
                 OS.cyrillic_support = False
+                return previous_codepage
             if not safe:
                 raise UnicodeEncodeError(f"Cannot use codepage 65001, returning to {previous_codepage}, you can set other by Windows.set_cmd_code_page")
             return code_page
