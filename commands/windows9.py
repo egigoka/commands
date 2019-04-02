@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.3.7"
+__version__ = "0.3.8"
 
 
 class Windows:
@@ -20,49 +20,50 @@ class Windows:
         else:
             raise OSError("Locking work only on Windows < 10")
 
-    @staticmethod
-    def set_cmd_code_page(code_page):
+    @classmethod
+    def set_cmd_code_page(cls, code_page):
         import os
         import subprocess
         subprocess.Popen(f"chcp {code_page}".split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         os.system("set PYTHONIOENCODING = utf - 8")
+        cls.get_cmd_code_page()  # it's fucking magick, don't touch
         return code_page
 
     @staticmethod
     def get_cmd_code_page():
         import subprocess
-        from .str9 import Str
         out, err = subprocess.Popen("chcp", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
         if err:
             return "Error getting current codepage"
         try:
-            out = Str.substring(out.lower(), "active code page:").strip()
-            return out
+            out = out.lower().strip()[len("active code page:"):].strip()  # replace with Str.substring
+            return int(out)
         except KeyError:
             return "Cannot get current codepage"
 
     @classmethod
     def fix_unicode_encode_error(cls, safe=False):
         """Fix UnicodeConsoleError on old versions of Python
-        <br>`return` None
+        <br>`return` int, current code_page number
         """
         previous_codepage = cls.get_cmd_code_page()
         try:
             code_page = cls.set_cmd_code_page(65001)
-            print("йЙ", end="\n")
-            print("  ", end="\n")
-            return code_page
-        except:
-            from .print9 import Print
-            Print.debug(previous_codepage)
-            if previous_codepage >= 0:
+            import os
+            command = r'''py -c "print('йЙ', end='\r')"'''
+            print("йЙ", end="\r")
+            print("  ", end="\r")
+            os.system(command)
+            print("  ", end="\r")
+            return cls.get_cmd_code_page()
+        except Exception as e:
+            if int(previous_codepage) >= 0:
                 cls.set_cmd_code_page(previous_codepage)
                 from .os9 import OS
                 OS.cyrillic_support = False
+                if not safe:
+                    raise IOError(f"Cannot use codepage 65001, returning to {previous_codepage}, you can set other by Windows.set_cmd_code_page")
                 return previous_codepage
-            if not safe:
-                raise UnicodeEncodeError(f"Cannot use codepage 65001, returning to {previous_codepage}, you can set other by Windows.set_cmd_code_page")
-            return code_page
 
     @staticmethod
     def user_exists(self, username):
