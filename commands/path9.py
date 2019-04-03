@@ -46,26 +46,22 @@ class Path:
         from .const9 import backslash
         if OS.windows and path_first_path == backslash:  # support for smb windows paths like \\ip_or_pc\dir\
             path = backslash * 2
-        elif OS.windows and len(path_first_path) <= 2:
-            import string
-            if path_first_path == "~":
-                path = cls.home()
-            elif path_first_path[0] in string.ascii_letters and path_first_path[1] == ':':  # for windows drives
-                path = os.path.join(path_first_path, os.sep)
+        elif path_first_path == "~":
+            path = cls.home()
+        elif OS.windows:
+            if len(path_first_path) == 2:
+                import string
+                if path_first_path[0] in string.ascii_letters and path_first_path[1] == ':':  # for windows drives
+                    path = os.path.join(path_first_path, os.sep)
+                else:
+                    path = path_first_path
             else:
                 path = path_first_path
-        elif OS.windows:
-            path = path_first_path
-            if debug:
-                from .print9 import Print
-                Print.debug("path", path, "path_part", path_first_path)
         elif OS.unix_family:
             if path_first_path == "..":
                 path = path_first_path
             elif path_first_path == ".":
                 path = path_first_path
-            elif path_first_path == "~":
-                path = cls.home()
             else:
                 path = os.path.join(os.sep, path_first_path)
         else:
