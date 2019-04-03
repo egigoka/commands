@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.3.9"
+__version__ = "0.3.10"
 
 
 class Windows:
@@ -46,6 +46,8 @@ class Windows:
         """Fix UnicodeConsoleError on old versions of Python
         <br>`return` int, current code_page number
         """
+        # todo Make Windows.fix_unicode_console safe for async or not change code page for winserver <= 2008
+        print("# todo Make Windows.fix_unicode_console safe for async or not change code page for winserver <= 2008")
         previous_codepage = cls.get_cmd_code_page()
         try:
             code_page = cls.set_cmd_code_page(65001)

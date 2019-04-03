@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with funtions to work with path strings
 """
-__version__ = "2.2.1"
+__version__ = "2.2.2"
 
 
 class Path:
@@ -46,15 +46,14 @@ class Path:
         from .const9 import backslash
         if OS.windows and path_first_path == backslash:  # support for smb windows paths like \\ip_or_pc\dir\
             path = backslash * 2
-        elif OS.windows and len(path_first_path) <= 3:
-            if path_first_path == "..":
-                path = path_first_path
-            elif path_first_path == ".":
-                path = path_first_path
-            elif path_first_path == "~":
+        elif OS.windows and len(path_first_path) <= 2:
+            import string
+            if path_first_path == "~":
                 path = cls.home()
-            else:
+            elif path_first_path[0] in string.ascii_letters and path_first_path[1] == ':':  # for windows drives
                 path = os.path.join(path_first_path, os.sep)
+            else:
+                path = path_first_path
         elif OS.windows:
             path = path_first_path
             if debug:
