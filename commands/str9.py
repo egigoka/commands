@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.11.1"
+__version__ = "0.12.1"
 
 
 class Str:
@@ -150,13 +150,14 @@ class Str:
         return cls.leftpad(string, leng, char=char, rightpad=True)
 
     @staticmethod
-    def substring(string, before, after=None, return_after_substring=False, safe=False):
+    def substring(string, before, after=None, return_after_substring=False, safe=False, exception_message=None):
         """Get substring from string that between "before", and "after" strings, not including those.
         <br>`param string` string
         <br>`param before` string, that before output string
         <br>`param after` string, that after output string
         <br>`param return_after_substring` boolean, if True, return list of substring and part after substring
         <br>`param safe` boolean, suppress exceptions if something not found
+        <br>`param exception_message` string, will be in exception that raised
         <br>`return` string, from string that between "before", and "after" arguments
         """
         string = str(string)
@@ -167,7 +168,9 @@ class Str:
         else:
             startfrom = 0
             if not safe:
-                raise KeyError("The line preceding ({}) the search string was not found".format(before))
+                if isinstance(exception_message, str):
+                    exception_message += '. '
+                raise KeyError(f"{exception_message}The line preceding ({before}) the search string was not found")
         if after:
             after = str(after)
             end_at = string[startfrom:].find(after)
@@ -181,7 +184,9 @@ class Str:
                 if return_after_substring:
                     after_substring = ""
                 if not safe:
-                    raise KeyError("The string ({}) that followed the search string was not found".format(after))
+                    if isinstance(exception_message, str):
+                        exception_message += '. '
+                    raise KeyError(f"{exception_message}The string ({after}) that followed the search string was not found")
         else:
             substring = string[startfrom:]
         if return_after_substring:

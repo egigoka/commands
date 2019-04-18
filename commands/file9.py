@@ -165,50 +165,53 @@ class File:
         file.close()
 
     @staticmethod
-    def read(path, encoding="utf-8", auto_detect_encoding=False, quiet=True):  # return pipe to file content
+    def read(path, encoding="utf-8", auto_detect_encoding=False, quiet=True, mode="r"):  # return pipe to file content
         """
         <br>`param path` string, with path to file
         <br>`param auto_detect_encoding` bool or int, how much symbols use to auto define decoding, if True, uses 10000
         <br>`param quiet` bool, if True, suppress output to console
         <br>`return` pipe, to file text content with utf-8 decoding
         """
-        try:
-            if auto_detect_encoding:
-                if not quiet:
-                    from .bench9 import Bench
-                    define_encoding_bench = Bench()
-                count_of_symbols = auto_detect_encoding
-                if auto_detect_encoding is True:  # you can define how much symbols use to define encoding
-                    count_of_symbols = 10000
-                with open(path, "rb") as rawfile:
-                    slice_of_raw_data = rawfile.read(count_of_symbols)
-                # check for utf-16-le
-                fail_symbols = 0
-                for cnt, sym in enumerate(slice_of_raw_data):
-                    if cnt % 2 != 0:
-                        if sym != 0:
-                            fail_symbols += 1
-                utf_16_le = False
-                if fail_symbols/(len(slice_of_raw_data)/2) < 0.99:
-                    utf_16_le = True
-                if utf_16_le:
-                    encoding = "utf-16-le"
+        if mode=="r":
+            try:
+                if auto_detect_encoding:
                     if not quiet:
-                        define_encoding_bench.end(f"encoding defined by egigoka: [{encoding}] by [{count_of_symbols}] first symbols in")
-                # end check for utf-16-le
-                else:
-                    import chardet
-                    encoding = chardet.detect(slice_of_raw_data)["encoding"]
-                    if not quiet:
-                        define_encoding_bench.end(f"encoding defined by chardet: [{encoding}] by [{count_of_symbols}] first symbols in")
-            with open(path, "r", encoding=encoding) as file:
-                return file.read()
-        except UnicodeDecodeError:
-            import codecs
-            with codecs.open(path, encoding='cp1251', errors='replace') as file:
-                content = file.read()
-                file.close()
-                return content
+                        from .bench9 import Bench
+                        define_encoding_bench = Bench()
+                    count_of_symbols = auto_detect_encoding
+                    if auto_detect_encoding is True:  # you can define how much symbols use to define encoding
+                        count_of_symbols = 10000
+                    with open(path, "rb") as rawfile:
+                        slice_of_raw_data = rawfile.read(count_of_symbols)
+                    # check for utf-16-le
+                    fail_symbols = 0
+                    for cnt, sym in enumerate(slice_of_raw_data):
+                        if cnt % 2 != 0:
+                            if sym != 0:
+                                fail_symbols += 1
+                    utf_16_le = False
+                    if fail_symbols/(len(slice_of_raw_data)/2) < 0.2:
+                        utf_16_le = True
+                    if utf_16_le:
+                        encoding = "utf-16-le"
+                        if not quiet:
+                            define_encoding_bench.end(f"encoding defined by egigoka: [{encoding}] by [{count_of_symbols}] first symbols in")
+                    # end check for utf-16-le
+                    else:
+                        import chardet
+                        encoding = chardet.detect(slice_of_raw_data)["encoding"]
+                        if not quiet:
+                            define_encoding_bench.end(f"encoding defined by chardet: [{encoding}] by [{count_of_symbols}] first symbols in")
+                with open(path, "r", encoding=encoding) as file:
+                    return file.read()
+            except UnicodeDecodeError:
+                import codecs
+                with codecs.open(path, encoding='cp1251', errors='replace') as file:
+                    content = file.read()
+                    file.close()
+                    return content
+        elif mode == "b":
+            return
 
     @staticmethod
     def write(filename, what_to_write, mode="a", quiet=True):

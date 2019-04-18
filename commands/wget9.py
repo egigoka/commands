@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module wrapper to cli wget
 """
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 
 class Wget:  # pylint: disable=too-few-public-methods
@@ -21,7 +21,6 @@ class Wget:  # pylint: disable=too-few-public-methods
                     'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3167.0 Safari/537.36"'
 
         from .console9 import Console
-        # from .const9 import backslash
         from .dir9 import Dir
         import os
 
@@ -29,9 +28,8 @@ class Wget:  # pylint: disable=too-few-public-methods
         if no_check_certificate:
             no_check_certificate_cli_arg = "--no-check-certificate"
 
-        # url = url.replace("&", backslash + "&")
         command = f"wget {no_check_certificate_cli_arg} {url} -O {output_filename} {arguments}"
-        if not Dir.exist(os.path.split(output_filename)[0]):
+        if not Dir.exist(os.path.split(output_filename)[0]) and os.path.split(output_filename)[0]:
             Dir.create(os.path.split(output_filename)[0])
         try:
             return Console.get_output(command, print_std=not quiet)
