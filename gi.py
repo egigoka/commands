@@ -32,6 +32,7 @@ try:
     os.chdir(r"..\egigoka.github.io")
     os.system("git pull")
     os.system("git add .")
+    os.system("git pull")
     os.system(f'git commit -m "updating documentation for commands to v {new_version_string}"')
     os.system("git push")
     os.chdir(r"..\commands")
