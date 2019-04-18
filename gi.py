@@ -30,6 +30,7 @@ try:
     # updating doc
     os.system(r"pdoc3 --html commands --overwrite --html-dir ..\egigoka.github.io\ "[:-1])
     os.chdir(r"..\egigoka.github.io")
+    os.system("git pull")
     os.system("git add .")
     os.system(f'git commit -m "updating documentation for commands to v {new_version_string}"')
     os.system("git push")
