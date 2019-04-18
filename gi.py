@@ -31,7 +31,8 @@ ARGUMENTS = list(sys.argv)
 ARGUMENTS.pop(0)
 STRING = "small update (default message)"
 try:
-    ARGUMENTS[0]  # pylint: disable=pointless-statement
+    TEST = ARGUMENTS[0]
+    del TEST
     STRING = ""
     for arg in ARGUMENTS:
         STRING += arg + " "
