@@ -4,6 +4,7 @@
 """
 # pylint: disable=unused-wildcard-import, wildcard-import
 import sys
+import os
 from commands import *
 from commands.git9 import Git
 
@@ -21,15 +22,29 @@ if OS.windows:  # for not annoying git message about mess with LF and CRLF
     new_version_text = new_version_text.replace(newline, newline2)
 File.write(version_path, new_version_text, mode="w")  # write result to file
 
-Print.colored("uploadin",  new_version.lstrip(version_prefix).rstrip(version_suffix), "grey", "on_white")  # print to notice difference
+new_version_string = new_version.lstrip(version_prefix).rstrip(version_suffix)
+Print.colored("uploadin", new_version_string, "grey", "on_white")  # print to notice difference
 # CHANGING VERSION END
 
+try:
+    # updating doc
+    os.system(r"pdoc3 --html commands --overwrite --html-dir ..\egigoka.github.io\ "[:-1])
+    os.chdir(r"..\egigoka.github.io")
+    os.system("git pull")
+    os.system("git add .")
+    os.system("git pull")
+    os.system(f'git commit -m "updating documentation for commands to v {new_version_string}"')
+    os.system("git push")
+    os.chdir(r"..\commands")
+except Exception as e:
+    print(e)
 
 ARGUMENTS = list(sys.argv)
 ARGUMENTS.pop(0)
 STRING = "small update (default message)"
 try:
-    ARGUMENTS[0]  # pylint: disable=pointless-statement
+    TEST = ARGUMENTS[0]
+    del TEST
     STRING = ""
     for arg in ARGUMENTS:
         STRING += arg + " "

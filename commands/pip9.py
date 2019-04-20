@@ -12,8 +12,8 @@ class Pip:
     def main(list_of_args):
         """
         It's alias of pip.main function, it needed, because pip10 remove public API
-        :param list_of_args: must be list, same arguments as pip
-        :return: same as alias
+        <br>`param list_of_args` must be list, same arguments as pip
+        <br>`return` same as alias
         """
         try:
             from pip import main as pip_main
@@ -25,10 +25,10 @@ class Pip:
     def install(cls, *module_names, upgrade=False, uninstall=False):
         """
         Alias to 'pip install'
-        :param module_names:
-        :param upgrade: boolean, if True, "--upgrade" argument will pass to pip
-        :param uninstall: boolean, if True, "uninstall", "-y" arguments will pass to pip
-        :return: None
+        <br>`param module_names`
+        <br>`param upgrade` boolean, if True, "--upgrade" argument will pass to pip
+        <br>`param uninstall` boolean, if True, "uninstall", "-y" arguments will pass to pip
+        <br>`return` None
         """
         import time
         from .list9 import List
@@ -46,8 +46,8 @@ class Pip:
     def uninstall(cls, *module_names):
         """
         Alias to Pip.install with True passed to uninstall argument
-        :param module_names:
-        :return: None
+        <br>`param module_names`
+        <br>`return` None
         """
         cls.install(*module_names, uninstall=True)
 
@@ -55,7 +55,7 @@ class Pip:
     def check_pip_installation(cls):
         """
         Checks pip installation on Linux, if hasn't, tries to install it with apt-get
-        :return: None
+        <br>`return` None
         """
         if "pip" not in cls.list_of_modules:
             from .os9 import OS
@@ -67,7 +67,7 @@ class Pip:
     def update_all_packages(cls):
         """
         Update _all_ installed packages at once
-        :return: None
+        <br>`return` None
         """
         from .str9 import Str
         from .console9 import Console
@@ -86,7 +86,7 @@ class Pip:
     def _update_list_of_modules(cls):
         """
         Internal method. Updates internal list of modules.
-        :return: None
+        <br>`return` None
         """
         import pkgutil
         cls.list_of_modules = []

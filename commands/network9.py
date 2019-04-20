@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.5.2"
+__version__ = "0.5.3"
 
 
 class Network:
@@ -11,8 +11,8 @@ class Network:
     @staticmethod
     def get_domain_of_url(url):
         """
-        :param url: string, URL
-        :return: string, URL domain
+        <br>`param url` string, URL
+        <br>`return` string, URL domain
         """
         from .str9 import Str
         if "/" in url:
@@ -33,8 +33,8 @@ class Network:
     @staticmethod
     def dns_lookup(domain):
         """Resolve IP from domain name with socket.gethostbyname
-        :param domain: string, domain name
-        :return: string, IP
+        <br>`param domain` string, domain name
+        <br>`return` string, IP
         """
         import socket
         try:
@@ -43,16 +43,16 @@ class Network:
             return "not found"
 
     @classmethod
-    def ping(cls,  # pylint: disable=too-many-arguments,too-many-locals,too-many-branches,too-many-statements
+    def ping(cls,
              domain="127.0.0.1", count=1, quiet=False, logfile=None, timeout=10000, return_ip=False):
         """Wrapper under default ping command
-        :param domain: string, domain or IP
-        :param count: int, count of attempts
-        :param quiet: boolean, suppress print to console
-        :param logfile: string, path to log file
-        :param timeout: int, timeout in milliseconds
-        :param return_ip: boolean, return string with IP
-        :return: boolean of availability of domain, or list of boolean domain availability, string ip and full output
+        <br>`param domain` string, domain or IP
+        <br>`param count` int, count of attempts
+        <br>`param quiet` boolean, suppress print to console
+        <br>`param logfile` string, path to log file
+        <br>`param timeout` int, timeout in milliseconds
+        <br>`param return_ip` boolean, return string with IP
+        <br>`return` boolean of availability of domain, or list of boolean domain availability, string ip and full output
                  from ping command
         """
         # todo properly work with exception
@@ -88,14 +88,14 @@ class Network:
             except UnboundLocalError:
                 backup_ping_output = ""
             ping_output = ""
-        up = ("TTL" in ping_output) or ("ttl" in ping_output)  # pylint: disable=invalid-name
+        uplink = ping_output.lower().count("ttl") >= count
 
         if logfile or (not quiet):
             import termcolor
         if logfile:
             raise NotImplementedError()
         #    from .log9 import plog
-        #    if up:
+        #    if uplink:
         #        plog(logfile, domain + " is up!", quiet=True)
         #        termcolor.cprint(up_message, "white", "on_green")
         #    else:
@@ -104,7 +104,7 @@ class Network:
 
         elif not quiet:
             Print.rewrite("")
-            if up:
+            if uplink:
                 termcolor.cprint(up_message, "white", "on_green")
             else:
                 termcolor.cprint(down_message, "white", "on_red")
@@ -114,7 +114,7 @@ class Network:
             try:
                 for line in Str.nl(ping_output + backup_ping_output):
                     if len(Str.get_integers(line, float_support=False)) >= 4:
-                        octaves = Str.get_integers(line, float_support=False)
+                        octaves = Str.get_integers(line, float_support=False)  # todo change to regex!!!!!!!!!
                         # pylint: disable=invalid-name
                         ip = str(octaves[0]) + "." + str(octaves[1]) + "." + str(octaves[2]) + "." + str(octaves[3])
                         break
@@ -122,8 +122,8 @@ class Network:
                 pass
             if not ip:
                 ip = cls.dns_lookup(domain)  # pylint: disable=invalid-name
-            return up, ip, ping_output
-        return up
+            return uplink, ip, ping_output
+        return uplink
 
     @staticmethod
     def get_fqdn(ip=None):

@@ -11,8 +11,8 @@ class Dir:
     @staticmethod
     def create(dirname):
         """Creates dir if it doesn't exist
-        :param dirname: string with path to new dir
-        :return:
+        <br>`param dirname` string with path to new dir
+        <br>`return`
         """
         import os
         if not os.path.isdir(dirname):
@@ -21,8 +21,8 @@ class Dir:
     @staticmethod
     def list_of_entries(path):
         """
-        :param path: string with path to folder
-        :return: list of files and folders in path
+        <br>`param path` string with path to folder
+        <br>`return` list of files and folders in path
         """
         import os
         return os.listdir(path)
@@ -40,9 +40,9 @@ class Dir:
     @classmethod
     def number_of_files(cls, path, quiet=True):
         """
-        :param path: string with paht
-        :param quiet: suppress print to console
-        :return: int count of files in directory
+        <br>`param path` string with paht
+        <br>`param quiet` suppress print to console
+        <br>`return` int count of files in directory
         """
         import os
         dir_contents = cls.list_of_files(path)
@@ -53,11 +53,11 @@ class Dir:
     @classmethod
     def batch_rename(cls, directory, previous_name_substring, new_name_substring, quiet=False):
         """Batch renames files in directory.
-        :param directory: string with path to directory
-        :param previous_name_substring: string that must be changed in every file
-        :param new_name_substring: string to that will be changed 'input_str'
-        :param quiet: suppress print to console
-        :return: None
+        <br>`param directory` string with path to directory
+        <br>`param previous_name_substring` string that must be changed in every file
+        <br>`param new_name_substring` string to that will be changed 'input_str'
+        <br>`param quiet` suppress print to console
+        <br>`return` None
         """
         for filename in cls.list_of_files(directory):
             if previous_name_substring in filename:
@@ -71,11 +71,11 @@ class Dir:
     def delete(cls, path, cleanup=False, remove_readonly=True, no_sleep=False, 
                skip_PermissionError=False, quiet_PermissionError=False):
         """Remove directory
-        :param path: string
-        :param cleanup: boolean, True doesn't delete "path" folder, only content
-        :param skip_PermissionError: boolean, if True, skips files with denied permissions to read|write
-        :param quiet_PermissionError: boolean, suppress console output when skip file by PermissionError
-        :return: None
+        <br>`param path` string
+        <br>`param cleanup` boolean, True doesn't delete "path" folder, only content
+        <br>`param skip_PermissionError` boolean, if True, skips files with denied permissions to read|write
+        <br>`param quiet_PermissionError` boolean, suppress console output when skip file by PermissionError
+        <br>`return` None
         """
         import os
         if quiet_PermissionError:
@@ -125,10 +125,10 @@ class Dir:
     @classmethod
     def cleanup(cls, path, skip_PermissionError=False, quiet_PermissionError=False):
         """Removes all content in directory
-        :param path: string
-        :param skip_PermissionError: boolean, if True, skips files with denied permissions to read|write
-        :param quiet_PermissionError: boolean, suppress console output when skip file by PermissionError
-        :return: None
+        <br>`param path` string
+        <br>`param skip_PermissionError` boolean, if True, skips files with denied permissions to read|write
+        <br>`param quiet_PermissionError` boolean, suppress console output when skip file by PermissionError
+        <br>`return` None
         """
         if quiet_PermissionError:
             skip_PermissionError = True
@@ -139,16 +139,16 @@ class Dir:
     def copy(cls, src, dst, symlinks=False, ignore=None,
              skip_PermissionError=False, quiet_PermissionError=False):
         """Same behavior as shutil.copytree, but can copy into existing directory
-        https://stackoverflow.com/a/22331852/6519078
-        :param src: string, source directory to copy
-        :param dst: stirng, destination
-        :param symlinks: boolean, following symlinks
-        :param ignore: You can define any function with any name you like before calling copytree function. This
-        function (which could also be a lambda expression) takes two arguments: a directory name and the files in it, it
+        https`//stackoverflow.com/a/22331852/6519078
+        <br>`param src` string, source directory to copy
+        <br>`param dst` stirng, destination
+        <br>`param symlinks` boolean, following symlinks
+        <br>`param ignore` You can define any function with any name you like before calling copytree function. This
+        function (which could also be a lambda expression) takes two arguments` a directory name and the files in it, it
         should return an iterable of ignore files.
-        :param skip_PermissionError: boolean, if True, skips files with denied permissions to read|write
-        :param quiet_PermissionError: boolean, suppress console output when skip file by PermissionError
-        :return: None
+        <br>`param skip_PermissionError` boolean, if True, skips files with denied permissions to read|write
+        <br>`param quiet_PermissionError` boolean, suppress console output when skip file by PermissionError
+        <br>`return` None
         """
         import os
         import shutil
@@ -191,15 +191,15 @@ class Dir:
     def move(cls, src_, dst_, symlinks_=False, ignore_=None,
              skip_PermissionError=False, quiet_PermissionError=False):
         """Copies folder, than delete source folder
-        :param src: string, source directory to copy
-        :param dst: stirng, destination
-        :param symlinks: boolean, following symlinks
-        :param ignore: You can define any function with any name you like before calling copytree function. This
-        function (which could also be a lambda expression) takes two arguments: a directory name and the files in it, it
+        <br>`param src` string, source directory to copy
+        <br>`param dst` stirng, destination
+        <br>`param symlinks` boolean, following symlinks
+        <br>`param ignore` You can define any function with any name you like before calling copytree function. This
+        function (which could also be a lambda expression) takes two arguments` a directory name and the files in it, it
         should return an iterable of ignore files.
-        :param skip_PermissionError: boolean, if True, skips files with denied permissions to read|write
-        :param quiet_PermissionError: boolean, suppress console output when skip file by PermissionError
-        :return: None
+        <br>`param skip_PermissionError` boolean, if True, skips files with denied permissions to read|write
+        <br>`param quiet_PermissionError` boolean, suppress console output when skip file by PermissionError
+        <br>`return` None
         """
         if quiet_PermissionError:
             skip_PermissionError = True
@@ -211,8 +211,8 @@ class Dir:
     @staticmethod
     def exist(filename):
         """
-        :param filename: string with path to dir
-        :return: boolean that means existence of dir
+        <br>`param filename` string with path to dir
+        <br>`return` boolean that means existence of dir
         """
         import os
         return os.path.isdir(filename)
