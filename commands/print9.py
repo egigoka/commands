@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for print to console.
 """
-__version__ = "0.9.5"
+__version__ = "0.9.6"
 
 
 class Print:
@@ -77,6 +77,7 @@ class Print:
         <br>`return` None
         """
         import termcolor
+        from contextlib import suppress
         termcolor.COLORS["gray"] = termcolor.COLORS["black"] = 30
         termcolor.HIGHLIGHTS["on_gray"] = termcolor.HIGHLIGHTS["on_black"] = 40
         from .os9 import OS
@@ -113,10 +114,11 @@ class Print:
         # run termcolor
         termcolor.cprint(string, color=color, on_color=highlight, attrs=attributes, end=end)
 
-        termcolor.COLORS.pop("gray")
-        termcolor.COLORS.pop("black")
-        termcolor.HIGHLIGHTS.pop("on_gray")
-        termcolor.HIGHLIGHTS.pop("on_black")
+        with suppress(KeyError):  # for work with multithreading
+            termcolor.COLORS.pop("gray")
+            termcolor.COLORS.pop("black")
+            termcolor.HIGHLIGHTS.pop("on_gray")
+            termcolor.HIGHLIGHTS.pop("on_black")
 
 
 Print = Print()

@@ -34,6 +34,7 @@ from .cli9 import CLI
 from .base64_9 import Base64
 from .funcs9 import dirify
 from .zip9 import Zip, Unzip
+from .id9 import ID
 from .resources9 import Resources
 from .const9 import backslash, newline, newline2, ruble
 from ._version import __version__
