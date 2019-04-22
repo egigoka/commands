@@ -287,4 +287,3 @@ class File:
                      'mac_cyrillic', 'mac_greek', 'mac_iceland', 'mac_latin2', 'mac_roman', 'mac_turkish', 'ptcp154',
                      'shift_jis', 'shift_jis_2004', 'shift_jisx0213', 'utf_32', 'utf_32_be', 'utf_32_le', 'utf_16',
                      'utf_16_be', 'utf_16_le', 'utf_7', 'utf_8', 'utf_8_sig']
-
