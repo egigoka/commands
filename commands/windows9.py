@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.3.11"
-
+__version__ = "0.4.0"
 
 class Windows:
     """Class to work with Windows-specific functions
@@ -163,3 +162,48 @@ class Windows:
         File.write(filename, output)
         if not quiet:
             print(f"Audit politics saved to {filename}")
+
+    @staticmethod
+    def getenv(name, scope="user"):
+        from .os9 import OS
+        if OS.is_python3:
+            import winreg
+        else:
+            import _winreg as winreg
+        assert scope in ('user', 'system'), "Houston we've got a problem"
+        if scope == 'user':
+            root = winreg.HKEY_CURRENT_USER
+            subkey = 'Environment'
+        else:
+            root = winreg.HKEY_LOCAL_MACHINE
+            subkey = r'SYSTEM\CurrentControlSet\Control\Session Manager\Environment'
+        key = winreg.OpenKey(root, subkey, 0, winreg.KEY_READ)
+        try:
+            value, _ = winreg.QueryValueEx(key, name)
+        except WindowsError:
+            value = ''
+        return value
+
+    @staticmethod
+    def setenv(name, value, scope):
+        # Note: for 'system' scope, you must run this as Administrator
+        from .console9 import Console
+        from .path9 import Path
+        from .os9 import OS
+        if OS.is_python3:
+            import winreg
+        else:
+            import _winreg as winreg
+        assert scope in ('user', 'system'), "Houston we've got a problem"
+        if scope == 'user':
+            root = winreg.HKEY_CURRENT_USER
+            subkey = 'Environment'
+        else:
+            root = winreg.HKEY_LOCAL_MACHINE
+            subkey = r'SYSTEM\CurrentControlSet\Control\Session Manager\Environment'
+        key = winreg.OpenKey(root, subkey, 0, winreg.KEY_ALL_ACCESS)
+        winreg.SetValueEx(key, name, 0, winreg.REG_EXPAND_SZ, value)
+        winreg.CloseKey(key)
+        # For some strange reason, calling SendMessage from the current process
+        # doesn't propagate environment changes at all.
+        return Console.get_output(Path.python(), "-c", "import win32api, win32con; assert win32api.SendMessage(win32con.HWND_BROADCAST, win32con.WM_SETTINGCHANGE, 0, 'Environment')")
