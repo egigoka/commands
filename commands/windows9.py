@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 class Windows:
     """Class to work with Windows-specific functions
@@ -52,7 +52,8 @@ class Windows:
             return cls.get_cmd_code_page()
         previous_codepage = cls.get_cmd_code_page()
         try:
-            code_page = cls.set_cmd_code_page(65001)
+            if previous_codepage != 65001:
+                code_page = cls.set_cmd_code_page(65001)
             import os
             command = r'''py -c "print('йЙ', end='\r')"'''
             print("йЙ", end="\r")
@@ -62,7 +63,10 @@ class Windows:
             return cls.get_cmd_code_page()
         except Exception as e:
             if int(previous_codepage) >= 0:
-                cls.set_cmd_code_page(previous_codepage)
+                if previous_codepage != 65001:
+                    cls.set_cmd_code_page(previous_codepage)
+                else:
+                    cls.set_cmd_code_page(437)
                 print("  ", end="\r")
                 from .os9 import OS
                 OS.cyrillic_support = False
@@ -185,7 +189,7 @@ class Windows:
         return value
 
     @staticmethod
-    def setenv(name, value, scope):
+    def setenv(name, value, scope="user"):
         # Note: for 'system' scope, you must run this as Administrator
         from .console9 import Console
         from .path9 import Path
