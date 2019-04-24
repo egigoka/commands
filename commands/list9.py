@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with lists
 """
-__version__ = "0.4.1"
+__version__ = "0.4.2"
 
 
 class List:
@@ -58,6 +58,9 @@ class List:
         return [str(string) for string in list]
 
     @staticmethod
-    def remove_duplicates(source_list):
-        from collections import OrderedDict
-        OrderedDict((x, True) for x in source_list).keys()
+    def remove_duplicates(source_list, preserve_order=True):
+        if preserve_order:
+            from collections import OrderedDict
+            return OrderedDict((x, True) for x in source_list).keys()
+        else:
+            return list(set(source_list))
