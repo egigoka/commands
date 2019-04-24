@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.3.10"
+__version__ = "0.3.11"
 
 
 class Windows:
@@ -46,8 +46,11 @@ class Windows:
         """Fix UnicodeConsoleError on old versions of Python
         <br>`return` int, current code_page number
         """
-        # todo Make Windows.fix_unicode_console safe for async or not change code page for winserver <= 2008
-        print("# todo Make Windows.fix_unicode_console safe for async or not change code page for winserver <= 2008")
+        from .path9 import Path
+        from .file9 import File
+        lockfile = Path.combine(Path.commands(), ".windows_codepage_lock")
+        if File.exist(lockfile):
+            return cls.get_cmd_code_page()
         previous_codepage = cls.get_cmd_code_page()
         try:
             code_page = cls.set_cmd_code_page(65001)
@@ -64,6 +67,7 @@ class Windows:
                 print("  ", end="\r")
                 from .os9 import OS
                 OS.cyrillic_support = False
+                File.create(lockfile)
                 if not safe:
                     raise IOError(f"Cannot use codepage 65001, returning to {previous_codepage}, you can set other by Windows.set_cmd_code_page")
                 return previous_codepage
