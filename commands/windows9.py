@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.4.1"
+__version__ = "0.4.2e"
 
 class Windows:
     """Class to work with Windows-specific functions
@@ -167,13 +167,24 @@ class Windows:
         if not quiet:
             print(f"Audit politics saved to {filename}")
 
-    @staticmethod
-    def getenv(name, scope="user"):
-        from .os9 import OS
-        if OS.is_python3:
-            import winreg
-        else:
-            import _winreg as winreg
+    winreg_imported = False
+    winreg = None
+
+    @classmethod
+    def import_winreg(cls):
+        if not cls.winreg_imported:
+            from .os9 import OS
+            if OS.is_python3:
+                import winreg
+            else:
+                import _winreg as winreg
+            cls.winreg = winreg
+            cls.winreg_imported = True
+        return cls.winreg
+
+    @classmethod
+    def getenv(cls, name, scope="user"):
+        winreg = cls.winreg
         assert scope in ('user', 'system'), "Houston we've got a problem"
         if scope == 'user':
             root = winreg.HKEY_CURRENT_USER
@@ -188,16 +199,12 @@ class Windows:
             value = ''
         return value
 
-    @staticmethod
-    def setenv(name, value, scope="user"):
+    @classmethod
+    def setenv(cls, name, value, scope="user"):
         # Note: for 'system' scope, you must run this as Administrator
         from .console9 import Console
         from .path9 import Path
-        from .os9 import OS
-        if OS.is_python3:
-            import winreg
-        else:
-            import _winreg as winreg
+        winreg = cls.winreg
         assert scope in ('user', 'system'), "Houston we've got a problem"
         if scope == 'user':
             root = winreg.HKEY_CURRENT_USER
