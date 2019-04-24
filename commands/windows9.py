@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.4.2e"
+__version__ = "0.4.2"
 
 class Windows:
     """Class to work with Windows-specific functions
@@ -168,7 +168,6 @@ class Windows:
             print(f"Audit politics saved to {filename}")
 
     winreg_imported = False
-    winreg = None
 
     @classmethod
     def import_winreg(cls):
@@ -184,7 +183,7 @@ class Windows:
 
     @classmethod
     def getenv(cls, name, scope="user"):
-        winreg = cls.winreg
+        winreg = cls.import_winreg()
         assert scope in ('user', 'system'), "Houston we've got a problem"
         if scope == 'user':
             root = winreg.HKEY_CURRENT_USER
@@ -204,7 +203,7 @@ class Windows:
         # Note: for 'system' scope, you must run this as Administrator
         from .console9 import Console
         from .path9 import Path
-        winreg = cls.winreg
+        winreg = cls.import_winreg()
         assert scope in ('user', 'system'), "Houston we've got a problem"
         if scope == 'user':
             root = winreg.HKEY_CURRENT_USER
