@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with lists
 """
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 
 class List:
@@ -56,3 +56,7 @@ class List:
     @staticmethod
     def to_strings(list):
         return [str(string) for string in list]
+
+    @staticmethod
+    def remove_duplicates(list_input):
+        return list(set(list_input))
