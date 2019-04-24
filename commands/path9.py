@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with funtions to work with path strings
 """
-__version__ = "2.2.2"
+__version__ = "2.3.0"
 
 
 class Path:
@@ -121,3 +121,8 @@ class Path:
         extension = File.get_extension(filepath)
         filepath_without_extension = filepath.rstrip(extension)
         return filepath_without_extension + str(infix) + extension
+
+    @staticmethod
+    def python():
+        import sys
+        return sys.executable
