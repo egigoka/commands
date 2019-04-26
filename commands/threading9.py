@@ -31,6 +31,14 @@ class MyThread:
         self.thread.run = self.run
         self.thread.start()
 
+    def wait_for_keyboard_interrupt(self):
+        import time
+        try:
+            while True:
+                time.sleep(1)  # wait for KeyboardInterrupt
+        except (KeyboardInterrupt, SystemExit):
+            self.raise_exception()
+
     # https://www.geeksforgeeks.org/python-different-ways-to-kill-a-thread/
     def get_id(self):
         import threading
@@ -66,23 +74,20 @@ class Threading:
         self.threads.append(MyThread(thread_id=self.thread_ids.get(), name=name, func=func, args=args, kwargs=kwargs,
                                      daemon=daemon))
 
-    def start(self, exitable=False):
-
-        if exitable:
-            def waiter(self_t):
-                import time
-                try:
-                    while True:
-                        print("\n\n\n\nwatch!\n\n\n\n")
-                        time.sleep(1)  # wait for KeyboardInterrupt
-                except (KeyboardInterrupt, SystemExit):
-                    self_t.raise_exception()
-            self.add("Watcher", waiter, args=(self,), daemon=True)
+    def start(self, wait_for_keyboard_interrupt=False):
         """Starts all added threads"""
-        if len(self.threads) == 0:
-            raise ValueError("No threads")
+        assert len(self.threads) != 0, "No threads"
+
         for thread in self.threads:
             thread.start()
+
+    def wait_for_keyboard_interrupt(self):
+        import time
+        try:
+            while True:
+                time.sleep(1)  # wait for KeyboardInterrupt
+        except (KeyboardInterrupt, SystemExit):
+            self.raise_exception()
 
     def cleanup(self):
         """Just clean queue"""
