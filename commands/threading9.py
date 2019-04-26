@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 from .dict9 import imdict
 
@@ -66,7 +66,16 @@ class Threading:
         self.threads.append(MyThread(thread_id=self.thread_ids.get(), name=name, func=func, args=args, kwargs=kwargs,
                                      daemon=daemon))
 
-    def start(self):
+    def start(self, exitable=False):
+        if exitable:
+            def waiter(self_t):
+                import time
+                try:
+                    while 1:
+                        time.sleep(1)  # wait for KeyboardInterrupt
+                except (KeyboardInterrupt, SystemExit):
+                    self_t.raise_exception()
+            self.add("Waiter", waiter, args=(self,), daemon=True)
         """Starts all added threads"""
         if len(self.threads) == 0:
             raise ValueError("No threads")
