@@ -77,7 +77,7 @@ class Threading:
         self.daemons = daemons
         self.quiet = quiet
 
-    def add(self, func, name, args=(), kwargs=_imdict, daemon=None, quiet=None):
+    def add(self, func, name=None, args=(), kwargs=_imdict, daemon=None, quiet=None):
         if daemon is None:
             daemon = self.daemons
         if quiet is None:
