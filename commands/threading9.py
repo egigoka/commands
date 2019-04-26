@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "0.1.2"
+__version__ = "0.2.0"
 
 from .dict9 import imdict
 
@@ -10,9 +10,10 @@ from .dict9 import imdict
 class MyThread:
     _imdict = imdict({})
 
-    def __init__(self, thread_id, name, func, args=(), kwargs=_imdict):
+    def __init__(self, thread_id, name, func, args=(), kwargs=_imdict, daemon=False):
         import threading
         self.thread = threading.Thread()
+        self.thread.daemon = daemon
         self.thread_id = thread_id
         self.name = name
         self.func = func
@@ -23,8 +24,8 @@ class MyThread:
         print("Starting " + self.name)
         try:
             self.func(*self.args, **self.kwargs)
-        except SystemExit:  # test
-            print("Exiting " + self.name)
+        except SystemExit:
+            print("Quited " + self.name)
 
     def start(self):
         self.thread.run = self.run
@@ -53,13 +54,17 @@ class MyThread:
 class Threading:
     _imdict = imdict({})
 
-    def __init__(self):
+    def __init__(self, daemons=None):
         from .id9 import ID
         self.threads = []
         self.thread_ids = ID()
+        self.daemons = daemons
 
-    def add(self, name, func, args=(), kwargs=_imdict):
-        self.threads.append(MyThread(thread_id=self.thread_ids.get(), name=name, func=func, args=args, kwargs=kwargs))
+    def add(self, name, func, args=(), kwargs=_imdict, daemon=None):
+        if daemon is None:
+            daemon = self.daemons
+        self.threads.append(MyThread(thread_id=self.thread_ids.get(), name=name, func=func, args=args, kwargs=kwargs,
+                                     daemon=daemon))
 
     def start(self):
         """Starts all added threads"""
