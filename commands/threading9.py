@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "0.0.5"
+__version__ = "0.1.0"
 
 from .dict9 import imdict
 
@@ -28,6 +28,24 @@ class MyThread:
         self.thread.run = self.run
         self.thread.start()
 
+    # https://www.geeksforgeeks.org/python-different-ways-to-kill-a-thread/
+    def get_id(self):
+        import threading
+        # returns id of the respective thread
+        if hasattr(self.thread, '_thread_id'):
+            return self.thread._thread_id
+        for id, thread in threading._active.items():
+            if self.thread is self:
+                return id
+
+    def raise_exception(self):
+        import ctypes
+        thread_id = self.get_id()
+        res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, ctypes.py_object(SystemExit))
+        if res > 1:
+            ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)
+            print('Exception raise failure')
+
 
 class Threading:
     _imdict = imdict({})
@@ -51,3 +69,13 @@ class Threading:
         """Just clean queue"""
         self.threads = []
         self.thread_ids.__init__()
+
+    def get_ids(self):
+        ids = []
+        for thread in self.threads:
+            ids.append(thread.get_id())
+        return ids
+
+    def raise_exception(self):
+        for thread in self.threads:
+            thread.raise_exception()
