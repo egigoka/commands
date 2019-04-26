@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 from .dict9 import imdict
 
@@ -67,15 +67,17 @@ class Threading:
                                      daemon=daemon))
 
     def start(self, exitable=False):
+
         if exitable:
             def waiter(self_t):
                 import time
                 try:
-                    while 1:
+                    while True:
+                        print("\n\n\n\nwatch!\n\n\n\n")
                         time.sleep(1)  # wait for KeyboardInterrupt
                 except (KeyboardInterrupt, SystemExit):
                     self_t.raise_exception()
-            self.add("Waiter", waiter, args=(self,), daemon=True)
+            self.add("Watcher", waiter, args=(self,), daemon=True)
         """Starts all added threads"""
         if len(self.threads) == 0:
             raise ValueError("No threads")
