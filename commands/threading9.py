@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "0.3.5"
+__version__ = "0.4.0"
 
 from .dict9 import imdict
 
@@ -10,7 +10,7 @@ from .dict9 import imdict
 class MyThread:
     _imdict = imdict({})
 
-    def __init__(self, thread_id, name, func, args=(), kwargs=_imdict, daemon=False):
+    def __init__(self, thread_id, name, func, args=(), kwargs=_imdict, daemon=False, quiet=True):
         import threading
         self.thread = threading.Thread()
         self.thread.daemon = daemon
@@ -19,14 +19,19 @@ class MyThread:
         self.func = func
         self.args = args
         self.kwargs = kwargs
+        self.quiet = quiet
+
+    def qprint(self, *args, **kwargs):
+        if not self.quiet:
+            print(*args, **kwargs)
 
     def run(self):
-        print("Starting " + self.thread.name)
+        self.qprint("Starting " + self.thread.name)
         try:
             self.func(*self.args, **self.kwargs)
-            print("Ended " + self.thread.name)
+            self.qprint("Ended " + self.thread.name)
         except SystemExit:
-            print("Quited " + self.thread.name)
+            self.qprint("Quited " + self.thread.name)
 
     def start(self):
         self.thread.run = self.run
@@ -49,7 +54,7 @@ class MyThread:
         for id, thread in threading._active.items():
             if thread is self.thread:
                 return id
-        print("Thread ID not found")
+        self.qprint("Thread ID not found")
 
     def raise_exception(self):
         import ctypes
@@ -63,17 +68,20 @@ class MyThread:
 class Threading:
     _imdict = imdict({})
 
-    def __init__(self, daemons=None):
+    def __init__(self, daemons=None, quiet=None):
         from .id9 import ID
         self.threads = []
         self.thread_ids = ID()
         self.daemons = daemons
+        self.quiet = quiet
 
-    def add(self, name, func, args=(), kwargs=_imdict, daemon=None):
+    def add(self, name, func, args=(), kwargs=_imdict, daemon=None, quiet=None):
         if daemon is None:
             daemon = self.daemons
+        if quiet is None:
+            quiet = self.quiet
         self.threads.append(MyThread(thread_id=self.thread_ids.get(), name=name, func=func, args=args, kwargs=kwargs,
-                                     daemon=daemon))
+                                     daemon=daemon, quiet=quiet))
 
     def start(self, wait_for_keyboard_interrupt=False):
         """Starts all added threads"""
