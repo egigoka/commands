@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "1.0.4"
+__version__ = "1.0.5"
 # pylint: disable=c-extension-no-member
 
 
@@ -229,6 +229,8 @@ class File:
                 file.write(what_to_write.encode("utf-8"))
         else:
             with open(filename, mode=mode) as file:  # open file then closes it
+                if isinstance(what_to_write, int):
+                    what_to_write = str(what_to_write)
                 file.write(what_to_write)
         if not quiet:
             print(f"Writed to file {filename}")
