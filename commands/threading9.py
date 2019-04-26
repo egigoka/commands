@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "0.0.1"
+__version__ = "0.0.3"
 
 from .dict9 import imdict
 
@@ -34,12 +34,12 @@ class Threading:
     _imdict = imdict({})
 
     def __init__(self):
+        from .id9 import ID
         self.threads = []
-        raise NotImplementedError
+        self.thread_ids = ID()
 
-    def add(self, thread_id, name, func, args=(), kwargs=_imdict):
-        self.threads.append(MyThread(thread_id=thread_id, name=name, func=func, args=args, kwargs=kwargs))
-        raise NotImplementedError
+    def add(self, name, func, args=(), kwargs=_imdict):
+        self.threads.append(MyThread(thread_id=self.thread_ids.get(), name=name, func=func, args=args, kwargs=kwargs))
 
     def start(self):
         """Starts all added threads"""
@@ -47,9 +47,9 @@ class Threading:
             raise ValueError("No threads")
         for thread in self.threads:
             thread.start()
-        raise NotImplementedError
 
     def cleanup(self):
         """Just clean queue"""
+        from .id9 import ID
         self.threads = []
-        raise NotImplementedError
+        self.thread_ids.__init__()

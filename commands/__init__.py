@@ -40,14 +40,3 @@ from .resources9 import Resources
 from .const9 import backslash, newline, newline2, ruble
 from ._version import __version__
 
-class Internal:
-    """Internal class with internal functions
-    """
-
-    @staticmethod
-    def help():
-        """Print all functionality of commands8, not implemented now
-        """
-        raise NotImplementedError
-        # commands.__dict__
-
