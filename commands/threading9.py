@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "0.3.1"
+__version__ = "0.3.2"
 
 from .dict9 import imdict
 
@@ -48,7 +48,7 @@ class MyThread:
         for id, thread in threading._active.items():
             if thread is self.thread:
                 return id
-        raise RuntimeError("Thread ID not found")
+        print("Thread ID not found")
 
     def raise_exception(self):
         import ctypes
