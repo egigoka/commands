@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "0.3.4"
+__version__ = "0.3.5"
 
 from .dict9 import imdict
 
@@ -88,7 +88,7 @@ class Threading:
             while True:  # wait for KeyboardInterrupt
                 is_alive = False  # is even single process alive
                 for thread in self.threads:
-                    if thread.is_alive():
+                    if thread.thread.is_alive():
                         time.sleep(1)
                         is_alive = True
                 if not is_alive:  # if none of processes alive
