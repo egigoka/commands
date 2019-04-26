@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "0.3.2"
+__version__ = "0.3.4"
 
 from .dict9 import imdict
 
@@ -15,17 +15,18 @@ class MyThread:
         self.thread = threading.Thread()
         self.thread.daemon = daemon
         self.thread_id = thread_id
-        self.name = name
+        self.thread.name = name
         self.func = func
         self.args = args
         self.kwargs = kwargs
 
     def run(self):
-        print("Starting " + self.name)
+        print("Starting " + self.thread.name)
         try:
             self.func(*self.args, **self.kwargs)
+            print("Ended " + self.thread.name)
         except SystemExit:
-            print("Quited " + self.name)
+            print("Quited " + self.thread.name)
 
     def start(self):
         self.thread.run = self.run
@@ -34,7 +35,7 @@ class MyThread:
     def wait_for_keyboard_interrupt(self):
         import time
         try:
-            while True:
+            while self.thread.is_alive():
                 time.sleep(1)  # wait for KeyboardInterrupt
         except (KeyboardInterrupt, SystemExit):
             self.raise_exception()
@@ -84,10 +85,16 @@ class Threading:
     def wait_for_keyboard_interrupt(self):
         import time
         try:
-            while True:
-                time.sleep(1)  # wait for KeyboardInterrupt
+            while True:  # wait for KeyboardInterrupt
+                is_alive = False  # is even single process alive
+                for thread in self.threads:
+                    if thread.is_alive():
+                        time.sleep(1)
+                        is_alive = True
+                if not is_alive:  # if none of processes alive
+                    return
         except (KeyboardInterrupt, SystemExit):
-            self.raise_exception()
+                self.raise_exception()
 
     def cleanup(self):
         """Just clean queue"""
