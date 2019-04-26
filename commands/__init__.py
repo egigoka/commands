@@ -20,7 +20,7 @@ from .time9 import Time
 from .json9 import Json
 from .list9 import List
 from .process9 import Process
-from .dict9 import Dict
+from .dict9 import Dict, imdict
 from .network9 import Network
 from .bash9 import Bash
 from .macos9 import macOS
@@ -35,6 +35,7 @@ from .base64_9 import Base64
 from .funcs9 import dirify
 from .zip9 import Zip, Unzip
 from .id9 import ID
+from .threading9 import MyThread, Threading
 from .resources9 import Resources
 from .const9 import backslash, newline, newline2, ruble
 from ._version import __version__

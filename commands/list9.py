@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with lists
 """
-__version__ = "0.4.3"
+__version__ = "0.5.0"
 
 
 class List:
@@ -64,3 +64,9 @@ class List:
             return list(OrderedDict((x, True) for x in source_list).keys())
         else:
             return list(set(source_list))
+
+    @staticmethod
+    def most_common(list, count):
+        import collections
+        c = collections.Counter(list)
+        return c.most_common(count)

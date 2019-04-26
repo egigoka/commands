@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with dicts
 """
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 
 class Dict:
@@ -35,3 +35,20 @@ class Dict:
             return output
         import collections
         return collections.OrderedDict(sorted(dict_.items()))
+
+
+class imdict(dict):
+    """Rejected PEP 351"""
+    def __hash__(self):
+        return id(self)
+
+    def _immutable(self, *args, **kws):
+        raise TypeError('object is immutable')
+
+    __setitem__ = _immutable
+    __delitem__ = _immutable
+    clear = _immutable
+    update = _immutable
+    setdefault = _immutable
+    pop = _immutable
+    popitem = _immutable
