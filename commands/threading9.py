@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "0.1.0"
+__version__ = "0.1.2"
 
 from .dict9 import imdict
 
@@ -21,8 +21,10 @@ class MyThread:
 
     def run(self):
         print("Starting " + self.name)
-        self.func(*self.args, **self.kwargs)
-        print("Exiting " + self.name)
+        try:
+            self.func(*self.args, **self.kwargs)
+        except SystemExit:  # test
+            print("Exiting " + self.name)
 
     def start(self):
         self.thread.run = self.run
@@ -35,8 +37,9 @@ class MyThread:
         if hasattr(self.thread, '_thread_id'):
             return self.thread._thread_id
         for id, thread in threading._active.items():
-            if self.thread is self:
+            if thread is self.thread:
                 return id
+        raise RuntimeError("Thread ID not found")
 
     def raise_exception(self):
         import ctypes
@@ -44,7 +47,7 @@ class MyThread:
         res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, ctypes.py_object(SystemExit))
         if res > 1:
             ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)
-            print('Exception raise failure')
+            raise RuntimeError('Thread Exception raise failure')
 
 
 class Threading:
