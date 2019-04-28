@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 from .dict9 import imdict
 
@@ -35,15 +35,17 @@ class MyThread:
         except SystemExit:
             self.qprint("Quited " + self.thread.name)
 
-    def start(self):
+    def start(self, wait_for_keyboard_interrupt=False):
         self.thread.run = self.run
         self.thread.start()
+        if wait_for_keyboard_interrupt:
+            self.wait_for_keyboard_interrupt()
 
     def wait_for_keyboard_interrupt(self):
         import time
         try:
             while self.thread.is_alive():
-                time.sleep(1)  # wait for KeyboardInterrupt
+                time.sleep(1)
         except (KeyboardInterrupt, SystemExit):
             self.raise_exception()
 
@@ -92,10 +94,13 @@ class Threading:
         for thread in self.threads:
             thread.start()
 
+        if wait_for_keyboard_interrupt:
+            self.wait_for_keyboard_interrupt()
+
     def wait_for_keyboard_interrupt(self):
         import time
         try:
-            while True:  # wait for KeyboardInterrupt
+            while True:
                 is_alive = False  # is even single process alive
                 for thread in self.threads:
                     if thread.thread.is_alive():
