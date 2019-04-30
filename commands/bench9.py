@@ -9,7 +9,7 @@ class Bench:
     """Benchmarking class (not so good, but enough for some purposes)
     """
 
-    def __init__(self, prefix="Bench passed in", quiet=False, fraction_digits=3, time_start=None):
+    def __init__(self, prefix="Bench passed in", quiet=True, fraction_digits=3, time_start=None):
         """
         <br>`param prefix` string, prints when ending of benchmark
         <br>`param quiet` boolean, suppress output to console
@@ -34,9 +34,7 @@ class Bench:
         self.time_start = datetime.datetime.now()
 
     def get(self):
-        """
-        <br>`return` float, time difference between start and this function call time
-        """
+        """`return` float, time difference between start and this function call time"""
         import datetime
         from .time9 import Time
         self.time_end = datetime.datetime.now()
@@ -64,9 +62,7 @@ class Bench:
                 try:
                     from .print9 import Print
                     Print.colored(self.prefix, str(round(delta, self.fraction_digits)), "seconds", "grey", "on_white")
-                except TypeError:
-                    print(self.prefix, str(round(delta, self.fraction_digits)), "seconds")
-                except AttributeError:
+                except (TypeError, AttributeError):
                     print(self.prefix, str(round(delta, self.fraction_digits)), "seconds")
         if start_immediately:
             self.start()

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.4.4"
+__version__ = "2.5.0"
 
 
 class Json:
@@ -17,6 +17,12 @@ class Json:
         else:
             self.string = {}
             self._save_to_file(self.filename, self.string, quiet=quiet)
+
+    def __getitem__(self, item):
+        return self.string.__getitem__(item)
+
+    def __setitem__(self, key, value):
+        return self.string.__setitem__(key, value)
 
     def load(self, quiet=True):
         """Loads json from file, defined in class init to class var "string"
