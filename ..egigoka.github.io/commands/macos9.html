@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.6.0" />
+<title>commands.macos9 API documentation</title>
+<meta name="description" content="Internal module with functions that works only in macOS" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase;cursor:pointer}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>commands.macos9</code></h1>
+</header>
+<section id="section-intro">
+<p>Internal module with functions that works only in macOS</p>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">#! python3
+# -*- coding: utf-8 -*-
+&#34;&#34;&#34;Internal module with functions that works only in macOS
+&#34;&#34;&#34;
+__version__ = &#34;0.2.4&#34;
+
+
+class macOS:  # pylint: disable=invalid-name, too-few-public-methods
+    &#34;&#34;&#34;Class with functions that works only in macOS
+    &#34;&#34;&#34;
+    class OSAScript:  # pylint: disable=too-few-public-methods
+        &#34;&#34;&#34;Class with function to work with osascript shell command
+        &#34;&#34;&#34;
+        @staticmethod
+        def quotes_escape(string):
+            &#34;&#34;&#34;Trying to escape quotes to puch them through AppleScript
+            &lt;br&gt;`param string` string input
+            &lt;br&gt;`return` string with escaped symbols
+            &#34;&#34;&#34;
+            from .const9 import backslash
+            quote_1 = &#39;&#34;&#39;
+            # quote_2 = &#34;&#39;&#34;
+            # if there any already escaped symbols:
+            string = string.replace(backslash, backslash * 3)  # if there any other escaped symbols except quotes
+            string = string.replace(backslash * 3 + quote_1,
+                                    backslash * 2 + quote_1)  # removing one backslash, because it will added furthurer
+            # string = string.replace(backslash*3+quote_2, backslash*2+quote_2)
+
+            # usual quotes escape
+            escaped_1 = backslash + quote_1
+            # escaped_2 = backslash + quote_2
+            string = string.replace(quote_1, escaped_1)
+            # string = string.replace(quote_2, escaped_2)
+            return string
+
+    @classmethod
+    def get_list_of_sounds(cls, quiet=False):
+        &#34;&#34;&#34;Print all sound names from current machine and user
+        &lt;br&gt;`param quiet` suppress print to console
+        &lt;br&gt;`return` list of all sounds
+        &#34;&#34;&#34;
+        from .print9 import Print
+        from .dir9 import Dir
+        from .path9 import Path
+        global_sounds = Dir.list_of_files(Path.combine(&#34;System&#34;, &#34;Library&#34;, &#34;Sounds&#34;))
+        local_sounds = Dir.list_of_files(Path.combine(&#34;~&#34;, &#34;Library&#34;, &#34;Sounds&#34;))
+        if not quiet:
+            Print.debug(&#34;global sounds&#34;, global_sounds, &#34;local sounds&#34;, local_sounds)
+        return global_sounds + local_sounds
+
+    @classmethod
+    def notification(cls, message, title=&#34;python3&#34;, subtitle=None, sound=None):
+        &#34;&#34;&#34;Create notification with AppleScript
+        &lt;br&gt;`param message` string
+        &lt;br&gt;`param title` string
+        &lt;br&gt;`param subtitle` string
+        &lt;br&gt;`param sound` string with sound name
+        &lt;br&gt;`param list_of_sounds` boolean,
+        &lt;br&gt;`return` None
+        &#34;&#34;&#34;
+        # https://apple.stackexchange.com/questions/57412/how-can-i-trigger-a-notification-center-notification-from-an-a
+        # pplescript-or-shel# - just AppleScript
+        # better realizations:
+        # advanced commandline tool - https://github.com/vjeantet/alerter
+        # simpler commandline tool - https://github.com/vjeantet/alerter
+        # commands = &#34;display notification \&#34;message\&#34; with title \&#34;title\&#34; subtitle \&#34;subtitle\&#34; sound name \&#34;Sosumi\&#34;&#34;
+        from .str9 import Str
+        from .process9 import Process
+        commands = &#34;display notification &#34; + Str.to_quotes(cls.OSAScript.quotes_escape(message))
+        if title or subtitle:
+            commands += &#34; with &#34;
+            if title:
+                commands += &#34;title &#34; + Str.to_quotes(cls.OSAScript.quotes_escape(title)) + &#34; &#34;
+            if subtitle:
+                commands += &#34;subtitle &#34; + Str.to_quotes(cls.OSAScript.quotes_escape(subtitle)) + &#34; &#34;
+        if sound:
+            commands += &#34; sound name &#34; + Str.to_quotes(cls.OSAScript.quotes_escape(sound))
+        commands = cls.OSAScript.quotes_escape(commands)  # escaping quotes:
+        commands = Str.to_quotes(commands)  # applescript to quotes
+        Process.start(&#34;osascript&#34;, &#34;-e&#34;,
+                      commands)  # f start(*arguments, new_window=False, debug=False, pureshell=False):
+
+    @staticmethod
+    def symlink(real, symlink):
+        &#34;&#34;&#34;Creates symlink in macOS
+        &lt;br&gt;`param real` string, path to real folder or file, where be linked symlink
+        &lt;br&gt;`param symlink` string, path to new symlink
+        &lt;br&gt;`return` None
+        &#34;&#34;&#34;
+        from .process9 import Process
+        Process.start(&#34;ln&#34;, &#34;-s&#34;, &#34;&#39;&#34;+real+&#34;&#39;&#34;, &#34;&#39;&#34;+symlink+&#34;&#39;&#34;)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="commands.macos9.macOS"><code class="flex name class">
+<span>class <span class="ident">macOS</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Class with functions that works only in macOS</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">class macOS:  # pylint: disable=invalid-name, too-few-public-methods
+    &#34;&#34;&#34;Class with functions that works only in macOS
+    &#34;&#34;&#34;
+    class OSAScript:  # pylint: disable=too-few-public-methods
+        &#34;&#34;&#34;Class with function to work with osascript shell command
+        &#34;&#34;&#34;
+        @staticmethod
+        def quotes_escape(string):
+            &#34;&#34;&#34;Trying to escape quotes to puch them through AppleScript
+            &lt;br&gt;`param string` string input
+            &lt;br&gt;`return` string with escaped symbols
+            &#34;&#34;&#34;
+            from .const9 import backslash
+            quote_1 = &#39;&#34;&#39;
+            # quote_2 = &#34;&#39;&#34;
+            # if there any already escaped symbols:
+            string = string.replace(backslash, backslash * 3)  # if there any other escaped symbols except quotes
+            string = string.replace(backslash * 3 + quote_1,
+                                    backslash * 2 + quote_1)  # removing one backslash, because it will added furthurer
+            # string = string.replace(backslash*3+quote_2, backslash*2+quote_2)
+
+            # usual quotes escape
+            escaped_1 = backslash + quote_1
+            # escaped_2 = backslash + quote_2
+            string = string.replace(quote_1, escaped_1)
+            # string = string.replace(quote_2, escaped_2)
+            return string
+
+    @classmethod
+    def get_list_of_sounds(cls, quiet=False):
+        &#34;&#34;&#34;Print all sound names from current machine and user
+        &lt;br&gt;`param quiet` suppress print to console
+        &lt;br&gt;`return` list of all sounds
+        &#34;&#34;&#34;
+        from .print9 import Print
+        from .dir9 import Dir
+        from .path9 import Path
+        global_sounds = Dir.list_of_files(Path.combine(&#34;System&#34;, &#34;Library&#34;, &#34;Sounds&#34;))
+        local_sounds = Dir.list_of_files(Path.combine(&#34;~&#34;, &#34;Library&#34;, &#34;Sounds&#34;))
+        if not quiet:
+            Print.debug(&#34;global sounds&#34;, global_sounds, &#34;local sounds&#34;, local_sounds)
+        return global_sounds + local_sounds
+
+    @classmethod
+    def notification(cls, message, title=&#34;python3&#34;, subtitle=None, sound=None):
+        &#34;&#34;&#34;Create notification with AppleScript
+        &lt;br&gt;`param message` string
+        &lt;br&gt;`param title` string
+        &lt;br&gt;`param subtitle` string
+        &lt;br&gt;`param sound` string with sound name
+        &lt;br&gt;`param list_of_sounds` boolean,
+        &lt;br&gt;`return` None
+        &#34;&#34;&#34;
+        # https://apple.stackexchange.com/questions/57412/how-can-i-trigger-a-notification-center-notification-from-an-a
+        # pplescript-or-shel# - just AppleScript
+        # better realizations:
+        # advanced commandline tool - https://github.com/vjeantet/alerter
+        # simpler commandline tool - https://github.com/vjeantet/alerter
+        # commands = &#34;display notification \&#34;message\&#34; with title \&#34;title\&#34; subtitle \&#34;subtitle\&#34; sound name \&#34;Sosumi\&#34;&#34;
+        from .str9 import Str
+        from .process9 import Process
+        commands = &#34;display notification &#34; + Str.to_quotes(cls.OSAScript.quotes_escape(message))
+        if title or subtitle:
+            commands += &#34; with &#34;
+            if title:
+                commands += &#34;title &#34; + Str.to_quotes(cls.OSAScript.quotes_escape(title)) + &#34; &#34;
+            if subtitle:
+                commands += &#34;subtitle &#34; + Str.to_quotes(cls.OSAScript.quotes_escape(subtitle)) + &#34; &#34;
+        if sound:
+            commands += &#34; sound name &#34; + Str.to_quotes(cls.OSAScript.quotes_escape(sound))
+        commands = cls.OSAScript.quotes_escape(commands)  # escaping quotes:
+        commands = Str.to_quotes(commands)  # applescript to quotes
+        Process.start(&#34;osascript&#34;, &#34;-e&#34;,
+                      commands)  # f start(*arguments, new_window=False, debug=False, pureshell=False):
+
+    @staticmethod
+    def symlink(real, symlink):
+        &#34;&#34;&#34;Creates symlink in macOS
+        &lt;br&gt;`param real` string, path to real folder or file, where be linked symlink
+        &lt;br&gt;`param symlink` string, path to new symlink
+        &lt;br&gt;`return` None
+        &#34;&#34;&#34;
+        from .process9 import Process
+        Process.start(&#34;ln&#34;, &#34;-s&#34;, &#34;&#39;&#34;+real+&#34;&#39;&#34;, &#34;&#39;&#34;+symlink+&#34;&#39;&#34;)</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="commands.macos9.macOS.OSAScript"><code class="name">var <span class="ident">OSAScript</span></code></dt>
+<dd>
+<section class="desc"><p>Class with function to work with osascript shell command</p></section>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="commands.macos9.macOS.get_list_of_sounds"><code class="name flex">
+<span>def <span class="ident">get_list_of_sounds</span></span>(<span>quiet=False)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Print all sound names from current machine and user
+<br><code>param quiet</code> suppress print to console
+<br><code>return</code> list of all sounds</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">@classmethod
+def get_list_of_sounds(cls, quiet=False):
+    &#34;&#34;&#34;Print all sound names from current machine and user
+    &lt;br&gt;`param quiet` suppress print to console
+    &lt;br&gt;`return` list of all sounds
+    &#34;&#34;&#34;
+    from .print9 import Print
+    from .dir9 import Dir
+    from .path9 import Path
+    global_sounds = Dir.list_of_files(Path.combine(&#34;System&#34;, &#34;Library&#34;, &#34;Sounds&#34;))
+    local_sounds = Dir.list_of_files(Path.combine(&#34;~&#34;, &#34;Library&#34;, &#34;Sounds&#34;))
+    if not quiet:
+        Print.debug(&#34;global sounds&#34;, global_sounds, &#34;local sounds&#34;, local_sounds)
+    return global_sounds + local_sounds</code></pre>
+</details>
+</dd>
+<dt id="commands.macos9.macOS.notification"><code class="name flex">
+<span>def <span class="ident">notification</span></span>(<span>message, title='python3', subtitle=None, sound=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Create notification with AppleScript
+<br><code>param message</code> string
+<br><code>param title</code> string
+<br><code>param subtitle</code> string
+<br><code>param sound</code> string with sound name
+<br><code>param list_of_sounds</code> boolean,
+<br><code>return</code> None</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">@classmethod
+def notification(cls, message, title=&#34;python3&#34;, subtitle=None, sound=None):
+    &#34;&#34;&#34;Create notification with AppleScript
+    &lt;br&gt;`param message` string
+    &lt;br&gt;`param title` string
+    &lt;br&gt;`param subtitle` string
+    &lt;br&gt;`param sound` string with sound name
+    &lt;br&gt;`param list_of_sounds` boolean,
+    &lt;br&gt;`return` None
+    &#34;&#34;&#34;
+    # https://apple.stackexchange.com/questions/57412/how-can-i-trigger-a-notification-center-notification-from-an-a
+    # pplescript-or-shel# - just AppleScript
+    # better realizations:
+    # advanced commandline tool - https://github.com/vjeantet/alerter
+    # simpler commandline tool - https://github.com/vjeantet/alerter
+    # commands = &#34;display notification \&#34;message\&#34; with title \&#34;title\&#34; subtitle \&#34;subtitle\&#34; sound name \&#34;Sosumi\&#34;&#34;
+    from .str9 import Str
+    from .process9 import Process
+    commands = &#34;display notification &#34; + Str.to_quotes(cls.OSAScript.quotes_escape(message))
+    if title or subtitle:
+        commands += &#34; with &#34;
+        if title:
+            commands += &#34;title &#34; + Str.to_quotes(cls.OSAScript.quotes_escape(title)) + &#34; &#34;
+        if subtitle:
+            commands += &#34;subtitle &#34; + Str.to_quotes(cls.OSAScript.quotes_escape(subtitle)) + &#34; &#34;
+    if sound:
+        commands += &#34; sound name &#34; + Str.to_quotes(cls.OSAScript.quotes_escape(sound))
+    commands = cls.OSAScript.quotes_escape(commands)  # escaping quotes:
+    commands = Str.to_quotes(commands)  # applescript to quotes
+    Process.start(&#34;osascript&#34;, &#34;-e&#34;,
+                  commands)  # f start(*arguments, new_window=False, debug=False, pureshell=False):</code></pre>
+</details>
+</dd>
+<dt id="commands.macos9.macOS.symlink"><code class="name flex">
+<span>def <span class="ident">symlink</span></span>(<span>real, symlink)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Creates symlink in macOS
+<br><code>param real</code> string, path to real folder or file, where be linked symlink
+<br><code>param symlink</code> string, path to new symlink
+<br><code>return</code> None</p></section>
+<details class="source">
+<summary>Source code</summary>
+<pre><code class="python">@staticmethod
+def symlink(real, symlink):
+    &#34;&#34;&#34;Creates symlink in macOS
+    &lt;br&gt;`param real` string, path to real folder or file, where be linked symlink
+    &lt;br&gt;`param symlink` string, path to new symlink
+    &lt;br&gt;`return` None
+    &#34;&#34;&#34;
+    from .process9 import Process
+    Process.start(&#34;ln&#34;, &#34;-s&#34;, &#34;&#39;&#34;+real+&#34;&#39;&#34;, &#34;&#39;&#34;+symlink+&#34;&#39;&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="commands" href="index.html">commands</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="commands.macos9.macOS" href="#commands.macos9.macOS">macOS</a></code></h4>
+<ul class="">
+<li><code><a title="commands.macos9.macOS.OSAScript" href="#commands.macos9.macOS.OSAScript">OSAScript</a></code></li>
+<li><code><a title="commands.macos9.macOS.get_list_of_sounds" href="#commands.macos9.macOS.get_list_of_sounds">get_list_of_sounds</a></code></li>
+<li><code><a title="commands.macos9.macOS.notification" href="#commands.macos9.macOS.notification">notification</a></code></li>
+<li><code><a title="commands.macos9.macOS.symlink" href="#commands.macos9.macOS.symlink">symlink</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.6.0</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
