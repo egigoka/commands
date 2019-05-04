@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with dicts
 """
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 
 class Dict:
@@ -26,7 +26,7 @@ class Dict:
         """Return sorted dict
         <br>`param dict_` input dict
         <br>`param case_insensitive` sort dict insensitive
-        <br>`return`
+        <br>`return` OrderedDict
         """
         if case_insensitive:
             output = {}
@@ -35,6 +35,15 @@ class Dict:
             return output
         import collections
         return collections.OrderedDict(sorted(dict_.items()))
+
+    @staticmethod
+    def from_str(string):
+        """`param string` string
+        <br>`return` dict"""
+        from ast import literal_eval
+        dict_ = literal_eval(string)
+        assert isinstance(dict_, dict), f"Output must be dict, {type(dict_)} was found"
+        return dict_
 
 
 class imdict(dict):
