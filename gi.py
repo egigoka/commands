@@ -8,6 +8,8 @@ import os
 from commands import *
 from commands.git9 import Git
 
+__version__ = "1.0.0"
+
 # CHANGING VERSION
 version_prefix = '__version__ = "'
 version_suffix = '"'
@@ -28,7 +30,8 @@ Print.colored("uploadin", new_version_string, "grey", "on_white")  # print to no
 
 try:
     # updating doc
-    os.system(r"pdoc3 --html commands --force --output-dir ..\egigoka.github.io\ "[:-1])
+    path = Path.combine("..", "egigoka.github.io") + backslash
+    os.system(fr"pdoc3 --html commands --force --output-dir {path}")
     os.chdir(r"..\egigoka.github.io")
     os.system("git pull")
     os.system("git add .")
