@@ -28,7 +28,7 @@ Print.colored("uploadin", new_version_string, "grey", "on_white")  # print to no
 
 try:
     # updating doc
-    os.system(r"pdoc3 --html commands --overwrite --html-dir ..\egigoka.github.io\ "[:-1])
+    os.system(r"pdoc3 --html commands --force --output-dir ..\egigoka.github.io\ "[:-1])
     os.chdir(r"..\egigoka.github.io")
     os.system("git pull")
     os.system("git add .")
