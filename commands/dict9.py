@@ -2,7 +2,26 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with dicts
 """
-__version__ = "0.3.0"
+__version__ = "0.4.0"
+
+
+
+class imdict(dict):
+    """Rejected PEP 351"""
+    def __hash__(self):
+        return id(self)
+
+    def _immutable(self, *args, **kws):
+        raise TypeError('object is immutable')
+
+    __setitem__ = _immutable
+    __delitem__ = _immutable
+    clear = _immutable
+    update = _immutable
+    setdefault = _immutable
+    pop = _immutable
+    popitem = _immutable
+
 
 
 class Dict:
@@ -45,19 +64,30 @@ class Dict:
         assert isinstance(dict_, dict), f"Output must be dict, {type(dict_)} was found"
         return dict_
 
+    @classmethod
+    def isinstance_keys(cls, dict_, types):
+        for key, value in cls.iterable(dict_):
+            if not isinstance(key, types):
+                return False
+        return True
 
-class imdict(dict):
-    """Rejected PEP 351"""
-    def __hash__(self):
-        return id(self)
+    @classmethod
+    def isinstance_values(cls, dict_, types):
+        for key, value in cls.iterable(dict_):
+            if not isinstance(value, types):
+                return False
+        return True
 
-    def _immutable(self, *args, **kws):
-        raise TypeError('object is immutable')
+    @classmethod
+    def all_keys_lambda(cls, dict_, func, args=(), kwargs=imdict({})):
+        output_dict = {}
+        for key, value in cls.iterable(dict_):
+            output_dict[func(key, *args, **kwargs)] = value
+        return output_dict
 
-    __setitem__ = _immutable
-    __delitem__ = _immutable
-    clear = _immutable
-    update = _immutable
-    setdefault = _immutable
-    pop = _immutable
-    popitem = _immutable
+    @classmethod
+    def all_values_lambda(cls, dict_, func, args=(), kwargs=imdict({})):
+        output_dict = {}
+        for key, value in cls.iterable(dict_):
+            output_dict[key] = func(value, *args, **kwargs)
+        return output_dict
