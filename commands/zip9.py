@@ -3,7 +3,7 @@
 """Internal module to work with zip archives
 """
 # https://code.tutsplus.com/ru/tutorials/compressing-and-extracting-files-in-python--cms-26816
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 
 
 class Zip:
@@ -14,9 +14,6 @@ class Zip:
 
         if not os.path.isfile(input_file):
             raise IOError(input_file + " is not file")
-
-        from .print9 import Print
-        Print.debug(output_zip)
 
         with zipfile.ZipFile(output_zip, mode=mode) as zip:
             zip.write(input_file, arcname=arcname, compress_type=zipfile.ZIP_DEFLATED)
