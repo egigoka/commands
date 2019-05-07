@@ -2,16 +2,18 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.5.0"
+__version__ = "2.6.0"
 
 
 class Json:
     """Class to work with JSON
     """
 
-    def __init__(self, filename, quiet=True, ensure_ascii=False):
+    def __init__(self, filename, quiet=True, ensure_ascii=False, debug=False):
         self.filename = filename
         self.ensure_ascii = ensure_ascii
+        self.quiet = quiet
+        self.debug = debug
         if self._check_file(filename):
             self.string = self._load_from_file(self.filename, quiet=quiet)
         else:
@@ -19,9 +21,11 @@ class Json:
             self._save_to_file(self.filename, self.string, quiet=quiet)
 
     def __getitem__(self, item):
+        self.save(quiet=self.quiet, debug=self.debug)
         return self.string.__getitem__(item)
 
     def __setitem__(self, key, value):
+        self.save(quiet=self.quiet, debug=self.debug)
         return self.string.__setitem__(key, value)
 
     def load(self, quiet=True):
@@ -65,12 +69,14 @@ class Json:
         import json
         import sys
         from .file9 import File
+        from .dict9 import Dict
         if debug:
             print("sys.argv[0] =", sys.argv[0])
             print(json_string)
         # try:
         File.wipe(filename)
         settings_json_text_io = open(filename, "w", encoding="utf8")
+        json_string = Dict.all_keys_lambda(json_string, str)  # make sure that all keys is strings
         json.dump(json_string, settings_json_text_io, ensure_ascii=self.ensure_ascii)
         settings_json_text_io.close()
         if not quiet:
