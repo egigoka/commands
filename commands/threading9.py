@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "1.1.1"
+__version__ = "1.1.2"
 
 from .dict9 import imdict
 
@@ -28,6 +28,7 @@ class MyThread:
 
     def qprint(self, *args, **kwargs):
         if not self.quiet:
+            print()
             print(*args, **kwargs)
 
     def run(self):
