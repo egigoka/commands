@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.8.11"
+__version__ = "0.9.0"
 
 
 class Console:
@@ -305,10 +305,11 @@ class Console:
             from .print9 import Print
             output = cls._get_output_with_timeout(*commands, print_std=print_std, decoding=decoding,
                                                   timeout=timeout)
+            if output[3]:
+                raise TimeoutError(fr"Timeout {timeout} reached while running {commands}")
         else:
             output = cls._get_output(*commands, print_std=print_std, decoding=decoding, pureshell=pureshell,
                                      universal_newlines=universal_newlines)
-
         out = output[0]
         err = output[1]
         if return_merged:
