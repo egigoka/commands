@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "1.1.0"
+__version__ = "1.1.1"
 
 from .dict9 import imdict
 
@@ -23,10 +23,8 @@ class MyThread:
         self.args = args
         self.kwargs = kwargs
         self.quiet = quiet
-        self.bench = None
-        if quiet:
-            from .bench9 import Bench
-            self.bench = Bench(name, quiet=True)
+        from .bench9 import Bench
+        self.bench = Bench(name, quiet=True)
 
     def qprint(self, *args, **kwargs):
         if not self.quiet:
