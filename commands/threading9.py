@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "1.2.0"
+__version__ = "1.3.0"
 
 from .dict9 import imdict
 
@@ -47,11 +47,13 @@ class MyThread:
         if wait_for_keyboard_interrupt:
             self.wait_for_keyboard_interrupt()
 
-    def wait_for_keyboard_interrupt(self):
+    def wait_for_keyboard_interrupt(self, quiet=True):
         import time
         try:
             while self.thread.is_alive():
                 time.sleep(1)
+                if not quiet:
+                    print(self.thread.name)
         except (KeyboardInterrupt, SystemExit):
             self.raise_exception()
 
@@ -110,7 +112,7 @@ class Threading:
                 alive = []  # list of alive threads
                 for thread in self.threads:
                     if thread.thread.is_alive():
-                        alive.append(thread.name)
+                        alive.append(thread.thread.name)
                         time.sleep(1)
                 if not alive:  # if none of processes alive
                     return
