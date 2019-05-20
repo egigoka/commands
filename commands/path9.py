@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with funtions to work with path strings
 """
-__version__ = "2.3.0"
+__version__ = "2.4.0"
 
 
 class Path:
@@ -126,3 +126,12 @@ class Path:
     def python():
         import sys
         return sys.executable
+
+    @staticmethod
+    def temp():
+        from .os9 import OS
+        if OS.macos:
+            return '/tmp'
+        else:
+            import tempfile
+            return tempfile.gettempdir()
