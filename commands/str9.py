@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.12.1"
+__version__ = "0.13.0"
 
 
 class Str:
@@ -320,6 +320,25 @@ class Str:
             password_sym = password[cnt % password_len]
             output_string += chr(numb + ord(password_sym))
         return output_string
+
+    seeds = []
+
+    @classmethod
+    def guid_by_seed(cls, seed, uniq_in_process=True):
+        if uniq_in_process:
+            if seed in cls.seeds:
+                raise KeyError(fr"seed '{seed}' already used by guid_by_seed")
+            else:
+                cls.seeds.append(seed)
+        import hashlib
+        bseed = bytes(seed, "utf-8")
+        hash = hashlib.sha256(bseed)
+        hashhex = hash.hexdigest()
+        strhashhex = str(hashhex)
+        symbols = strhashhex.zfill(32)[-32:]  # adds zeros if needed and cut unneded symbols
+        string = symbols[:8] + "-" + symbols[8:12] + "-" + symbols[12:16] + "-" + symbols[16:20] + "-" + symbols[20:]
+        return string
+
 
     python_encodings = ['ascii', 'big5', 'big5hkscs', 'cp037', 'cp424', 'cp437', 'cp500', 'cp737', 'cp775', 'cp850',
                         'cp852', 'cp855', 'cp856', 'cp857', 'cp860', 'cp861', 'cp862', 'cp863', 'cp864', 'cp865',
