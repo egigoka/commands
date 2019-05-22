@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.13.0"
+__version__ = "0.13.1"
 
 
 class Str:
@@ -325,11 +325,11 @@ class Str:
 
     @classmethod
     def guid_by_seed(cls, seed, uniq_in_process=True):
-        if uniq_in_process:
-            if seed in cls.seeds:
+        if seed in cls.seeds:
+            if uniq_in_process:
                 raise KeyError(fr"seed '{seed}' already used by guid_by_seed")
-            else:
-                cls.seeds.append(seed)
+        else:
+            cls.seeds.append(seed)
         import hashlib
         bseed = bytes(seed, "utf-8")
         hash = hashlib.sha256(bseed)
