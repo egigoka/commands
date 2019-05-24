@@ -24,7 +24,7 @@ setup(
         'psutil'],
     extras_require={
         ':platform_system!="Linux"': ['pyautogui'],
-        ':platform_system=="Windows"': ['pywin32', 'colorama', 'win10toast', 'winrm'],
+        ':platform_system=="Windows"': ['pywin32', 'colorama', 'win10toast', 'pywinrm'],
         ':python_version < "3.6" and platform_system=="Windows"': ['win_unicode_console'],
         },
     include_package_data=True,
