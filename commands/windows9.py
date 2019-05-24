@@ -2,11 +2,51 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.4.2"
+__version__ = "0.5.0"
 
 class Windows:
     """Class to work with Windows-specific functions
     """
+
+    class RemoteSystem:
+        def __init__(self, hostname, username, password, port=None, transport="ntlm"):
+            import winrm
+            ### FIX winrm ###
+            def fix_run_ps(self, script):
+                from base64 import b64encode
+                encoded_ps = b64encode(script.encode('utf_16_le')).decode('ascii')
+                rs = self.run_cmd('powershell -encodedcommand {0}'.format(encoded_ps))
+                if len(rs.std_err):
+                    rs.std_err = self._clean_error_msg(rs.std_err.decode('utf-8'))
+                return rs
+
+            winrm.Session.run_ps = fix_run_ps
+            ### END FIX winrm ###
+
+            if port is None:
+                port = 5986 if transport == 'ssl' else 5985
+
+            self.session = winrm.Session(fr"{hostname}:{port}", auth=(username, password), transport=transport)
+
+        def ps(self, script):
+            output = self.session.run_ps(script)
+            if output.std_err.startswith("#< CLIXML\r\n"):
+                output.std_err = output.std_err[len("#< CLIXML\r\n"):]
+
+            out = output.std_out.decode()
+            err = output.std_err
+            return out, err, output.status_code
+
+        def cmd(self, program, *args):
+            from commands.list9 import List
+            args = List.to_strings(args)
+            output = self.session.run_cmd(program, args)
+
+            out = output.std_out.decode()
+            err = output.std_err.decode()
+            return out, err, output.status_code
+
+
     @staticmethod
     def lock():
         """Locking windows workstation, doesn't work with Windows 10
