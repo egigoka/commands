@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "1.3.0"
+__version__ = "1.3.1"
 
 from .dict9 import imdict
 
@@ -10,10 +10,12 @@ from .dict9 import imdict
 class MyThread:
     _imdict = imdict({})
 
-    def __init__(self, thread_id, func, name=None, args=(), kwargs=_imdict, daemon=False, quiet=True):
+    def __init__(self, func, thread_id=None, name=None, args=(), kwargs=_imdict, daemon=False, quiet=True):
         import threading
         if name is None:
             name = f"Thread {func.__name__}.{thread_id}"
+        if thread_id is None:
+            thread_id = 0
         self.thread = threading.Thread()
         self.thread.daemon = daemon
         self.thread_id = thread_id
