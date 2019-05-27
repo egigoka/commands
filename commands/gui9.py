@@ -98,6 +98,7 @@ class Gui:  # pylint: disable=too-few-public-methods
                 WindowsBalloonTip(title=title, msg=message)
 
             from .threading9 import MyThread
-            MyThread(notification, args=(title, message), daemon=True)
+            t = MyThread(notification, args=(title, message), daemon=True)
+            t.start()
         else:
             raise NotImplementedError("OS not in ['Windows', 'macOS'] not supported yet")
