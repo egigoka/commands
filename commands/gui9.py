@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with gui
 """
-__version__ = "0.4.1"
+__version__ = "0.4.2"
 
 
 class Gui:  # pylint: disable=too-few-public-methods
@@ -50,7 +50,7 @@ class Gui:  # pylint: disable=too-few-public-methods
                 toaster = ToastNotifier()
 
                 from .threading9 import MyThread
-                t = MyThread(toaster.show_toast, args=(title, message), kwargs={"icon_path":None, "duration":5, "threaded":False}, daemon=True)
+                t = MyThread(toaster.show_toast, args=(title, message), kwargs={"icon_path":None, "threaded":False}, daemon=True)
                 t.start()
 
             else:
