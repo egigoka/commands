@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with lists
 """
-__version__ = "0.5.0"
+__version__ = "0.6.0"
 
 
 class List:
@@ -70,3 +70,11 @@ class List:
         import collections
         c = collections.Counter(list)
         return c.most_common(count)
+
+    @staticmethod
+    def shuffle(list):
+        import random
+        import copy
+        copy_list = copy.deepcopy(list)
+        random.shuffle(copy_list)
+        return copy_list

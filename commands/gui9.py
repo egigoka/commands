@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with gui
 """
-__version__ = "0.4.3"
+__version__ = "0.4.6"
 
 
 class Gui:  # pylint: disable=too-few-public-methods
@@ -61,8 +61,11 @@ class Gui:  # pylint: disable=too-few-public-methods
                     # Register the Window class.
                     wc = win32gui.WNDCLASS()
                     hinst = wc.hInstance = win32api.GetModuleHandle(None)
-                    wc.lpszClassName = "PythonTaskbar"
+                    # fucc
+                    from .random9 import Random
+                    wc.lpszClassName = "PythonTaskbar" + Random.string(100)
                     wc.lpfnWndProc = message_map  # could also specify a wndproc.
+
                     classAtom = win32gui.RegisterClass(wc)
                     # Create the Window.
                     style = win32con.WS_OVERLAPPED | win32con.WS_SYSMENU
@@ -83,8 +86,7 @@ class Gui:  # pylint: disable=too-few-public-methods
                     win32gui.Shell_NotifyIcon(win32gui.NIM_MODIFY,
                                      (self.hwnd, 0, win32gui.NIF_INFO, win32con.WM_USER + 20,
                                       hicon, "Balloon  tooltip", title, 200, msg))
-                    # self.show_balloon(title, msg)
-                    time.sleep(10)
+                    time.sleep(60)
                     win32gui.DestroyWindow(self.hwnd)
 
                 def OnDestroy(self, hwnd, msg, wparam, lparam):
@@ -95,7 +97,16 @@ class Gui:  # pylint: disable=too-few-public-methods
                     win32api.PostQuitMessage(0)  # Terminate the app.
 
             def notification(title, message):
-                WindowsBalloonTip(title=title, msg=message)
+                import pywintypes
+                cnt = 0
+                while cnt < 10:
+                    cnt += 1
+                    try:
+                        WindowsBalloonTip(title=title, msg=message)
+                        return
+                    except pywintypes.error as err:
+                        print(err)
+                        pass
 
             from .threading9 import MyThread
             t = MyThread(notification, args=(title, message), daemon=True)
