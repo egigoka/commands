@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.5.5"
+__version__ = "0.5.6"
 
 
 class Network:
@@ -88,7 +88,7 @@ class Network:
             except UnboundLocalError:
                 backup_ping_output = ""
             ping_output = ""
-        uplink = ping_output.lower().count("time=") >= count
+        uplink = ping_output.lower().count("time=")+ping_output.lower().count("time<") >= count
 
         if logfile or (not quiet):
             import termcolor
