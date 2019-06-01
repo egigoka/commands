@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with funtions to work with path strings
 """
-__version__ = "2.4.0"
+__version__ = "2.5.0"
 
 
 class Path:
@@ -72,9 +72,7 @@ class Path:
 
     @staticmethod
     def home():
-        """
-        <br>`return` string, home directory of user
-        """
+        """<br>`return` string, home directory of user"""
         from .os9 import OS
         from .console9 import Console
         from .const9 import newline, newline2
@@ -135,3 +133,9 @@ class Path:
         else:
             import tempfile
             return tempfile.gettempdir()
+
+    @staticmethod
+    def safe__file__(__file__):
+        if len(__file__) == 0:
+            return '.'
+        return __file__
