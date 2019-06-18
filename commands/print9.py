@@ -19,7 +19,6 @@ class Print:
 
     def multithread_safe(self, *args, **kwargs):
         """Thread safe print function"""
-        print(self)
         with self.s_print_lock:
             print(*args, **kwargs)
 
