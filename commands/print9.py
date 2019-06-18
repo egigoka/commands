@@ -2,18 +2,26 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for print to console.
 """
-__version__ = "0.9.6"
+__version__ = "0.10.0"
 
 
 class Print:
     """Class with functions for print to console.
     """
+    
+    def __init__(self):
+        from threading import Lock
+        self.s_print_lock = Lock()
 
     def __call__(self, *args, **kwargs):
-        print(*args, **kwargs)
+        self.multithread_safe(*args, **kwargs)
 
-    @staticmethod
-    def debug(*strings, raw=False):
+    def multithread_safe(self, *args, **kwargs):
+        """Thread safe print function"""
+        with self.s_print_lock:
+            print(*args, **kwargs)
+
+    def debug(self, *strings, raw=False):
         """More notable print, used only for debugging
         <br>`param strings` strings, prints separately
         <br>`param raw` print representation of raw strings
@@ -21,18 +29,17 @@ class Print:
         """
         from .console9 import Console
         line = "-" * Console.width()
-        print("<<<Debug sheet:>>>")
+        self.multithread_safe("<<<Debug sheet:>>>")
         for str_ in strings:
-            print(line, end="")
+            self.multithread_safe(line, end="")
             if raw:
-                print(repr(str_))
+                self.multithread_safe(repr(str_))
             else:
-                print(str_)
-            print(line)
-        print("<<<End of debug sheet>>>")
+                self.multithread_safe(str_)
+            self.multithread_safe(line)
+        self.multithread_safe("<<<End of debug sheet>>>")
 
-    @staticmethod
-    def rewrite(*strings, sep=" ", fit=True):
+    def rewrite(self,*strings, sep=" ", fit=True):
         """Print rewritable string. note, that you need to rewrite string to remove previous characters
         <br>`param strings` strings, work as builtin print()
         <br>`param sep` sep as builtin print(sep)
@@ -43,14 +50,12 @@ class Print:
         line = " " * Console.width()
         if OS.windows:  # windows add symbol to end of string :(
             line = line[:-1]
-        print(line, end="\r")
+        self.multithread_safe(line, end="\r")
         if fit:
             strings = Console.fit(*strings, sep=sep)
-        print(*strings, sep=sep, end="\r")
+        self.multithread_safe(*strings, sep=sep, end="\r")
 
-
-    @staticmethod
-    def prettify(object_, indent=4, quiet=False):
+    def prettify(self, object_, indent=4, quiet=False):
         """Pretty print of list, dicts, tuples
         <br>`param object_` list|dict|tuple
         <br>`param indent` int, indent to new nested level
@@ -59,9 +64,10 @@ class Print:
         """
         import pprint
         pretty_printer = pprint.PrettyPrinter(indent=indent)
+        pretty_string = pretty_printer.pformat(object=object_)
         if not quiet:
-            pretty_printer.pprint(object_)
-        return pretty_printer.pformat(object=object_)
+            self.multithread_safe(pretty_string)
+        return pretty_string
 
     colorama_inited = False
 
@@ -111,8 +117,9 @@ class Print:
             string += str(strings[-1])  # последняя без сепаратора
         else:  # if there only one object
             string = strings[0]
-        # run termcolor
-        termcolor.cprint(string, color=color, on_color=highlight, attrs=attributes, end=end)
+
+        colored_string = termcolor.colored(string, color=color, on_color=highlight, attrs=attributes)
+        cls.multithread_safe(colored_string, end=end)
 
         with suppress(KeyError):  # for work with multithreading
             termcolor.COLORS.pop("gray")
