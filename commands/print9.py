@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for print to console.
 """
-__version__ = "0.10.1"
+__version__ = "0.10.2"
 
 
 class Print:
     """Class with functions for print to console.
     """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):  # args added cause pycharm thinks that I'm every time init this class when call it
         from threading import Lock
         self.s_print_lock = Lock()
         self.colorama_inited = False

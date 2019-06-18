@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "1.3.1"
+__version__ = "1.3.2"
 
 from .dict9 import imdict
 
@@ -30,8 +30,8 @@ class MyThread:
 
     def qprint(self, *args, **kwargs):
         if not self.quiet:
-            print()
-            print(*args, **kwargs)
+            from .print9 import Print
+            Print(*args, **kwargs)
 
     def run(self):
         self.qprint("Starting " + self.thread.name)
@@ -55,7 +55,8 @@ class MyThread:
             while self.thread.is_alive():
                 time.sleep(1)
                 if not quiet:
-                    print(self.thread.name)
+                    from .print9 import Print
+                    Print(self.thread.name)
         except (KeyboardInterrupt, SystemExit):
             self.raise_exception()
 
@@ -119,7 +120,8 @@ class Threading:
                 if not alive:  # if none of processes alive
                     return
                 if not quiet:
-                    print("alive:", alive)
+                    from .print9 import Print
+                    Print("alive:", alive)
         except (KeyboardInterrupt, SystemExit):
                 self.raise_exception()
 

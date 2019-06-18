@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.5.0"
+__version__ = "0.5.1"
 
 class Windows:
     """Class to work with Windows-specific functions
@@ -87,6 +87,7 @@ class Windows:
         """
         from .path9 import Path
         from .file9 import File
+        from .print9 import Print
         lockfile = Path.combine(Path.commands(), ".windows_codepage_lock")
         if File.exist(lockfile):
             return cls.get_cmd_code_page()
@@ -95,11 +96,12 @@ class Windows:
             if previous_codepage != 65001:
                 code_page = cls.set_cmd_code_page(65001)
             import os
-            command = r'''py -c "print('йЙ', end='\r')"'''
-            print("йЙ", end="\r")
-            print("  ", end="\r")
+            with Print.s_print_lock:
+                command = r'''py -c "print('йЙ', end='\r')"'''
+            Print("йЙ", end="\r")
+            Print("  ", end="\r")
             os.system(command)
-            print("  ", end="\r")
+            Print("  ", end="\r")
             return cls.get_cmd_code_page()
         except Exception as e:
             if int(previous_codepage) >= 0:
@@ -107,7 +109,7 @@ class Windows:
                     cls.set_cmd_code_page(previous_codepage)
                 else:
                     cls.set_cmd_code_page(437)
-                print("  ", end="\r")
+                Print("  ", end="\r")
                 from .os9 import OS
                 OS.cyrillic_support = False
                 File.create(lockfile)
