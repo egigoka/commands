@@ -2,22 +2,24 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for print to console.
 """
-__version__ = "0.10.0"
+__version__ = "0.10.1"
 
 
 class Print:
     """Class with functions for print to console.
     """
-    
+
     def __init__(self):
         from threading import Lock
         self.s_print_lock = Lock()
+        self.colorama_inited = False
 
     def __call__(self, *args, **kwargs):
         self.multithread_safe(*args, **kwargs)
 
     def multithread_safe(self, *args, **kwargs):
         """Thread safe print function"""
+        print(self)
         with self.s_print_lock:
             print(*args, **kwargs)
 
@@ -69,10 +71,7 @@ class Print:
             self.multithread_safe(pretty_string)
         return pretty_string
 
-    colorama_inited = False
-
-    @classmethod
-    def colored(cls, *strings, attributes=None, end="\n", sep=" "):
+    def colored(self, *strings, attributes=None, end="\n", sep=" "):
         """Wrapper for termcolor.cprint, added some smartness <br>`3
         Usage` Print.colored("text1", "text2", "red") or cls.colored("text", "text2", "red", "on_white").
         You can pick colors from termcolor.COLORS, highlights from termcolor.HIGHLIGHTS.
@@ -87,10 +86,10 @@ class Print:
         termcolor.COLORS["gray"] = termcolor.COLORS["black"] = 30
         termcolor.HIGHLIGHTS["on_gray"] = termcolor.HIGHLIGHTS["on_black"] = 40
         from .os9 import OS
-        if OS.windows and not cls.colorama_inited:
+        if OS.windows and not self.colorama_inited:
             import colorama
             colorama.init()
-            cls.colorama_inited = True
+            self.colorama_inited = True
         # check for colors in input
         highlight = None
         color = None
@@ -119,7 +118,7 @@ class Print:
             string = strings[0]
 
         colored_string = termcolor.colored(string, color=color, on_color=highlight, attrs=attributes)
-        cls.multithread_safe(colored_string, end=end)
+        self.multithread_safe(colored_string, end=end)
 
         with suppress(KeyError):  # for work with multithreading
             termcolor.COLORS.pop("gray")
