@@ -140,14 +140,14 @@ class Str:
         return string_output
 
     @classmethod
-    def rightpad(cls, string, leng, char="0"):
+    def rightpad(cls, string, length, char="0"):
         """Adds symbols from char str to right side of output string to change input string len to 'length'
         <br>`param string` string, input
         <br>`param length` int, len of output string
         <br>`param char` string, characters, added to right side of input string
         <br>`return` string, with added characters to side of input string
         """
-        return cls.leftpad(string, leng, char=char, rightpad=True)
+        return cls.leftpad(string, length, char=char, rightpad=True)
 
     @staticmethod
     def substring(string, before, after=None, return_after_substring=False, safe=False, exception_message=None):
