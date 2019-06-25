@@ -24,7 +24,7 @@ class Wget:  # pylint: disable=too-few-public-methods
         from .dir9 import Dir
         import os
 
-        commands = [wget_path, url, "-O", output_filename, "--no-verbose"] + arguments
+        commands = [wget_path, url, "-O", output_filename, "--no-verbose", f"--base={url}"] + arguments
         if no_check_certificate:
             commands.insert(1, "--no-check-certificate")
         if not Dir.exist(os.path.split(output_filename)[0]) and os.path.split(output_filename)[0]:
