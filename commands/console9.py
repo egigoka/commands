@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.9.0"
+__version__ = "0.10.0"
 
 
 class Console:
@@ -198,7 +198,7 @@ class Console:
         return State.stdout, State.stderr, return_code, State.timeout_exception
 
     @staticmethod
-    def _get_output(*commands, print_std, decoding, pureshell, universal_newlines):
+    def _get_output(*commands, print_std, decoding, pureshell, universal_newlines, debug=False):
         import subprocess
         if decoding:
             out = ""
@@ -226,9 +226,10 @@ class Console:
                     if print_std:
                         print(line, end='')
         except FileNotFoundError as exception:
-            from .print9 import Print
-            Print.debug("commands", commands, "pureshell", pureshell, "print_std", print_std, "decoding", decoding,
-                        "universal_newlines", universal_newlines)
+            if debug:
+                from .print9 import Print
+                Print.debug("commands", commands, "pureshell", pureshell, "print_std", print_std, "decoding", decoding,
+                            "universal_newlines", universal_newlines)
             raise FileNotFoundError(exception)
         return out, err
 
@@ -237,7 +238,7 @@ class Console:
 
     @classmethod
     def get_output(cls, *commands, pureshell=False, print_std=False, decoding=None, universal_newlines=False,
-                   auto_decoding=True, auto_disable_py_buffering=True, return_merged=True, timeout=None):
+                   auto_decoding=True, auto_disable_py_buffering=True, return_merged=True, timeout=None, debug=False):
         """Return output of executing command.
         <br>`param commands` list[string if pureshell is True] with command and arguments
         <br>`param pureshell` boolean, if True, the specified command will be executed through the shell
@@ -309,7 +310,7 @@ class Console:
                 raise TimeoutError(fr"Timeout {timeout} reached while running {commands}")
         else:
             output = cls._get_output(*commands, print_std=print_std, decoding=decoding, pureshell=pureshell,
-                                     universal_newlines=universal_newlines)
+                                     universal_newlines=universal_newlines, debug=debug)
         out = output[0]
         err = output[1]
         if return_merged:
