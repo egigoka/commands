@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.6.0"
+__version__ = "2.6.1"
 
 
 class Json:
@@ -93,7 +93,7 @@ class Json:
             raise IOError("error while saving JSON, try to repair script at path " +
                           Path.full(sys.argv[0]))
 
-    def _load_from_file(self, filename, quiet=False, debug=False):
+    def _load_from_file(self, file_path, quiet=False, debug=False):
         """
         <br>`param filename` path of file, from load JSON
         <br>`param quiet` suppress print to console
@@ -102,22 +102,22 @@ class Json:
         """
         import json
         import os
-        # try:
-        if not os.path.isfile(filename):
+        if not os.path.isfile(file_path):
             from .file9 import File
-            File.create(filename)
+            File.create(file_path)
             clean_json = {}
-            self._save_to_file(filename, clean_json)
-        settings_json_text_io = open(filename, encoding="utf8")
-        json_string_in_memory = json.load(settings_json_text_io)
-        settings_json_text_io.close()
+            self._save_to_file(file_path, clean_json)
+        with open(file_path, encoding="utf8") as file_handle:
+            try:
+                json_string_in_memory = json.load(file_handle)
+            except json.decoder.JSONDecodeError as e:
+                from .file9 import File
+                if File.read(file_path) == "":
+                    json_string_in_memory = {}
+                else:
+                    raise e
         if not quiet:
             print("JSON successfully loaded")
         if debug:
             print(json_string_in_memory)
         return json_string_in_memory
-        # except:
-        #     import sys
-        #     from .path import Path
-        #     raise IOError("error while loading JSON, try to repair script at path " +
-        #                   Path.full(sys.argv[0]))

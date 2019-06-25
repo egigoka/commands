@@ -16,6 +16,11 @@ class TSQL:
         self.connect_to_sql_string = f'DRIVER={self.sql_driver};SERVER={self.sql_server};UID={self.sql_sa_user};' \
                                      f'PWD={self.sql_sa_password};DATABASE={self.sql_database}'
 
+    
+
+    def run(self, command, debug=False):
+        raise NotImplementedError
+
     def run_without_transaction(self, command, debug=False):
         import pyodbc
         from .print9 import Print
