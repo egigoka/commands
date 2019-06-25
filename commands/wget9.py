@@ -39,6 +39,6 @@ class Wget:  # pylint: disable=too-few-public-methods
                 if OS.windows:
                     wget_exec_name += ".exe"
                 return cls.download(url=url, output_filename=output_filename, no_check_certificate=no_check_certificate,
-                                    wget_path=Path.combine(Path.commands(), wget_exec_name))
+                                    wget_path=Path.combine(Path.commands(), "res", wget_exec_name))
             raise OSError(exception, "install wget")
         # Another way to fix blocks by creating ~/.wgetrc file https://stackoverflow.com/a/34166756
