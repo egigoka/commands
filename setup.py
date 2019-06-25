@@ -21,7 +21,8 @@ setup(
         'pyperclip',
         'paramiko',
         'chardet',
-        'psutil'],
+        'psutil',
+        'pyodbc'],
     extras_require={
         ':platform_system!="Linux"': ['pyautogui'],
         ':platform_system=="Windows"': ['pywin32', 'colorama', 'pywinrm'],
