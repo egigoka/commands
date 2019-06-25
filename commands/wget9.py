@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module wrapper to cli wget
 """
-__version__ = "0.1.3"
+__version__ = "0.1.5"
 
 
 class Wget:  # pylint: disable=too-few-public-methods
@@ -16,23 +16,21 @@ class Wget:  # pylint: disable=too-few-public-methods
         <br>`param quiet` boolean, suppress print to console
         <br>`return` output from wget if 'quiet' argument is True
         """
-        arguments = '--header="Accept: text/html" ' + \
+        arguments = ['--header="Accept: text/html"',
                     '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) ' + \
-                    'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3167.0 Safari/537.36"'
+                    'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3167.0 Safari/537.36"']
 
         from .console9 import Console
         from .dir9 import Dir
         import os
 
-        no_check_certificate_cli_arg = ""
+        commands = [wget_path, url, "-O", output_filename] + arguments
         if no_check_certificate:
-            no_check_certificate_cli_arg = "--no-check-certificate"
-
-        command = f"{wget_path} {no_check_certificate_cli_arg} {url} -O {output_filename} {arguments}"
+            commands.insert(1, "--no-check-certificate")
         if not Dir.exist(os.path.split(output_filename)[0]) and os.path.split(output_filename)[0]:
             Dir.create(os.path.split(output_filename)[0])
         try:
-            return Console.get_output(command, print_std=not quiet)
+            return Console.get_output(commands, print_std=not quiet)
         except FileNotFoundError as exception:
             if wget_path == "wget":
                 from .path9 import Path
