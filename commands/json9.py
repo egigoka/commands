@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.6.1"
+__version__ = "2.6.2"
 
 
 class Json:
@@ -76,7 +76,10 @@ class Json:
         # try:
         File.wipe(filename)
         settings_json_text_io = open(filename, "w", encoding="utf8")
-        json_string = Dict.all_keys_lambda(json_string, str)  # make sure that all keys is strings
+        try:
+            json_string = Dict.all_keys_lambda(json_string, str)  # make sure that all keys is strings
+        except TypeError:
+            json_string = str(json_string)
         json.dump(json_string, settings_json_text_io, ensure_ascii=self.ensure_ascii)
         settings_json_text_io.close()
         if not quiet:
