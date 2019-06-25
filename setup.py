@@ -27,6 +27,6 @@ setup(
         ':platform_system=="Windows"': ['pywin32', 'colorama', 'pywinrm'],
         ':python_version < "3.6" and platform_system=="Windows"': ['win_unicode_console'],
         },
-    package_data={'': ['wget.exe']},
+    package_data={'': ['res/*']},
     include_package_data=True,
 )
