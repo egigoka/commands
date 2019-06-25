@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module wrapper to cli wget
 """
-__version__ = "0.1.7"
+__version__ = "0.2.0"
 
 
 class Wget:  # pylint: disable=too-few-public-methods
@@ -24,13 +24,16 @@ class Wget:  # pylint: disable=too-few-public-methods
         from .dir9 import Dir
         import os
 
-        commands = [wget_path, url, "-O", output_filename] + arguments
+        commands = [wget_path, url, "-O", output_filename, "--no-verbose"] + arguments
         if no_check_certificate:
             commands.insert(1, "--no-check-certificate")
         if not Dir.exist(os.path.split(output_filename)[0]) and os.path.split(output_filename)[0]:
             Dir.create(os.path.split(output_filename)[0])
         try:
-            return Console.get_output(commands, print_std=not quiet)
+            output = Console.get_output(commands, print_std=not quiet).strip(" \r\n")
+            if output:
+                raise RuntimeError(output)
+            return
         except FileNotFoundError as exception:
             if wget_path == "wget":
                 from .path9 import Path
