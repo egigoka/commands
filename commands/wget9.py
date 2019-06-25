@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module wrapper to cli wget
 """
-__version__ = "0.1.5"
+__version__ = "0.1.6"
 
 
 class Wget:  # pylint: disable=too-few-public-methods
@@ -34,7 +34,11 @@ class Wget:  # pylint: disable=too-few-public-methods
         except FileNotFoundError as exception:
             if wget_path == "wget":
                 from .path9 import Path
+                from .os9 import OS
+                wget_exec_name = "wget"
+                if OS.windows:
+                    wget_exec_name += ".exe"
                 return cls.download(url=url, output_filename=output_filename, no_check_certificate=no_check_certificate,
-                                    wget_path=Path.combine(Path.commands(), "wget"))
+                                    wget_path=Path.combine(Path.commands(), wget_exec_name))
             raise OSError(exception, "install wget")
         # Another way to fix blocks by creating ~/.wgetrc file https://stackoverflow.com/a/34166756
