@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with transact sql
 """
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 
 class TSQL:
@@ -122,8 +122,7 @@ ALTER DATABASE [{sql_database}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
         return backup_path
 
     def get_size(self, debug=False):
-        query = fr'''use {self.sql_database}
-                     SELECT
+        query = fr'''SELECT
                         [size] * 8, 
                         [filename]
                      FROM sysfiles'''
