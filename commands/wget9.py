@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module wrapper to cli wget
 """
-__version__ = "0.2.13"
+__version__ = "0.2.14"
 
 
 class Wget:  # pylint: disable=too-few-public-methods
@@ -20,7 +20,6 @@ class Wget:  # pylint: disable=too-few-public-methods
         from .network9 import Network
         from .console9 import Console
         from .dir9 import Dir
-        print(Network.get_domain_of_url(url))
         arguments = [
                     '--header="Accept: text/html"',
                     '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) ' + \
