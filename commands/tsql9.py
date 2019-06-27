@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with transact sql
 """
-__version__ = "0.3.3"
+__version__ = "0.4.0"
 
 
 class TSQL:
@@ -120,9 +120,18 @@ class TSQL:
 
         return backup_path
 
-    def get_size(self, debug=False):
+    def get_file_sizes(self, debug=False):
         query = fr'''SELECT 
                          CONVERT(bigint, [size])*8*1024, 
                          [filename] 
                      FROM sysfiles'''
         return self.query(query, debug=debug)
+
+    def get_used_space(self, debug=False):
+        from .str9 import Str
+
+        query = "EXEC sp_spaceused @oneresultset = 1"
+        answer = self.query(query, debug=debug)
+        data = answer[0][4]
+        bytes = Str.get_integers(data)[0]
+        return bytes
