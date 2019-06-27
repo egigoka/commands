@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with transact sql
 """
-__version__ = "0.4.1"
+__version__ = "0.5.0"
 
 
 class TSQL:
@@ -99,6 +99,14 @@ class TSQL:
             command += f"""USE master;
                                ALTER DATABASE [{sql_database}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;"""
         command += f"""DROP DATABASE [{sql_database}]"""
+        self.run_without_transaction(command)
+
+    def drop_table(self, sql_table, force=False):
+        command = ""
+        if force:
+            command += f"""USE master;
+                               ALTER DATABASE [{sql_table}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;"""
+        command += f"""DROP TABLE [{sql_table}]"""
         self.run_without_transaction(command)
 
     def backup_database_to_disk(self, sql_database):
