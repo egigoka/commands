@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with transact sql
 """
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 
 class TSQL:
@@ -28,8 +28,10 @@ class TSQL:
         if debug:
             Print("Successful connection to SQL")
             Print(f"Run with transaction: '{query}'")
+
         cur.execute(query)
         con.commit()
+
         if debug:
             Print(f"End '{query}'")
             Print("Try to close connection")
@@ -50,9 +52,11 @@ class TSQL:
         if debug:
             Print("Successful connection to SQL")
             Print(f"Run without transaction: '{query}'")
+
         cur.execute(query)
         while cur.nextset():
             pass
+
         if debug:
             Print(f"End '{query}'")
             Print("Try to close connection")
@@ -60,6 +64,34 @@ class TSQL:
         con.close()
         if debug:
             Print("Close connection done")
+
+    def query(self, query, debug=False):
+        import pyodbc
+        from .print9 import Print
+
+        if debug:
+            Print('SQL settings:"' + self.connect_to_sql_string + '"')
+            Print("Trying connect to SQL")
+        con = pyodbc.connect(self.connect_to_sql_string, autocommit=True)
+        cur = con.cursor()
+        if debug:
+            Print("Successful connection to SQL")
+            Print(f"Run query: '{query}'")
+
+        out = []
+        cur.execute(query)
+        for row in cur.fetchall():
+            out.append(row)
+
+        if debug:
+            Print(f"End '{query}'")
+            Print("Try to close connection")
+        cur.close()
+        con.close()
+        if debug:
+            Print("Close connection done")
+
+        return out
 
     def drop_database(self, sql_database, force=False):
         command = ""
