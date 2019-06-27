@@ -31,6 +31,16 @@ class Network:
         return url_output
 
     @staticmethod
+    def get_protocol_of_url(url):
+        """
+        <br>`param url` string, URL
+        <br>`return` string, URL domain
+        """
+        from .str9 import Str
+        proto_prefix = "://"
+        return Str.substring(url, "", proto_prefix, exception_message="The protocol of url not found") + proto_prefix
+
+    @staticmethod
     def dns_lookup(domain):
         """Resolve IP from domain name with socket.gethostbyname
         <br>`param domain` string, domain name

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with transact sql
 """
-__version__ = "0.0.1"
+__version__ = "0.1.0"
 
 
 class TSQL:
@@ -16,34 +16,50 @@ class TSQL:
         self.connect_to_sql_string = f'DRIVER={self.sql_driver};SERVER={self.sql_server};UID={self.sql_sa_user};' \
                                      f'PWD={self.sql_sa_password};DATABASE={self.sql_database}'
 
-    
-
-    def run(self, command, debug=False):
-        raise NotImplementedError
-
-    def run_without_transaction(self, command, debug=False):
+    def run(self, query, debug=False):
         import pyodbc
         from .print9 import Print
 
-        info = "INFO:"  # change to logger
         if debug:
-            Print(info, 'SQL settings:"' + self.connect_to_sql_string + '"')
-            Print(info, "Trying connect to SQL")
-        con = pyodbc.connect(self.connect_to_sql_string, autocommit=True)
+            Print('SQL settings:"' + self.connect_to_sql_string + '"')
+            Print("Trying connect to SQL")
+        con = pyodbc.connect(self.connect_to_sql_string)
         cur = con.cursor()
         if debug:
-            Print(info, "Successful connection to SQL")
-            Print(info, f"Run '{command}'")
-        cur.execute(command)
-        while cur.nextset():
-            pass
+            Print("Successful connection to SQL")
+            Print(f"Run with transaction: '{query}'")
+        cur.execute(query)
+        con.commit()
         if debug:
-            Print(info, f"End '{command}'")
-            Print(info, "Try to close connection")
+            Print(f"End '{query}'")
+            Print("Try to close connection")
         cur.close()
         con.close()
         if debug:
-            Print(info, "Close connection done")
+            Print("Close connection done")
+
+    def run_without_transaction(self, query, debug=False):
+        import pyodbc
+        from .print9 import Print
+
+        if debug:
+            Print('SQL settings:"' + self.connect_to_sql_string + '"')
+            Print("Trying connect to SQL")
+        con = pyodbc.connect(self.connect_to_sql_string, autocommit=True)
+        cur = con.cursor()
+        if debug:
+            Print("Successful connection to SQL")
+            Print(f"Run without transaction: '{query}'")
+        cur.execute(query)
+        while cur.nextset():
+            pass
+        if debug:
+            Print(f"End '{query}'")
+            Print("Try to close connection")
+        cur.close()
+        con.close()
+        if debug:
+            Print("Close connection done")
 
     def drop_database(self, sql_database, force=False):
         command = ""

@@ -246,6 +246,7 @@ class Console:
         'py' or 'python' firs arg.)
         <br>`return` typle with strings stdout and stderr
         """
+        import os
         from .os9 import OS
         if len(commands) == 1:
                 commands = commands[0]
@@ -259,12 +260,11 @@ class Console:
             raise IndexError("commands must not be empty")
 
         # disable buffering for python
-        if ("py" in commands or "py" in commands[0]) and print_std and auto_disable_py_buffering:
+        if ("py" in commands or "py" in os.path.split(commands[0])[1]) and print_std and auto_disable_py_buffering:
             if "-u" not in commands:
                 list_commands = list(commands)
                 list_commands.insert(1, "-u")
                 commands = list_commands
-
         # set decoding and init
         if auto_decoding and not decoding and not universal_newlines:
             if OS.windows:
