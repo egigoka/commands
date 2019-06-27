@@ -97,8 +97,7 @@ class TSQL:
         command = ""
         if force:
             command += f"""USE master;
-ALTER DATABASE [{sql_database}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-"""
+                               ALTER DATABASE [{sql_database}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;"""
         command += f"""DROP DATABASE [{sql_database}]"""
         self.run_without_transaction(command)
 
@@ -116,7 +115,7 @@ ALTER DATABASE [{sql_database}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
             File.wipe(backup_path)
 
         command = f"""BACKUP DATABASE [{sql_database}]
-        TO DISK = '{backup_path}'"""
+                          TO DISK = '{backup_path}'"""
         self.run_without_transaction(command)
 
         return backup_path
