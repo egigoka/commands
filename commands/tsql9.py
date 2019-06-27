@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with transact sql
 """
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 
 class TSQL:
@@ -133,5 +133,5 @@ class TSQL:
         query = "EXEC sp_spaceused @oneresultset = 1"
         answer = self.query(query, debug=debug)
         data = answer[0][4]
-        bytes = Str.get_integers(data)[0]
+        bytes = Str.get_integers(data)[0] * 1024
         return bytes
