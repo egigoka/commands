@@ -8,7 +8,7 @@ import os
 from commands import *
 from commands.git9 import Git
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 # CHANGING VERSION
 version_prefix = '__version__ = "'
@@ -28,20 +28,6 @@ new_version_string = new_version.lstrip(version_prefix).rstrip(version_suffix)
 Print.colored("uploadin", new_version_string, "grey", "on_white")  # print to notice difference
 # CHANGING VERSION END
 
-try:
-    # updating doc
-    path = Path.combine("..", "egigoka.github.io") + backslash
-    os.system(fr"pdoc3 --html commands --force --output-dir {path}")
-    os.chdir(r"..\egigoka.github.io")
-    os.system("git pull")
-    os.system("git add .")
-    os.system("git pull")
-    os.system(f'git commit -m "updating documentation for commands to v {new_version_string}"')
-    os.system("git push")
-    os.chdir(r"..\commands")
-except Exception as e:
-    print(e)
-
 ARGUMENTS = list(sys.argv)
 ARGUMENTS.pop(0)
 STRING = "small update (default message)"
@@ -57,3 +43,26 @@ except IndexError:
     if INPUT_STRING:
         STRING = INPUT_STRING
 Git.update(STRING)
+
+try:
+    if OS.windows:
+        os.system(r".\update_commands.bat")
+    elif OS.unix_family:
+        os.system("chmod +X ./update_commands.sh")
+        os.system("./update_commands.sh")
+except Exception as e:
+    print(e)
+
+try:
+    # updating doc
+    path = Path.combine("..", "egigoka.github.io") + backslash
+    os.system(fr"pdoc3 --html commands --force --output-dir {path}")
+    os.chdir(r"..\egigoka.github.io")
+    os.system("git pull")
+    os.system("git add .")
+    os.system("git pull")
+    os.system(f'git commit -m "updating documentation for commands to v {new_version_string}"')
+    os.system("git push")
+    os.chdir(r"..\commands")
+except Exception as e:
+    print(e)
