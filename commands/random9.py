@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for creating some random values.
 """
-__version__ = "0.6.1"
+__version__ = "0.6.2"
 
 
 class Random:
@@ -17,6 +17,12 @@ class Random:
         <br>`return` int|str, random from 'minimum' to 'maximum'
         """
         import random
+
+        if maximum < minimum:
+            temp = maximum
+            maximum = minimum
+            minimum = temp
+
         result = random.randrange(minimum, maximum + 1)
         if to_str:
             from .str9 import Str
