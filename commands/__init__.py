@@ -36,6 +36,7 @@ from .zip9 import Zip, Unzip
 from .id9 import ID
 from .git9 import Git
 from .tsql9 import TSQL
+from .cache9 import Cache, CachedFunction
 from .threading9 import MyThread, Threading
 from .resources9 import Resources
 from .const9 import backslash, newline, newline2, ruble
