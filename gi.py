@@ -8,7 +8,7 @@ import os
 from commands import *
 from commands.git9 import Git
 
-__version__ = "1.1.0"
+__version__ = "1.1.1"
 
 # CHANGING VERSION
 version_prefix = '__version__ = "'
@@ -53,16 +53,14 @@ try:
 except Exception as e:
     print(e)
 
-try:
-    # updating doc
-    path = Path.combine("..", "egigoka.github.io") + backslash
-    os.system(fr"pdoc3 --html commands --force --output-dir {path}")
-    os.chdir(r"..\egigoka.github.io")
-    os.system("git pull")
-    os.system("git add .")
-    os.system("git pull")
-    os.system(f'git commit -m "updating documentation for commands to v {new_version_string}"')
-    os.system("git push")
-    os.chdir(r"..\commands")
-except Exception as e:
-    print(e)
+# updating doc
+path = Path.combine("..", "egigoka.github.io") + backslash
+os.system(fr"pdoc3 --html commands --force --output-dir {path}")
+os.chdir(r"..\egigoka.github.io")
+os.system("git pull")
+os.system("git add .")
+os.system("git pull")
+os.system(f'git commit -m "updating documentation for commands to v {new_version_string}"')
+os.system("git push")
+os.chdir(r"..\commands")
+
