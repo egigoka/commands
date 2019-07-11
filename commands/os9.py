@@ -88,3 +88,5 @@ class OS:  # pylint: disable=too-few-public-methods
         cyrillic_support = True
     except (UnicodeEncodeError, PermissionError) as err:
         cyrillic_support = False
+
+    
