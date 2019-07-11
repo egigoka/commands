@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.7.2"
+__version__ = "2.8.0"
 
 
 class Json:
@@ -30,6 +30,9 @@ class Json:
 
     def __len__(self):
         return self.string.__len__()
+
+    def items(self):
+        return self.string.items()
 
     def load(self, quiet=True):
         """Loads json from file, defined in class init to class var "string"
