@@ -54,13 +54,12 @@ except Exception as e:
     print(e)
 
 # updating doc
+cwd = os.getcwd()
 path = Path.combine("..", "egigoka.github.io")
 os.system(fr"pdoc3 --html commands --force --output-dir {path}")
 os.chdir(path)
-os.system("git pull")
+os.system("git fetch --all")
 os.system("git add .")
-os.system("git pull")
 os.system(f'git commit -m "updating documentation for commands to v {new_version_string}"')
 os.system("git push")
-os.chdir(r"..\commands")
-
+os.chdir(cwd)
