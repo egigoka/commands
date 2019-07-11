@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with funtions to work with path strings
 """
-__version__ = "2.6.0"
+__version__ = "2.5.9"
 
 
 class Path:
@@ -139,8 +139,3 @@ class Path:
         if len(__file__) == 0:
             return '.'
         return __file__
-
-    @staticmethod
-    def temp_dir():
-        import tempfile
-        return tempfile.gettempdir()

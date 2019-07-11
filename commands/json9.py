@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.8.0"
+__version__ = "2.8.1"
 
 
 class Json:
@@ -21,12 +21,13 @@ class Json:
             self._save_to_file(self.filename, self.string, quiet=quiet)
 
     def __getitem__(self, item):
-        self.save(quiet=self.quiet, debug=self.debug)
+        self.load()
         return self.string.__getitem__(item)
 
     def __setitem__(self, key, value):
+        output = self.string.__setitem__(key, value)
         self.save(quiet=self.quiet, debug=self.debug)
-        return self.string.__setitem__(key, value)
+        return output
 
     def __len__(self):
         return self.string.__len__()

@@ -39,6 +39,7 @@ from .tsql9 import TSQL
 from .cache9 import Cache, CachedFunction
 from .threading9 import MyThread, Threading
 from .resources9 import Resources
+from .giv9 import GIV
 from .const9 import backslash, newline, newline2, ruble
 from ._version import __version__
 
