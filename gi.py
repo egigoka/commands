@@ -8,7 +8,7 @@ import os
 from commands import *
 from commands.git9 import Git
 
-__version__ = "1.1.2"
+__version__ = "1.1.3"
 
 # CHANGING VERSION
 version_prefix = '__version__ = "'
@@ -54,7 +54,7 @@ except Exception as e:
     print(e)
 
 # updating doc
-path = Path.combine("..", "egigoka.github.io") + backslash
+path = Path.combine("..", "egigoka.github.io")
 os.system(fr"pdoc3 --html commands --force --output-dir {path}")
 os.chdir(path)
 os.system("git pull")
