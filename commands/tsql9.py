@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with transact sql
 """
-__version__ = "0.6.0"
+__version__ = "0.6.1"
 
 
 class TSQL:
@@ -92,6 +92,11 @@ class TSQL:
             Print("Successful connection to SQL")
             Print(f"Run query: '{query}'")
 
+        # debug shit
+        from .id9 import ID
+        id = ID()
+        print(id.get())
+
         out = []
         def get_rows(cursor):
             output = []
@@ -102,6 +107,7 @@ class TSQL:
                 print(f"query:{query}")
                 raise
             for row in cursor.fetchall():
+                print(id.get())
                 output.append(row)
             return output
 
