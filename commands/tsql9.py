@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with transact sql
 """
-__version__ = "0.5.2"
+__version__ = "0.6.0"
 
 
 class TSQL:
@@ -93,14 +93,21 @@ class TSQL:
             Print(f"Run query: '{query}'")
 
         out = []
-        try:
-            cur.execute(query)
-        except pyodbc.ProgrammingError:
-            print(f"self.connect_to_sql_string:'{self.connect_to_sql_string}'")
-            print(f"query:{query}")
-            raise
-        for row in cur.fetchall():
-            out.append(row)
+        def get_rows(cursor):
+            output = []
+            try:
+                cursor.execute(query)
+            except pyodbc.ProgrammingError:
+                print(f"self.connect_to_sql_string:'{self.connect_to_sql_string}'")
+                print(f"query:{query}")
+                raise
+            for row in cursor.fetchall():
+                output.append(row)
+            return output
+
+        out.append(get_rows(cur))
+        while cur.nextset():
+            out.append(get_rows(cur))
 
         if debug:
             Print(f"End '{query}'")
@@ -110,6 +117,8 @@ class TSQL:
         if debug:
             Print("Close connection done")
 
+        if len(out) == 1:
+            return out[0]
         return out
 
     def drop_database(self, sql_database, force=False):
