@@ -8,7 +8,7 @@ import os
 from commands import *
 from commands.git9 import Git
 
-__version__ = "1.2.0"
+__version__ = "1.2.1"
 
 # CHANGING VERSION
 version_prefix = '__version__ = "'
@@ -63,10 +63,18 @@ def safe_run(command):
 cwd = os.getcwd()
 path = Path.combine("..", "egigoka.github.io")
 
+# downloading last version
+os.chdir(path)
+safe_run("git fetch --all")
+safe_run("git reset --hard origin/master")
+
+# updating doc
+os.chdir(cwd)
 safe_run(fr"pdoc3 --html commands --force --output-dir {path}")
+
+# upload doc
 os.chdir(path)
 safe_run("git add .")
 safe_run(f'git commit -m "updating documentation for commands to v {new_version_string}"')
-safe_run("git fetch --all")
 safe_run("git push")
 os.chdir(cwd)
