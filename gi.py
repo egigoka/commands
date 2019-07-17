@@ -8,7 +8,7 @@ import os
 from commands import *
 from commands.git9 import Git
 
-__version__ = "1.1.3"
+__version__ = "1.2.0"
 
 # CHANGING VERSION
 version_prefix = '__version__ = "'
@@ -54,12 +54,19 @@ except Exception as e:
     print(e)
 
 # updating doc
+def safe_run(command):
+    print(command)
+    out, err = Console.get_output(command, return_merged=False)
+    if err:
+        print(err)
+
 cwd = os.getcwd()
 path = Path.combine("..", "egigoka.github.io")
-os.system(fr"pdoc3 --html commands --force --output-dir {path}")
+
+safe_run(fr"pdoc3 --html commands --force --output-dir {path}")
 os.chdir(path)
-os.system("git add .")
-os.system(f'git commit -m "updating documentation for commands to v {new_version_string}"')
-os.system("git fetch --all")
-os.system("git push")
+safe_run("git add .")
+safe_run(f'git commit -m "updating documentation for commands to v {new_version_string}"')
+safe_run("git fetch --all")
+safe_run("git push")
 os.chdir(cwd)
