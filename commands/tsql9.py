@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with transact sql
 """
-__version__ = "0.5.0"
+__version__ = "0.5.1"
 
 
 class TSQL:
@@ -23,7 +23,10 @@ class TSQL:
         if debug:
             Print('SQL settings:"' + self.connect_to_sql_string + '"')
             Print("Trying connect to SQL")
-        con = pyodbc.connect(self.connect_to_sql_string)
+        try:
+            con = pyodbc.connect(self.connect_to_sql_string)
+        except pyodbc.InterfaceError:
+            print(f"self.connect_to_sql_string:'{self.connect_to_sql_string}'")
         cur = con.cursor()
         if debug:
             Print("Successful connection to SQL")
