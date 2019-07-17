@@ -10,6 +10,12 @@ from commands.git9 import Git
 
 __version__ = "1.2.1"
 
+def safe_run(command):
+    print(command)
+    out, err = Console.get_output(command, return_merged=False)
+    if err:
+        print(err)
+
 # CHANGING VERSION
 version_prefix = '__version__ = "'
 version_suffix = '"'
@@ -46,20 +52,14 @@ Git.update(STRING)
 
 try:
     if OS.windows:
-        os.system(r".\update_commands.bat")
+        safe_run(r".\update_commands.bat")
     elif OS.unix_family:
-        os.system("chmod +X ./update_commands.sh")
-        os.system("./update_commands.sh")
+        safe_run("chmod +X ./update_commands.sh")
+        safe_run("./update_commands.sh")
 except Exception as e:
     print(e)
 
 # updating doc
-def safe_run(command):
-    print(command)
-    out, err = Console.get_output(command, return_merged=False)
-    if err:
-        print(err)
-
 cwd = os.getcwd()
 path = Path.combine("..", "egigoka.github.io")
 
