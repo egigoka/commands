@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with transact sql
 """
-__version__ = "0.6.1"
+__version__ = "0.6.3"
 
 
 class TSQL:
@@ -92,24 +92,19 @@ class TSQL:
             Print("Successful connection to SQL")
             Print(f"Run query: '{query}'")
 
-        # debug shit
-        from .id9 import ID
-        id = ID()
-        print(id.get())
-
         out = []
         def get_rows(cursor):
             output = []
-            try:
-                cursor.execute(query)
-            except pyodbc.ProgrammingError:
-                print(f"self.connect_to_sql_string:'{self.connect_to_sql_string}'")
-                print(f"query:{query}")
-                raise
             for row in cursor.fetchall():
-                print(id.get())
                 output.append(row)
             return output
+
+        try:
+            cur.execute(query)
+        except pyodbc.ProgrammingError:
+            print(f"self.connect_to_sql_string:'{self.connect_to_sql_string}'")
+            print(f"query:{query}")
+            raise
 
         out.append(get_rows(cur))
         while cur.nextset():
@@ -172,8 +167,8 @@ class TSQL:
     def get_used_space(self, debug=False):
         from .str9 import Str
 
-        query = "EXEC sp_spaceused @oneresultset = 1"
+        query = "EXEC sp_spaceused"
         answer = self.query(query, debug=debug)
-        data = answer[0][4]
+        data = answer[1][0][1]
         bytes = Str.get_integers(data)[0] * 1024
         return bytes
