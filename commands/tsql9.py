@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with transact sql
 """
-__version__ = "0.5.1"
+__version__ = "0.5.2"
 
 
 class TSQL:
@@ -27,12 +27,18 @@ class TSQL:
             con = pyodbc.connect(self.connect_to_sql_string)
         except pyodbc.InterfaceError:
             print(f"self.connect_to_sql_string:'{self.connect_to_sql_string}'")
+            raise
         cur = con.cursor()
         if debug:
             Print("Successful connection to SQL")
             Print(f"Run with transaction: '{query}'")
 
-        cur.execute(query)
+        try:
+            cur.execute(query)
+        except pyodbc.ProgrammingError:
+            print(f"self.connect_to_sql_string:'{self.connect_to_sql_string}'")
+            print(f"query:{query}")
+            raise
         con.commit()
 
         if debug:
@@ -56,7 +62,12 @@ class TSQL:
             Print("Successful connection to SQL")
             Print(f"Run without transaction: '{query}'")
 
-        cur.execute(query)
+        try:
+            cur.execute(query)
+        except pyodbc.ProgrammingError:
+            print(f"self.connect_to_sql_string:'{self.connect_to_sql_string}'")
+            print(f"query:{query}")
+            raise
         while cur.nextset():
             pass
 
@@ -82,7 +93,12 @@ class TSQL:
             Print(f"Run query: '{query}'")
 
         out = []
-        cur.execute(query)
+        try:
+            cur.execute(query)
+        except pyodbc.ProgrammingError:
+            print(f"self.connect_to_sql_string:'{self.connect_to_sql_string}'")
+            print(f"query:{query}")
+            raise
         for row in cur.fetchall():
             out.append(row)
 
