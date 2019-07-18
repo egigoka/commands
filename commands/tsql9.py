@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with transact sql
 """
-__version__ = "0.6.4"
+__version__ = "0.6.5"
 
 
 class TSQL:
@@ -44,6 +44,8 @@ class TSQL:
             Print(f"End '{query}'")
             Print("Try to close connection")
         cur.close()
+
+        con.commit()
         con.close()
         if debug:
             Print("Close connection done")
