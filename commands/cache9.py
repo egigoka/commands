@@ -1,6 +1,6 @@
 #! python3
 # -*- coding: utf-8 -*-
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 from .dict9 import imdict
 
@@ -15,16 +15,23 @@ class Cache:
         self.bench = bench
         if bench is None:
             self.bench = Bench("cache updated in", quiet=quiet)
-        self.stored_output = None
         self.func = func
         self.args = args
         self.kwargs = kwargs
 
+    def run(self):
+        self.stored_output = self.func(*self.args, **self.kwargs)
+        self.bench.end()
+
     def __call__(self):
         if self.counter.get() % self.update_every == 0:
-            self.stored_output = self.func(*self.args, **self.kwargs)
-            self.bench.end()
-        return self.stored_output
+            self.run()
+        try:
+            return self.stored_output
+        except AttributeError:
+            self.run()
+            return self.stored_output
+
 
 
 class CachedFunction:
