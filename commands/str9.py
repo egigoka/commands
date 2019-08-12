@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.13.2"
+__version__ = "0.13.3"
 
 
 class Str:
@@ -112,13 +112,11 @@ class Str:
             raise ValueError("type", type(string), "isn't supported by Str.split_every")
         string = str(string)
         import re
-        output_lines = []
         char_exists = "."
         char_can_be_exists = ".?"
         regexp = char_exists + char_can_be_exists*(chars-1)
-        for line in re.findall(regexp, string):  # todo can I just return this list?
-            output_lines += [line]
-        return output_lines
+        return re.findall(regexp, string, re.DOTALL)
+
 
     @staticmethod
     def leftpad(string, length, char="0", rightpad=False):
