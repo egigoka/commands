@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "1.2.0"
+__version__ = "1.2.1"
 
 
 class Dir:
@@ -45,10 +45,12 @@ class Dir:
         <br>`return` int count of files in directory
         """
         import os
-        dir_contents = cls.list_of_files(path)
+        cnt = 0
+        for root, dirs, files in os.walk(path):
+            cnt += len(files)
         if not quiet:
-            print(os.path.split(path)[1], "contain", len(dir_contents), "files")
-        return len(dir_contents)
+            print(os.path.split(path)[1], "contain", cnt, "files")
+        return cnt
 
     @classmethod
     def batch_rename(cls, directory, previous_name_substring, new_name_substring, quiet=False):
