@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with time
 """
-__version__ = "0.1.5"
+__version__ = "0.1.6"
 
 
 class Time:
@@ -30,14 +30,14 @@ class Time:
         <br>`return` datetime.datetime time object
         """
         import datetime
-        if isinstance(timestamp, str):
+        if isinstance(timestamp, (str, int)):
             timestamp = float(timestamp)
         elif isinstance(timestamp, float):
             pass
         elif isinstance(timestamp, datetime.datetime):
             return timestamp
         else:
-            raise TypeError(f"timestamp must be float or str, not {type(timestamp)}")
+            raise TypeError(f"timestamp must be float, int or str, not {type(timestamp)}")
         return datetime.datetime.fromtimestamp(timestamp)
 
     @staticmethod
