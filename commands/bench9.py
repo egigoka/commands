@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with Bench factory function
 """
-__version__ = "0.5.1"
+__version__ = "0.5.2"
 
 
 class Bench:
@@ -40,7 +40,7 @@ class Bench:
         self.time_end = datetime.datetime.now()
         return Time.delta(self.time_start, self.time_end)
 
-    def end(self, prefix_string=None, quiet_if_zero=False, start_immediately=False):
+    def end(self, prefix_string=None, quiet_if_zero=False, start_immediately=False, quiet=None):
         """End benchmarking`
         return time difference between start and end of bencmarking, print string with prefix
         and time difference.
@@ -50,11 +50,13 @@ class Bench:
         <br>`param start_immediately` change start time of current Bench class to current time
         <br>`return` float, delta between start and end
         """
+        if quiet is None:
+            quiet = self.quiet
         delta = self.get()
         self.start()
         if prefix_string:
             self.prefix = prefix_string
-        if not self.quiet:
+        if not quiet:
             # print(not quiet_if_zero, str(round(delta, cls.fraction_digits)),
             # (str(round(delta, cls.fraction_digits)) != "0.0"),
             # (not quiet_if_zero) and (str(round(delta, cls.fraction_digits)) != "0.0"))

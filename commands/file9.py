@@ -39,7 +39,7 @@ class File:
             print(f"File {filename} created")
 
     @classmethod
-    def delete(cls, path, quiet=False, no_sleep=False):
+    def delete(cls, path, quiet=True, no_sleep=False):
         """
         <br>`param path` string with path to deleting file
         <br>`param quiet` boolean, suppress print to console
