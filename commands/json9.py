@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.8.2"
+__version__ = "2.8.3"
 
 
 class Json:
@@ -90,7 +90,8 @@ class Json:
         json.dump(json_string, settings_json_text_io, ensure_ascii=self.ensure_ascii)
         settings_json_text_io.close()
         if not quiet:
-            print("JSON successfully saved")
+            from .print9 import Print
+            Print.multithread_safe("JSON successfully saved")
         # except:
         #     from .path import Path
         #     raise IOError("error while saving JSON, try to repair script at path " +

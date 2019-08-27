@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "1.3.3"
+__version__ = "1.3.4"
 
 from .dict9 import imdict
 
@@ -125,7 +125,8 @@ class Threading:
                     from .print9 import Print
                     Print("alive:", alive)
         except (KeyboardInterrupt, SystemExit):
-                self.raise_exception()
+            self.raise_exception()
+            raise
 
     def cleanup(self):
         """Just clean queue"""
