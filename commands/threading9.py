@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "1.3.4"
+__version__ = "1.3.5"
 
 from .dict9 import imdict
 
@@ -39,9 +39,9 @@ class MyThread:
         self.qprint("Starting " + self.thread.name)
         try:
             self.result = self.func(*self.args, **self.kwargs)
-            self.qprint(f"Ended {self.thread.name}. running: {self.bench.end()}")
+            self.qprint(f"Finished {self.thread.name}. running: {self.bench.end()}")
         except SystemExit:
-            self.qprint(f"Quited {self.thread.name}. running: {self.bench.end()}")
+            self.qprint(f"Killed {self.thread.name}. running: {self.bench.end()}")
 
     def start(self, wait_for_keyboard_interrupt=False):
         self.thread.run = self.run
