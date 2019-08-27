@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "1.0.5"
+__version__ = "1.0.6"
 # pylint: disable=c-extension-no-member
 
 
@@ -210,8 +210,11 @@ class File:
                     content = file.read()
                     file.close()
                     return content
-        elif mode == "b":
-            return
+        elif mode in ["b", "rb"]:
+            with open(path, "rb", encoding=encoding) as file:
+                content = file.read()
+                file.close()
+                return content
 
     @staticmethod
     def write(filename, what_to_write, mode="a", quiet=True):
