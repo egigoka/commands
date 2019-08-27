@@ -83,8 +83,8 @@ class OS:  # pylint: disable=too-few-public-methods
             except:  # pylint: disable=bare-except
                 pass
         for cyr_symbol in cyr_line:
-            print(cyr_symbol * 2, end="\r")
-        print("  ", end="\r")
+            print(cyr_symbol * 2 + "\r", end="")
+        print("  \r", end="")
         cyrillic_support = True
     except (UnicodeEncodeError, PermissionError) as err:
         cyrillic_support = False

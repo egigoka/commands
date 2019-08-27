@@ -97,11 +97,11 @@ class Windows:
                 code_page = cls.set_cmd_code_page(65001)
             import os
             with Print.s_print_lock:
-                command = r'''py -c "print('йЙ', end='\r')"'''
-            Print("йЙ", end="\r")
-            Print("  ", end="\r")
+                command = r'''py -c "print('йЙ\r', end='')"'''
+            Print("йЙ\r", end="")
+            Print("  \r", end="")
             os.system(command)
-            Print("  ", end="\r")
+            Print("  \r", end="")
             return cls.get_cmd_code_page()
         except Exception as e:
             if int(previous_codepage) >= 0:
@@ -109,7 +109,7 @@ class Windows:
                     cls.set_cmd_code_page(previous_codepage)
                 else:
                     cls.set_cmd_code_page(437)
-                Print("  ", end="\r")
+                Print("  \r", end="")
                 from .os9 import OS
                 OS.cyrillic_support = False
                 File.create(lockfile)
