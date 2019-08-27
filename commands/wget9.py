@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 """Internal module wrapper to cli wget
 """
-__version__ = "0.2.14"
+__version__ = "0.2.15"
 
 
 class Wget:  # pylint: disable=too-few-public-methods
     """Class wrapper to cli wget
     """
     @classmethod
-    def download(cls, url, output_filename, quiet=False, no_check_certificate=False, wget_path="wget"):  # pylint: disable=inconsistent-return-statements
+    def download(cls, url, output_filename, quiet=False, no_check_certificate=False, wget_path="wget", timeout=None):  # pylint: disable=inconsistent-return-statements
         """Wrapper to wget cli
         <br>`param url` string, url to some file
         <br>`param output_filename` string, path to filename
@@ -34,7 +34,7 @@ class Wget:  # pylint: disable=too-few-public-methods
         if not Dir.exist(os.path.split(output_filename)[0]) and os.path.split(output_filename)[0]:
             Dir.create(os.path.split(output_filename)[0])
         try:
-            output = Console.get_output(commands, print_std=not quiet, auto_disable_py_buffering=False).strip(" \r\n")
+            output = Console.get_output(commands, print_std=not quiet, auto_disable_py_buffering=False, timeout=timeout).strip(" \r\n")
             return output
         except FileNotFoundError as exception:
             if wget_path == "wget":
