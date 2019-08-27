@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "1.0.6"
+__version__ = "1.0.7"
 # pylint: disable=c-extension-no-member
 
 
@@ -211,7 +211,7 @@ class File:
                     file.close()
                     return content
         elif mode in ["b", "rb"]:
-            with open(path, "rb", encoding=encoding) as file:
+            with open(path, "rb") as file:
                 content = file.read()
                 file.close()
                 return content
