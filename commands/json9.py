@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.8.3"
+__version__ = "2.8.4"
 
 
 class Json:
@@ -115,9 +115,12 @@ class Json:
         import os
         if not os.path.isfile(file_path):
             from .file9 import File
-            File.create(file_path)
-            clean_json = {}
-            self._save_to_file(file_path, clean_json)
+            try:
+                File.create(file_path)
+                clean_json = {}
+                self._save_to_file(file_path, clean_json)
+            except FileExistsError:  # if file created while this code running
+                pass
         with open(file_path, encoding="utf8") as file_handle:
             try:
                 json_string_in_memory = json.load(file_handle)
