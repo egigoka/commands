@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to check some environment properties
 """
-__version__ = "3.0.0"
+__version__ = "3.0.1"
 
 
 class OS:  # pylint: disable=too-few-public-methods
@@ -186,6 +186,15 @@ class OS:  # pylint: disable=too-few-public-methods
             except (UnicodeEncodeError, PermissionError) as err:
                 pass
             return self._cyrillic_support
+
+    @property
+    def hostname(self):
+        try:
+            return self._hostname
+        except AttributeError:
+            import socket
+            self._hostname = socket.gethostname()
+            return self._hostname
 
 
 OS = OS()
