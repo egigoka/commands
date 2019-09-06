@@ -65,7 +65,7 @@ class Json:
         #         print("JSON is bad")
         #     return False
 
-    def _save_to_file(self, filename, json_string, quiet=False, debug=False):
+    def _save_to_file(self, filename, json_string, quiet=True, debug=False):
         """
         <br>`param filename` path of file, where JSON will be saved
         <br>`param json_string` list or dict to save in file
@@ -104,7 +104,7 @@ class Json:
             raise IOError("error while saving JSON, try to repair script at path " +
                           Path.full(sys.argv[0]))
 
-    def _load_from_file(self, file_path, quiet=False, debug=False):
+    def _load_from_file(self, file_path, quiet=True, debug=False):
         """
         <br>`param filename` path of file, from load JSON
         <br>`param quiet` suppress print to console

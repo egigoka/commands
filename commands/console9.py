@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.10.0"
+__version__ = "0.10.1"
 
 
 class Console:
@@ -335,19 +335,19 @@ class Console:
             pass
         else:
             # get longest line
-            longest_string = ""
-            for string in strings:
-                string = str(string)
-                if len(string) > len(longest_string):
-                    longest_string = string
+            longest_string = 0
+            for cnt, string in enumerate(strings):
+                print(cnt, string)
+                if len(string) > len(strings[longest_string]):
+                    longest_string = cnt
 
             # cut line
             cut_cnt = len_all - console_width
-            new_longest_string = longest_string[cut_cnt:]
+            new_longest_string = strings[longest_string][cut_cnt:]
             new_longest_string = ">>" + new_longest_string[2:]
 
             # replace
-            strings = List.replace_string(strings, longest_string, new_longest_string)
+            strings[longest_string] = new_longest_string
 
         return strings
 
