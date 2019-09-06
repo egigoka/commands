@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.8.4"
+__version__ = "2.9.0"
 
 
 class Json:
@@ -31,6 +31,13 @@ class Json:
 
     def __len__(self):
         return self.string.__len__()
+
+    def __repr__(self):
+        from .print9 import Print
+        pretty = Print.prettify(self.string)
+        return f"JSON '{self.filename}':\n{pretty}"
+
+    __print__ = __repr__
 
     def items(self):
         return self.string.items()
