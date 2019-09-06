@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.9.1"
+__version__ = "2.10.0"
 
 
 class Json:
@@ -36,6 +36,11 @@ class Json:
         from .print9 import Print
         pretty = Print.prettify(self.string, quiet=True)
         return f"JSON '{self.filename}':\n{pretty}"
+
+    def pop(self, *args, **kwargs):
+        output = self.string.pop(*args, **kwargs)
+        self.save(quiet=self.quiet, debug=self.debug)
+        return output
 
     __print__ = __repr__
 
