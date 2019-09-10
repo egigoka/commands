@@ -51,11 +51,15 @@ class Unzip:
         temp_zip.close()
 
     @staticmethod
-    def single(input_zip, output_dir, output_file):
+    def single(input_zip, path_inside_zip, output_path):
+        '''https://thispointer.com/python-how-to-unzip-a-file-extract-single-multiple-or-all-files-from-a-zip-archive/
+        input_zip : path to zip for extracting
+        path_inside_zip : Full name of file to be extracted. It should one from the list of archived files names returned by ZipFile.namelist()
+        output_path : location where zip file need to be extracted, if not provided it will extract the file in current directory.'''
         import zipfile
 
         temp_zip = zipfile.ZipFile(input_zip)
-        temp_zip.extract(output_dir, output_file)
+        temp_zip.extract(path_inside_zip, output_path)
 
         temp_zip.close()
 
