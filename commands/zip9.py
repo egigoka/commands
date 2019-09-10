@@ -62,7 +62,7 @@ class Unzip:
         from .file9 import File
 
         temp_zip = zipfile.ZipFile(input_zip)
-        temp_path = temp_zip.extract(path_inside_zip, Path.temp())
+        temp_path = temp_zip.extract(path_inside_zip, Path.temp())  # why I only can unzip to folder with original name?
         temp_zip.close()
 
         File.move(temp_path, output_path)
