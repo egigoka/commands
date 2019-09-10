@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with lists
 """
-__version__ = "0.6.1"
+__version__ = "0.6.2"
 
 
 class List:
@@ -35,8 +35,10 @@ class List:
         <br>`return` list of lists
         """
         count = int(count)
-        if count > len(list_input):
+        if count == 0:
             return [[list_input[x]] for x in range(0, len(list_input))]
+        elif count > len(list_input):
+            return [list_input, ]
         output_lists = [list_input[x:x+count] for x in range(0, len(list_input), count)]
         # https://stackoverflow.com/questions/9671224/split-a-python-list-into-other-sublists-i-e-smaller-lists
         return output_lists  # todo отдебажить пограничные моменты
