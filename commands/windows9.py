@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.5.1"
+__version__ = "0.5.2"
 
 class Windows:
     """Class to work with Windows-specific functions
@@ -111,7 +111,7 @@ class Windows:
                     cls.set_cmd_code_page(437)
                 Print("  \r", end="")
                 from .os9 import OS
-                OS.cyrillic_support = False
+                OS._cyrillic_support = False
                 File.create(lockfile)
                 if not safe:
                     raise IOError(f"Cannot use codepage 65001, returning to {previous_codepage}, you can set other by Windows.set_cmd_code_page")
