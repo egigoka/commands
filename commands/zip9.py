@@ -3,7 +3,7 @@
 """Internal module to work with zip archives
 """
 # https://code.tutsplus.com/ru/tutorials/compressing-and-extracting-files-in-python--cms-26816
-__version__ = "0.2.2"
+__version__ = "0.3.0"
 
 
 class Zip:
@@ -55,11 +55,16 @@ class Unzip:
         '''https://thispointer.com/python-how-to-unzip-a-file-extract-single-multiple-or-all-files-from-a-zip-archive/
         input_zip : path to zip for extracting
         path_inside_zip : Full name of file to be extracted. It should one from the list of archived files names returned by ZipFile.namelist()
-        output_path : location where zip file need to be extracted, if not provided it will extract the file in current directory.'''
+        output_path : location where zip file need to be extracted, if not provided it will extract the file in current directory.
+        :return: None'''
         import zipfile
+        from .path9 import Path
+        from .file9 import File
 
         temp_zip = zipfile.ZipFile(input_zip)
-        temp_zip.extract(path_inside_zip, output_path)
-
+        temp_path = temp_zip.extract(path_inside_zip, Path.temp())
         temp_zip.close()
+
+        File.move(temp_path, output_path)
+
 
