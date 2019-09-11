@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.5.2"
+__version__ = "0.5.3"
 
 class Windows:
     """Class to work with Windows-specific functions
@@ -75,7 +75,8 @@ class Windows:
         if err:
             return "Error getting current codepage"
         try:
-            out = out.lower().strip()[len("active code page:"):].strip()  # replace with Str.substring
+            from .str9 import Str
+            out = Str.substring(out, ": ")
             return int(out)
         except KeyError:
             return "Cannot get current codepage"
