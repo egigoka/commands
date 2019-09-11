@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.13.3"
+__version__ = "0.13.4"
 
 
 class Str:
@@ -158,8 +158,10 @@ class Str:
         <br>`param exception_message` string, will be in exception that raised
         <br>`return` string, from string that between "before", and "after" arguments
         """
-        string = str(string)
-        before = str(before)
+        if isinstance(string, bytes):
+            string = string.decode()
+        if isinstance(before, bytes):
+            before = before.decode()
         startfrom = string.find(before)
         if startfrom != -1:
             startfrom = string.find(before) + len(before)
@@ -172,7 +174,8 @@ class Str:
                     exception_message = ""
                 raise KeyError(f"{exception_message}The line preceding ({before}) the search string was not found")
         if after:
-            after = str(after)
+            if isinstance(after, bytes):
+                after = after.decode()
             end_at = string[startfrom:].find(after)
             if end_at != -1:
                 end_at += startfrom
