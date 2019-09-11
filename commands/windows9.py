@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.6.1"
+__version__ = "0.6.2"
 
 class Windows:
     """Class to work with Windows-specific functions
@@ -77,7 +77,7 @@ class Windows:
         try:
             from .str9 import Str
             if debug: print(out)
-            out = Str.substring(str(out), ": ", "\r\n")
+            out = Str.substring(out, ": ", "\r\n")
             if debug: print(out)
             return int(out)
         except KeyError:
