@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.13.4"
+__version__ = "0.13.5"
 
 
 class Str:
@@ -159,9 +159,11 @@ class Str:
         <br>`return` string, from string that between "before", and "after" arguments
         """
         if isinstance(string, bytes):
-            string = string.decode()
+            from .bytes9 import Bytes
+            string = Bytes.to_string(string)
         if isinstance(before, bytes):
-            before = before.decode()
+            from .bytes9 import Bytes
+            before = Bytes.to_string(before)
         startfrom = string.find(before)
         if startfrom != -1:
             startfrom = string.find(before) + len(before)
@@ -175,7 +177,8 @@ class Str:
                 raise KeyError(f"{exception_message}The line preceding ({before}) the search string was not found")
         if after:
             if isinstance(after, bytes):
-                after = after.decode()
+                from .bytes9 import Bytes
+                after = Bytes.to_string(after)
             end_at = string[startfrom:].find(after)
             if end_at != -1:
                 end_at += startfrom
