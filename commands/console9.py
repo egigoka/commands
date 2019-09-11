@@ -271,7 +271,6 @@ class Console:
                 commands = list_commands
         # set decoding and init
         if auto_decoding and not decoding and not universal_newlines:
-            win_cp = None  # debug
             if OS.windows:
                 if cls.windows_utf8:
                     decoding = "utf_8"
@@ -280,10 +279,13 @@ class Console:
                 else:
                     from .windows9 import Windows
                     try:
+                        from .print9 import Print
                         win_cp = Windows.fix_unicode_encode_error(safe=False)
                         cls.windows_utf8 = True
+                        Print.debug("passed Windows.fix_unicode_encode_error")
                         decoding = "utf_8"
                     except IOError:  # if cp65001 cannot be setted
+                        Print.debug("failed Windows.fix_unicode_encode_error")
                         cls.windows_utf8_fail = True
                         decoding = f"cp{Windows.get_cmd_code_page()}"
             elif OS.unix_family:
@@ -292,9 +294,6 @@ class Console:
                 universal_newlines = True
 
         from .print9 import Print
-        Print.debug("OS.windows", OS.windows, "OS.unix_family", OS.unix_family, "decoding", decoding,
-                    "cls.windows_utf8_fail", cls.windows_utf8_fail, "cls.windows_utf8", cls.windows_utf8,
-                    "win_cp", win_cp)
 
         if decoding and universal_newlines:
             raise TypeError("can't decode 'str' to 'str', set universal_newlines to False for manually set decoding")
