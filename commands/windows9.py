@@ -93,7 +93,10 @@ class Windows:
         from .print9 import Print
         lockfile = Path.combine(Path.commands(), ".windows_codepage_lock")
         if File.exist(lockfile):
-            return cls.get_cmd_code_page()
+            cp = cls.get_cmd_code_page()
+            if not safe:
+                raise IOError(f"Cannot use codepage 65001, continue using {cp}, you can set other by Windows.set_cmd_code_page")
+            return cp
         previous_codepage = cls.get_cmd_code_page()
         try:
             if previous_codepage != 65001:
@@ -102,9 +105,9 @@ class Windows:
             with Print.s_print_lock:
                 command = r'''py -c "print('йЙ\r', end='')"'''
             Print("йЙ\r", end="")
-            #Print("  \r", end="")
+            Print("  \r", end="")
             os.system(command)
-            #Print("  \r", end="")
+            Print("  \r", end="")
             return cls.get_cmd_code_page()
         except Exception as e:
             if int(previous_codepage) >= 0:
