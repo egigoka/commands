@@ -290,6 +290,10 @@ class Console:
             else:
                 universal_newlines = True
 
+        from .print9 import Print
+        Print.debug("OS.windows", OS.windows, "OS.unix_family", OS.unix_family, "decoding", decoding,
+                    "cls.windows_utf8_fail", cls.windows_utf8_fail, "cls.windows_utf8", cls.windows_utf8)
+
         if decoding and universal_newlines:
             raise TypeError("can't decode 'str' to 'str', set universal_newlines to False for manually set decoding")
         if timeout and universal_newlines:
