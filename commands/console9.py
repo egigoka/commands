@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.10.1"
+__version__ = "0.10.2"
 
 
 class Console:
@@ -214,7 +214,10 @@ class Console:
 
                 for line in popen_object.stdout:
                     if decoding:
-                        line = line.decode(decoding)
+                        try:
+                            line = line.decode(decoding)
+                        except UnicodeDecodeError as e:
+                            raise UnicodeDecodeError(f"{e}, line: '{line}', decoding: '{decoding}'")
                     out += line
                     if print_std:
                         print(line, end='')
