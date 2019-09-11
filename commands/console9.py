@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.10.2"
+__version__ = "0.10.3"
 
 
 class Console:
@@ -217,7 +217,8 @@ class Console:
                         try:
                             line = line.decode(decoding)
                         except UnicodeDecodeError as e:
-                            raise UnicodeDecodeError(f"{e}, line: '{line}', decoding: '{decoding}'")
+                            print(f"line: '{line}', decoding: '{decoding}'")
+                            raise
                     out += line
                     if print_std:
                         print(line, end='')
