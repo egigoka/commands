@@ -279,13 +279,10 @@ class Console:
                 else:
                     from .windows9 import Windows
                     try:
-                        from .print9 import Print
                         win_cp = Windows.fix_unicode_encode_error(safe=False)
                         cls.windows_utf8 = True
-                        Print.debug("passed Windows.fix_unicode_encode_error")
                         decoding = "utf_8"
                     except IOError:  # if cp65001 cannot be setted
-                        Print.debug("failed Windows.fix_unicode_encode_error")
                         cls.windows_utf8_fail = True
                         decoding = f"cp{Windows.get_cmd_code_page()}"
             elif OS.unix_family:

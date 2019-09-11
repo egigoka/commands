@@ -102,9 +102,9 @@ class Windows:
             with Print.s_print_lock:
                 command = r'''py -c "print('йЙ\r', end='')"'''
             Print("йЙ\r", end="")
-            Print("  \r", end="")
+            #Print("  \r", end="")
             os.system(command)
-            Print("  \r", end="")
+            #Print("  \r", end="")
             return cls.get_cmd_code_page()
         except Exception as e:
             if int(previous_codepage) >= 0:
