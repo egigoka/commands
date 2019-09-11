@@ -76,7 +76,7 @@ class Windows:
             return "Error getting current codepage"
         try:
             from .str9 import Str
-            out = Str.substring(out, ": ")
+            out = Str.substring(out, ": ", "\r\n")
             return int(out)
         except KeyError:
             return "Cannot get current codepage"
