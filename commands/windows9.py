@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.5.3"
+__version__ = "0.6.0"
 
 class Windows:
     """Class to work with Windows-specific functions
@@ -69,14 +69,16 @@ class Windows:
         return code_page
 
     @staticmethod
-    def get_cmd_code_page():
+    def get_cmd_code_page(debug=False):
         import subprocess
         out, err = subprocess.Popen("chcp", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
         if err:
             return "Error getting current codepage"
         try:
             from .str9 import Str
+            if debug: print(out)
             out = Str.substring(out, ": ", "\r\n")
+            if debug: print(out)
             return int(out)
         except KeyError:
             return "Cannot get current codepage"
