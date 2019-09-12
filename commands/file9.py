@@ -267,7 +267,16 @@ class File:
             from winmagic import magic
         else:
             import magic
-        return magic.from_file(path, mime=True)
+        try:
+            return magic.from_file(path, mime=True)
+        except OSError:
+            from .console9 import Console
+            from .path9 import Path
+            out = Console.get_output(Path.combine(Path.commands(), "res", "file.exe"), "-i", path)
+            try:
+                return out.split("; ")[1]
+            except IndexError:
+                return "unknown"
 
     all_encodings = ['ascii', 'big5', 'big5hkscs', 'cp037', 'cp273', 'cp424', 'cp437', 'cp500', 'cp720', 'cp737',
                      'cp775', 'cp850', 'cp852', 'cp855', 'cp856', 'cp857', 'cp858', 'cp860', 'cp861', 'cp862', 'cp863',
