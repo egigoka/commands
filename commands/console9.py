@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.10.4"
+__version__ = "0.10.5"
 
 
 class Console:
@@ -200,7 +200,7 @@ class Console:
     @staticmethod
     def _get_output(*commands, print_std, decoding, pureshell, universal_newlines, debug=False):
         import subprocess
-        if decoding:
+        if decoding or universal_newlines:
             out = ""
             err = ""
         else:
@@ -289,8 +289,6 @@ class Console:
                 decoding = "utf8"
             else:
                 universal_newlines = True
-
-        from .print9 import Print
 
         if decoding and universal_newlines:
             raise TypeError("can't decode 'str' to 'str', set universal_newlines to False for manually set decoding")
