@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.10.3"
+__version__ = "0.10.4"
 
 
 class Console:
@@ -237,8 +237,8 @@ class Console:
             raise FileNotFoundError(exception)
         return out, err
 
-    windows_utf8 = False
-    windows_utf8_fail = False
+    windows_cp65001 = False
+    windows_cp65001_fail = False
 
     @classmethod
     def get_output(cls, *commands, pureshell=False, print_std=False, decoding=None, universal_newlines=False,
@@ -272,18 +272,18 @@ class Console:
         # set decoding and init
         if auto_decoding and not decoding and not universal_newlines:
             if OS.windows:
-                if cls.windows_utf8:
-                    decoding = "utf_8"
-                elif cls.windows_utf8_fail:
+                if cls.windows_cp65001:
+                    decoding = "cp65001"
+                elif cls.windows_cp65001_fail:
                     decoding = "cp866"
                 else:
                     from .windows9 import Windows
                     try:
                         win_cp = Windows.fix_unicode_encode_error(safe=False)
-                        cls.windows_utf8 = True
-                        decoding = "utf_8"
+                        cls.windows_cp65001 = True
+                        decoding = "cp65001"
                     except IOError:  # if cp65001 cannot be setted
-                        cls.windows_utf8_fail = True
+                        cls.windows_cp65001_fail = True
                         decoding = f"cp{Windows.get_cmd_code_page()}"
             elif OS.unix_family:
                 decoding = "utf8"
