@@ -260,6 +260,15 @@ class File:
                 sha256.update(block)
         return sha256.hexdigest()
 
+    @staticmethod
+    def get_mime(path):
+        from .os9 import OS
+        if OS.windows:
+            from winmagic import magic
+        else:
+            import magic
+        return magic.from_file(path, mime=True)
+
     all_encodings = ['ascii', 'big5', 'big5hkscs', 'cp037', 'cp273', 'cp424', 'cp437', 'cp500', 'cp720', 'cp737',
                      'cp775', 'cp850', 'cp852', 'cp855', 'cp856', 'cp857', 'cp858', 'cp860', 'cp861', 'cp862', 'cp863',
                      'cp864', 'cp865', 'cp866', 'cp869', 'cp874', 'cp875', 'cp932', 'cp949', 'cp950', 'cp1006',

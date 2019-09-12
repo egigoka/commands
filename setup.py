@@ -25,7 +25,8 @@ setup(
         'pyodbc'],
     extras_require={
         ':platform_system!="Linux"': ['pyautogui'],
-        ':platform_system=="Windows"': ['pywin32', 'colorama', 'pywinrm'],
+        ':platform_system=="Windows"': ['pywin32', 'colorama', 'pywinrm', 'python-magic-win64'],
+        ':platform_system!="Windows"': ['python-magic'],
         ':python_version < "3.6" and platform_system=="Windows"': ['win_unicode_console'],
         },
     package_data={'': ['res/*']},
