@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with shit functions
 """
-__version__ = "3.1.2"
+__version__ = "3.1.3"
 
 
 def dirify(_object, wildcard="*"):
@@ -23,8 +23,10 @@ def dirify(_object, wildcard="*"):
         if "__" not in attr_str:
             try:
                 _type = type(_object.__getattribute__(attr_str))
-            except (TypeError, AttributeError):
+            except TypeError:
                 _type = type(_object.__getattribute__(_object, attr_str))
+            except AttributeError:
+                _type = "AttributeError"
             _type = Str.substring(str(_type), "<class ", ">", safe=True)
             print(Str.rightpad(attr_str, longest_name, "—"), _type, sep=">")
 
