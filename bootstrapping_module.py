@@ -33,7 +33,7 @@ except (ModuleNotFoundError, ImportError):
             os.system("brew install git")  # todo test
         else:
             raise NotImplementedError("OS " + sys.platform + " is not supported")
-	# end getting git
+    # end getting git
     os.system("pip install git+https://github.com/egigoka/commands")
     import commands
 # # # end bootstrap # # #

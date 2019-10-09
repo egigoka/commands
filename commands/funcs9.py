@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with shit functions
 """
-__version__ = "3.1.3"
+__version__ = "3.1.4"
 
 
 def dirify(_object, wildcard="*"):
@@ -26,7 +26,9 @@ def dirify(_object, wildcard="*"):
             except TypeError:
                 _type = type(_object.__getattribute__(_object, attr_str))
             except AttributeError:
-                _type = "AttributeError"
+                _type = "AttributeError happened"
+            except OSError:
+                _type = "OSError happened"
             _type = Str.substring(str(_type), "<class ", ">", safe=True)
             print(Str.rightpad(attr_str, longest_name, "—"), _type, sep=">")
 
