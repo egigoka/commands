@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for creating some random values.
 """
-__version__ = "0.6.2"
+__version__ = "0.7.0"
 
 
 class Random:
@@ -116,3 +116,10 @@ class Random:
         symbols = cls.string(32, string.digits + "abcdef")
         string = symbols[:8] + "-" + symbols[8:12] + "-" + symbols [12:16] + "-" + symbols[16:20] + "-" + symbols[20:]
         return string
+
+    @staticmethod
+    def shuffle(list_like_obj):
+        import random
+        _list = list(list_like_obj)
+        random.shuffle(_list)
+        return ''.join(_list)
