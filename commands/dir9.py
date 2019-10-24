@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "1.2.1"
+__version__ = "1.3.0"
 
 
 class Dir:
@@ -230,3 +230,8 @@ class Dir:
                 filepath = Path.combine(root, file)
                 total_size += File.get_size(filepath)
         return total_size
+
+    @staticmethod
+    def get_modification_time(path):
+        from .file9 import File
+        return File.get_modification_time(path)
