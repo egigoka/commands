@@ -3,7 +3,7 @@
 """Internal module to work with zip archives
 """
 # https://code.tutsplus.com/ru/tutorials/compressing-and-extracting-files-in-python--cms-26816
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 
 class Zip:
@@ -11,22 +11,33 @@ class Zip:
     def file(input_file, output_zip, arcname=None, mode="w"):
         import zipfile
         import os
+        from .file9 import File
 
-        if not os.path.isfile(input_file):
+        if not File.exist(input_file):
             raise IOError(input_file + " is not file")
 
-        with zipfile.ZipFile(output_zip, mode=mode) as zip:
+        temp_file = output_zip+".tmp"
+        File.delete(temp_file, quiet=True)
+
+        with zipfile.ZipFile(temp_file, mode=mode) as zip:
             zip.write(input_file, arcname=arcname, compress_type=zipfile.ZIP_DEFLATED)
+
+        File.move(temp_file, output_zip)
 
     @staticmethod
     def dir(input_dir, output_zip, quiet=True):
         import os
         import zipfile
+        from .file9 import File
+        from .dir9 import Dir
 
-        if not os.path.isdir(input_dir):
+        if not Dir.exist(input_dir):
             raise IOError(input_dir + " is not dir")
 
-        temp_zip = zipfile.ZipFile(output_zip, 'w')
+        temp_file = output_zip + ".tmp"
+        File.delete(temp_file, quiet=True)
+
+        temp_zip = zipfile.ZipFile(temp_file, 'w')
         for root, dirs, files in os.walk(input_dir):
             for file in files:
                 file_path = os.path.join(root, file)
@@ -38,6 +49,7 @@ class Zip:
                     Print.rewrite(CLI.wait_update(quiet=True), file_path, "zipped")
 
         temp_zip.close()
+        File.move(temp_file, output_zip)
 
 
 class Unzip:
