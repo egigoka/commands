@@ -10,7 +10,6 @@ class Zip:
     @staticmethod
     def file(input_file, output_zip, arcname=None, mode="w"):
         import zipfile
-        import os
         from .file9 import File
 
         if not File.exist(input_file):

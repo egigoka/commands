@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.6.2"
+__version__ = "0.7.1"
 
 class Windows:
     """Class to work with Windows-specific functions
@@ -265,3 +265,45 @@ class Windows:
         # For some strange reason, calling SendMessage from the current process
         # doesn't propagate environment changes at all.
         return Console.get_output(Path.python(), "-c", "import win32api, win32con; assert win32api.SendMessage(win32con.HWND_BROADCAST, win32con.WM_SETTINGCHANGE, 0, 'Environment')")
+
+    @staticmethod
+    def get_powershell_execution_policy():
+        from .console9 import Console
+        psfix_command = f'''powershell -command "& {{&'Get-ExecutionPolicy'}}"'''
+        out, err = Console.get_output(psfix_command, return_merged=False)
+        if err:
+            raise OSError(err)
+        return out.strip()
+
+    @staticmethod
+    def set_powershell_execution_policy(policy_name):
+        from .console9 import Console
+        psfix_command = f'''powershell -command "& {{&'Set-ExecutionPolicy' {policy_name}}}"'''  # "Set-ExecutionPolicy {policy_name}"
+        out, err = Console.get_output(psfix_command, return_merged=False)
+        if err:
+            raise OSError(err)
+        return out
+
+    @classmethod
+    def run_powershell(cls, ps1_script):
+        from .random9 import Random
+        from .file9 import File
+        from .console9 import Console
+
+        temp_ps1_file = Random.string(10)+".ps1"
+
+        old_policy = cls.get_powershell_execution_policy()
+        if old_policy != "RemoteSigned":
+            cls.set_powershell_execution_policy("RemoteSigned")
+
+        File.write(temp_ps1_file, ps1_script)
+        out, err = Console.get_output(fr'powershell .\"{temp_ps1_file}"', return_merged=False)
+        File.delete(temp_ps1_file)
+
+        if old_policy != "RemoteSigned":
+            cls.set_powershell_execution_policy(old_policy)
+
+        if err:
+            raise OSError(err)
+
+        return out
