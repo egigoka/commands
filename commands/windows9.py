@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.7.1"
+__version__ = "0.7.2"
 
 class Windows:
     """Class to work with Windows-specific functions
@@ -297,7 +297,7 @@ class Windows:
             cls.set_powershell_execution_policy("RemoteSigned")
 
         File.write(temp_ps1_file, ps1_script)
-        out, err = Console.get_output(fr'powershell .\"{temp_ps1_file}"', return_merged=False)
+        out, err = Console.get_output(fr'powershell .\"{temp_ps1_file}"', return_merged=False, create_cmd_subprocess=True)
         File.delete(temp_ps1_file)
 
         if old_policy != "RemoteSigned":

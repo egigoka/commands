@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.10.6"
+__version__ = "0.11.0"
 
 
 class Console:
@@ -242,7 +242,8 @@ class Console:
 
     @classmethod
     def get_output(cls, *commands, pureshell=False, print_std=False, decoding=None, universal_newlines=False,
-                   auto_decoding=True, auto_disable_py_buffering=True, return_merged=True, timeout=None, debug=False):
+                   auto_decoding=True, auto_disable_py_buffering=True, return_merged=True, timeout=None, debug=False,
+                   create_cmd_subprocess=False):
         """Return output of executing command.
         <br>`param commands` list[string if pureshell is True] with command and arguments
         <br>`param pureshell` boolean, if True, the specified command will be executed through the shell
@@ -296,18 +297,16 @@ class Console:
             raise NotImplementedError("asyncio.subprocess doesn't support 'universal_newlines', disable 'auto_decoding'"
                                       " or set 'decoding'")
 
+        if (timeout and pureshell and OS.windows) or create_cmd_subprocess:
+            commands_old = commands
+            commands = list()
+            commands.append("cmd")
+            # commands.append("/U")  # only cmd applications output in utf16,
+            #                          other applications output in default encoding D:
+            commands.append("/C")
+            commands.append(" ".join(commands_old))
+
         if timeout:
-            if pureshell:
-                if OS.windows:
-                    from .const9 import backslash
-                    commands_old = commands
-                    commands = []
-                    commands.append("cmd")
-                    # commands.append("/U")  # only cmd applications output in utf16,
-                    #                          other applications output in default encoding D:
-                    commands.append("/C")
-                    commands.append(" ".join(commands_old))
-            from .print9 import Print
             output = cls._get_output_with_timeout(*commands, print_std=print_std, decoding=decoding,
                                                   timeout=timeout)
             if output[3]:
