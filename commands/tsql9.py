@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with transact sql
 """
-__version__ = "0.6.5"
+__version__ = "0.6.6"
 
 
 class TSQL:
@@ -17,7 +17,11 @@ class TSQL:
                                      f'PWD={self.sql_sa_password};DATABASE={self.sql_database}'
 
     def run(self, query, debug=False):
-        import pyodbc
+        try:
+            import pyodbc
+        except ImportError:
+            print("please, install pyodbc")
+            raise
         from .print9 import Print
 
         if debug:
@@ -51,7 +55,11 @@ class TSQL:
             Print("Close connection done")
 
     def run_without_transaction(self, query, debug=False):
-        import pyodbc
+        try:
+            import pyodbc
+        except ImportError:
+            print("please, install pyodbc")
+            raise
         from .print9 import Print
 
         if debug:
@@ -80,7 +88,11 @@ class TSQL:
             Print("Close connection done")
 
     def query(self, query, debug=False):
-        import pyodbc
+        try:
+            import pyodbc
+        except ImportError:
+            print("please, install pyodbc")
+            raise
         from .print9 import Print
 
         if debug:
