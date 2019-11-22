@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.11.0"
+__version__ = "0.11.1"
 
 
 class Console:
@@ -30,15 +30,8 @@ class Console:
         """
         <br>`return` int width of opened console in chars
         """
-        from .os9 import OS
-        if OS.windows:
-            import shutil
-            width_ = shutil.get_terminal_size().columns
-        elif OS.unix_family:
-            from .str9 import Str
-            io_string = Console.get_output("stty", "size")
-            width_ = Str.get_integers(io_string)[1]
-        return int(width_)
+        import shutil
+        return shutil.get_terminal_size().columns
 
     @staticmethod
     def height():
