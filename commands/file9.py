@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with files
 """
-__version__ = "1.0.7"
+__version__ = "1.0.8"
 # pylint: disable=c-extension-no-member
 
 
@@ -70,11 +70,11 @@ class File:
         <br>`param output_file` string with path to new file place
         <br>`return` None
         """
-        # shutil.move gives 2 exceptions when file not found, so don't use it
-        cls.copy(input_file=input_file, output_file=output_file)
-        if input_file.lower() != output_file.lower():  # if rename change only register of names in case-insensitive FS
-            cls.delete(input_file, quiet=True, no_sleep=True)
-        return output_file
+        import shutil
+        if cls.exist(input_file):
+            return shutil.move(input_file, output_file)
+        raise FileNotFoundError(f"When trying to move/rename file '{input_file}'>'{output_file}': "
+                                f"File '{input_file}' not found")
 
     @staticmethod
     def copy(input_file, output_file):
