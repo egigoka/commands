@@ -55,7 +55,7 @@ try:
         safe_run(r".\update_commands.bat")
     elif OS.unix_family:
         safe_run("chmod +X ./update_commands.sh")
-        safe_run("./update_commands.sh")
+        safe_run("sh ./update_commands.sh")
 except Exception as e:
     print(e)
 
