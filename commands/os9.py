@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to check some environment properties
 """
-__version__ = "3.0.1"
+__version__ = "3.1.0"
 
 
 class OS:  # pylint: disable=too-few-public-methods
@@ -195,6 +195,11 @@ class OS:  # pylint: disable=too-few-public-methods
             import socket
             self._hostname = socket.gethostname()
             return self._hostname
+
+    @staticmethod
+    def walk(top, topdown=True, onerror=None, followlinks=False):
+        import os
+        return os.walk(top=top, topdown=topdown, onerror=onerror, followlinks=followlinks)
 
 
 OS = OS()
