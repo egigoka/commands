@@ -1,8 +1,8 @@
 #! python3
 # -*- coding: utf-8 -*-
-"""Internal module with funtions to work with path strings
+"""Internal module with functions to work with path strings
 """
-__version__ = "2.5.9"
+__version__ = "2.5.10"
 
 
 class Path:
@@ -136,6 +136,5 @@ class Path:
 
     @staticmethod
     def safe__file__(__file__):
-        if len(__file__) == 0:
-            return '.'
-        return __file__
+        import os
+        return os.path.realpath(__file__)
