@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.11.1"
+__version__ = "0.11.3"
 
 
 class Console:
@@ -248,13 +248,11 @@ class Console:
         from .os9 import OS
         if len(commands) == 1:
                 commands = commands[0]
-        if isinstance(commands, str):
+        if isinstance(commands, str) and not pureshell:
             import shlex
             commands = shlex.split(commands, posix=False)
 
-        try:
-            commands[0]
-        except IndexError:
+        if not commands:
             raise IndexError("commands must not be empty")
 
         # disable buffering for python
