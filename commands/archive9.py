@@ -3,7 +3,7 @@
 """Internal module to work with zip and tar.lzma archives
 """
 # https://code.tutsplus.com/ru/tutorials/compressing-and-extracting-files-in-python--cms-26816
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 
 class UniversalArchive:
@@ -24,7 +24,8 @@ class UniversalArchive:
         if self.archive_type == Archive.MODE_ZIPDEFLATED:
             import zipfile
             additional_args["compress_type"] = zipfile.ZIP_DEFLATED
-
+        elif self.archive_type == Archive.MODE_TARLZMA:
+            self._real_archive_object.write = self._real_archive_object.add
         return self._real_archive_object.write(input_file, arcname=arcname, **additional_args)
 
     def extract(self, *args, **kwargs):
