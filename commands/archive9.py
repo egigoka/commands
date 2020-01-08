@@ -3,7 +3,7 @@
 """Internal module to work with zip and tar.lzma archives
 """
 # https://code.tutsplus.com/ru/tutorials/compressing-and-extracting-files-in-python--cms-26816
-__version__ = "0.4.1"
+__version__ = "0.5.1"
 
 
 class UniversalArchive:
@@ -15,16 +15,20 @@ class UniversalArchive:
         if archive_type == Archive.MODE_ZIPDEFLATED:
             import zipfile
             self._real_archive_object = zipfile.ZipFile(archive_file, mode=mode)
+        # https://www.tutorialspoint.com/read-and-write-tar-archive-files-using-python-tarfile
         elif archive_type == Archive.MODE_TARLZMA:
             import tarfile
             self._real_archive_object = tarfile.open(archive_file, mode=f"{mode}:xz")
+        elif archive_type == Archive.MODE_TARGZ:
+            import tarfile
+            self._real_archive_object = tarfile.open(archive_file, mode=f"{mode}:gz")
 
     def write(self, input_file, arcname=None):
         additional_args = {}
         if self.archive_type == Archive.MODE_ZIPDEFLATED:
             import zipfile
             additional_args["compress_type"] = zipfile.ZIP_DEFLATED
-        elif self.archive_type == Archive.MODE_TARLZMA:
+        elif self.archive_type in (Archive.MODE_TARLZMA, Archive.MODE_TARGZ):
             self._real_archive_object.write = self._real_archive_object.add
         return self._real_archive_object.write(input_file, arcname=arcname, **additional_args)
 
@@ -41,6 +45,7 @@ class UniversalArchive:
 class Archive:
     MODE_ZIPDEFLATED = 1
     MODE_TARLZMA = 2
+    MODE_TARGZ = 3
 
     @staticmethod
     def file(input_file, archive_file, arcname=None, mode="a", archive_type=MODE_ZIPDEFLATED):
