@@ -3,7 +3,7 @@
 """Internal module to work with zip and tar.lzma archives
 """
 # https://code.tutsplus.com/ru/tutorials/compressing-and-extracting-files-in-python--cms-26816
-__version__ = "0.5.1"
+__version__ = "0.5.2"
 
 
 class UniversalArchive:
@@ -20,6 +20,8 @@ class UniversalArchive:
             import tarfile
             self._real_archive_object = tarfile.open(archive_file, mode=f"{mode}:xz")
         elif archive_type == Archive.MODE_TARGZ:
+            if mode not in ("r", "w", "x"):
+                raise ValueError("mode must be 'r', 'w' or 'x'")
             import tarfile
             self._real_archive_object = tarfile.open(archive_file, mode=f"{mode}:gz")
 
