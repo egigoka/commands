@@ -41,6 +41,7 @@ from .threading9 import MyThread, Threading
 from .resources9 import Resources
 from .bytes9 import Bytes
 from .giv9 import GIV
+from .archive9 import Archive, Unarchive
 from .const9 import backslash, newline, newline2, ruble, rtl, KiB, MiB, GiB
 from ._version import __version__
 
