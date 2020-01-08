@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.11.3"
+__version__ = "0.11.4"
 
 
 class Console:
@@ -86,7 +86,7 @@ class Console:
                 break
 
     @staticmethod
-    def _get_output_with_timeout(*commands, print_std, decoding, timeout):
+    def _get_output_with_timeout(commands, print_std, decoding, timeout):
         import asyncio
         import sys
         import time
@@ -191,7 +191,7 @@ class Console:
         return State.stdout, State.stderr, return_code, State.timeout_exception
 
     @staticmethod
-    def _get_output(*commands, print_std, decoding, pureshell, universal_newlines, debug=False):
+    def _get_output(commands, print_std, decoding, pureshell, universal_newlines, debug=False):
         import subprocess
         if decoding or universal_newlines:
             out = ""
@@ -298,12 +298,12 @@ class Console:
             commands.append(" ".join(commands_old))
 
         if timeout:
-            output = cls._get_output_with_timeout(*commands, print_std=print_std, decoding=decoding,
+            output = cls._get_output_with_timeout(commands, print_std=print_std, decoding=decoding,
                                                   timeout=timeout)
             if output[3]:
                 raise TimeoutError(fr"Timeout {timeout} reached while running {commands}")
         else:
-            output = cls._get_output(*commands, print_std=print_std, decoding=decoding, pureshell=pureshell,
+            output = cls._get_output(commands, print_std=print_std, decoding=decoding, pureshell=pureshell,
                                      universal_newlines=universal_newlines, debug=debug)
         out = output[0]
         err = output[1]
