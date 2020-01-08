@@ -86,7 +86,7 @@ class Archive:
                     from .cli9 import CLI
                     Print.rewrite(CLI.wait_update(quiet=True), file_path, "archived")
 
-        temp_file.close()
+        archive.close()
         File.move(temp_file, archive_file)
 
 
