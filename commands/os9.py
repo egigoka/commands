@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to check some environment properties
 """
-__version__ = "3.1.0"
+__version__ = "3.1.1"
 
 
 class OS:  # pylint: disable=too-few-public-methods
@@ -199,6 +199,9 @@ class OS:  # pylint: disable=too-few-public-methods
     @staticmethod
     def walk(top, topdown=True, onerror=None, followlinks=False):
         import os
+        from .dir9 import Dir
+        if not Dir.exist(top):
+            raise FileNotFoundError(f"Directory {top} doesn't exist")
         return os.walk(top=top, topdown=topdown, onerror=onerror, followlinks=followlinks)
 
 
