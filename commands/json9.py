@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "3.0.1"
+__version__ = "3.1.0"
 
 
 class Json:
@@ -171,4 +171,9 @@ class JsonList(Json):
     def append(self, object):
         self.load()
         self.string.append(object)
+        self.save()
+
+    def sort(self, *args, **kwargs):
+        self.load()
+        self.string.sort(*args, **kwargs)
         self.save()
