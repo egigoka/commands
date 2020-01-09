@@ -348,6 +348,29 @@ class Str:
         return string
 
 
+    @staticmethod
+    def rreplace(string: str, old: str, new: str, occurrence: int):
+        '''Right replace. Replacing
+        :param string: str, string, where to replace
+        :param old: str, substring to replace
+        :param new: str, substring to insert
+        :param occurrence: int, count of replcacement from right
+        :return: str, string with replaced substrings
+        '''
+        # https://stackoverflow.com/a/2556252/6519078
+        if not isinstance(string, str):
+            string = str(string)
+        if not isinstance(old, str):
+            old = str(old)
+        if not isinstance(new, str):
+            new = str(new)
+        if not isinstance(occurrence, int):
+            occurrence = int(occurrence)
+
+        _list = string.rsplit(old, occurrence)
+        return new.join(_list)
+
+
     python_encodings = ['ascii', 'big5', 'big5hkscs', 'cp037', 'cp424', 'cp437', 'cp500', 'cp737', 'cp775', 'cp850',
                         'cp852', 'cp855', 'cp856', 'cp857', 'cp860', 'cp861', 'cp862', 'cp863', 'cp864', 'cp865',
                         'cp866', 'cp869', 'cp874', 'cp875', 'cp932', 'cp949', 'cp950', 'cp1006', 'cp1026', 'cp1140',
