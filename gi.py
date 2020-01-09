@@ -23,6 +23,8 @@ version_path = Path.combine(Path.working(), "commands", "_version.py")  # path t
 version_text = File.read(version_path)  # text from version file
 __version__ = Str.substring(version_text, version_prefix, version_suffix)  # get version from plane text
 last_int = Str.get_integers(__version__)[-1]  # get only integer of alpha version
+if last_int < 0:
+    last_int = -last_int
 old_version = version_prefix + __version__ + version_suffix  # old string, that currently in file
 
 new_version = version_prefix + Str.rreplace(__version__, last_int, last_int+1, 1) + version_suffix  # new string to replace old version
