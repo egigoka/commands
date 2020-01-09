@@ -32,7 +32,6 @@ from .int9 import Int
 from .cli9 import CLI
 from .base64_9 import Base64
 from .funcs9 import dirify
-from .zip9 import Zip, Unzip
 from .id9 import ID
 from .git9 import Git
 from .tsql9 import TSQL
