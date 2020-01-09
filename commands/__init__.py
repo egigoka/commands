@@ -16,7 +16,7 @@ from .file9 import File
 from .dir9 import Dir
 from .path9 import Path
 from .time9 import Time
-from .json9 import Json
+from .json9 import Json, JsonDict, JsonList
 from .list9 import List
 from .process9 import Process
 from .dict9 import Dict, imdict

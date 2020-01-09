@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "2.10.0"
+__version__ = "3.0.1"
 
 
 class Json:
@@ -20,15 +20,6 @@ class Json:
             self.string = {}
             self._save_to_file(self.filename, self.string, quiet=quiet)
 
-    def __getitem__(self, item):
-        self.load()
-        return self.string.__getitem__(item)
-
-    def __setitem__(self, key, value):
-        output = self.string.__setitem__(key, value)
-        self.save(quiet=self.quiet, debug=self.debug)
-        return output
-
     def __len__(self):
         return self.string.__len__()
 
@@ -43,9 +34,6 @@ class Json:
         return output
 
     __print__ = __repr__
-
-    def items(self):
-        return self.string.items()
 
     def load(self, quiet=True):
         """Loads json from file, defined in class init to class var "string"
@@ -147,3 +135,40 @@ class Json:
         if debug:
             print(json_string_in_memory)
         return json_string_in_memory
+
+
+class JsonDict(Json):
+    def __init__(self, filename, quiet=True, ensure_ascii=False, debug=False):
+        Json.__init__(self=self, filename=filename, quiet=quiet, ensure_ascii=ensure_ascii, debug=debug)
+        if not isinstance(self.string, dict):
+            raise TypeError(f"Json file {filename} is not containing dict")
+
+    def __getitem__(self, item):
+        self.load()
+        return self.string.__getitem__(item)
+
+    def __setitem__(self, key, value):
+        output = self.string.__setitem__(key, value)
+        self.save(quiet=self.quiet, debug=self.debug)
+        return output
+
+    def items(self):
+        return self.string.items()
+
+
+class JsonList(Json):
+    __getitem__ = JsonDict.__getitem__
+    __setitem__ = JsonDict.__setitem__
+
+    def __init__(self, filename, quiet=True, ensure_ascii=False, debug=False):
+        Json.__init__(self=self, filename=filename, quiet=quiet, ensure_ascii=ensure_ascii, debug=debug)
+        if self.string == {}:
+            self.string = []
+            self.save()
+        if not isinstance(self.string, list):
+            raise TypeError(f"Json file {filename} is not containing list")
+
+    def append(self, object):
+        self.load()
+        self.string.append(object)
+        self.save()

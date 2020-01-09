@@ -52,7 +52,7 @@ class TSQL:
         con.commit()
         con.close()
         if debug:
-            Print("Close connection done")
+            Print("Close connection finished")
 
     def run_without_transaction(self, query, debug=False):
         try:
@@ -85,7 +85,7 @@ class TSQL:
         cur.close()
         con.close()
         if debug:
-            Print("Close connection done")
+            Print("Close connection finished")
 
     def query(self, query, debug=False):
         try:
@@ -127,7 +127,7 @@ class TSQL:
         cur.close()
         con.close()
         if debug:
-            Print("Close connection done")
+            Print("Close connection finished")
 
         if len(out) == 1:
             return out[0]
