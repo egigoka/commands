@@ -83,8 +83,8 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
     @staticmethod
     def symlink(real, symlink):
         """Creates symlink in macOS
-        <br>`param real` string, path to real folder or file, where be linked symlink
-        <br>`param symlink` string, path to new symlink
+        <br>`param real` string, path1 to real folder or file, where be linked symlink
+        <br>`param symlink` string, path1 to new symlink
         <br>`return` None
         """
         from .process9 import Process

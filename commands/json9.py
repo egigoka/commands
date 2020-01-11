@@ -54,7 +54,7 @@ class Json:
 
     def _check_file(self, filename, quiet=True):
         """
-        <br>`param filename` string with path to JSON file
+        <br>`param filename` string with path1 to JSON file
         <br>`return` boolean with state of JSON correctness
         """
         # try:
@@ -67,7 +67,7 @@ class Json:
 
     def _save_to_file(self, filename, json_string, quiet=True, debug=False):
         """
-        <br>`param filename` path of file, where JSON will be saved
+        <br>`param filename` path1 of file, where JSON will be saved
         <br>`param json_string` list or dict to save in file
         <br>`param quiet` boolean, suppress print to console
         <br>`param debug` boolean, needed for debugging
@@ -93,20 +93,20 @@ class Json:
             from .print9 import Print
             Print.multithread_safe("JSON successfully saved")
         # except:
-        #     from .path import Path
-        #     raise IOError("error while saving JSON, try to repair script at path " +
+        #     from .path1 import Path
+        #     raise IOError("error while saving JSON, try to repair script at path1 " +
         #                   Path.full(sys.argv[0]))
         json_test_string = self._load_from_file(filename, quiet=True)
         if json_string != json_test_string:
             from .path9 import Path
             from .print9 import Print
             Print.debug("jsonstring_to_save", json_string, "json_test_string_from_file", json_test_string)
-            raise IOError("error while saving JSON, try to repair script at path " +
+            raise IOError("error while saving JSON, try to repair script at path1 " +
                           Path.full(sys.argv[0]))
 
     def _load_from_file(self, file_path, quiet=True, debug=False):
         """
-        <br>`param filename` path of file, from load JSON
+        <br>`param filename` path1 of file, from load JSON
         <br>`param quiet` suppress print to console
         <br>`param debug` boolean, needed for debugging
         <br>`return`

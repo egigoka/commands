@@ -107,7 +107,7 @@ class Unarchive:
     @staticmethod
     def single(archive_path, path_inside_archive, output_path, archive_type=Archive.MODE_ZIPDEFLATED):
         """
-        archive_path : path to archive for extracting
+        archive_path : path1 to archive for extracting
         path_inside_archive : Full name of file to be extracted.
         output_path : location where file need to be extracted,
         if not provided it will extract the file in current directory.

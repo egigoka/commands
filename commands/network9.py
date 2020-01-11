@@ -59,7 +59,7 @@ class Network:
         <br>`param domain` string, domain or IP
         <br>`param count` int, count of attempts
         <br>`param quiet` boolean, suppress print to console
-        <br>`param logfile` string, path to log file
+        <br>`param logfile` string, path1 to log file
         <br>`param timeout` int, timeout in milliseconds
         <br>`param return_ip` boolean, return string with IP
         <br>`return` boolean of availability of domain, or list of boolean domain availability, string ip and full output
