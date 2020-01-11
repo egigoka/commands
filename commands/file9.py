@@ -12,7 +12,7 @@ class File:
     @classmethod
     def create(cls, filename, quiet=True):
         """Creates subdirs, if needed
-        <br>`param filename` string with path1 to creating file
+        <br>`param filename` string with path to creating file
         <br>`param quiet` boolean, if True, suppress output to console
         <br>`return` None
         """
@@ -41,7 +41,7 @@ class File:
     @classmethod
     def delete(cls, path, quiet=True, no_sleep=False):
         """
-        <br>`param path1` string with path1 to deleting file
+        <br>`param path` string with path to deleting file
         <br>`param quiet` boolean, suppress print to console
         <br>`param no_sleep` boolean, if True - function skip sleep in 0.05 seconds after deleting file (to ensure than file
         deleted before next code run)
@@ -66,8 +66,8 @@ class File:
     @classmethod
     def move(cls, input_file, output_file):
         """
-        <br>`param input_file` string with path1 to previous file place
-        <br>`param output_file` string with path1 to new file place
+        <br>`param input_file` string with path to previous file place
+        <br>`param output_file` string with path to new file place
         <br>`return` None
         """
         import shutil
@@ -79,8 +79,8 @@ class File:
     @staticmethod
     def copy(input_file, output_file):
         """
-        <br>`param input_file` string with path1 to existing file
-        <br>`param output_file` string with path1 to new file
+        <br>`param input_file` string with path to existing file
+        <br>`param output_file` string with path to new file
         <br>`return` None
         """
         import shutil
@@ -89,9 +89,9 @@ class File:
     @classmethod
     def rename(cls, input_file, output_file):
         """
-        <br>`param input_file` string with path1 to previous file place
-        <br>`param output_file` string with path1 to new file place
-        <br>`return` string with path1 to new file place
+        <br>`param input_file` string with path to previous file place
+        <br>`param output_file` string with path to new file place
+        <br>`return` string with path to new file place
         """
         return cls.move(input_file, output_file)
 
@@ -99,7 +99,7 @@ class File:
     def hide(cls, filename, quiet=True):
         """Adding dot to filename and set attribute FILE_ATTRIBUTE_HIDDEN to
         file, if running on Windows
-        <br>`param filename` string with path1 to file
+        <br>`param filename` string with path to file
         <br>`param quiet` suppress print to console
         <br>`return` string with new filename
         """
@@ -123,7 +123,7 @@ class File:
     @classmethod
     def backup(cls, filename, subfolder="bak", hide=True, quiet=False):
         """Move file to subfolder, adds sort of timestamp to filename and hide file if 'hide' argument is True
-        <br>`param filename` string with path1 to file
+        <br>`param filename` string with path to file
         <br>`param subfolder` string with name of subfolder of backed up files
         <br>`param hide` boolean, define hide file or not
         <br>`param quiet` boolean, suppress print to console
@@ -145,7 +145,7 @@ class File:
             print("len(subfolder) < 1, so subfolder = 'bak'")  # print error
         subfolder = Path.extend(backup_filename[0], subfolder)  # append subfolder name
         Dir.create(subfolder)  # create subfolder
-        backup_filename = Path.extend(subfolder, backup_filename[1])  # backup file name full path1
+        backup_filename = Path.extend(subfolder, backup_filename[1])  # backup file name full path
         shutil.copy2(filename, backup_filename)  # finally backup file
         if hide:
             backup_filename = cls.hide(backup_filename)  # hiding file
@@ -158,7 +158,7 @@ class File:
     @staticmethod
     def wipe(path):
         """Erase content of file
-        <br>`param path1` string with path1 to file
+        <br>`param path` string with path to file
         <br>`return` None
         """
         file = open(path, 'w')
@@ -167,7 +167,7 @@ class File:
     @staticmethod
     def read(path, encoding="utf-8", auto_detect_encoding=False, quiet=True, mode="r"):  # return pipe to file content
         """
-        <br>`param path1` string, with path1 to file
+        <br>`param path` string, with path to file
         <br>`param auto_detect_encoding` bool or int, how much symbols use to auto define decoding, if True, uses 10000
         <br>`param quiet` bool, if True, suppress output to console
         <br>`return` pipe, to file text content with utf-8 decoding
@@ -199,7 +199,7 @@ class File:
     @staticmethod
     def write(filename, what_to_write, mode="a", quiet=True):
         """Write to end of file if "mode" arg isn't redefined
-        <br>`param filename` string with path1 to file
+        <br>`param filename` string with path to file
         <br>`param what_to_write` string to write
         <br>`param mode` string with any mode that supported by python open() func
         <br>`param quiet` boolean, if True, suppress output to console
@@ -221,7 +221,7 @@ class File:
     @staticmethod
     def exist(filename):
         """
-        <br>`param filename` string with path1 to file
+        <br>`param filename` string with path to file
         <br>`return` boolean that means existence of file
         """
         import os
@@ -230,7 +230,7 @@ class File:
     @staticmethod
     def get_size(filename):  # return size in bytes
         """
-        <br>`param filename` string with path1 to file
+        <br>`param filename` string with path to file
         <br>`return` int with filesize in bytes
         """
         import os
@@ -239,7 +239,7 @@ class File:
     @staticmethod
     def get_modification_time(filename):
         """
-        <br>`param filename` string, path1 to file
+        <br>`param filename` string, path to file
         <br>`return` float,
         """
         import os

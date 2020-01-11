@@ -11,7 +11,7 @@ class Dir:
     @staticmethod
     def create(dirname):
         """Creates dir if it doesn't exist
-        <br>`param dirname` string with path1 to new dir
+        <br>`param dirname` string with path to new dir
         <br>`return`
         """
         import os
@@ -21,8 +21,8 @@ class Dir:
     @staticmethod
     def list_of_entries(path):
         """
-        <br>`param path1` string with path1 to folder
-        <br>`return` list of files and folders in path1
+        <br>`param path` string with path to folder
+        <br>`return` list of files and folders in path
         """
         import os
         return os.listdir(path)
@@ -40,7 +40,7 @@ class Dir:
     @classmethod
     def number_of_files(cls, path, quiet=True):
         """
-        <br>`param path1` string with paht
+        <br>`param path` string with paht
         <br>`param quiet` suppress print to console
         <br>`return` int count of files in directory
         """
@@ -58,7 +58,7 @@ class Dir:
     @classmethod
     def batch_rename(cls, directory, previous_name_substring, new_name_substring, quiet=False):
         """Batch renames files in directory.
-        <br>`param directory` string with path1 to directory
+        <br>`param directory` string with path to directory
         <br>`param previous_name_substring` string that must be changed in every file
         <br>`param new_name_substring` string to that will be changed 'input_str'
         <br>`param quiet` suppress print to console
@@ -76,8 +76,8 @@ class Dir:
     def delete(cls, path, cleanup=False, remove_readonly=True, no_sleep=False, 
                skip_PermissionError=False, quiet_PermissionError=False):
         """Remove directory
-        <br>`param path1` string
-        <br>`param cleanup` boolean, True doesn't delete "path1" folder, only content
+        <br>`param path` string
+        <br>`param cleanup` boolean, True doesn't delete "path" folder, only content
         <br>`param skip_PermissionError` boolean, if True, skips files with denied permissions to read|write
         <br>`param quiet_PermissionError` boolean, suppress console output when skip file by PermissionError
         <br>`return` None
@@ -130,7 +130,7 @@ class Dir:
     @classmethod
     def cleanup(cls, path, skip_PermissionError=False, quiet_PermissionError=False):
         """Removes all content in directory
-        <br>`param path1` string
+        <br>`param path` string
         <br>`param skip_PermissionError` boolean, if True, skips files with denied permissions to read|write
         <br>`param quiet_PermissionError` boolean, suppress console output when skip file by PermissionError
         <br>`return` None
@@ -216,7 +216,7 @@ class Dir:
     @staticmethod
     def exist(filename):
         """
-        <br>`param filename` string with path1 to dir
+        <br>`param filename` string with path to dir
         <br>`return` boolean that means existence of dir
         """
         import os

@@ -47,8 +47,8 @@ class Git:
 
     @classmethod
     def push(cls, path, upstream=False):
-        """Push commits to 'path1' repo
-        <br>`param path1` string, path1 of repo
+        """Push commits to 'path' repo
+        <br>`param path` string, path of repo
         <br>`param upstream` boolean, if True, adding argument '-u' to git
         <br>`return` None
         """
@@ -62,7 +62,7 @@ class Git:
     def update(cls, message, path="https://github.com/egigoka/" + get_name_of_repo() + ".git"):
         """Automatization to mine git upload
         <br>`param message` string, commit message
-        <br>`param path1` string, path1 to repo
+        <br>`param path` string, path to repo
         <br>`return` None
         """
         cls.add(".")

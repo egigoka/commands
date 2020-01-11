@@ -12,7 +12,7 @@ class Wget:  # pylint: disable=too-few-public-methods
     def download(cls, url, output_filename, quiet=False, no_check_certificate=False, wget_path="wget", timeout=None):  # pylint: disable=inconsistent-return-statements
         """Wrapper to wget cli
         <br>`param url` string, url to some file
-        <br>`param output_filename` string, path1 to filename
+        <br>`param output_filename` string, path to filename
         <br>`param quiet` boolean, suppress print to console
         <br>`return` output from wget if 'quiet' argument is True
         """

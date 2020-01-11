@@ -19,7 +19,7 @@ def safe_run(command):
 # CHANGING VERSION
 version_prefix = '__version__ = "'
 version_suffix = '"'
-version_path = Path.combine(Path.working(), "commands", "_version.py")  # path1 to version file
+version_path = Path.combine(Path.working(), "commands", "_version.py")  # path to version file
 version_text = File.read(version_path)  # text from version file
 __version__ = Str.substring(version_text, version_prefix, version_suffix)  # get version from plane text
 last_int = Str.get_integers(__version__)[-1]  # get only integer of alpha version
@@ -73,7 +73,7 @@ safe_run("git reset --hard origin/master")
 
 # updating doc
 os.chdir(cwd)
-safe_run(fr"pdoc3 --html commands --force --output-dir {path1}")
+safe_run(fr"pdoc3 --html commands --force --output-dir {path}")
 
 # upload doc
 os.chdir(path)
