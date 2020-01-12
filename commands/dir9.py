@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "1.3.1"
+__version__ = "1.3.2"
 
 
 class Dir:
@@ -222,11 +222,15 @@ class Dir:
         import os
         return os.path.isdir(filename)
 
-    @staticmethod
-    def get_size(path):
+    @classmethod
+    def get_size(cls, path):
         import os
         from .file9 import File
         from .path9 import Path
+
+        if not cls.exist(path):
+            raise FileNotFoundError(f"Directory '{path}' not found")
+
         total_size = 0
         for root, dirs, files in os.walk(path):
             for file in files:
