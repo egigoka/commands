@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with path strings
 """
-__version__ = "2.5.11"
+__version__ = "2.6.0"
 
 
 class Path:
@@ -18,12 +18,20 @@ class Path:
         return os.path.abspath(path)
 
     @staticmethod
-    def commands():
+    def get_real_path(__file__):
+        """Used for store some settings(?)
+        <br>`return` string, path of input filepath
+        """
+        import os
+        return os.path.realpath(__file__)
+
+    @classmethod
+    def commands(cls):
         """Used for store some settings(?)
         <br>`return` string, path of this module
         """
         import os
-        return os.path.dirname(os.path.realpath(__file__))
+        return os.path.dirname(cls.get_real_path(__file__))
 
     @staticmethod
     def working():
