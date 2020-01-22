@@ -188,12 +188,10 @@ class File:
                 import codecs
                 with codecs.open(path, encoding='cp1251', errors='replace') as file:
                     content = file.read()
-                    file.close()
                     return content
         elif mode in ["b", "rb"]:
             with open(path, "rb") as file:
                 content = file.read()
-                file.close()
                 return content
 
     @staticmethod
@@ -216,7 +214,7 @@ class File:
                     what_to_write = str(what_to_write)
                 file.write(what_to_write)
         if not quiet:
-            print(f"Writed to file {filename}")
+            print(f"Written to file {filename}")
 
     @staticmethod
     def exist(filename):

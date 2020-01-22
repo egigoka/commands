@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Global Interpreter Variables
 """
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 
 
 class GIV:
@@ -15,10 +15,10 @@ class GIV:
     def init(cls):
         if cls.json is None:
             from .path9 import Path
-            from .json9 import Json
+            from .json9 import JsonDict
 
             json_path = Path.combine(Path.temp(), "commands_GIV.json")
-            cls.json = Json(json_path, debug=False, quiet=True)
+            cls.json = JsonDict(json_path, debug=False, quiet=True)
 
     @classmethod
     def __getitem__(cls, item):
