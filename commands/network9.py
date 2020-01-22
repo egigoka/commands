@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.5.6"
+__version__ = "0.5.7"
 
 
 class Network:
