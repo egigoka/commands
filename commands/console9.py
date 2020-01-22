@@ -202,7 +202,7 @@ class Console:
         # end setting decoding and init
 
         try:
-            with subprocess.Popen(commands, shell=pureshell, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=1,
+            with subprocess.Popen(commands, shell=pureshell, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                   universal_newlines=universal_newlines) as popen_object:
 
                 for line in popen_object.stdout:
