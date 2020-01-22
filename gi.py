@@ -12,10 +12,10 @@ __version__ = "1.2.2"
 
 
 def safe_run(command):
-    Print.colored(command, "green", "on_black")
+    Print.colored(command, "green", "on_white")
     out, err = Console.get_output(command, return_merged=False)
     if err:
-        Print.colored(err, "red", "on_black")
+        Print.colored(err, "red", "on_white")
 
 
 # CHANGING VERSION
