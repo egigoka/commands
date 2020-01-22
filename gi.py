@@ -8,13 +8,15 @@ import os
 from commands import *
 from commands.git9 import Git
 
-__version__ = "1.2.1"
+__version__ = "1.2.2"
+
 
 def safe_run(command):
-    print(command)
+    Print.colored(command, "green", "on_black")
     out, err = Console.get_output(command, return_merged=False)
     if err:
-        print(err)
+        Print.colored(err, "red", "on_black")
+
 
 # CHANGING VERSION
 version_prefix = '__version__ = "'

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with constants
 """
-__version__ = "1.2.0"
+__version__ = "1.2.1"
 
 # pylint: disable=invalid-name, anomalous-backslash-in-string
 newline = '\n'  # string with LF newline
