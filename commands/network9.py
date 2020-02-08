@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.5.7"
+__version__ = "0.6.0"
 
 
 class Network:
@@ -338,3 +338,15 @@ class Network:
                 raise LookupError("IP not found")
         else:
             return ipgetter.get_external_ip()
+
+    def check_internet_apple(self, timeout):
+        import requests
+        response = requests.get("http://captive.apple.com/hotspot-detect.html", timeout=timeout).content
+        good_response = b'<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>\n'
+        return response == good_response
+
+    def check_internet_microsoft(self, timeout):
+        import requests
+        response = requests.get("http://www.msftncsi.com/ncsi.txt", timeout=timeout).content
+        good_response = b'Microsoft NCSI'
+        return response == good_response
