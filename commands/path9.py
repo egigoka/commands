@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with path strings
 """
-__version__ = "2.6.0"
+__version__ = "2.6.1"
 
 
 class Path:
@@ -66,9 +66,7 @@ class Path:
             else:
                 path = path_first_path
         elif OS.unix_family:
-            if path_first_path == "..":
-                path = path_first_path
-            elif path_first_path == ".":
+            if path_first_path.startswith("."):
                 path = path_first_path
             else:
                 path = os.path.join(os.sep, path_first_path)

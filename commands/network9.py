@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.6.1"
+__version__ = "0.7.0"
 
 
 class Network:
@@ -340,15 +340,22 @@ class Network:
             return ipgetter.get_external_ip()
 
     @staticmethod
-    def check_internet_apple(timeout=10):
+    def check_response(endpoint, good_response, timeout=10):
         import requests
-        response = requests.get("http://captive.apple.com/hotspot-detect.html", timeout=timeout).content
-        good_response = b'<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>\n'
+        try:
+            response = requests.get(endpoint, timeout=timeout).content
+        except requests.exceptions.ConnectionError:
+            return False
         return response == good_response
 
-    @staticmethod
-    def check_internet_microsoft(timeout=10):
-        import requests
-        response = requests.get("http://www.msftncsi.com/ncsi.txt", timeout=timeout).content
-        good_response = b'Microsoft NCSI'
-        return response == good_response
+    @classmethod
+    def check_internet_apple(cls, timeout=10):
+        return cls.check_response("http://captive.apple.com/hotspot-detect.html",
+                                  b'<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>\n',
+                                  timeout=timeout)
+
+    @classmethod
+    def check_internet_microsoft(cls, timeout=10):
+        return cls.check_response("http://www.msftncsi.com/ncsi.txt",
+                                  b'Microsoft NCSI',
+                                  timeout=timeout)
