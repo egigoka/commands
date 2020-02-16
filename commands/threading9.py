@@ -2,9 +2,13 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "1.3.5"
+__version__ = "1.4.2"
 
 from .dict9 import imdict
+
+
+class IsRunning():
+    pass
 
 
 class MyThread:
@@ -22,7 +26,7 @@ class MyThread:
         self.thread.daemon = daemon
         self.thread_id = thread_id
         self.thread.name = name
-        self.thread.result = None
+        self.result = IsRunning()
         self.func = func
         self.args = args
         self.kwargs = kwargs
@@ -80,6 +84,9 @@ class MyThread:
         if res > 1:
             ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)
             raise RuntimeError('Thread Exception raise failure')
+
+    def is_running(self):
+        return self.thread.is_alive()
 
 
 class Threading:
@@ -142,3 +149,16 @@ class Threading:
     def raise_exception(self):
         for thread in self.threads:
             thread.raise_exception()
+
+    def get_results(self):
+        results = []
+        for thread in self.threads:
+            results.append(thread.result)
+        return results
+
+    def is_running(self):
+        cnt = 0
+        for thread in self.threads:
+            if thread.is_running():
+                cnt += 1
+        return cnt
