@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.7.2"
+__version__ = "0.7.3"
 
 class Windows:
     """Class to work with Windows-specific functions
@@ -307,3 +307,10 @@ class Windows:
             raise OSError(err)
 
         return out
+
+    @staticmethod
+    def change_wallpaper(image_path):
+        import ctypes
+        SPI_SETDESKWALLPAPER = 20
+        ctypes.windll.user32.SystemParametersInfoA(SPI_SETDESKWALLPAPER, 0, image_path, 0)
+        ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, image_path, 3)
