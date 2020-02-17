@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.13.5"
+__version__ = "0.13.7"
 
 
 class Str:
@@ -40,7 +40,7 @@ class Str:
         floatn = None
         for symbol in str(string) + " ":  # in exception some processing, meh :(
             try:
-                if symbol in ['-', '—']:
+                if symbol in ['-', '—'] and not integer_found:
                     negative = True
                     continue
                 if float_support:
