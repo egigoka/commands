@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "1.4.2"
+__version__ = "1.4.3"
 
 from .dict9 import imdict
 
@@ -48,12 +48,16 @@ class MyThread:
             self.qprint(f"Killed {self.thread.name}. running: {self.bench.end()}")
 
     def start(self, wait_for_keyboard_interrupt=False):
-        self.thread.run = self.run
-        self.thread.start()
-        if not self.quiet:
-            self.bench.start()
-        if wait_for_keyboard_interrupt:
-            self.wait_for_keyboard_interrupt()
+        try:
+            self.thread.run = self.run
+            self.thread.start()
+            if not self.quiet:
+                self.bench.start()
+            if wait_for_keyboard_interrupt:
+                self.wait_for_keyboard_interrupt()
+        except (KeyboardInterrupt, SystemExit):
+            self.raise_exception()
+            raise
 
     def wait_for_keyboard_interrupt(self, quiet=True):
         import time
@@ -65,6 +69,7 @@ class MyThread:
                     Print(self.thread.name)
         except (KeyboardInterrupt, SystemExit):
             self.raise_exception()
+            raise
 
     # https://www.geeksforgeeks.org/python-different-ways-to-kill-a-thread/
     def get_id(self):
