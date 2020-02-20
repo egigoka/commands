@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "1.4.3"
+__version__ = "1.5.0"
 
 from .dict9 import imdict
 
 
-class IsRunning():
+class IsRunning:
     pass
 
 
@@ -27,6 +27,7 @@ class MyThread:
         self.thread_id = thread_id
         self.thread.name = name
         self.result = IsRunning()
+        self.killed = False
         self.func = func
         self.args = args
         self.kwargs = kwargs
@@ -40,24 +41,22 @@ class MyThread:
             Print(*args, **kwargs)
 
     def run(self):
+        import sys
         self.qprint("Starting " + self.thread.name)
         try:
+            sys.settrace(self.globaltrace)
             self.result = self.func(*self.args, **self.kwargs)
             self.qprint(f"Finished {self.thread.name}. running: {self.bench.end()}")
         except SystemExit:
             self.qprint(f"Killed {self.thread.name}. running: {self.bench.end()}")
 
     def start(self, wait_for_keyboard_interrupt=False):
-        try:
-            self.thread.run = self.run
-            self.thread.start()
-            if not self.quiet:
-                self.bench.start()
-            if wait_for_keyboard_interrupt:
-                self.wait_for_keyboard_interrupt()
-        except (KeyboardInterrupt, SystemExit):
-            self.raise_exception()
-            raise
+        self.thread.run = self.run
+        self.thread.start()
+        if not self.quiet:
+            self.bench.start()
+        if wait_for_keyboard_interrupt:
+            self.wait_for_keyboard_interrupt()
 
     def wait_for_keyboard_interrupt(self, quiet=True):
         import time
@@ -71,27 +70,26 @@ class MyThread:
             self.raise_exception()
             raise
 
-    # https://www.geeksforgeeks.org/python-different-ways-to-kill-a-thread/
-    def get_id(self):
-        import threading
-        # returns id of the respective thread
-        if hasattr(self.thread, '_thread_id'):
-            return self.thread._thread_id
-        for id, thread in threading._active.items():
-            if thread is self.thread:
-                return id
-        self.qprint("Thread ID not found")
-
-    def raise_exception(self):
-        import ctypes
-        thread_id = self.get_id()
-        res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, ctypes.py_object(SystemExit))
-        if res > 1:
-            ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)
-            raise RuntimeError('Thread Exception raise failure')
-
     def is_running(self):
         return self.thread.is_alive()
+
+    # https://www.geeksforgeeks.org/python-different-ways-to-kill-a-thread/
+    def globaltrace(self, frame, event, arg):
+        if event == 'call':
+            return self.localtrace
+        else:
+            return None
+
+    def localtrace(self, frame, event, arg):
+        if self.killed:
+            if event == 'line':
+                raise SystemExit()
+        return self.localtrace
+
+    def kill(self):
+        self.killed = True
+
+    raise_exception = kill
 
 
 class Threading:
