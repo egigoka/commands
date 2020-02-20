@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "1.5.0"
+__version__ = "1.5.1"
 
 from .dict9 import imdict
 
@@ -82,8 +82,7 @@ class MyThread:
 
     def localtrace(self, frame, event, arg):
         if self.killed:
-            if event == 'line':
-                raise SystemExit()
+            raise SystemExit()
         return self.localtrace
 
     def kill(self):
@@ -152,6 +151,8 @@ class Threading:
     def raise_exception(self):
         for thread in self.threads:
             thread.raise_exception()
+
+    kill = raise_exception
 
     def get_results(self):
         results = []
