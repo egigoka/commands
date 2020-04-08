@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.7.1"
+__version__ = "0.7.2"
 
 
 class Network:
@@ -349,10 +349,11 @@ class Network:
                 from .print9 import Print
                 Print.debug(e)
             return False
-        if debug:
+        output = response == good_response
+        if debug and not output:
             from .print9 import Print
             Print.debug(response, good_response)
-        return response == good_response
+        return output
 
     @classmethod
     def check_internet_apple(cls, timeout=10, debug=False):
