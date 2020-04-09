@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.7.2"
+__version__ = "0.7.3"
 
 
 class Network:
@@ -357,9 +357,13 @@ class Network:
 
     @classmethod
     def check_internet_apple(cls, timeout=10, debug=False):
+        if cls.check_response("http://captive.apple.com/hotspot-detect.html",
+                              b'<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>\n',
+                              timeout=timeout, debug=debug):
+            return True
         return cls.check_response("http://captive.apple.com/hotspot-detect.html",
-                                  b'<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>\n',
-                                  timeout=timeout, debug=debug)
+                                  b'<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>',
+                                  timeout=timeout, debug=debug)  # sometimes this page is without newline at end
 
     @classmethod
     def check_internet_microsoft(cls, timeout=10, debug=False):
