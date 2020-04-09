@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.7.3"
+__version__ = "0.7.4"
 
 
 class Network:
@@ -349,7 +349,12 @@ class Network:
                 from .print9 import Print
                 Print.debug(e)
             return False
-        output = response == good_response
+        if isinstance(good_response, str):
+            output = response == good_response
+        elif isinstance(good_response, list) or isinstance(good_response, tuple):
+            output = response in good_response
+        else:
+            raise ValueError("good_response must be str, list or tuple")
         if debug and not output:
             from .print9 import Print
             Print.debug(response, good_response)
@@ -357,13 +362,10 @@ class Network:
 
     @classmethod
     def check_internet_apple(cls, timeout=10, debug=False):
-        if cls.check_response("http://captive.apple.com/hotspot-detect.html",
-                              b'<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>\n',
-                              timeout=timeout, debug=debug):
-            return True
         return cls.check_response("http://captive.apple.com/hotspot-detect.html",
-                                  b'<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>',
-                                  timeout=timeout, debug=debug)  # sometimes this page is without newline at end
+                                  (b'<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>\n',
+                                   b'<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>'),
+                                  timeout=timeout, debug=debug)
 
     @classmethod
     def check_internet_microsoft(cls, timeout=10, debug=False):
