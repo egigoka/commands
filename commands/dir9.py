@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "1.3.2"
+__version__ = "1.4.0"
 
 
 class Dir:
@@ -242,3 +242,9 @@ class Dir:
     def get_modification_time(path):
         from .file9 import File
         return File.get_modification_time(path)
+
+    @staticmethod
+    def get_free_space(path):
+        import shutil
+        total, used, free = shutil.disk_usage(path)
+        return free
