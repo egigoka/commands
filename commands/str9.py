@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.13.7"
+__version__ = "0.14.0"
 
 
 class Str:
@@ -369,6 +369,15 @@ class Str:
 
         _list = string.rsplit(old, occurrence)
         return new.join(_list)
+
+    @staticmethod
+    def is_ascii(string):
+        try:
+            string.encode('ascii')
+        except UnicodeEncodeError:
+            return False
+        else:
+            return True
 
 
     python_encodings = ['ascii', 'big5', 'big5hkscs', 'cp037', 'cp424', 'cp437', 'cp500', 'cp737', 'cp775', 'cp850',
