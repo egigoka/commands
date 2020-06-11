@@ -8,7 +8,7 @@ import os
 from commands import *
 from commands.git9 import Git
 
-__version__ = "1.3.0"
+__version__ = "1.3.1"
 
 
 def safe_run(command):
@@ -83,7 +83,7 @@ safe_run("git reset --hard origin/master")
 # updating doc
 os.chdir(cwd)
 if not safe_run("pydoc3"):
-    safe_run("pip3 install pydoc3")
+    Print.colored("pydoc3.py not in PATH or PATHEXT")
 safe_run(fr"pdoc3 --html commands --force --output-dir {path}")
 
 # upload doc
