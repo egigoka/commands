@@ -8,14 +8,21 @@ import os
 from commands import *
 from commands.git9 import Git
 
-__version__ = "1.2.2"
+__version__ = "1.3.0"
 
 
 def safe_run(command):
     Print.colored(command, "green", "on_white")
-    out, err = Console.get_output(command, return_merged=False)
-    if err:
+    try:
+        out, err = Console.get_output(command, return_merged=False)
+        if err:
+            Print.colored(err, "red", "on_white")
+            return False
+        else:
+            return True
+    except Exception as err:
         Print.colored(err, "red", "on_white")
+        return False
 
 
 # CHANGING VERSION
@@ -75,6 +82,8 @@ safe_run("git reset --hard origin/master")
 
 # updating doc
 os.chdir(cwd)
+if not safe_run("pydoc3"):
+    safe_run("pip3 install pydoc3")
 safe_run(fr"pdoc3 --html commands --force --output-dir {path}")
 
 # upload doc
