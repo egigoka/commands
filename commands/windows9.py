@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with Windows-specific functions
 """
-__version__ = "0.7.3"
+__version__ = "0.7.4"
 
 class Windows:
     """Class to work with Windows-specific functions
@@ -103,7 +103,7 @@ class Windows:
                 code_page = cls.set_cmd_code_page(65001)
             import os
             with Print.s_print_lock:
-                command = r'''py -c "print('йЙ\r', end='')"'''
+                command = r'''python3 -c "print('йЙ\r', end='')"'''
             Print("йЙ\r", end="")
             Print("  \r", end="")
             os.system(command)
