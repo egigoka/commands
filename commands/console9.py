@@ -312,9 +312,10 @@ class Console:
         return out, err
 
     @classmethod
-    def fit(cls, *strings, sep=" "):
+    def fit(cls, *strings: str, sep: str = " "):
         """Fit strings to console
         <br>`return` strings, that can be fit in one line print
+        <br> yes, implementation is far beyond good
         """
         from .os9 import OS
         from .list9 import List

@@ -1,31 +1,33 @@
 #! python3
 # -*- coding: utf-8 -*-
+from typing import Union
+
 """Internal module with functions for print to console.
 """
-__version__ = "0.10.2"
+__version__ = "0.11.0"
 
 
 class Print:
     """Class with functions for print to console.
     """
 
-    def __init__(self, *args, **kwargs):  # args added cause pycharm thinks that I'm every time init this class when call it
+    def __init__(self, *args, **kwargs):
         from threading import Lock
         self.s_print_lock = Lock()
         self.colorama_inited = False
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args, **kwargs) -> None:
         self.multithread_safe(*args, **kwargs)
 
-    def multithread_safe(self, *args, **kwargs):
+    def multithread_safe(self, *args, **kwargs) -> None:
         """Thread safe print function"""
         with self.s_print_lock:
             print(*args, **kwargs)
 
-    def debug(self, *strings, raw=False):
+    def debug(self, *strings: str, raw: bool = False) -> None:
         """More notable print, used only for debugging
-        <br>`param strings` strings, prints separately
-        <br>`param raw` print representation of raw strings
+        <br>`param strings` prints separately
+        <br>`param raw` print representation of strings
         <br>`return`
         """
         from .console9 import Console
@@ -40,11 +42,11 @@ class Print:
             self.multithread_safe(line)
         self.multithread_safe("<<<End of debug sheet>>>")
 
-    def rewrite(self,*strings, sep=" ", fit=True):
+    def rewrite(self, *strings: str, sep: str = " ", fit: bool = True) -> None:
         """Print rewritable string. note, that you need to rewrite string to remove previous characters
-        <br>`param strings` strings, work as builtin print()
+        <br>`param strings` work as builtin print()
         <br>`param sep` sep as builtin print(sep)
-        <br>`return`
+        <br>`param fit` try to fit output in one line
         """
         from .os9 import OS
         from .console9 import Console
@@ -56,12 +58,12 @@ class Print:
             strings = Console.fit(*strings, sep=sep)
         self.multithread_safe(*strings, sep=sep, end="\r")
 
-    def prettify(self, object_, indent=4, quiet=False):
+    def prettify(self, object_: Union[list, dict, tuple], indent: int = 4, quiet: bool = False) -> str:
         """Pretty print of list, dicts, tuples
-        <br>`param object_` list|dict|tuple
-        <br>`param indent` int, indent to new nested level
-        <br>`param quiet` boolean, suppress print to console
-        <br>`return` string, from pprint.pformat
+        <br>`param object_` object to print
+        <br>`param indent` indent to new nested level
+        <br>`param quiet` suppress print to console
+        <br>`return` from pprint.pformat
         """
         import pprint
         pretty_printer = pprint.PrettyPrinter(indent=indent)
@@ -70,15 +72,15 @@ class Print:
             self.multithread_safe(pretty_string)
         return pretty_string
 
-    def colored(self, *strings, attributes=None, end="\n", sep=" "):
-        """Wrapper for termcolor.cprint, added some smartness <br>`3
-        Usage` Print.colored("text1", "text2", "red") or cls.colored("text", "text2", "red", "on_white").
+    def colored(self, *strings: str, attributes: list = None, end: str = "\n", sep: str = " ") -> None:
+        """Wrapper for termcolor.cprint, added some smartness
+        <br>Usage` Print.colored("text1", "text2", "red") or Print.colored("text", "text2", "red", "on_white")
+        <br>even Print.colored("text", "text2", "on_white", "red") now.
         You can pick colors from termcolor.COLORS, highlights from termcolor.HIGHLIGHTS.
-        <br>`param strings` strings, work as builtin print()
-        <br>`param attributes` list of attributes, going to tkinter.cprint(attrs) argument
-        <br>`param end` string, same end, as builtin print(end)
-        <br>`param sep` string, same end, as builtin print(sep)
-        <br>`return` None
+        <br>`param strings` work as builtin print(*strings)
+        <br>`param attributes` going to termcolor.cprint(attrs) argument
+        <br>`param end` same as builtin print(end)
+        <br>`param sep` same as builtin print(sep)
         """
         import termcolor
         from contextlib import suppress
