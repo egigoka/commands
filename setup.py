@@ -17,7 +17,6 @@ setup(
     packages=['commands'],  # same as name
     install_requires=[
         'termcolor',
-        'copypaste',
         'pyperclip',
         'paramiko',
         'chardet',
