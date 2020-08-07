@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with ffmpeg
 """
-__version__ = "0.0.7"
+__version__ = "0.0.8"
 
 
 class FFMpeg:
@@ -16,7 +16,7 @@ class FFMpeg:
         subs_meta_list = []
         subs_meta_id = ID()
         for name, lang in Dict.iterable(subs):
-            subs_names_list += ['-i', '{name}']
+            subs_names_list += ['-i', name]
             subs_meta_list += [f'-metadata:s:s:{subs_meta_id.get()}', f'language={lang}']
 
         maps_list = []
