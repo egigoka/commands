@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.11.5"
+__version__ = "0.11.6"
 
 
 class Console:
@@ -252,7 +252,7 @@ class Console:
             import shlex
             commands = shlex.split(commands, posix=False)
 
-        if isinstance(commands, list):
+        if isinstance(commands, list) or isinstance(commands, tuple):
             from .list9 import List
             commands = List.to_strings(commands)
 
