@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with ffmpeg
 """
-__version__ = "0.0.8"
+__version__ = "0.1.0"
 
 
 class FFMpeg:
@@ -25,4 +25,11 @@ class FFMpeg:
 
         commands = ["ffmpeg", "-i", input_file] + subs_names_list + maps_list + ["-c", "copy"] + subs_meta_list + [output_file]
 
+        Console.get_output(commands, print_std=True)
+
+    @staticmethod
+    def avi_to_mkv(input_file, output_file):
+        from .console9 import Console
+
+        commands = ["ffmpeg", "-fflags", "+genpts", "-i", input_file, "-c:v", "copy", "-c:a", "copy", output_file]
         Console.get_output(commands, print_std=True)
