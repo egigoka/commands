@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.11.4"
+__version__ = "0.11.5"
 
 
 class Console:
@@ -251,6 +251,10 @@ class Console:
         if isinstance(commands, str) and not pureshell:
             import shlex
             commands = shlex.split(commands, posix=False)
+
+        if isinstance(commands, list):
+            from .list9 import List
+            commands = List.to_strings(commands)
 
         if not commands:
             raise IndexError("commands must not be empty")
