@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with ffmpeg
 """
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 
 class FFMpeg:
@@ -39,19 +39,19 @@ class FFMpeg:
         Console.get_output(commands, print_std=True)
 
     @classmethod
-    def add_subtitles_to_mkv(cls, input_file: str, subs: dict, output_file: str, subs_existed_langs: list = ()):
+    def add_subtitles_to_mkv(cls, input_file: str, subs: dict, output_file: str, existed_langs: list = ()):
         cls.add_something_to_mkv(input_file=input_file,
                                  additional_files=subs,
                                  output_file=output_file,
-                                 existed_langs=subs_existed_langs,
+                                 existed_langs=existed_langs,
                                  metadata_type=FFMpeg.MetadataTypes.subtitles)
 
     @classmethod
-    def add_audio_to_mkv(cls, input_file: str, audio: dict, output_file: str, audio_existed_langs: list = ()):
+    def add_audio_to_mkv(cls, input_file: str, audio: dict, output_file: str, existed_langs: list = ()):
         cls.add_something_to_mkv(input_file=input_file,
                                  additional_files=audio,
                                  output_file=output_file,
-                                 existed_langs=audio_existed_langs,
+                                 existed_langs=existed_langs,
                                  metadata_type=FFMpeg.MetadataTypes.audio)
 
     @staticmethod
