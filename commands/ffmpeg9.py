@@ -55,7 +55,7 @@ class FFMpeg:
                                  metadata_type=FFMpeg.MetadataTypes.audio)
 
     @staticmethod
-    def avi_to_mkv(input_file, output_file):
+    def convert_to_mkv(input_file, output_file):
         from .console9 import Console
 
         commands = ["ffmpeg", "-y", "-fflags", "+genpts", "-i", input_file, "-c:v", "copy", "-c:a", "copy", "-map", "0", output_file]
