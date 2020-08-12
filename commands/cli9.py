@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 
 class CLI:
@@ -27,11 +27,16 @@ class CLI:
             return
 
         while True:
-            input_str = input(f"{question} (y/n)? default [{answer}]")
+            print_str = f"{question} (y/n)?"
+            if default:
+                print_str += " default '{default}'"
+            input_str = input(print_str)
             input_str = input_str.strip(" ")
             output = check_answer(input_str)
             if output is not None:
                 return output
+            elif check_answer(default) is not None:
+                return check_answer(default)
 
     @staticmethod
     def get_ints(question, count_of_ints, answer=None):
