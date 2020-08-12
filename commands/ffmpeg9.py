@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with ffmpeg
 """
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 
 class FFMpeg:
@@ -33,7 +33,7 @@ class FFMpeg:
         for i in range(len(additional_files) + 1):
             maps_list += ['-map', i]
 
-        commands = ["ffmpeg", "-i", input_file] + names_list + maps_list + ["-c", "copy"] + meta_list + [
+        commands = ["ffmpeg", "-y", "-i", input_file] + names_list + maps_list + ["-c", "copy"] + meta_list + [
             output_file]
 
         Console.get_output(commands, print_std=True)
@@ -55,8 +55,8 @@ class FFMpeg:
                                  metadata_type=FFMpeg.MetadataTypes.audio)
 
     @staticmethod
-    def convert_to_mkv(input_file, output_file):
+    def avi_to_mkv(input_file, output_file):
         from .console9 import Console
 
-        commands = ["ffmpeg", "-fflags", "+genpts", "-i", input_file, "-c", "copy", output_file]
+        commands = ["ffmpeg", "-y", "-fflags", "+genpts", "-i", input_file, "-c:v", "copy", "-c:a", "copy", "-map", "0", output_file]
         Console.get_output(commands, print_std=True)
