@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 
 class CLI:
     """Class to work with commandline interfaces
     """
     @staticmethod
-    def get_y_n(question, answer=None):
+    def get_y_n(question, default=None):
         """Obtain answer yes or no from user in commandline.
         <br>`param question` string with question to user
         <br>`param answer` predefined string with answer, must be "y" or "n"
@@ -26,10 +26,6 @@ class CLI:
                 return False
             return
 
-        if answer:
-            output = check_answer(answer)
-            if output is not None:
-                return output
         while True:
             input_str = input(f"{question} (y/n)? default [{answer}]")
             input_str = input_str.strip(" ")

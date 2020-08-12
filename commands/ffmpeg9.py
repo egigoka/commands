@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with ffmpeg
 """
-__version__ = "0.3.1"
+__version__ = "0.4.0"
 
 
 class FFMpeg:
@@ -55,8 +55,8 @@ class FFMpeg:
                                  metadata_type=FFMpeg.MetadataTypes.audio)
 
     @staticmethod
-    def avi_to_mkv(input_file, output_file):
+    def convert_to_mkv(input_file, output_file):
         from .console9 import Console
 
-        commands = ["ffmpeg", "-fflags", "+genpts", "-i", input_file, "-c:v", "copy", "-c:a", "copy", output_file]
+        commands = ["ffmpeg", "-fflags", "+genpts", "-i", input_file, "-c", "copy", output_file]
         Console.get_output(commands, print_std=True)
