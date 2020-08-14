@@ -1,8 +1,9 @@
 #! python3
 # -*- coding: utf-8 -*-
+from typing import Union
 """Internal module to work with files
 """
-__version__ = "1.0.8"
+__version__ = "1.1.0"
 # pylint: disable=c-extension-no-member
 
 
@@ -165,14 +166,13 @@ class File:
         file.close()
 
     @staticmethod
-    def read(path, encoding="utf-8", auto_detect_encoding=False, quiet=True, mode="r"):  # return pipe to file content
+    def read(path, encoding: str = "utf-8", auto_detect_encoding: Union[bool, int] = True, mode: str = "r"):  # return pipe to file content
         """
-        <br>`param path` string, with path to file
-        <br>`param auto_detect_encoding` bool or int, how much symbols use to auto define decoding, if True, uses 10000
-        <br>`param quiet` bool, if True, suppress output to console
+        <br>`param path` path to file
+        <br>`param auto_detect_encoding` how much symbols use to auto define decoding, if True, uses 10000
         <br>`return` pipe, to file text content with utf-8 decoding
         """
-        if mode=="r":
+        if mode == "r":
             try:
                 if auto_detect_encoding:
                     from .bytes9 import Bytes
