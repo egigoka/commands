@@ -14,6 +14,7 @@ class FFMpeg:
     @staticmethod
     def add_something_to_mkv(input_file: str, additional_files: dict,
                              output_file: str, metadata_type: str, existed_langs: list = ()):
+        import os
         from .console9 import Console
         from .dict9 import Dict
         from .id9 import ID
@@ -37,6 +38,7 @@ class FFMpeg:
             output_file]
 
         Console.get_output(commands, print_std=True)
+
 
     @classmethod
     def add_subtitles_to_mkv(cls, input_file: str, subs: dict, output_file: str, existed_langs: list = ()):
