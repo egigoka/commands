@@ -213,6 +213,7 @@ class Console:
                             print(f"line: '{line}', decoding: '{decoding}'")
                             raise
                     out += line
+                    print(print_std)
                     if print_std:
                         print(line, end='')
 
