@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.11.6"
+__version__ = "0.11.7"
 
 
 class Console:
@@ -119,7 +119,7 @@ class Console:
                         line = ''
             State.stdout += line
             if print_std:
-                print(line, end="")
+                print(line, end="", flush=True)
             return True
 
         def save_stderr(stderr):
@@ -127,7 +127,7 @@ class Console:
                 stderr = stderr.decode(decoding)
             State.stderr = stderr
             if print_std and stderr:
-                print(f"stderr:\n{stderr}")
+                print(f"stderr:\n{stderr}", flush=True)
 
         async def run_command(*args, timeout):
             # start child process
@@ -213,16 +213,20 @@ class Console:
                             print(f"line: '{line}', decoding: '{decoding}'")
                             raise
                     out += line
-                    print(print_std)
                     if print_std:
-                        print(line, end='')
+                        print(line, end='', flush=True)
 
-                for line in popen_object.stderr:
+                stderr = list(popen_object.stderr)
+
+                if len(stderr):
+                    print(f"stderr:", flush=True)
+
+                for line in stderr:
                     if decoding:
                         line = line.decode(decoding)
                     err += line
                     if print_std:
-                        print(line, end='')
+                        print(line, end='', flush=True)
         except FileNotFoundError as exception:
             if debug:
                 from .print9 import Print
