@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with ffmpeg
 """
-__version__ = "0.5.0"
+__version__ = "0.5.1"
 
 
 class FFMpeg:
@@ -69,7 +69,7 @@ class FFMpeg:
     def convert_to_mkv(input_file, output_file, verbose=False):
         from .console9 import Console
 
-        commands = ["ffmpeg", "-i", input_file, "-c:v", "copy", "-c:a", "copy", "-map", "0", output_file]
+        commands = [f'ffmpeg -i "{input_file}" -c:v copy -c:a copy -map 0 "{output_file}"']
         if verbose:
             print(" ".join(commands))
-        Console.get_output(commands, print_std=True)
+        Console.get_output(commands, print_std=True, pureshell=True)
