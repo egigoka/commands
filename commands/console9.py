@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.11.7"
+__version__ = "0.11.8"
 
 
 class Console:
@@ -119,6 +119,7 @@ class Console:
                         line = ''
             State.stdout += line
             if print_std:
+
                 print(line, end="", flush=True)
             return True
 
@@ -214,7 +215,11 @@ class Console:
                             raise
                     out += line
                     if print_std:
-                        print(line, end='', flush=True)
+                        end = ''
+                        if debug:
+                            from .time9 import Time
+                            end = Time.dotted() + "\n"
+                        print(line, end=end, flush=True)
 
                 stderr = list(popen_object.stderr)
 
@@ -226,7 +231,11 @@ class Console:
                         line = line.decode(decoding)
                     err += line
                     if print_std:
-                        print(line, end='', flush=True)
+                        end = ''
+                        if debug:
+                            from .time9 import Time
+                            end = Time.dotted() + "\n"
+                        print(line, end=end, flush=True)
         except FileNotFoundError as exception:
             if debug:
                 from .print9 import Print
