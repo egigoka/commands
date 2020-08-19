@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.11.10"
+__version__ = "0.11.11"
 
 
 class Console:
@@ -215,6 +215,7 @@ class Console:
                                 raise
                         output += string
                         if print_std:
+                            from .print9 import Print
                             Print.colored(string, end='', flush=True)
                     return output
 
