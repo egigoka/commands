@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.11.9"
+__version__ = "0.11.10"
 
 
 class Console:
@@ -225,7 +225,7 @@ class Console:
                 pipes.add(print_out_lines, "stderr",
                           kwargs={"obj": popen_object.stderr, "color": "red", "is_string": is_string})
 
-                pipes.start()
+                pipes.start(wait_for_keyboard_interrupt=True)
 
                 out, err = pipes.get_results()
 
