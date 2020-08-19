@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with ffmpeg
 """
-__version__ = "0.5.2"
+__version__ = "0.5.3"
 
 
 class FFMpeg:
@@ -39,8 +39,9 @@ class FFMpeg:
 
         if debug:
             from .print9 import Print
+            from .list9 import List
             Print.colored(f"{commands=}", "red")
-            Print.colored('" "'.join(commands), "magenta")
+            Print.colored('" "'.join(List.to_strings(commands)), "magenta")
 
         Console.get_output(commands, print_std=True, debug=debug)
 
