@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.11.11"
+__version__ = "0.11.12"
 
 
 class Console:
@@ -206,7 +206,7 @@ class Console:
                     output = b''
                     if is_string:
                         output = ''
-                    for string in popen_object.stdout:
+                    for string in obj:
                         if decoding:
                             try:
                                 string = string.decode(decoding)
@@ -216,7 +216,7 @@ class Console:
                         output += string
                         if print_std:
                             from .print9 import Print
-                            Print.colored(string, end='', flush=True)
+                            Print.colored(string, color, end='', flush=True)
                     return output
 
                 pipes = Threading(verbose=debug)
