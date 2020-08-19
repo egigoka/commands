@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "1.5.1"
+__version__ = "1.6.2"
 
 from .dict9 import imdict
 
@@ -94,12 +94,12 @@ class MyThread:
 class Threading:
     _imdict = imdict({})
 
-    def __init__(self, daemons=None, quiet=None):
+    def __init__(self, daemons=None, verbose=None):
         from .id9 import ID
         self.threads = []
         self.thread_ids = ID()
         self.daemons = daemons
-        self.quiet = quiet
+        self.quiet = not verbose
 
     def add(self, func, name=None, args=(), kwargs=_imdict, daemon=None, quiet=None):
         if daemon is None:

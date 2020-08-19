@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.11.8"
+__version__ = "0.11.9"
 
 
 class Console:
@@ -194,48 +194,41 @@ class Console:
     @staticmethod
     def _get_output(commands, print_std, decoding, pureshell, universal_newlines, debug=False):
         import subprocess
-        if decoding or universal_newlines:
-            out = ""
-            err = ""
-        else:
-            out = b''
-            err = b''
-        # end setting decoding and init
+        from .threading9 import Threading
+
+        is_string = decoding or universal_newlines
 
         try:
             with subprocess.Popen(commands, shell=pureshell, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                   universal_newlines=universal_newlines) as popen_object:
 
-                for line in popen_object.stdout:
-                    if decoding:
-                        try:
-                            line = line.decode(decoding)
-                        except UnicodeDecodeError as e:
-                            print(f"line: '{line}', decoding: '{decoding}'")
-                            raise
-                    out += line
-                    if print_std:
-                        end = ''
-                        if debug:
-                            from .time9 import Time
-                            end = Time.dotted() + "\n"
-                        print(line, end=end, flush=True)
+                def print_out_lines(obj, color, is_string: bool):
+                    output = b''
+                    if is_string:
+                        output = ''
+                    for string in popen_object.stdout:
+                        if decoding:
+                            try:
+                                string = string.decode(decoding)
+                            except UnicodeDecodeError as e:
+                                print(f"line: '{string}', decoding: '{decoding}'")
+                                raise
+                        output += string
+                        if print_std:
+                            Print.colored(string, end='', flush=True)
+                    return output
 
-                stderr = list(popen_object.stderr)
+                pipes = Threading(verbose=debug)
 
-                if len(stderr):
-                    print(f"stderr:", flush=True)
+                pipes.add(print_out_lines, "stdout",
+                          kwargs={"obj": popen_object.stdout, "color": "green", "is_string": is_string})
+                pipes.add(print_out_lines, "stderr",
+                          kwargs={"obj": popen_object.stderr, "color": "red", "is_string": is_string})
 
-                for line in stderr:
-                    if decoding:
-                        line = line.decode(decoding)
-                    err += line
-                    if print_std:
-                        end = ''
-                        if debug:
-                            from .time9 import Time
-                            end = Time.dotted() + "\n"
-                        print(line, end=end, flush=True)
+                pipes.start()
+
+                out, err = pipes.get_results()
+
         except FileNotFoundError as exception:
             if debug:
                 from .print9 import Print
