@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 """Internal module to check some environment properties
 """
-__version__ = "3.1.1"
+__version__ = "3.2.0"
 
 
 class OS:  # pylint: disable=too-few-public-methods
     """Class with some environment properties
     """
+
     @property
     def is_python3(self):
         try:
@@ -31,7 +32,7 @@ class OS:  # pylint: disable=too-few-public-methods
         try:
             return self._python_commandline_version
         except AttributeError:
-            self._python_commandline_version =  ""
+            self._python_commandline_version = ""
             if self.is_python3:
                 self._python_commandline_version = "3"
             return self._python_commandline_version
@@ -114,7 +115,6 @@ class OS:  # pylint: disable=too-few-public-methods
                 self._python_implementation = "cpython"
             return self._python_implementation
 
-
     @property
     def nt_family(self):
         try:
@@ -123,7 +123,6 @@ class OS:  # pylint: disable=too-few-public-methods
             self._nt_family = self.windows
             return self._nt_family
 
-
     @property
     def unix_family(self):
         try:
@@ -131,7 +130,6 @@ class OS:  # pylint: disable=too-few-public-methods
         except AttributeError:
             self._unix_family = self.macos or self.linux
             return self._unix_family
-
 
     @property
     def display(self):
@@ -146,7 +144,6 @@ class OS:  # pylint: disable=too-few-public-methods
                 self._display = False
             return self._display
 
-
     @property
     def running_in_repl(self):
         try:
@@ -160,7 +157,6 @@ class OS:  # pylint: disable=too-few-public-methods
             except AttributeError:
                 self._running_in_repl = False
             return self._running_in_repl
-
 
     @property
     def cyrillic_support(self):
@@ -203,6 +199,11 @@ class OS:  # pylint: disable=too-few-public-methods
         if not Dir.exist(top):
             raise FileNotFoundError(f"Directory {top} doesn't exist")
         return os.walk(top=top, topdown=topdown, onerror=onerror, followlinks=followlinks)
+
+    @staticmethod
+    def system(command):
+        import os
+        return os.system(command)
 
 
 OS = OS()
