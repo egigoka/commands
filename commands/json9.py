@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "3.2.0"
+__version__ = "3.3.0"
 
 
 class Json:
@@ -163,6 +163,9 @@ class JsonDict(Json):
 
     def items(self):
         return self.string.items()
+
+    def keys(self):
+        return self.string.keys()
 
 
 class JsonList(Json):
