@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "3.1.1"
+__version__ = "3.2.0"
 
 
 class Json:
@@ -23,17 +23,20 @@ class Json:
     def __len__(self):
         return self.string.__len__()
 
+    def __contains__(self, item):
+        return self.string.__contains__(item)
+
     def __repr__(self):
         from .print9 import Print
         pretty = Print.prettify(self.string, quiet=True)
         return f"JSON '{self.filename}':\n{pretty}"
 
+    __print__ = __repr__
+
     def pop(self, *args, **kwargs):
         output = self.string.pop(*args, **kwargs)
         self.save(quiet=self.quiet, debug=self.debug)
         return output
-
-    __print__ = __repr__
 
     def load(self, quiet=True):
         """Loads json from file, defined in class init to class var "string"
@@ -173,6 +176,8 @@ class JsonList(Json):
             self.save()
         if not isinstance(self.string, list):
             raise TypeError(f"Json file {filename} is not containing list")
+
+
 
     def append(self, object):
         self.load()
