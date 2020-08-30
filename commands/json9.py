@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "4.0.0"
+__version__ = "4.0.2"
 
 
 class Json:
@@ -14,11 +14,8 @@ class Json:
         self.ensure_ascii = ensure_ascii
         self.quiet = quiet
         self.debug = debug
-        if self._check_file(filename):
-            self.string = self._load_from_file(self.filename, quiet=quiet)
-        else:
-            self.string = {}
-            self._save_to_file(self.filename, self.string, quiet=quiet)
+
+        self.load(quiet=quiet)
 
     def __len__(self):
         return self.string.__len__()
