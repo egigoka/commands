@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 
 
 class CLI:
@@ -20,6 +20,8 @@ class CLI:
             <br>`param string` input string, check answer for "y" or "n", for other values return None
             <br>`return` True|False|None
             """
+            if string is None:
+                return
             if string.lower() == "y":
                 return True
             if string.lower() == "n":
@@ -31,7 +33,7 @@ class CLI:
             if default:
                 print_str += " default '{default}'"
             input_str = input(print_str)
-            input_str = input_str.strip(" ")
+            input_str = input_str.strip()
             output = check_answer(input_str)
             if output is not None:
                 return output
