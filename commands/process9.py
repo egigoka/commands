@@ -32,5 +32,5 @@ class Process:
             except ValueError:
                 pass
         else:
-            raise NotImplementedError("OS not supported, now only Windows and macOS")
+            raise NotImplementedError("OS not supported, now only Windows and unix-like")
         return Console.get_output(command_)

@@ -3,13 +3,7 @@
 """Internal module to simplify work with git
 """
 # pylint: disable=unused-wildcard-import, wildcard-import
-import sys
-from commands.path9 import Path
-from commands.process9 import Process
-from commands.bash9 import Bash
-from commands.file9 import File
-from commands.str9 import Str
-__version__ = "2.0.1"
+__version__ = "2.1.0"
 
 
 def get_name_of_repo():
@@ -17,6 +11,7 @@ def get_name_of_repo():
     <br>`return` string, name of repo
     """
     import os
+    from .path9 import Path
     if Path.working().split(os.sep)[-1] in ["t", "term"]:
         return "test"
     return Path.working().split(os.sep)[-1]
@@ -31,7 +26,8 @@ class Git:
         <br>`param what` string, adding files
         <br>`return` None
         """
-        Process.start("git", "add", what)
+        from .console9 import Console
+        Console.get_output("git", "add", what)
 
     @classmethod
     def commit(cls, message=None):
@@ -39,11 +35,14 @@ class Git:
         <br>`param message` string, message of commit
         <br>`return` None
         """
+        from .bash9 import Bash
+        from .console9 import Console
+
         commands = ["git", "commit"]
         if message:
             commands.append("-m")
             commands.append(Bash.argument_escape(message))
-        Process.start(commands)
+        Console.get_output(commands)
 
     @classmethod
     def push(cls, path, upstream=False):
@@ -52,11 +51,13 @@ class Git:
         <br>`param upstream` boolean, if True, adding argument '-u' to git
         <br>`return` None
         """
+        from .console9 import Console
+
         commands = ["git", "push"]
         if upstream:
             commands.append("-u")
         commands.append(path)
-        Process.start(commands)
+        Console.get_output(commands)
 
     @classmethod
     def update(cls, message, path="https://github.com/egigoka/" + get_name_of_repo() + ".git"):
