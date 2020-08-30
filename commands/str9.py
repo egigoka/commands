@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.14.0"
+__version__ = "0.14.1"
 
 
 class Str:
@@ -174,7 +174,7 @@ class Str:
                     exception_message += '. '
                 elif exception_message is None:
                     exception_message = ""
-                raise KeyError(f"{exception_message}The line preceding ({before}) the search string was not found")
+                raise KeyError(f'{exception_message}The line preceding "{before}" the search string was not found')
         if after:
             if isinstance(after, bytes):
                 from .bytes9 import Bytes
@@ -194,7 +194,7 @@ class Str:
                         exception_message += '. '
                     elif exception_message is None:
                         exception_message = ""
-                    raise KeyError(f"{exception_message}The string ({after}) that followed the search string was not found")
+                    raise KeyError(f'{exception_message}The string "{after}" that followed the search string was not found')
         else:
             substring = string[startfrom:]
         if return_after_substring:
