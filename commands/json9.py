@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "4.0.2"
+__version__ = "4.0.3"
 
 
 class Json:
@@ -69,8 +69,8 @@ class Json:
             from .file9 import File
             try:
                 File.create(self.filename)
-                clean_json = {}
-                self.save(self.filename, clean_json)
+                self.string = {}
+                self.save(self.filename)
             except FileExistsError:  # if file created while this code running
                 pass
         with open(self.filename, encoding="utf8") as file_handle:
