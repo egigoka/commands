@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.7.5"
+__version__ = "0.7.6"
 
 
 class Network:
@@ -354,7 +354,7 @@ class Network:
         elif isinstance(good_response, list) or isinstance(good_response, tuple):
             output = response in good_response
         else:
-            raise ValueError("good_response must be bytes, list or tuple")
+            raise TypeError(f"good_response must be bytes, list or tuple, got '{type(good_response)}' instead")
         if debug and not output:
             from .print9 import Print
             Print.debug(response, good_response)

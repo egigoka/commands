@@ -70,7 +70,7 @@ class Json:
             try:
                 File.create(self.filename)
                 self.string = {}
-                self.save(self.filename)
+                self.save()
             except FileExistsError:  # if file created while this code running
                 pass
         with open(self.filename, encoding="utf8") as file_handle:
