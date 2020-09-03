@@ -346,7 +346,7 @@ class Network:
         from .list9 import List
 
         if isinstance(good_response, str):
-            good_response = bytes(good_response)
+            good_response = bytes(good_response, encoding="utf-8")
         elif isinstance(good_response, list) or isinstance(good_response, tuple):
             good_response = List.apply_lambda_to_all_elements(good_response, bytes)
 
