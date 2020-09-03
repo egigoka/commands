@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with lists
 """
-__version__ = "0.6.2"
+__version__ = "0.7.0"
 
 
 class List:
@@ -58,8 +58,12 @@ class List:
         return [str(string).replace(old_string, new_string) for string in list]
 
     @staticmethod
-    def to_strings(list):
-        return [str(string) for string in list]
+    def apply_lambda_to_all_elements(list, function):
+        return [function(string) for string in list]
+
+    @classmethod
+    def to_strings(cls, list):
+        return cls.apply_lambda_to_all_elements(list, str)
 
     @staticmethod
     def remove_duplicates(source_list, preserve_order=True):

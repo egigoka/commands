@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.7.6"
+__version__ = "0.7.7"
+from typing import Union
 
 
 class Network:
@@ -340,8 +341,15 @@ class Network:
             return ipgetter.get_external_ip()
 
     @staticmethod
-    def check_response(endpoint, good_response, timeout=10, debug=False):
+    def check_response(endpoint: str, good_response: Union[str, bytes, list], timeout: int = 10, debug: bool = False) -> bool:
         import requests
+        from .list9 import List
+
+        if isinstance(good_response, str):
+            good_response = bytes(good_response)
+        elif isinstance(good_response, list) or isinstance(good_response, tuple):
+            good_response = List.apply_lambda_to_all_elements(good_response, bytes)
+
         try:
             response = requests.get(endpoint, timeout=timeout).content
         except requests.exceptions.ConnectionError as e:
