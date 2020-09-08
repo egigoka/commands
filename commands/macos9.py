@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions that works only in macOS
 """
-__version__ = "0.2.4"
+__version__ = "0.2.5"
 
 
 class macOS:  # pylint: disable=invalid-name, too-few-public-methods
@@ -65,7 +65,7 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
         # simpler commandline tool - https://github.com/vjeantet/alerter
         # commands = "display notification \"message\" with title \"title\" subtitle \"subtitle\" sound name \"Sosumi\""
         from .str9 import Str
-        from .process9 import Process
+        from .os9 import OS
         commands = "display notification " + Str.to_quotes(cls.OSAScript.quotes_escape(message))
         if title or subtitle:
             commands += " with "
@@ -77,8 +77,7 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
             commands += " sound name " + Str.to_quotes(cls.OSAScript.quotes_escape(sound))
         commands = cls.OSAScript.quotes_escape(commands)  # escaping quotes:
         commands = Str.to_quotes(commands)  # applescript to quotes
-        Process.start("osascript", "-e",
-                      commands)  # f start(*arguments, new_window=False, debug=False, pureshell=False):
+        OS.system(" ".join(["osascript", "-e", *commands]))
 
     @staticmethod
     def symlink(real, symlink):
