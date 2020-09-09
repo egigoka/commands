@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "4.0.3"
+__version__ = "4.0.4"
 
 
 class Json:
@@ -98,9 +98,9 @@ class JsonDict(Json):
         try:
             return self.string.__getitem__(item)
         except KeyError:
-            print(f"{self=}")
-            print(f"{self.string=}")
-            print(f"{item=}")
+            print(f"self={self}")
+            print(f"self.string={self.string}")
+            print(f"item={item}")
             raise
 
     def __setitem__(self, key, value):
