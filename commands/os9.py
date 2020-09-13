@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to check some environment properties
 """
-__version__ = "3.2.0"
+__version__ = "3.3.0"
 
 
 class OS:  # pylint: disable=too-few-public-methods
@@ -201,8 +201,13 @@ class OS:  # pylint: disable=too-few-public-methods
         return os.walk(top=top, topdown=topdown, onerror=onerror, followlinks=followlinks)
 
     @staticmethod
-    def system(command):
+    def system(command: str, verbose: bool = False):
         import os
+
+        if verbose:
+            from .print9 import Print
+            Print.colored(command, "blue")
+
         return os.system(command)
 
 
