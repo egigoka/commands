@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with lists
 """
-__version__ = "0.7.0"
+__version__ = "0.8.0"
 
 
 class List:
@@ -86,3 +86,11 @@ class List:
         copy_list = copy.deepcopy(list)
         random.shuffle(copy_list)
         return copy_list
+
+    @staticmethod
+    def remove_empty_strings(list_: list):
+        list_new = list_.copy()
+        for cnt, item in enumerate(list_new):
+            if item == "":
+                list_new.pop(cnt)
+        return list_new

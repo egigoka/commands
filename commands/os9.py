@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to check some environment properties
 """
-__version__ = "3.4.0"
+__version__ = "3.4.1"
 
 
 class OS:  # pylint: disable=too-few-public-methods
@@ -219,5 +219,6 @@ class OS:  # pylint: disable=too-few-public-methods
     def where(*args, **kwargs):
         import shutil
         return shutil.which(*args, **kwargs)
+
 
 OS = OS()
