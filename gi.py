@@ -11,10 +11,10 @@ from commands.git9 import Git
 __version__ = "1.3.4"
 
 
-def safe_run(command):
+def safe_run(command, pureshell=False):
     Print.colored(command, "green")
     try:
-        out, err = Console.get_output(command, return_merged=False)
+        out, err = Console.get_output(command, return_merged=False, pureshell=pureshell)
         if err:
             Print.colored(err, "red")
             return False
@@ -86,7 +86,7 @@ if OS.windows:
     if not safe_run("pydoc3"):
         Print.colored("pydoc3.py not in PATH or PATHEXT", "red")
 elif OS.unix_family:
-    if not safe_run("where pdoc3"):
+    if not safe_run("where pdoc3", pureshell=True):
         Print.colored("pdoc not in PATH", "red")
 else:
     raise NotImplementedError("OS is not supported now")
