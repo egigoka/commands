@@ -8,7 +8,7 @@ import os
 from commands import *
 from commands.git9 import Git
 
-__version__ = "1.3.5"
+__version__ = "1.3.6"
 
 
 def safe_run(command):
@@ -86,8 +86,8 @@ if OS.windows:
     if not safe_run("pydoc3"):
         Print.colored("pydoc3.py not in PATH or PATHEXT", "red")
 elif OS.unix_family:
-    if not safe_run("where pdoc3"):
-        Print.colored("pdoc not in PATH", "red")
+    if not OS.where("pdoc3"):
+        Print.colored("pdoc3 not in PATH", "red")
 else:
     raise NotImplementedError("OS is not supported now")
 safe_run(fr"pdoc3 --html commands --force --output-dir {path}")
