@@ -8,7 +8,7 @@ import os
 from commands import *
 from commands.git9 import Git
 
-__version__ = "1.3.1"
+__version__ = "1.3.2"
 
 
 def safe_run(command):
@@ -60,7 +60,7 @@ except IndexError:
     INPUT_STRING = input("Enter a description or press Enter to default message: ")
     if INPUT_STRING:
         STRING = INPUT_STRING
-Git.update(STRING)
+Git.update(STRING, verbose=True)
 
 try:
     if OS.windows:

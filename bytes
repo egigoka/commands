@@ -1,0 +1,14 @@
+uploadin 0.9.577-alpha
+È…  È…  .\update_commands.bat
+git fetch --all
+git reset --hard origin/master
+pydoc3
+[WinError 2] The system cannot find the file specified
+pydoc3.py not in PATH or PATHEXT
+pdoc3 --html commands --force --output-dir ..\egigoka.github.io
+[WinError 2] The system cannot find the file specified
+git add .
+git commit -m "updating documentation for commands to v 0.9.577-alpha"
+git push
+Everything up-to-date
+
