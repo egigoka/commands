@@ -8,20 +8,20 @@ import os
 from commands import *
 from commands.git9 import Git
 
-__version__ = "1.3.2"
+__version__ = "1.3.3"
 
 
 def safe_run(command):
-    Print.colored(command, "green", "on_white")
+    Print.colored(command, "green")
     try:
         out, err = Console.get_output(command, return_merged=False)
         if err:
-            Print.colored(err, "red", "on_white")
+            Print.colored(err, "red")
             return False
         else:
             return True
     except Exception as err:
-        Print.colored(err, "red", "on_white")
+        Print.colored(err, "red")
         return False
 
 
@@ -82,8 +82,14 @@ safe_run("git reset --hard origin/master")
 
 # updating doc
 os.chdir(cwd)
-if not safe_run("pydoc3"):
-    Print.colored("pydoc3.py not in PATH or PATHEXT")
+if OS.windows:
+    if not safe_run("pydoc3"):
+        Print.colored("pydoc3.py not in PATH or PATHEXT", "red")
+elif OS.unix_family:
+    if not safe_run("pdoc3"):
+        Print.colored("pdoc not in PATH", "red")
+else:
+    raise NotImplementedError("OS is not supported now")
 safe_run(fr"pdoc3 --html commands --force --output-dir {path}")
 
 # upload doc
