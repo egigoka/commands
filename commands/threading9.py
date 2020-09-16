@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I trying work with threads
 """
-__version__ = "1.6.2"
+__version__ = "1.7.0"
 
 from .dict9 import imdict
 
@@ -166,3 +166,12 @@ class Threading:
             if thread.is_running():
                 cnt += 1
         return cnt
+
+
+class Lock:
+    def __call__(self, *args, **kwargs):
+        import threading
+        return threading.Lock()
+
+
+Lock = Lock()

@@ -36,7 +36,7 @@ from .id9 import ID
 from .git9 import Git
 from .tsql9 import TSQL
 from .cache9 import Cache, CachedFunction
-from .threading9 import MyThread, Threading
+from .threading9 import MyThread, Threading, Lock
 from .resources9 import Resources
 from .bytes9 import Bytes
 from .giv9 import GIV
