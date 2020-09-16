@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with time
 """
-__version__ = "0.1.6"
+__version__ = "1.0.0"
 
 
 class Time:
@@ -81,28 +81,32 @@ class Time:
         while benchmark.get() < seconds:
             import time
             time.sleep(1/check_per_sec)
+
             secs_left_int = int(seconds - benchmark.get())
+
             if secs_left_int != secs_second_var:
                 secs_second_var = secs_left_int
-                Print.rewrite("Timer for " + str(seconds) + " seconds. " + str(secs_left_int) + " left")
+                string = "Timer for " + str(seconds) + " seconds."
+                if seconds > 1:
+                    string += " " + str(secs_left_int) + " left"
+                Print.rewrite(string)
+
         Print.rewrite("")
 
     @classmethod
-    def sleep(cls, seconds, quiet_small=False, check_per_sec=10):
+    def sleep(cls, seconds, verbose=False, check_per_sec=10):
         """Function to idle. If 'seconds more, than 1, running Time._timer. Otherwise run time.sleep and print time
         left.
         <br>`param seconds` int|float, how long sleep
-        <br>`param quiet_small` boolean, suppress print for time len <= 1 second
+        <br>`param verbose` boolean, print remaining time
         <br>`param check_per_sec` int|float, how often check time
         <br>`return` None
         """
         if seconds < 0:
             raise ValueError("sleep time must be non-negative")
-        elif seconds >= 1:
+        if verbose:
             cls._timer(seconds, check_per_sec)
         else:
-            if not quiet_small:
-                print("sleeping", seconds)
             import time
             time.sleep(seconds)
 
