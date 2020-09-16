@@ -9,12 +9,17 @@ class Cache:
     def __init__(self, func, update_every, args=(), kwargs=imdict(), quiet=True, bench=None):
         from .id9 import ID
         from .bench9 import Bench
+        from .threading9 import Lock
 
         self.counter = ID()
+        self.lock = Lock()
+
         self.update_every = update_every
+
         self.bench = bench
         if bench is None:
             self.bench = Bench("cache updated in", quiet=quiet)
+
         self.func = func
         self.args = args
         self.kwargs = kwargs
@@ -24,13 +29,14 @@ class Cache:
         self.bench.end()
 
     def __call__(self):
-        if self.counter.get() % self.update_every == 0:
-            self.run()
-        try:
-            return self.stored_output
-        except AttributeError:
-            self.run()
-            return self.stored_output
+        with self.lock:
+            if self.counter.get() % self.update_every == 0:
+                self.run()
+            try:
+                return self.stored_output
+            except AttributeError:
+                self.run()
+                return self.stored_output
 
 
 
@@ -38,13 +44,16 @@ class CachedFunction:
     def __init__(self, func, update_every, quiet=True):
         from .id9 import ID
         from .bench9 import Bench
+        from .threading9 import Lock
 
         self.func = func
         self.update_every = update_every
         self.quiet = quiet
+
         self.caches = {}
         self.counter = ID()
         self.bench = Bench("cache updated in", quiet=quiet)
+        self.lock = Lock()
 
     def return_value(self, *args, **kwargs):
         try:
@@ -55,7 +64,8 @@ class CachedFunction:
             return self.return_value(*args, **kwargs)
 
     def __call__(self, *args, **kwargs):
-        if self.counter.get() % self.update_every == 0:  # flush caches
-            self.caches = {}
+        with self.lock:
+            if self.counter.get() % self.update_every == 0:  # flush caches
+                self.caches = {}
 
-        return self.return_value(*args, **kwargs)
+            return self.return_value(*args, **kwargs)
