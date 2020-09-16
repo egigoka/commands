@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.7.7"
+__version__ = "0.7.8"
 from typing import Union
 
 
@@ -352,7 +352,7 @@ class Network:
 
         try:
             response = requests.get(endpoint, timeout=timeout).content
-        except requests.exceptions.ConnectionError as e:
+        except (requests.exceptions.ConnectionError, requests.exceptions.ReadTimeout) as e:
             if debug:
                 from .print9 import Print
                 Print.debug(e)
