@@ -42,6 +42,7 @@ from .bytes9 import Bytes
 from .giv9 import GIV
 from .archive9 import Archive, Unarchive
 from .ffmpeg9 import FFMpeg
+from .keyboard9 import Keyboard
 from .const9 import backslash, newline, newline2, ruble, rtl, KiB, MiB, GiB
 from ._version import __version__
 
