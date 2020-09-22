@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "1.4.0"
+__version__ = "1.5.0"
 
 
 class Dir:
@@ -142,7 +142,7 @@ class Dir:
 
     @classmethod
     def copy(cls, src, dst, symlinks=False, ignore=None,
-             skip_PermissionError=False, quiet_PermissionError=False):
+             skip_PermissionError=False, quiet_PermissionError=False, verbose=False):
         """Same behavior as shutil.copytree, but can copy into existing directory
         https`//stackoverflow.com/a/22331852/6519078
         <br>`param src` string, source directory to copy
@@ -161,6 +161,8 @@ class Dir:
         if quiet_PermissionError:
             skip_PermissionError = True
         if not os.path.exists(dst):
+            if verbose:
+                print(f"creating dir {dst}")
             os.makedirs(dst)
             shutil.copystat(src, dst)
         lst = os.listdir(src)
@@ -181,12 +183,17 @@ class Dir:
                 except:
                     pass  # lchmod not available
             elif os.path.isdir(s):
-                cls.copy(s, d, symlinks, ignore, skip_PermissionError, quiet_PermissionError)
+                cls.copy(s=s, d=d, symlinks=symlinks, ignore=ignore, skip_PermissionError=skip_PermissionError,
+                         quiet_PermissionError=quiet_PermissionError, verbose=verbose)
             else:
                 if not skip_PermissionError:
+                    if verbose:
+                        print(f"copying {s} to {d}")
                     shutil.copy2(s, d)
                 else:
                     try:
+                        if verbose:
+                            print(f"copying {s} to {d}")
                         shutil.copy2(s, d)
                     except PermissionError as err:
                         if not quiet_PermissionError:
@@ -194,7 +201,7 @@ class Dir:
 
     @classmethod
     def move(cls, src_, dst_, symlinks_=False, ignore_=None,
-             skip_PermissionError=False, quiet_PermissionError=False):
+             skip_PermissionError=False, quiet_PermissionError=False, verbose=False):
         """Copies folder, than delete source folder
         <br>`param src` string, source directory to copy
         <br>`param dst` stirng, destination
@@ -210,7 +217,8 @@ class Dir:
             skip_PermissionError = True
         cls.copy(src=src_, dst=dst_, symlinks=symlinks_, ignore=ignore_,
                  skip_PermissionError=skip_PermissionError,
-                 quiet_PermissionError=quiet_PermissionError)
+                 quiet_PermissionError=quiet_PermissionError, verbose=verbose)
+
         cls.delete(src_)
 
     @staticmethod
