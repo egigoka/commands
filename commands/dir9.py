@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "1.6.1"
+__version__ = "1.7.0"
 
 
 class Dir:
@@ -144,6 +144,7 @@ class Dir:
     def copy(cls, src, dst, symlinks=False, ignore=None,
              skip_PermissionError=False, quiet_PermissionError=False,
              skip_FileNotFoundError=False, quiet_FileNotFoundError=False,
+             skip_OSError=False, quiet_OSError=False,
              verbose=False):
         """Same behavior as shutil.copytree, but can copy into existing directory
         https`//stackoverflow.com/a/22331852/6519078
@@ -152,7 +153,7 @@ class Dir:
         <br>`param symlinks` boolean, following symlinks
         <br>`param ignore` You can define any function with any name you like before calling copytree function. This
         function (which could also be a lambda expression) takes two arguments` a directory name and the files in it, it
-        should return an iterable of ignore files.
+        should return an iterable of ignored files.
         <br>`param skip_PermissionError` boolean, if True, skips files with denied permissions to read|write
         <br>`param quiet_PermissionError` boolean, suppress console output when skip file by PermissionError
         <br>`return` None
@@ -188,6 +189,7 @@ class Dir:
                 cls.copy(src=s, dst=d, symlinks=symlinks, ignore=ignore,
                          skip_PermissionError=skip_PermissionError, quiet_PermissionError=quiet_PermissionError,
                          skip_FileNotFoundError=skip_FileNotFoundError, quiet_FileNotFoundError=quiet_FileNotFoundError,
+                         skip_OSError=skip_OSError, quiet_OSError=quiet_OSError,
                          verbose=verbose)
             else:
                 try:
@@ -203,6 +205,11 @@ class Dir:
                     if not quiet_FileNotFoundError:
                         print(err)
                     if not skip_FileNotFoundError:
+                        raise
+                except OSError as err:
+                    if not quiet_OSError:
+                        print(err)
+                    if not skip_OSError:
                         raise
 
     @classmethod
