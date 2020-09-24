@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "1.6.0"
+__version__ = "1.6.1"
 
 
 class Dir:
@@ -185,8 +185,10 @@ class Dir:
                 except:
                     pass  # lchmod not available
             elif os.path.isdir(s):
-                cls.copy(src=s, dst=d, symlinks=symlinks, ignore=ignore, skip_PermissionError=skip_PermissionError,
-                         quiet_PermissionError=quiet_PermissionError, verbose=verbose)
+                cls.copy(src=s, dst=d, symlinks=symlinks, ignore=ignore,
+                         skip_PermissionError=skip_PermissionError, quiet_PermissionError=quiet_PermissionError,
+                         skip_FileNotFoundError=skip_FileNotFoundError, quiet_FileNotFoundError=quiet_FileNotFoundError,
+                         verbose=verbose)
             else:
                 try:
                     if verbose:
