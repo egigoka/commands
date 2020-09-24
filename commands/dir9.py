@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "1.5.1"
+__version__ = "1.6.0"
 
 
 class Dir:
@@ -142,7 +142,9 @@ class Dir:
 
     @classmethod
     def copy(cls, src, dst, symlinks=False, ignore=None,
-             skip_PermissionError=False, quiet_PermissionError=False, verbose=False):
+             skip_PermissionError=False, quiet_PermissionError=False,
+             skip_FileNotFoundError=False, quiet_FileNotFoundError=False,
+             verbose=False):
         """Same behavior as shutil.copytree, but can copy into existing directory
         https`//stackoverflow.com/a/22331852/6519078
         <br>`param src` string, source directory to copy
@@ -186,18 +188,20 @@ class Dir:
                 cls.copy(src=s, dst=d, symlinks=symlinks, ignore=ignore, skip_PermissionError=skip_PermissionError,
                          quiet_PermissionError=quiet_PermissionError, verbose=verbose)
             else:
-                if not skip_PermissionError:
+                try:
                     if verbose:
                         print(f"copying {s} to {d}")
                     shutil.copy2(s, d)
-                else:
-                    try:
-                        if verbose:
-                            print(f"copying {s} to {d}")
-                        shutil.copy2(s, d)
-                    except PermissionError as err:
-                        if not quiet_PermissionError:
-                            print(err)
+                except PermissionError as err:
+                    if not quiet_PermissionError:
+                        print(err)
+                    if not skip_PermissionError:
+                        raise
+                except FileNotFoundError as err:
+                    if not quiet_FileNotFoundError:
+                        print(err)
+                    if not skip_FileNotFoundError:
+                        raise
 
     @classmethod
     def move(cls, src_, dst_, symlinks_=False, ignore_=None,
