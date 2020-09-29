@@ -4,7 +4,7 @@ from typing import Union
 
 """Internal module with functions for print to console.
 """
-__version__ = "0.12.0"
+__version__ = "0.12.2"
 
 
 class Print:
@@ -98,7 +98,7 @@ class Print:
         termcolor.COLORS["gray"] = termcolor.COLORS["black"] = 30
         termcolor.HIGHLIGHTS["on_gray"] = termcolor.HIGHLIGHTS["on_black"] = 40
         from .os9 import OS
-        if OS.windows and not self.colorama_inited and self._color_output_enabled:
+        if OS.windows and not self.colorama_inited and self.color_output_enabled:
             import colorama
             colorama.init()
             self.colorama_inited = True
@@ -106,18 +106,21 @@ class Print:
         highlight = None
         color = None
         color_args = 0
-        if str(strings[-1]) in termcolor.HIGHLIGHTS:
-            highlight = strings[-1]
-            color_args += 1
-            if str(strings[-2]) in termcolor.COLORS:
-                color = strings[-2]
+        try:
+            if str(strings[-1]) in termcolor.HIGHLIGHTS:
+                highlight = strings[-1]
                 color_args += 1
-        elif str(strings[-1]) in termcolor.COLORS:
-            color = strings[-1]
-            color_args += 1
-            if str(strings[-2]) in termcolor.HIGHLIGHTS:
-                highlight = strings[-2]
+                if str(strings[-2]) in termcolor.COLORS:
+                    color = strings[-2]
+                    color_args += 1
+            elif str(strings[-1]) in termcolor.COLORS:
+                color = strings[-1]
                 color_args += 1
+                if str(strings[-2]) in termcolor.HIGHLIGHTS:
+                    highlight = strings[-2]
+                    color_args += 1
+        except KeyError:
+            pass
         # create single string to pass it into termcolor
         string = ""
         if color_args:
@@ -129,7 +132,7 @@ class Print:
         else:  # if there only one object
             string = strings[0]
 
-        if self._color_output_enabled:
+        if self.color_output_enabled:
             colored_string = termcolor.colored(string, color=color, on_color=highlight, attrs=attributes)
         else:
             colored_string = string
