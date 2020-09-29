@@ -39,7 +39,6 @@ class Cache:
                 return self.stored_output
 
 
-
 class CachedFunction:
     def __init__(self, func, update_every, quiet=True):
         from .id9 import ID
