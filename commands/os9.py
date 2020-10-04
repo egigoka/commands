@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to check some environment properties
 """
-__version__ = "3.5.0"
+__version__ = "3.6.0"
 
 
 class OS:  # pylint: disable=too-few-public-methods
@@ -214,6 +214,11 @@ class OS:  # pylint: disable=too-few-public-methods
     def args(self):
         import sys
         return sys.argv
+
+    @property
+    def env(self):
+        import os
+        return os.environ
 
     @staticmethod
     def where(*args, **kwargs):

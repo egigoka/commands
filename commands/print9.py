@@ -4,7 +4,7 @@ from typing import Union
 
 """Internal module with functions for print to console.
 """
-__version__ = "0.11.2"
+__version__ = "0.12.2"
 
 
 class Print:
@@ -15,6 +15,7 @@ class Print:
         from threading import Lock
         self.s_print_lock = Lock()
         self.colorama_inited = False
+        self._color_output_enabled = None
 
     def __call__(self, *args, **kwargs) -> None:
         self.multithread_safe(*args, **kwargs)
@@ -72,12 +73,20 @@ class Print:
             self.multithread_safe(pretty_string)
         return pretty_string
 
+    @property
+    def color_output_enabled(self):
+        if self._color_output_enabled is None:
+            from .os9 import OS
+            self._color_output_enabled = "NO_COLOR" not in OS.env.keys()
+        return self._color_output_enabled
+
     def colored(self, *strings: Union[str, int, list, dict], attributes: list = None, end: str = "\n",
                 sep: str = " ", flush: bool = False) -> None:
         """Wrapper for termcolor.cprint, added some smartness
         <br>Usage` Print.colored("text1", "text2", "red") or Print.colored("text", "text2", "red", "on_white")
         <br>even Print.colored("text", "text2", "on_white", "red") now.
         You can pick colors from termcolor.COLORS, highlights from termcolor.HIGHLIGHTS.
+        When environment variable NO_COLOR present (regardless of its value), prevents the addition of ANSI color.
         <br>`param strings` work as builtin print(*strings)
         <br>`param attributes` going to termcolor.cprint(attrs) argument
         <br>`param end` same as builtin print(end)
@@ -89,7 +98,7 @@ class Print:
         termcolor.COLORS["gray"] = termcolor.COLORS["black"] = 30
         termcolor.HIGHLIGHTS["on_gray"] = termcolor.HIGHLIGHTS["on_black"] = 40
         from .os9 import OS
-        if OS.windows and not self.colorama_inited:
+        if OS.windows and not self.colorama_inited and self.color_output_enabled:
             import colorama
             colorama.init()
             self.colorama_inited = True
@@ -97,18 +106,21 @@ class Print:
         highlight = None
         color = None
         color_args = 0
-        if str(strings[-1]) in termcolor.HIGHLIGHTS:
-            highlight = strings[-1]
-            color_args += 1
-            if str(strings[-2]) in termcolor.COLORS:
-                color = strings[-2]
+        try:
+            if str(strings[-1]) in termcolor.HIGHLIGHTS:
+                highlight = strings[-1]
                 color_args += 1
-        elif str(strings[-1]) in termcolor.COLORS:
-            color = strings[-1]
-            color_args += 1
-            if str(strings[-2]) in termcolor.HIGHLIGHTS:
-                highlight = strings[-2]
+                if str(strings[-2]) in termcolor.COLORS:
+                    color = strings[-2]
+                    color_args += 1
+            elif str(strings[-1]) in termcolor.COLORS:
+                color = strings[-1]
                 color_args += 1
+                if str(strings[-2]) in termcolor.HIGHLIGHTS:
+                    highlight = strings[-2]
+                    color_args += 1
+        except KeyError:
+            pass
         # create single string to pass it into termcolor
         string = ""
         if color_args:
@@ -120,7 +132,10 @@ class Print:
         else:  # if there only one object
             string = strings[0]
 
-        colored_string = termcolor.colored(string, color=color, on_color=highlight, attrs=attributes)
+        if self.color_output_enabled:
+            colored_string = termcolor.colored(string, color=color, on_color=highlight, attrs=attributes)
+        else:
+            colored_string = string
         self.multithread_safe(colored_string, end=end, flush=flush)
 
         with suppress(KeyError):  # for work with multithreading
