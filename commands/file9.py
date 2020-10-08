@@ -3,7 +3,7 @@
 from typing import Union
 """Internal module to work with files
 """
-__version__ = "1.2.0"
+__version__ = "1.2.1"
 # pylint: disable=c-extension-no-member
 
 
@@ -113,7 +113,7 @@ class File:
             import win32con
             win32api.SetFileAttributes(filename, win32con.FILE_ATTRIBUTE_HIDDEN)  # hiding file like windows do
         elif OS.unix_family:
-            dotted_file = Path.extend(os.path.split(filename)[0], "." + os.path.split(filename)[1])  # adding dot
+            dotted_file = Path.combine(os.path.split(filename)[0], "." + os.path.split(filename)[1])  # adding dot
             filename = cls.rename(filename, dotted_file)  # adding dot
         else:
             raise NotImplementedError("Your OS doesn't supported")
@@ -144,9 +144,9 @@ class File:
         except TypeError:  # if subfolder has no len
             subfolder = "bak"  # set subfolder to default
             print("len(subfolder) < 1, so subfolder = 'bak'")  # print error
-        subfolder = Path.extend(backup_filename[0], subfolder)  # append subfolder name
+        subfolder = Path.combine(backup_filename[0], subfolder)  # append subfolder name
         Dir.create(subfolder)  # create subfolder
-        backup_filename = Path.extend(subfolder, backup_filename[1])  # backup file name full path
+        backup_filename = Path.combine(subfolder, backup_filename[1])  # backup file name full path
         shutil.copy2(filename, backup_filename)  # finally backup file
         if hide:
             backup_filename = cls.hide(backup_filename)  # hiding file
