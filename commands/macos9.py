@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions that works only in macOS
 """
-__version__ = "0.2.5"
+__version__ = "0.3.1"
 
 
 class macOS:  # pylint: disable=invalid-name, too-few-public-methods
@@ -49,7 +49,7 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
         return global_sounds + local_sounds
 
     @classmethod
-    def notification(cls, message, title="python3", subtitle=None, sound=None):
+    def notification(cls, message, title="python3", subtitle=None, sound=None, debug=False):
         """Create notification with AppleScript
         <br>`param message` string
         <br>`param title` string
@@ -77,7 +77,10 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
             commands += " sound name " + Str.to_quotes(cls.OSAScript.quotes_escape(sound))
         commands = cls.OSAScript.quotes_escape(commands)  # escaping quotes:
         commands = Str.to_quotes(commands)  # applescript to quotes
-        OS.system(" ".join(["osascript", "-e", *commands]))
+        command = " ".join(["osascript", "-e", commands])
+        if debug:
+            print(f"{command=}")
+        OS.system(command)
 
     @staticmethod
     def symlink(real, symlink):

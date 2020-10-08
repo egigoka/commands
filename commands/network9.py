@@ -166,6 +166,7 @@ class Network:
     @staticmethod
     def get_ip(fast=True, quiet=True):
         # much code by phoemur@gmail.com (ipgetter)
+        global Print
         import re
         import random
         import ssl
