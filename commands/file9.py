@@ -3,7 +3,7 @@
 from typing import Union
 """Internal module to work with files
 """
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 # pylint: disable=c-extension-no-member
 
 
@@ -166,7 +166,23 @@ class File:
         file.close()
 
     @staticmethod
-    def read(path, encoding: str = "utf-8", auto_detect_encoding: Union[bool, int] = True, mode: str = "r"):  # return pipe to file content
+    def get_encoding(path, count_of_symbols: Union[bool, int] = True):
+        """
+        <br>`param path` path to file
+        <br>`param count_of_symbols` how much symbols use to auto define decoding, if True, uses 10000
+        <br>`return` string, file encoding
+        """
+        from .bytes9 import Bytes
+        count_of_symbols = count_of_symbols
+        if count_of_symbols is True:  # you can define how much symbols use to define encoding
+            count_of_symbols = 10000
+        with open(path, "rb") as rawfile:
+            slice_of_raw_data = rawfile.read(count_of_symbols)
+        encoding = Bytes.get_encoding(slice_of_raw_data)
+        return encoding
+
+    @classmethod
+    def read(cls, path, encoding: str = "utf-8", auto_detect_encoding: Union[bool, int] = True, mode: str = "r"):  # return pipe to file content
         """
         <br>`param path` path to file
         <br>`param auto_detect_encoding` how much symbols use to auto define decoding, if True, uses 10000
@@ -175,13 +191,7 @@ class File:
         if mode == "r":
             try:
                 if auto_detect_encoding:
-                    from .bytes9 import Bytes
-                    count_of_symbols = auto_detect_encoding
-                    if auto_detect_encoding is True:  # you can define how much symbols use to define encoding
-                        count_of_symbols = 10000
-                    with open(path, "rb") as rawfile:
-                        slice_of_raw_data = rawfile.read(count_of_symbols)
-                    encoding = Bytes.get_encoding(slice_of_raw_data)
+                    encoding = cls.get_encoding(path, count_of_symbols=auto_detect_encoding)
                 with open(path, "r", encoding=encoding) as file:
                     return file.read()
             except UnicodeDecodeError:
