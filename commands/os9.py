@@ -194,7 +194,7 @@ class OS:  # pylint: disable=too-few-public-methods
         return os.system(command)
 
     @property
-    def args(self):
+    def args(self) -> list:
         import sys
         return sys.argv
 
