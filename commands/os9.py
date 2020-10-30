@@ -2,167 +2,152 @@
 # -*- coding: utf-8 -*-
 """Internal module to check some environment properties
 """
-__version__ = "3.6.0"
+__version__ = "3.7.0"
 
 
 class OS:  # pylint: disable=too-few-public-methods
     """Class with some environment properties
     """
 
+    def __init__(self):
+        self._is_python3 = None
+        self._python_version_major = None
+        self._python_commandline_version = None
+        self._sys_platform = None
+        self._windows = None
+        self._windows_version = None
+        self._linux = None
+        self._name = None
+        self._macos = None
+        self._architecture = None
+        self._python_implementation = None
+        self._nt_family = None
+        self._unix_family = None
+        self._display = None
+        self._running_in_repl = None
+        self._cyrillic_support = None
+        self._hostname = None
+
     @property
     def is_python3(self):
-        try:
-            return self._is_python3
-        except AttributeError:
+        if self._is_python3 is None:
             import sys
             self._is_python3 = sys.version_info >= (3, 0)
-            return self._is_python3
+        return self._is_python3
 
     @property
     def python_version_major(self):
-        try:
-            return self._python_version_major
-        except AttributeError:
+        if self._python_version_major is None:
             import sys
             self._python_version_major = sys.version_info.major
-            return self._python_version_major
+        return self._python_version_major
 
     @property
     def python_commandline_version(self):
-        try:
-            return self._python_commandline_version
-        except AttributeError:
+        if self._python_commandline_version is None:
             self._python_commandline_version = ""
             if self.is_python3:
                 self._python_commandline_version = "3"
-            return self._python_commandline_version
+        return self._python_commandline_version
 
     @property
-    def sys_platfrom(self):
-        try:
-            return self._sys_platfrom
-        except AttributeError:
+    def sys_platform(self):
+        if self._sys_platform is None:
             import sys
-            self._sys_platfrom = sys.platform
-            return self._sys_platfrom
+            self._sys_platform = sys.platform
+        return self._sys_platform
 
     @property
     def windows(self):
-        try:
-            return self._windows
-        except AttributeError:
-            self._windows = self.sys_platfrom == "win32" or self.sys_platfrom == "cygwin"
-            return self._windows
+        if self._windows is None:
+            self._windows = self.sys_platform == "win32" or self.sys_platform == "cygwin"
+        return self._windows
 
     @property
     def windows_version(self):
-        try:
-            return self._windows_version
-        except AttributeError:
+        if self._windows_version is None:
             import sys
             self._windows_version = sys.getwindowsversion().major
-            return self._windows_version
+        return self._windows_version
 
     @property
     def linux(self):
-        try:
-            return self._linux
-        except AttributeError:
-            self._linux = self.sys_platfrom == "linux" or self.sys_platfrom == "linux2"
-            return self._linux
+        if self._linux is None:
+            self._linux = self.sys_platform == "linux" or self.sys_platform == "linux2"
+        return self._linux
 
     @property
     def macos(self):
-        try:
-            return self._macos
-        except AttributeError:
-            self._macos = self.sys_platfrom == "darwin"
-            return self._macos
+        if self._macos is None:
+            self._macos = self.sys_platform == "darwin"
+        return self._macos
 
     @property
     def name(self):
-        try:
-            return self._name
-        except AttributeError:
-            if self.sys_platfrom == "linux" or self.sys_platfrom == "linux2":
+        if self._name is None:
+            if self.sys_platform == "linux" or self.sys_platform == "linux2":
                 self._name = "linux"
-            elif self.sys_platfrom == "win32" or self.sys_platfrom == "cygwin":
+            elif self.sys_platform == "win32" or self.sys_platform == "cygwin":
                 self._name = "windows"
-            elif self.sys_platfrom == "darwin":
+            elif self.sys_platform == "darwin":
                 self._name = "macos"
             else:
                 self._name = "unknown"
-            return self._name
+        return self._name
 
     @property
     def architecture(self):
-        try:
-            return self._architecture
-        except AttributeError:
+        if self._architecture is None:
             import platform
             self._architecture = platform.architecture()[0]
-            return self._architecture
+        return self._architecture
 
     @property
     def python_implementation(self):
-        try:
-            return self._python_implementation
-        except AttributeError:
+        if self._python_implementation is None:
             import platform
             if platform.python_implementation == "PyPy":
                 self._python_implementation = "pypy"
             else:
                 self._python_implementation = "cpython"
-            return self._python_implementation
+        return self._python_implementation
 
     @property
     def nt_family(self):
-        try:
-            return self._nt_family
-        except AttributeError:
+        if self._nt_family is None:
             self._nt_family = self.windows
-            return self._nt_family
+        return self._nt_family
 
     @property
     def unix_family(self):
-        try:
-            return self._unix_family
-        except AttributeError:
+        if self._unix_family is None:
             self._unix_family = self.macos or self.linux
-            return self._unix_family
+        return self._unix_family
 
     @property
     def display(self):
-        try:
-            return self._display
-        except AttributeError:
+        if self._display is None:
             try:
                 if self.linux:
                     from Xlib.display import Display
                 self._display = True
             except ImportError:
                 self._display = False
-            return self._display
+        return self._display
 
     @property
     def running_in_repl(self):
-        try:
-            return self._running_in_repl
-        except AttributeError:
-            try:
-                import sys
-                sys.ps1  # pylint: disable = pointless-statement, no-member
-                sys.ps2  # pylint: disable = pointless-statement, no-member
+        if self._running_in_repl is None:
+            import sys
+            if hasattr(sys, "ps1") and hasattr(sys, "ps2"):
                 self._running_in_repl = True
-            except AttributeError:
+            else:
                 self._running_in_repl = False
-            return self._running_in_repl
+        return self._running_in_repl
 
     @property
     def cyrillic_support(self):
-        try:
-            return self._cyrillic_support
-        except AttributeError:
+        if self._cyrillic_support is None:
             self._cyrillic_support = False
             try:
                 # if windows:
@@ -181,16 +166,14 @@ class OS:  # pylint: disable=too-few-public-methods
                 self._cyrillic_support = True
             except (UnicodeEncodeError, PermissionError) as err:
                 pass
-            return self._cyrillic_support
+        return self._cyrillic_support
 
     @property
     def hostname(self):
-        try:
-            return self._hostname
-        except AttributeError:
+        if self._hostname is None:
             import socket
             self._hostname = socket.gethostname()
-            return self._hostname
+        return self._hostname
 
     @staticmethod
     def walk(top, topdown=True, onerror=None, followlinks=False):
@@ -228,7 +211,7 @@ class OS:  # pylint: disable=too-few-public-methods
     @staticmethod
     def exit(__status):
         import sys
-        sys.exit(__status=__status)
+        sys.exit(__status)
 
 
 OS = OS()
