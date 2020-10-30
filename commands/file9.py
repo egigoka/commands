@@ -3,7 +3,7 @@
 from typing import Union
 """Internal module to work with files
 """
-__version__ = "1.1.0"
+__version__ = "1.2.1"
 # pylint: disable=c-extension-no-member
 
 
@@ -113,7 +113,7 @@ class File:
             import win32con
             win32api.SetFileAttributes(filename, win32con.FILE_ATTRIBUTE_HIDDEN)  # hiding file like windows do
         elif OS.unix_family:
-            dotted_file = Path.extend(os.path.split(filename)[0], "." + os.path.split(filename)[1])  # adding dot
+            dotted_file = Path.combine(os.path.split(filename)[0], "." + os.path.split(filename)[1])  # adding dot
             filename = cls.rename(filename, dotted_file)  # adding dot
         else:
             raise NotImplementedError("Your OS doesn't supported")
@@ -144,9 +144,9 @@ class File:
         except TypeError:  # if subfolder has no len
             subfolder = "bak"  # set subfolder to default
             print("len(subfolder) < 1, so subfolder = 'bak'")  # print error
-        subfolder = Path.extend(backup_filename[0], subfolder)  # append subfolder name
+        subfolder = Path.combine(backup_filename[0], subfolder)  # append subfolder name
         Dir.create(subfolder)  # create subfolder
-        backup_filename = Path.extend(subfolder, backup_filename[1])  # backup file name full path
+        backup_filename = Path.combine(subfolder, backup_filename[1])  # backup file name full path
         shutil.copy2(filename, backup_filename)  # finally backup file
         if hide:
             backup_filename = cls.hide(backup_filename)  # hiding file
@@ -166,7 +166,23 @@ class File:
         file.close()
 
     @staticmethod
-    def read(path, encoding: str = "utf-8", auto_detect_encoding: Union[bool, int] = True, mode: str = "r"):  # return pipe to file content
+    def get_encoding(path, count_of_symbols: Union[bool, int] = True):
+        """
+        <br>`param path` path to file
+        <br>`param count_of_symbols` how much symbols use to auto define decoding, if True, uses 10000
+        <br>`return` string, file encoding
+        """
+        from .bytes9 import Bytes
+        count_of_symbols = count_of_symbols
+        if count_of_symbols is True:  # you can define how much symbols use to define encoding
+            count_of_symbols = 10000
+        with open(path, "rb") as rawfile:
+            slice_of_raw_data = rawfile.read(count_of_symbols)
+        encoding = Bytes.get_encoding(slice_of_raw_data)
+        return encoding
+
+    @classmethod
+    def read(cls, path, encoding: str = "utf-8", auto_detect_encoding: Union[bool, int] = True, mode: str = "r"):  # return pipe to file content
         """
         <br>`param path` path to file
         <br>`param auto_detect_encoding` how much symbols use to auto define decoding, if True, uses 10000
@@ -175,13 +191,7 @@ class File:
         if mode == "r":
             try:
                 if auto_detect_encoding:
-                    from .bytes9 import Bytes
-                    count_of_symbols = auto_detect_encoding
-                    if auto_detect_encoding is True:  # you can define how much symbols use to define encoding
-                        count_of_symbols = 10000
-                    with open(path, "rb") as rawfile:
-                        slice_of_raw_data = rawfile.read(count_of_symbols)
-                    encoding = Bytes.get_encoding(slice_of_raw_data)
+                    encoding = cls.get_encoding(path, count_of_symbols=auto_detect_encoding)
                 with open(path, "r", encoding=encoding) as file:
                     return file.read()
             except UnicodeDecodeError:
