@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.7.8"
+__version__ = "0.8.0"
 from typing import Union
 
 
@@ -381,3 +381,13 @@ class Network:
         return cls.check_response("http://www.msftncsi.com/ncsi.txt",
                                   b'Microsoft NCSI',
                                   timeout=timeout, debug=debug)
+
+    @staticmethod
+    def get(url, params=None, **kwargs):
+        import requests
+        return requests.get(url=url, params=params, **kwargs)
+
+    @staticmethod
+    def post(url, data=None, json=None, **kwargs):
+        import requests
+        return requests.post(url=url, data=data, json=json, **kwargs)
