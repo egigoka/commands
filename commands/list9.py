@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with lists
 """
-__version__ = "0.8.0"
+__version__ = "0.9.0"
 
 
 class List:
@@ -94,3 +94,40 @@ class List:
             if item == "":
                 list_new.pop(cnt)
         return list_new
+
+    @staticmethod
+    def itemgetter_with_casting(item, *items, cast_to):
+        if not items:
+            def func(obj):
+                for type_to in cast_to:
+                    try:
+                        return type_to(obj[item])
+                    except:
+                        pass
+                return obj[item]
+        else:
+            def func(obj):
+                new_list = []
+                for i in items:
+                    for type_to in cast_to:
+                        try:
+                            new_list.append(type_to(obj[i]))
+                        except:
+                            pass
+                    new_list.append(i)
+                return tuple(new_list)
+        return func
+
+    @classmethod
+    def sort_by(cls, list_input: list, *sort_keys, cast_to=()) -> list:
+        return sorted(list_input, key=cls.itemgetter_with_casting(*sort_keys, cast_to=cast_to))
+
+    @staticmethod
+    def enum_by(list_input: list, *enum_keys) -> dict:
+        from operator import itemgetter
+        new_dict = {}
+        for value in list_input:
+            itemgetter_current = itemgetter(*enum_keys)
+            key = itemgetter_current(value)
+            new_dict[key] = value
+        return new_dict
