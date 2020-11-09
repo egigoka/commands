@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.2.2"
+__version__ = "0.3.0"
 
 
 class CLI:
@@ -41,7 +41,7 @@ class CLI:
                 return check_answer(default)
 
     @staticmethod
-    def get_ints(question, count_of_ints, answer=None):
+    def get_ints(question, count_of_ints):
         """Obtain answer with integers from user in commandline.
         <br>`param question` string with question to user
         <br>`param count_of_ints` int of ints must be in answer
@@ -63,10 +63,6 @@ class CLI:
                 return ints
             return
 
-        if answer:
-            output = check_answer(answer, count_of_ints)
-            if output is not None:
-                return output
         while True:
             input_str = input(f"{question} (answer {count_of_ints} integer_s)?")
             input_str = input_str.strip(" ")
@@ -75,8 +71,8 @@ class CLI:
                 return output
 
     @classmethod
-    def get_int(cls, question, answer=None):
-        return cls.get_ints(question=question, count_of_ints=1, answer=answer)
+    def get_int(cls, question):
+        return cls.get_ints(question=question, count_of_ints=1)
 
     wait_update_pos = 0
 
