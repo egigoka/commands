@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with lists
 """
-__version__ = "0.9.0"
+__version__ = "0.10.0"
 
 
 class List:
@@ -123,11 +123,19 @@ class List:
         return sorted(list_input, key=cls.itemgetter_with_casting(*sort_keys, cast_to=cast_to))
 
     @staticmethod
-    def enum_by(list_input: list, *enum_keys) -> dict:
+    def enum_by(list_input: list, *enum_keys, cast_to=()) -> dict:
         from operator import itemgetter
         new_dict = {}
         for value in list_input:
             itemgetter_current = itemgetter(*enum_keys)
             key = itemgetter_current(value)
+
+            for type_to in cast_to:
+                try:
+                    value = type_to(value)
+                    break
+                except:
+                    pass
+
             new_dict[key] = value
         return new_dict
