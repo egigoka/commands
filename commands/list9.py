@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with lists
 """
-__version__ = "0.10.1"
+__version__ = "0.10.2"
 
 
 class List:
@@ -118,7 +118,7 @@ class List:
                         except:
                             pass
                     if not added:
-                        new_list.append(i)
+                        new_list.append(obj[i])
                 return tuple(new_list)
         return func
 
