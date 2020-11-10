@@ -48,25 +48,17 @@ class CLI:
         <br>`param answer` predefined string with answer
         <br>`return` integer or list of integers
         """
-
-        def check_answer(input, count_of_ints):  # pylint: disable=inconsistent-return-statements
-            """Check input from user or argument "answer"
-            <br>`param input` input string
-            <br>`param count_of_ints` int of ints must be in answer
-            <br>`return` True|False|None
-            """
-            from .str9 import Str
-            ints = Str.get_integers(input, float_support=False)
-            if len(ints) == count_of_ints:
-                if count_of_ints == 1:
-                    return ints[0]
-                return ints
-            return
+        from .str9 import Str
 
         while True:
             input_str = input(f"{question} (answer {count_of_ints} integer_s)?")
-            input_str = input_str.strip(" ")
-            output = check_answer(input_str, count_of_ints)
+            ints = Str.get_integers(input_str, float_support=False)
+            output = None
+            if len(ints) == count_of_ints:
+                if count_of_ints == 1:
+                    output = ints[0]
+                else:
+                    output = ints
             if output is not None:
                 return output
 
