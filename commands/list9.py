@@ -106,6 +106,8 @@ class List:
                         pass
                 return obj[item]
         else:
+            items = (item,) + items
+            
             def func(obj):
                 new_list = []
                 for i in items:
