@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with lists
 """
-__version__ = "0.10.0"
+__version__ = "0.10.1"
 
 
 class List:
@@ -109,12 +109,16 @@ class List:
             def func(obj):
                 new_list = []
                 for i in items:
+                    added = False
                     for type_to in cast_to:
                         try:
                             new_list.append(type_to(obj[i]))
+                            added = True
+                            break
                         except:
                             pass
-                    new_list.append(i)
+                    if not added:
+                        new_list.append(i)
                 return tuple(new_list)
         return func
 

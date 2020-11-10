@@ -12,7 +12,7 @@ __version__ = "1.3.6"
 
 
 def safe_run(command):
-    Print.colored(command, "green")
+    Print.colored(command, "magenta")
     try:
         out, err = Console.get_output(command, return_merged=False)
         if err:
