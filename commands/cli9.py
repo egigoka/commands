@@ -51,7 +51,7 @@ class CLI:
         from .str9 import Str
 
         while True:
-            input_str = input(f"{question} (answer {count_of_ints} integer_s)?")
+            input_str = input(f"{question} (answer {count_of_ints} integer_s): ")
             ints = Str.get_integers(input_str, float_support=False)
             output = None
             if len(ints) == count_of_ints:
