@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.3.4"
+__version__ = "0.3.5"
 
 
 class CLI:
