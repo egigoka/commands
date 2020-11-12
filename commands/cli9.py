@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.4.1"
+__version__ = "0.4.2"
 
 
 class CLI:
@@ -111,7 +111,7 @@ class CLI:
 
     @staticmethod
     def multiline_input(question: str) -> str:
-        print("Enter|paste your content. Ctrl-D or Ctrl-Z (Windows) to save it.")
+        print("\nEnter|paste your content. Ctrl-D or Ctrl-Z (Windows) to save it.")
         print(question)
         lines = []
         while True:
