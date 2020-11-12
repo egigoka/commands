@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 
 class CLI:
@@ -116,7 +116,7 @@ class CLI:
         lines = []
         while True:
             try:
-                lines.append(input("..."))
+                lines.append(input())
             except EOFError:
                 break
         return "\n".join(lines)
