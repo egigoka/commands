@@ -1,8 +1,0 @@
-uploadin 9.0.0-alpha434
-[master 379e7e4] "updated List.split_every to support count"
- 1 file changed, 1 insertion(+), 1 deletion(-)
-Branch 'master' set up to track remote branch 'master' from 'https://github.com/egigoka/commands.git'.
-.\update_commands.bat
-  can't set attribute
-git fetch --all
-  
