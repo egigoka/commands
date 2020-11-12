@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.3.2"
+__version__ = "0.3.3"
 
 
 class CLI:
@@ -34,6 +34,7 @@ class CLI:
                 print_str += " default '{default}'"
             try:
                 import thefuck.system
+                print(print_str)
                 input_str = thefuck.system.get_key()
             except:
                 input_str = input(print_str)
