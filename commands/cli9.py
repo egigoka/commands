@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.3.5"
+__version__ = "0.4.0"
 
 
 class CLI:
@@ -108,3 +108,15 @@ class CLI:
         raise NotImplementedError
         from .console9 import Console  # pylint: disable=unreachable
         Console.width()
+
+    @staticmethod
+    def multiline_input(question: str) -> str:
+        print("Enter|paste your content. Ctrl-D or Ctrl-Z (Windows) to save it.")
+        print(question)
+        lines = []
+        while True:
+            try:
+                lines.append(input("..."))
+            except EOFError:
+                break
+        return "\n".join(lines)
