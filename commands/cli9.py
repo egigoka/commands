@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.3.0"
+__version__ = "0.3.2"
 
 
 class CLI:
@@ -32,8 +32,12 @@ class CLI:
             print_str = f"{question} (y/n)?"
             if default:
                 print_str += " default '{default}'"
-            input_str = input(print_str)
-            input_str = input_str.strip()
+            try:
+                import thefuck.system
+                input_str = thefuck.system.get_key()
+            except:
+                input_str = input(print_str)
+                input_str = input_str.strip()
             output = check_answer(input_str)
             if output is not None:
                 return output
