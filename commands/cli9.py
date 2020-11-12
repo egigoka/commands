@@ -29,12 +29,12 @@ class CLI:
             return
 
         while True:
-            print_str = f"{question} (y/n)?"
+            print_str = f"{question} (y/n)? "
             if default:
                 print_str += " default '{default}'"
             try:
                 import thefuck.system
-                print(print_str, end=" ")
+                print(print_str, end="", flush=True)
                 input_str = thefuck.system.get_key()
                 print(input_str)
             except:
