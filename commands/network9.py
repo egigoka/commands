@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.8.0"
+__version__ = "0.9.0"
 from typing import Union
 
 
@@ -342,7 +342,7 @@ class Network:
             return ipgetter.get_external_ip()
 
     @staticmethod
-    def check_response(endpoint: str, good_response: Union[str, bytes, list], timeout: int = 10, debug: bool = False) -> bool:
+    def check_response(endpoint: str, good_response: Union[str, bytes, list, tuple], timeout: int = 10, debug: bool = False) -> bool:
         import requests
         from .list9 import List
 
@@ -383,11 +383,23 @@ class Network:
                                   timeout=timeout, debug=debug)
 
     @staticmethod
-    def get(url, params=None, **kwargs):
+    def get(url, params=None, basic_auth_user=None, basic_auth_password=None, **kwargs):
         import requests
-        return requests.get(url=url, params=params, **kwargs)
+
+        auth = None
+        if basic_auth_user and basic_auth_password:
+            import requests.auth
+            auth = requests.auth.HTTPBasicAuth(basic_auth_user, basic_auth_password)
+
+        return requests.get(url=url, auth=auth, params=params, **kwargs)
 
     @staticmethod
-    def post(url, data=None, json=None, **kwargs):
+    def post(url, data=None, json=None, basic_auth_user=None, basic_auth_password=None, **kwargs):
         import requests
-        return requests.post(url=url, data=data, json=json, **kwargs)
+
+        auth = None
+        if basic_auth_user and basic_auth_password:
+            import requests.auth
+            auth = requests.auth.HTTPBasicAuth(basic_auth_user, basic_auth_password)
+
+        return requests.post(url=url, auth=auth, data=data, json=json, **kwargs)
