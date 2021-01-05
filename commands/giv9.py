@@ -33,6 +33,10 @@ class GIV:
         cls.json.save()
         return result
 
+    @classmethod
+    def __repr__(cls):
+        cls.init()
+        return cls.json.__repr__()
 
     @classmethod
     def clean(cls):
