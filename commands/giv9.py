@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Global Interpreter Variables
 """
-__version__ = "0.0.4"
+__version__ = "0.0.5"
 
 
 class GIV:
@@ -23,12 +23,16 @@ class GIV:
     @classmethod
     def __getitem__(cls, item):
         cls.init()
+        cls.json.load()
         return cls.json.__getitem__(item)
 
     @classmethod
     def __setitem__(cls, key, value):
         cls.init()
-        return cls.json.__setitem__(key, value)
+        result = cls.json.__setitem__(key, value)
+        cls.json.save()
+        return result
+
 
     @classmethod
     def clean(cls):
