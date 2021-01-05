@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Global Interpreter Variables
 """
-__version__ = "0.0.5"
+__version__ = "0.1.0"
 
 
 class GIV:
@@ -39,5 +39,13 @@ class GIV:
         cls.init()
         cls.json.string = {}
         cls.json.save()
+
+    @classmethod
+    def pop(cls, *args):
+        cls.init()
+        result = cls.json.pop(*args)
+        cls.json.save()
+        return result
+
 
 GIV = GIV()
