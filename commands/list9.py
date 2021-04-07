@@ -100,7 +100,7 @@ class List:
         from collections.abc import Iterable
         if not isinstance(cast_to, Iterable):
             cast_to = (cast_to, )
-        
+
         if not items:
             def func(obj):
                 for type_to in cast_to:
