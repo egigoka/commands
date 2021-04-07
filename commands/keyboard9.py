@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with keyboard
 """
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 
 class Keyboard:
@@ -35,6 +35,6 @@ class Keyboard:
             output += cls.translate(symbol)
 
         if verbose:
-            print(f'Keyboard.write("{string}")')
+            print(f'Keyboard.write("{string}") -> pyautogui.write("{output}")')
 
         pyautogui.write(output)
