@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with keyboard
 """
-__version__ = "0.1.2"
+__version__ = "0.2.0"
 
 
 class Keyboard:
@@ -27,12 +27,17 @@ class Keyboard:
         return "".join(map(lambda x: tr.get(x.lower(), x), key))
 
     @classmethod
-    def write(cls, string, verbose=False):
-        import pyautogui
-
+    def translate_string(cls, string):
         output = ""
         for symbol in string:
             output += cls.translate(symbol)
+        return output
+
+    @classmethod
+    def write(cls, string, verbose=False):
+        import pyautogui
+
+        output = cls.translate_string(string)
 
         if verbose:
             print(f'Keyboard.write("{string}") -> pyautogui.write("{output}")')
