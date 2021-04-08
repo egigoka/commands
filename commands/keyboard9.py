@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with keyboard
 """
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 
 class Keyboard:
@@ -23,8 +23,8 @@ class Keyboard:
         ycuken = "йцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖ\ЭЯЧСМИТЬБЮ,"
 
         tr = dict(zip(ycuken, qwerty))  # join as keys and values
-
-        return "".join(map(lambda x: tr.get(x), key))
+        
+        return "".join(map(lambda x: tr.get(x, x), key))
 
     @classmethod
     def translate_string(cls, string):
