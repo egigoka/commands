@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with keyboard
 """
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 
 
 class Keyboard:
@@ -19,11 +19,11 @@ class Keyboard:
     @staticmethod
     def translate(key):
         """Returns qwerty key or the given key itself if no mapping found"""
-        qwerty = "qwertyuiop[]asdfghjkl;'zxcvbnm,.QWERTYUIOP{}ASDFGHJKL:\"ZXCVBNM<>?"
-        ycuken = "йцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖ\ЭЯЧСМИТЬБЮ,"
+        qwerty = r"!\@#$%^&*()_+qwertyuiop[]asdfghjkl;'zxcvbnm,.QWERTYUIOP{}ASDFGHJKL:\"ZXCVBNM<>?"
+        ycuken = r"!\"№;%:?*()_+йцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖ\ЭЯЧСМИТЬБЮ,"
 
         tr = dict(zip(ycuken, qwerty))  # join as keys and values
-        
+
         return "".join(map(lambda x: tr.get(x, x), key))
 
     @classmethod
