@@ -19,12 +19,12 @@ class Keyboard:
     @staticmethod
     def translate(key):
         """Returns qwerty key or the given key itself if no mapping found"""
-        qwerty = "qwertyuiop[]asdfghjkl;'zxcvbnm,."
-        ycuken = "йцукенгшщзхъфывапролджэячсмитьбю"
+        qwerty = "qwertyuiop[]asdfghjkl;'zxcvbnm,.QWERTYUIOP{}ASDFGHJKL:\"ZXCVBNM<>?"
+        ycuken = "йцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖ\ЭЯЧСМИТЬБЮ,"
 
         tr = dict(zip(ycuken, qwerty))  # join as keys and values
 
-        return "".join(map(lambda x: tr.get(x.lower(), x), key))
+        return "".join(map(lambda x: tr.get(x), key))
 
     @classmethod
     def translate_string(cls, string):
