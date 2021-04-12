@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.4.5"
+__version__ = "0.4.6"
 
 
 class CLI:
@@ -28,7 +28,7 @@ class CLI:
             string = string.lower()
             string_t = Keyboard.translate_string(string)
             if string != string_t:
-                print(" > " + string_t)
+                print(" > " + string_t, end="")
                 string = string_t
 
             if string == "y":
