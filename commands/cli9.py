@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.4.3"
+__version__ = "0.4.4"
 
 
 class CLI:
@@ -20,11 +20,20 @@ class CLI:
             <br>`param string` input string, check answer for "y" or "n", for other values return None
             <br>`return` True|False|None
             """
+            from .keyboard9 import Keyboard
+
             if string is None:
                 return
-            if string.lower() == "y":
+
+            string = string.lower()
+            string_t = Keyboard.translate_string(string)
+            if string != string_t:
+                print(string_t)
+                string = string_t
+
+            if string == "y":
                 return True
-            if string.lower() == "n":
+            if string == "n":
                 return False
             return
 
