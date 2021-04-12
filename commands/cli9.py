@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.4.4"
+__version__ = "0.4.5"
 
 
 class CLI:
@@ -28,7 +28,7 @@ class CLI:
             string = string.lower()
             string_t = Keyboard.translate_string(string)
             if string != string_t:
-                print(string_t)
+                print(" > " + string_t)
                 string = string_t
 
             if string == "y":
@@ -45,11 +45,12 @@ class CLI:
                 import thefuck.system
                 print(print_str, end="", flush=True)
                 input_str = thefuck.system.get_key()
-                print(input_str)
+                print(input_str, end="")
             except:
                 input_str = input(print_str)
                 input_str = input_str.strip()
             output = check_answer(input_str)
+            print()
             if output is not None:
                 return output
             elif check_answer(default) is not None:
