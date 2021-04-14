@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.14.1"
+__version__ = "0.14.2"
 
 
 class Str:
@@ -326,7 +326,17 @@ class Str:
         password_len = len(password)
         for cnt, numb in enumerate(int_list):
             password_sym = password[cnt % password_len]
-            output_string += chr(numb + ord(password_sym))
+            chr_number = numb + ord(password_sym)
+
+            try:
+                char = chr(chr_number)
+            except ValueError:
+                if chr_number > 0x110000:
+                    char = chr(0x110000)
+                else:
+                    char = chr(0)
+            output_string += char
+
         return output_string
 
     seeds = []
