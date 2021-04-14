@@ -98,10 +98,11 @@ class JsonDict(Json):
         try:
             return self.string.__getitem__(item)
         except KeyError:
-            print(f"self={self}")
-            print(f"self.string={self.string}")
-            print(f"item={item}")
-            raise
+            info_string = f'''self={self}
+self.string={self.string}")
+item={item}
+item not found!'''
+            raise KeyError(info_string)
 
     def __setitem__(self, key, value):
         output = self.string.__setitem__(key, value)
