@@ -112,7 +112,7 @@ class List:
             def func(obj):
                 new_list = []
                 for i in items:
-                    new_list.append(Obj.cast_to(obj[i]))
+                    new_list.append(Obj.cast_to(obj[i], cast_to=cast_to))
                 return tuple(new_list)
         return func
 
