@@ -98,33 +98,21 @@ class List:
     @staticmethod
     def itemgetter_with_casting(item, *items, cast_to):
         from collections.abc import Iterable
+        from .obj9 import Obj
+
         if not isinstance(cast_to, Iterable):
-            cast_to = (cast_to, )
+            cast_to = (cast_to,)
 
         if not items:
             def func(obj):
-                for type_to in cast_to:
-                    try:
-                        return type_to(obj[item])
-                    except:
-                        pass
-                return obj[item]
+                return Obj.cast_to(obj, cast_to=cast_to)
         else:
             items = (item,) + items
 
             def func(obj):
                 new_list = []
                 for i in items:
-                    added = False
-                    for type_to in cast_to:
-                        try:
-                            new_list.append(type_to(obj[i]))
-                            added = True
-                            break
-                        except:
-                            pass
-                    if not added:
-                        new_list.append(obj[i])
+                    new_list.append(Obj.cast_to(obj[i]))
                 return tuple(new_list)
         return func
 
