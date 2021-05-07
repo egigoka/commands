@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.4.6"
+__version__ = "0.4.7"
 
 
 class CLI:
@@ -21,12 +21,17 @@ class CLI:
             <br>`return` True|False|None
             """
             from .keyboard9 import Keyboard
+            import thefuck.const
 
             if string is None:
                 return
 
-            string = string.lower()
-            string_t = Keyboard.translate_string(string)
+            if isinstance(string, thefuck.const._GenConst):
+                string_t = string._name
+            else:
+                string = string.lower()
+                string_t = Keyboard.translate_string(string)
+
             if string != string_t:
                 print(" > " + string_t, end="")
                 string = string_t
@@ -46,7 +51,7 @@ class CLI:
                 print(print_str, end="", flush=True)
                 input_str = thefuck.system.get_key()
                 print(input_str, end="")
-            except:
+            except Exception:
                 input_str = input(print_str)
                 input_str = input_str.strip()
             output = check_answer(input_str)
