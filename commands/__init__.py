@@ -31,7 +31,7 @@ from .wget9 import Wget
 from .int9 import Int
 from .cli9 import CLI
 from .base64_9 import Base64
-from .funcs9 import dirify, multiple, copy, paste
+from .funcs9 import dirify, multiple, copy, paste, q, exit
 from .id9 import ID
 from .git9 import Git
 from .tsql9 import TSQL

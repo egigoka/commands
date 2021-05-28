@@ -2,7 +2,13 @@
 # -*- coding: utf-8 -*-
 """Internal module with shit functions
 """
-__version__ = "3.3.0"
+__version__ = "3.4.1"
+
+
+class Q:
+    def __repr__(self):
+        import sys 
+        sys.exit(0)
 
 
 def dirify(_object, wildcard="*"):
@@ -43,3 +49,6 @@ def copy(string: str):
 def paste():
     import pyperclip
     return pyperclip.paste()
+
+q = Q()
+exit = Q()
