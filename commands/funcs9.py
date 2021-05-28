@@ -2,13 +2,12 @@
 # -*- coding: utf-8 -*-
 """Internal module with shit functions
 """
-__version__ = "3.4.1"
+__version__ = "3.4.2"
 
 
 class Q:
     def __repr__(self):
-        import sys 
-        sys.exit(0)
+        raise SystemExit
 
 
 def dirify(_object, wildcard="*"):
