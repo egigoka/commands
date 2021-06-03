@@ -9,7 +9,7 @@ class Time:
     """Class to work with time
     """
     @staticmethod
-    def _lp2(string, length=2):
+    def __lp2(string, length=2):
         """Internal alias to Str.leftpad
         """
         from .str9 import Str
@@ -22,6 +22,11 @@ class Time:
         """
         import time
         return time.time()
+    
+    @staticmethod
+    def datetime():
+        import datetime
+        return datetime.datetime.now()
 
     @staticmethod
     def timestamp_to_datetime(timestamp):
@@ -62,9 +67,9 @@ class Time:
             time = cls.timestamp_to_datetime(custom_time)
         else:
             time = datetime.datetime.now()
-        time = cls._lp2(time.year) + "." + cls._lp2(time.month) + "." + cls._lp2(time.day) + "_at_" + \
-            cls._lp2(time.hour) + "." + cls._lp2(time.minute) + "." + cls._lp2(time.second) + "." + \
-            cls._lp2(time.microsecond, 6)
+        time = cls.__lp2(time.year) + "." + cls.__lp2(time.month) + "." + cls.__lp2(time.day) + "_at_" + \
+            cls.__lp2(time.hour) + "." + cls.__lp2(time.minute) + "." + cls.__lp2(time.second) + "." + \
+            cls.__lp2(time.microsecond, 6)
         return time
 
     @staticmethod
