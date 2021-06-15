@@ -3,7 +3,7 @@
 from typing import Union
 """Internal module to work with files
 """
-__version__ = "1.2.1"
+__version__ = "1.3.0"
 # pylint: disable=c-extension-no-member
 
 
@@ -205,11 +205,12 @@ class File:
                 return content
 
     @staticmethod
-    def write(filename, what_to_write, mode="a", quiet=True):
+    def write(filename, what_to_write, mode="a", encoding="utf-8", quiet=True):
         """Write to end of file if "mode" arg isn't redefined
         <br>`param filename` string with path to file
         <br>`param what_to_write` string to write
         <br>`param mode` string with any mode that supported by python open() func
+        <br>`param encoding` string with any encoding
         <br>`param quiet` boolean, if True, suppress output to console
         <br>`return` None
         """
@@ -217,7 +218,7 @@ class File:
             print(f"Writing to file {filename}")
         if "b" not in mode and isinstance(what_to_write, str):
             with open(filename, mode=mode+"b") as file:  # open file then closes it
-                file.write(what_to_write.encode("utf-8"))
+                file.write(what_to_write.encode(encoding))
         else:
             with open(filename, mode=mode) as file:  # open file then closes it
                 if isinstance(what_to_write, int):
