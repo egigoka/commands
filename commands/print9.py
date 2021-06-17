@@ -4,10 +4,10 @@ from typing import Union
 
 """Internal module with functions for print to console.
 """
-__version__ = "0.12.2"
+__version__ = "0.12.3"
 
 
-class Print:
+class __Print:
     """Class with functions for print to console.
     """
 
@@ -145,4 +145,4 @@ class Print:
             termcolor.HIGHLIGHTS.pop("on_black")
 
 
-Print = Print()
+Print = __Print()
