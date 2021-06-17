@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.4.9"
+__version__ = "0.4.10"
 
 
 class CLI:
@@ -47,7 +47,7 @@ class CLI:
         while True:
             print_str = f"{question} (y/n)? "
             if default:
-                print_str += " default '{default}'"
+                print_str += f" default '{default}'"
             try:
                 import thefuck.system
                 print(print_str, end="", flush=True)
