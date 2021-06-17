@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.4.8"
+__version__ = "0.4.9"
 
 
 class CLI:
@@ -28,7 +28,7 @@ class CLI:
 
             if isinstance(string, thefuck.const._GenConst):
                 string_t = string._name
-                if string_t == thefuck.const.KEY_CTRL_C:
+                if string == thefuck.const.KEY_CTRL_C:
                     raise KeyboardInterrupt
             else:
                 string = string.lower()
