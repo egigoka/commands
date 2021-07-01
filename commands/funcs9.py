@@ -2,12 +2,17 @@
 # -*- coding: utf-8 -*-
 """Internal module with shit functions
 """
-__version__ = "3.4.2"
+__version__ = "3.4.3"
 
 
 class Q:
     def __repr__(self):
         raise SystemExit
+
+    def __call__(self, code=None):
+        import _sitebuiltins
+        quitter = _sitebuiltins.Quitter("q", "end of file? wtf? why it's string?")
+        quitter.__call__(code)
 
 
 def dirify(_object, wildcard="*"):
