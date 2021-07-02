@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.9.2"
+__version__ = "0.9.3"
 from typing import Union
 
 
@@ -265,10 +265,10 @@ class Network:
                     ('Accept-Language', "en-US,en;q=0.5")]
 
                 try:
-                    url = opener.open(server, timeout=4)
+                    url = opener.open(server, timeout=1)
                     content = url.read()
 
-                    # Didn't want to import chardet. Prefered to stick to stdlib
+                    # Didn't want to import chardet. Preferred to stick to stdlib
                     if PY3K:
                         try:
                             content = content.decode('UTF-8')
