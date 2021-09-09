@@ -3,7 +3,7 @@
 from typing import Union
 """Internal module to work with files
 """
-__version__ = "1.3.0"
+__version__ = "1.4.0"
 # pylint: disable=c-extension-no-member
 
 
@@ -287,6 +287,15 @@ class File:
             except IndexError:
                 return "unknown"
 
+    @staticmethod
+    def set_modification_time(filepath, datetime):
+        import time
+        import os
+
+        modTime = time.mktime(datetime.timetuple())
+
+        os.utime(filepath, (modTime, modTime))
+
     all_encodings = ['ascii', 'big5', 'big5hkscs', 'cp037', 'cp273', 'cp424', 'cp437', 'cp500', 'cp720', 'cp737',
                      'cp775', 'cp850', 'cp852', 'cp855', 'cp856', 'cp857', 'cp858', 'cp860', 'cp861', 'cp862', 'cp863',
                      'cp864', 'cp865', 'cp866', 'cp869', 'cp874', 'cp875', 'cp932', 'cp949', 'cp950', 'cp1006',
@@ -299,3 +308,4 @@ class File:
                      'mac_cyrillic', 'mac_greek', 'mac_iceland', 'mac_latin2', 'mac_roman', 'mac_turkish', 'ptcp154',
                      'shift_jis', 'shift_jis_2004', 'shift_jisx0213', 'utf_32', 'utf_32_be', 'utf_32_le', 'utf_16',
                      'utf_16_be', 'utf_16_le', 'utf_7', 'utf_8', 'utf_8_sig']
+

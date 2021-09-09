@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with time
 """
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 
 class Time:
@@ -24,9 +24,30 @@ class Time:
         return time.time()
     
     @staticmethod
-    def datetime():
+    def datetime(year=None, month=None, day=None, hour=None, minute=None, second=None, microsecond=None, tzinfo=None, fold=None):
         import datetime
-        return datetime.datetime.now()
+        now = datetime.datetime.now()
+        args = {}
+        if year is not None:
+            args["year"] = year
+        if month is not None:
+            args["month"] = month
+        if day is not None:
+            args["day"] = day
+        if hour is not None:
+            args["hour"] = hour
+        if minute is not None:
+            args["minute"] = minute
+        if second is not None:
+            args["second"] = second
+        if microsecond is not None:
+            args["microsecond"] = microsecond
+        if tzinfo is not None:
+            args["tzinfo"] = tzinfo
+        if fold is not None:
+            args["fold"] = fold
+        datetime_datetime = now.replace(**args)
+        return datetime_datetime
 
     @staticmethod
     def timestamp_to_datetime(timestamp):
