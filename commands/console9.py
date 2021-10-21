@@ -209,11 +209,12 @@ class Console:
                     for string in obj:
                         if decoding:
                             try:
-                                string = string.decode(decoding)
+                                string_ = string.decode(decoding)
                             except UnicodeDecodeError as e:
-                                print(f"line: '{string}', decoding: '{decoding}'")
-                                raise
-                        output += string
+                                # fallback to chardet
+                                import chardet
+                                string_ = string.decode(chardet.detect(string)['encoding'])
+                        output += string_
                         if print_std:
                             from .print9 import Print
                             Print.colored(string, color, end='', flush=True)
