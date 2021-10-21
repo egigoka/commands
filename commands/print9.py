@@ -4,7 +4,7 @@ from typing import Union
 
 """Internal module with functions for print to console.
 """
-__version__ = "0.12.3"
+__version__ = "0.13.0"
 
 
 class __Print:
@@ -81,7 +81,7 @@ class __Print:
         return self._color_output_enabled
 
     def colored(self, *strings: Union[str, int, list, dict], attributes: list = None, end: str = "\n",
-                sep: str = " ", flush: bool = False) -> None:
+                sep: str = " ", flush: bool = False, verbose: bool = True) -> None:
         """Wrapper for termcolor.cprint, added some smartness
         <br>Usage` Print.colored("text1", "text2", "red") or Print.colored("text", "text2", "red", "on_white")
         <br>even Print.colored("text", "text2", "on_white", "red") now.
@@ -136,13 +136,16 @@ class __Print:
             colored_string = termcolor.colored(string, color=color, on_color=highlight, attrs=attributes)
         else:
             colored_string = string
-        self.multithread_safe(colored_string, end=end, flush=flush)
+        if verbose:
+            self.multithread_safe(colored_string, end=end, flush=flush)
 
         with suppress(KeyError):  # for work with multithreading
             termcolor.COLORS.pop("gray")
             termcolor.COLORS.pop("black")
             termcolor.HIGHLIGHTS.pop("on_gray")
             termcolor.HIGHLIGHTS.pop("on_black")
+
+        return colored_string
 
 
 Print = __Print()
