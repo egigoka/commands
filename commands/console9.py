@@ -217,7 +217,7 @@ class Console:
                         output += string_
                         if print_std:
                             from .print9 import Print
-                            Print.colored(string, color, end='', flush=True)
+                            Print.colored(string_, color, end='', flush=True)
                     return output
 
                 pipes = Threading(verbose=debug)
