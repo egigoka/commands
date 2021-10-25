@@ -46,7 +46,6 @@ class Time:
             args["tzinfo"] = tzinfo
         if fold is not None:
             args["fold"] = fold
-        print(args)
         datetime_datetime = now.replace(**args)
         return datetime_datetime
 
