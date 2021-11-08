@@ -8,6 +8,7 @@ __version__ = "0.4.10"
 class CLI:
     """Class to work with commandline interfaces
     """
+
     @staticmethod
     def get_y_n(question, default=None):
         """Obtain answer yes or no from user in commandline.
@@ -15,7 +16,8 @@ class CLI:
         <br>`param answer` predefined string with answer, must be "y" or "n"
         <br>`return` boolean
         """
-        def check_answer(string):  #pylint: disable=inconsistent-return-statements
+
+        def check_answer(string):  # pylint: disable=inconsistent-return-statements
             """Check input from user or argument "answer"
             <br>`param string` input string, check answer for "y" or "n", for other values return None
             <br>`return` True|False|None
@@ -138,3 +140,52 @@ class CLI:
                 print()
                 break
         return "\n".join(lines)
+
+    @staticmethod
+    def get_date(date_name: str, always_return_date: bool = False):
+        """Gets date from user input.
+
+        :param date_name: string, name of date for user
+        :param always_return_date: bool, ask user a date until valid is entered
+        :return None if date is not entered and always_return_date is False
+        :return datetime.datetime if correct data is entered (time is 00:00:00)"""
+        from .time9 import Time
+        date = None
+        while date is None:
+            date_str = input(f"Enter date of {date_name} like \"{str(Time.datetime().day).zfill(2)}\" "
+                             f"or with month \"{str(Time.datetime().day).zfill(2)}"
+                             f"{str(Time.datetime().month).zfill(2)}\" "
+                             f"or with year \"{str(Time.datetime().day).zfill(2)}"
+                             f"{str(Time.datetime().month).zfill(2)}"
+                             f"{str(Time.datetime().year).zfill(4)}\": ").strip()
+            if date_str:
+                date = Time.datetime()
+                try:
+                    day = int(date_str[:2])
+                except ValueError:
+                    day = date.day
+                try:
+                    month = int(date_str[2:4])
+                except ValueError:
+                    month = date.month
+                try:
+                    year = int(date_str[4:])
+                    if len(str(year)) == 2:
+                        year += 2000
+                except ValueError:
+                    year = date.year
+
+                try:
+                    date = date.replace(day=day, month=month, year=year, hour=0, minute=0, second=0)
+                    break
+                except ValueError:
+                    print("Wrong date.")
+                    date = None
+            else:
+                if always_return_date:
+                    print("Please, enter date.")
+                    continue
+                else:
+                    break
+
+        return date
