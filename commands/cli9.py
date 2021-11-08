@@ -176,7 +176,7 @@ class CLI:
                     year = date.year
 
                 try:
-                    date = date.replace(day=day, month=month, year=year, hour=0, minute=0, second=0)
+                    date = date.replace(day=day, month=month, year=year, hour=0, minute=0, second=0, microsecond=0)
                     break
                 except ValueError:
                     print("Wrong date.")
