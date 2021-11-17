@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module wrapper to cli wget
 """
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 
 class Wget:  # pylint: disable=too-few-public-methods
@@ -38,7 +38,8 @@ class Wget:  # pylint: disable=too-few-public-methods
         if not Dir.exist(os.path.split(output_filename)[0]) and os.path.split(output_filename)[0]:
             Dir.create(os.path.split(output_filename)[0])
         try:
-            output = Console.get_output(commands, print_std=not quiet, auto_disable_py_buffering=False, timeout=timeout).strip(" \r\n")
+            output = Console.get_output(commands, print_std=not quiet, auto_disable_py_buffering=False,
+                                        timeout=timeout, debug=debug).strip(" \r\n")
             return output
         except FileNotFoundError as exception:
             if wget_path == "wget":
