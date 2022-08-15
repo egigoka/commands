@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with mouse
 """
-__version__ = "1.4.0"
+__version__ = "1.5.0"
 
 
 class SettingsMouse:  # pylint: disable=too-few-public-methods
@@ -137,3 +137,12 @@ class Mouse:  # pylint: disable=too-few-public-methods
             pyautogui.moveRel(x, y, duration=duration, tween=tween)
         else:
             pyautogui.moveTo(x, y, duration=duration, tween=tween)
+
+    @staticmethod
+    def get_position():
+        """
+        <br>`return` typle, x and y position of mouse
+        """
+        import pyautogui
+
+        return pyautogui.position()
