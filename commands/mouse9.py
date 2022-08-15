@@ -97,6 +97,15 @@ class Mouse:  # pylint: disable=too-few-public-methods
             """
             cls.click(button='left', position=position, quiet=quiet)
 
+        @classmethod
+        def middle(cls, position=None, quiet=False):
+            """
+            <br>`param position` list with two values x and y (pixels from up and left)
+            <br>`param quiet` boolean, suppress print to console
+            <br>`return` None
+            """
+            cls.click(button='middle', position=position, quiet=quiet)
+
     @staticmethod
     def move(x, y=None, x2=None, y2=None,  # pylint: disable=too-many-arguments, invalid-name
              duration=SettingsMouse.mouse_move_duration, tween=None, rel=False, quiet=False):
