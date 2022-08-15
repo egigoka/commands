@@ -23,6 +23,7 @@ from .dict9 import Dict, imdict
 from .network9 import Network
 from .bash9 import Bash
 from .macos9 import macOS
+from .mouse9 import Mouse
 from .windows9 import Windows
 from .gui9 import Gui
 from .tkinter9 import Tkinter

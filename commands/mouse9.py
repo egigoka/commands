@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with mouse
 """
-__version__ = "1.3.0"
-
-import pyautogui
+__version__ = "1.4.0"
 
 
 class SettingsMouse:  # pylint: disable=too-few-public-methods
@@ -35,6 +33,8 @@ class Mouse:  # pylint: disable=too-few-public-methods
             <br>`param up` boolean, scroll up or down
             <br>`return`
             """
+            import pyautogui
+
             value = int(value)
             if not up:
                 value = 0-value
@@ -68,6 +68,8 @@ class Mouse:  # pylint: disable=too-few-public-methods
             <br>`param quiet` boolean, suppress print to console
             <br>`return` None
             """
+            import pyautogui
+
             from .time9 import Time
             Time.sleep(SettingsMouse.sleep_before_click, verbose=not quiet)
             if position:
@@ -96,8 +98,8 @@ class Mouse:  # pylint: disable=too-few-public-methods
             cls.click(button='left', position=position, quiet=quiet)
 
     @staticmethod
-    def move(x, y, x2=None, y2=None,  # pylint: disable=too-many-arguments, invalid-name
-             duration=SettingsMouse.mouse_move_duration, tween=pyautogui.easeInOutQuad, rel=False, quiet=False):
+    def move(x, y=None, x2=None, y2=None,  # pylint: disable=too-many-arguments, invalid-name
+             duration=SettingsMouse.mouse_move_duration, tween=None, rel=False, quiet=False):
         """
         <br>`param x` int, position in pixels
         <br>`param y` int, position in pixels
@@ -109,6 +111,10 @@ class Mouse:  # pylint: disable=too-few-public-methods
         <br>`param quiet` boolean, suppress print to console
         <br>`return` None
         """
+        import pyautogui
+
+        if tween is None:
+            tween = pyautogui.easeInOutQuad
         if isinstance(x, tuple):
             if len(x) == 2:
                 y = x[1]
