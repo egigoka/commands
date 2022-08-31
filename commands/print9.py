@@ -95,6 +95,7 @@ class __Print:
         """
         import termcolor
         from contextlib import suppress
+        from .list9 import List
         termcolor.COLORS["gray"] = termcolor.COLORS["black"] = 30
         termcolor.HIGHLIGHTS["on_gray"] = termcolor.HIGHLIGHTS["on_black"] = 40
         from .os9 import OS
@@ -125,6 +126,9 @@ class __Print:
         string = ""
         if color_args:
             strings = strings[:-color_args]
+
+        strings = List.to_strings(strings)
+
         sep.join(strings)
 
         if self.color_output_enabled:
