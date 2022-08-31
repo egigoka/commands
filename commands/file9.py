@@ -12,7 +12,7 @@ class File:
     """
     @classmethod
     def create(cls, filename, quiet=True):
-        """Creates subdirs, if needed
+        """Creates subdirectories, if needed
         <br>`param filename` string with path to creating file
         <br>`param quiet` boolean, if True, suppress output to console
         <br>`return` None
@@ -44,7 +44,8 @@ class File:
         """
         <br>`param path` string with path to deleting file
         <br>`param quiet` boolean, suppress print to console
-        <br>`param no_sleep` boolean, if True - function skip sleep in 0.05 seconds after deleting file (to ensure than file
+        <br>`param no_sleep` boolean, if True - function skip sleep in 0.05 seconds after deleting file
+        (to ensure than file
         deleted before next code run)
         <br>`return` None
         """
@@ -122,10 +123,10 @@ class File:
         return filename
 
     @classmethod
-    def backup(cls, filename, subfolder="bak", hide=True, quiet=False):
-        """Move file to subfolder, adds sort of timestamp to filename and hide file if 'hide' argument is True
+    def backup(cls, filename, subdirectory="bak", hide=True, quiet=False):
+        """Move file to subdirectory, adds sort of timestamp to filename and hide file if 'hide' argument is True
         <br>`param filename` string with path to file
-        <br>`param subfolder` string with name of subfolder of backed up files
+        <br>`param subdirectory` string with name of subdirectory of backed up files
         <br>`param hide` boolean, define hide file or not
         <br>`param quiet` boolean, suppress print to console
         <br>`return`
@@ -136,17 +137,17 @@ class File:
         from .dir9 import Dir
         from .time9 import Time
         filename = Path.full(filename)  # normalize filename
-        backup_filename = str(filename) + "." + Time.dotted() + ".bak"  # add dotted time to backup filename
+        backup_filename = str(filename) + "." + Time.dotted() + ".bak"  # add dotted time to back up filename
         backup_filename = os.path.split(backup_filename)  # splitting filename to folder and file
-        try:  # if subfolder has no len
-            if len(subfolder) < 1:  # if subfolder has zero len
-                raise TypeError("subfolder must have non-zero len")
-        except TypeError:  # if subfolder has no len
-            subfolder = "bak"  # set subfolder to default
-            print("len(subfolder) < 1, so subfolder = 'bak'")  # print error
-        subfolder = Path.combine(backup_filename[0], subfolder)  # append subfolder name
-        Dir.create(subfolder)  # create subfolder
-        backup_filename = Path.combine(subfolder, backup_filename[1])  # backup file name full path
+        try:  # if subdirectory has no len
+            if len(subdirectory) < 1:  # if subdirectory has zero len
+                raise TypeError("subdirectory must have non-zero len")
+        except TypeError:  # if subdirectory has no len
+            subdirectory = "bak"  # set subdirectory to default
+            print("len(subdirectory) < 1, so subdirectory = 'bak'")  # print error
+        subdirectory = Path.combine(backup_filename[0], subdirectory)  # append subdirectory name
+        Dir.create(subdirectory)  # create subdirectory
+        backup_filename = Path.combine(subdirectory, backup_filename[1])  # backup file name full path
         shutil.copy2(filename, backup_filename)  # finally backup file
         if hide:
             backup_filename = cls.hide(backup_filename)  # hiding file
@@ -176,13 +177,14 @@ class File:
         count_of_symbols = count_of_symbols
         if count_of_symbols is True:  # you can define how much symbols use to define encoding
             count_of_symbols = 10000
-        with open(path, "rb") as rawfile:
-            slice_of_raw_data = rawfile.read(count_of_symbols)
+        with open(path, "rb") as raw_file:
+            slice_of_raw_data = raw_file.read(count_of_symbols)
         encoding = Bytes.get_encoding(slice_of_raw_data)
         return encoding
 
     @classmethod
-    def read(cls, path, encoding: str = "utf-8", auto_detect_encoding: Union[bool, int] = True, mode: str = "r"):  # return pipe to file content
+    def read(cls, path, encoding: str = "utf-8", auto_detect_encoding: Union[bool, int] = True, mode: str = "r"):
+        # return pipe to file content
         """
         <br>`param path` path to file
         <br>`param auto_detect_encoding` how much symbols use to auto define decoding, if True, uses 10000
@@ -240,7 +242,7 @@ class File:
     def get_size(filename):  # return size in bytes
         """
         <br>`param filename` string with path to file
-        <br>`return` int with filesize in bytes
+        <br>`return` int with file size in bytes
         """
         import os
         return os.stat(filename).st_size
@@ -292,9 +294,9 @@ class File:
         import time
         import os
 
-        modTime = time.mktime(datetime.timetuple())
+        mod_time = time.mktime(datetime.timetuple())
 
-        os.utime(filepath, (modTime, modTime))
+        os.utime(filepath, (mod_time, mod_time))
 
     all_encodings = ['ascii', 'big5', 'big5hkscs', 'cp037', 'cp273', 'cp424', 'cp437', 'cp500', 'cp720', 'cp737',
                      'cp775', 'cp850', 'cp852', 'cp855', 'cp856', 'cp857', 'cp858', 'cp860', 'cp861', 'cp862', 'cp863',
@@ -308,4 +310,3 @@ class File:
                      'mac_cyrillic', 'mac_greek', 'mac_iceland', 'mac_latin2', 'mac_roman', 'mac_turkish', 'ptcp154',
                      'shift_jis', 'shift_jis_2004', 'shift_jisx0213', 'utf_32', 'utf_32_be', 'utf_32_le', 'utf_16',
                      'utf_16_be', 'utf_16_le', 'utf_7', 'utf_8', 'utf_8_sig']
-

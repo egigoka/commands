@@ -54,7 +54,7 @@ class Pip:
     @classmethod
     def check_pip_installation(cls):
         """
-        Checks pip installation on Linux, if hasn't, tries to install it with apt-get
+        Checks pip installation on Linux, if it hasn't, tries to install it with apt-get
         <br>`return` None
         """
         if "pip" not in cls.list_of_modules:

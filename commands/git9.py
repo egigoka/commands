@@ -61,7 +61,7 @@ class Git:
 
     @classmethod
     def update(cls, message, path="https://github.com/egigoka/" + get_name_of_repo() + ".git", verbose=False):
-        """Automatization to mine git upload
+        """Automation to my git upload
         <br>`param message` string, commit message
         <br>`param path` string, path to repo
         <br>`return` None
@@ -69,6 +69,3 @@ class Git:
         cls.add(".", verbose=verbose)
         cls.commit(message, verbose=verbose)
         cls.push(path, upstream=True, verbose=verbose)
-
-
-

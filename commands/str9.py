@@ -37,7 +37,7 @@ class Str:
         integers = []
         current_integer = 0
         negative = False
-        floatn = None
+        float_numbers = None
         for symbol in str(string) + " ":  # in exception some processing, meh :(
             try:
                 if symbol in ['-', '—'] and not integer_found:
@@ -45,21 +45,21 @@ class Str:
                     continue
                 if float_support:
                     if symbol in [".", ","]:
-                        if isinstance(floatn, int):
-                            floatn = None
+                        if isinstance(float_numbers, int):
+                            float_numbers = None
                             raise ValueError  # goto to except block code
-                        floatn = 0
+                        float_numbers = 0
                         continue
                 int(symbol)
-                if isinstance(floatn, int):
-                    floatn += 1
+                if isinstance(float_numbers, int):
+                    float_numbers += 1
                     value_before = current_integer
-                    added_value = int(symbol)*pow(10, -floatn)
+                    added_value = int(symbol)*pow(10, -float_numbers)
                     current_integer = current_integer + added_value
                     if debug:
-                        print("value_before", value_before, "floatn", floatn, "added_value", added_value,
+                        print("value_before", value_before, "float_numbers", float_numbers, "added_value", added_value,
                               "current_integer", current_integer)
-                    current_integer = round(current_integer, floatn)  # to reduce problems with floating numbers
+                    current_integer = round(current_integer, float_numbers)  # to reduce problems with floating numbers
                 else:
                     current_integer = current_integer*10 + int(symbol)
                 integer_found = True
@@ -71,7 +71,7 @@ class Str:
                     current_integer = 0
                     integer_found = False
                 negative = False
-                floatn = None
+                float_numbers = None
         return integers
 
     @staticmethod
@@ -87,7 +87,7 @@ class Str:
             strings = string.split(newline)
             return strings
         else:
-            raise TypeError(str(type(string)) + " can't be splitted")
+            raise TypeError(str(type(string)) + " can't be split")
 
     @classmethod
     def nl(cls, string):  # pylint: disable=invalid-name
@@ -116,7 +116,6 @@ class Str:
         char_can_be_exists = ".?"
         regexp = char_exists + char_can_be_exists*(chars-1)
         return re.findall(regexp, string, re.DOTALL)
-
 
     @staticmethod
     def leftpad(string, length, char="0", rightpad=False):
@@ -164,11 +163,11 @@ class Str:
         if isinstance(before, bytes):
             from .bytes9 import Bytes
             before = Bytes.to_string(before)
-        startfrom = string.find(before)
-        if startfrom != -1:
-            startfrom = string.find(before) + len(before)
+        start_from = string.find(before)
+        if start_from != -1:
+            start_from = string.find(before) + len(before)
         else:
-            startfrom = 0
+            start_from = 0
             if not safe:
                 if isinstance(exception_message, str):
                     exception_message += '. '
@@ -179,14 +178,14 @@ class Str:
             if isinstance(after, bytes):
                 from .bytes9 import Bytes
                 after = Bytes.to_string(after)
-            end_at = string[startfrom:].find(after)
+            end_at = string[start_from:].find(after)
             if end_at != -1:
-                end_at += startfrom
-                substring = string[startfrom:end_at]
+                end_at += start_from
+                substring = string[start_from:end_at]
                 if return_after_substring:
                     after_substring = string[end_at:]
             else:
-                substring = string[startfrom:]
+                substring = string[start_from:]
                 if return_after_substring:
                     after_substring = ""
                 if not safe:
@@ -194,9 +193,10 @@ class Str:
                         exception_message += '. '
                     elif exception_message is None:
                         exception_message = ""
-                    raise KeyError(f'{exception_message}The string "{after}" that followed the search string was not found')
+                    raise KeyError(f'{exception_message}The string '
+                                   f'"{after}" that followed the search string was not found')
         else:
-            substring = string[startfrom:]
+            substring = string[start_from:]
         if return_after_substring:
             return substring, after_substring
         return substring
@@ -209,7 +209,7 @@ class Str:
         <br>`return` None
         """
         import difflib
-        strings = [(string_a, string_b)]  # for furthurer support for unlimited srtings
+        strings = [(string_a, string_b)]  # for further support for unlimited strings
         for symbol_a, symbol_b in strings:
             print('{} => {}'.format(symbol_a, symbol_b))
             for i, symbol in enumerate(difflib.ndiff(symbol_a, symbol_b)):
@@ -231,7 +231,7 @@ class Str:
         return getpass.getpass(str(string))
 
     @classmethod
-    def input_int(cls, message="Input integer: ", minimum=None, maximum=None, default=None, debug=True):  # pylint: disable=too-many-arguments
+    def input_int(cls, message="Input integer: ", minimum=None, maximum=None, default=None, debug=True):
         """Ask user to input integer.
         <br>`param message` string, message to user
         <br>`param minimum` minimum value of returned integer
@@ -240,37 +240,36 @@ class Str:
         <br>`param debug` boolean, debug purposes
         <br>`return` int, input from user
         """
-        output_int = "jabla fitta"
+        output_int = None
         if default:
             message += "(Enter = " + str(default) + ") "
-        while output_int == "jabla fitta":  # цикл, пока не получит итоговое число
+        while output_int is None:  # cycle while integer is not provided
             integer = input(message)
             if integer != "":
                 try:
                     integer = cls.get_integers(integer)[0]
                 except IndexError:
-                    print("Это не число")
+                    print("It's not an integer")
                     continue
             elif default and integer == "":
                 output_int = default
                 break
             elif integer == "":
-                print("Это не число")
+                print("It's not an integer")
                 raise ValueError
             if minimum:
                 if int < minimum:
-                    print("Число должно быть больше", minimum)
+                    print("Value must be greater than", minimum)
                     raise ValueError
             if maximum:
                 if int > maximum:
-                    print("Число должно быть меньше", maximum)
+                    print("Value must be less than", maximum)
                     raise ValueError
             output_int = integer
             break
         if debug:
-            print("Итоговое число:", output_int)
+            print("Output integer:", output_int)
         return output_int
-
 
     @classmethod
     def remove_spaces(cls, string_):
@@ -287,7 +286,7 @@ class Str:
     def get_words(string_):
         """
         <br>`param string_` string, with spaces to split it
-        <br>`return` list of substrings, splitted by space|multiple space
+        <br>`return` list of substrings, split by space|multiple space
         """
         removed_spaces = ' '.join(string_.split())  # at least, it's fast https://stackoverflow.com/questions/2077897/
         # substitute-multiple-whitespace-with-single-whitespace-in-python
@@ -303,11 +302,11 @@ class Str:
         <br>`return` string, guid-like
         """
         import hashlib
-        bseed = bytes(seed, "utf-8")
-        hash = hashlib.sha256(bseed)
-        hashhex = hash.hexdigest()
-        strhashhex = str(hashhex)
-        symbols = strhashhex.zfill(32)[-32:]  # adds zeros if needed and cut unneded symbols
+        bytes_seed = bytes(seed, "utf-8")
+        hash_sha256 = hashlib.sha256(bytes_seed)
+        hash_hex_digest = hash_sha256.hexdigest()
+        str_hash_hex = str(hash_hex_digest)
+        symbols = str_hash_hex.zfill(32)[-32:]  # adds zeros if needed and cut unneeded symbols
         string = symbols[:8] + "-" + symbols[8:12] + "-" + symbols[12:16] + "-" + symbols[16:20] + "-" + symbols[20:]
         return string
 
@@ -349,24 +348,24 @@ class Str:
         else:
             cls.seeds.append(seed)
         import hashlib
-        bseed = bytes(seed, "utf-8")
-        hash = hashlib.sha256(bseed)
-        hashhex = hash.hexdigest()
-        strhashhex = str(hashhex)
-        symbols = strhashhex.zfill(32)[-32:]  # adds zeros if needed and cut unneded symbols
+        bytes_seed = bytes(seed, "utf-8")
+        hash_sha256 = hashlib.sha256(bytes_seed)
+        hash_hex_digest = hash_sha256.hexdigest()
+        str_hash_hex = str(hash_hex_digest)
+        symbols = str_hash_hex.zfill(32)[-32:]  # adds zeros if needed and cut unneeded symbols
         string = symbols[:8] + "-" + symbols[8:12] + "-" + symbols[12:16] + "-" + symbols[16:20] + "-" + symbols[20:]
         return string
 
 
     @staticmethod
     def rreplace(string: str, old: str, new: str, occurrence: int):
-        '''Right replace. Replacing
+        """Right replace. Replacing
         :param string: str, string, where to replace
         :param old: str, substring to replace
         :param new: str, substring to insert
-        :param occurrence: int, count of replcacement from right
+        :param occurrence: int, count of replacement from right
         :return: str, string with replaced substrings
-        '''
+        """
         # https://stackoverflow.com/a/2556252/6519078
         if not isinstance(string, str):
             string = str(string)
@@ -388,7 +387,6 @@ class Str:
             return False
         else:
             return True
-
 
     python_encodings = ['ascii', 'big5', 'big5hkscs', 'cp037', 'cp424', 'cp437', 'cp500', 'cp737', 'cp775', 'cp850',
                         'cp852', 'cp855', 'cp856', 'cp857', 'cp860', 'cp861', 'cp862', 'cp863', 'cp864', 'cp865',

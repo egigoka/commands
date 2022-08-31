@@ -101,6 +101,7 @@ class CLI:
         <br>`return` string with 'stick' in new position
         """
         from .const9 import backslash
+        stick = None
         if cls.wait_update_pos == 0:
             stick = "|"
         elif cls.wait_update_pos == 1:
@@ -121,7 +122,7 @@ class CLI:
         """Here must be realisation of progressbar
         <br>`param count` int|float current progress status value
         <br>`param finish` int|float finish progress value
-        <br>`param width_of_output` int width of progressbar, by default it's width of console
+        <br>`param width_of_output` int width of progressbar, by default its width of console
         <br>`return`
         """
         raise NotImplementedError

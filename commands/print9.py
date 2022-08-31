@@ -11,7 +11,7 @@ class __Print:
     """Class with functions for print to console.
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
         from threading import Lock
         self.s_print_lock = Lock()
         self.colorama_inited = False
@@ -125,12 +125,7 @@ class __Print:
         string = ""
         if color_args:
             strings = strings[:-color_args]
-        if len(strings) > 1:
-            for substring in strings[:-1]:  # все строки добавляются в основную строку с сепаратором
-                string += str(substring) + sep
-            string += str(strings[-1])  # последняя без сепаратора
-        else:  # if there only one object
-            string = strings[0]
+        sep.join(strings)
 
         if self.color_output_enabled:
             colored_string = termcolor.colored(string, color=color, on_color=highlight, attrs=attributes)

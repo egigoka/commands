@@ -46,13 +46,16 @@ def multiple(*types):
     from typing import Union
     return Union[types]
 
+
 def copy(string: str):
     import pyperclip
     pyperclip.copy(string)
 
+
 def paste():
     import pyperclip
     return pyperclip.paste()
+
 
 q = Q()
 exit = Q()

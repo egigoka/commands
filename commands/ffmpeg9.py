@@ -14,7 +14,6 @@ class FFMpeg:
     @staticmethod
     def add_something_to_mkv(input_file: str, additional_files: dict,
                              output_file: str, metadata_type: str, existed_langs: list = (), debug: bool = False):
-        import os
         from .console9 import Console
         from .dict9 import Dict
         from .id9 import ID
@@ -45,7 +44,6 @@ class FFMpeg:
 
         Console.get_output(commands, print_std=True, debug=debug)
 
-
     @classmethod
     def add_subtitles_to_mkv(cls, input_file: str, subs: dict, output_file: str, existed_langs: list = (),
                              debug: bool = False):
@@ -70,7 +68,8 @@ class FFMpeg:
     def convert_avi_to_mkv(input_file, output_file, verbose=False):
         from .console9 import Console
 
-        commands = ["ffmpeg", "-y", "-fflags", "+genpts", "-i", input_file, "-c:v", "copy", "-c:a", "copy", "-map", "0", output_file]
+        commands = ["ffmpeg", "-y", "-fflags", "+genpts", "-i", input_file, "-c:v", "copy", "-c:a", "copy", "-map", "0",
+                    output_file]
         if verbose:
             print(" ".join(commands))
         Console.get_output(commands, print_std=True)
@@ -82,4 +81,4 @@ class FFMpeg:
         commands = [f'ffmpeg -i "{input_file}" -c:v copy -c:a copy -map 0 "{output_file}"']
         if verbose:
             print(" ".join(commands))
-        Console.get_output(commands, print_std=True, pureshell=True)
+        Console.get_output(commands, print_std=True, pure_shell=True)

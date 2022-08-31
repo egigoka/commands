@@ -39,6 +39,7 @@ class Console:
         <br>`return` int height of opened console in chars
         """
         from .os9 import OS
+        height = None
         if OS.windows:
             import shutil
             height = shutil.get_terminal_size().lines
@@ -50,7 +51,7 @@ class Console:
 
     @classmethod
     def blink(cls, width=None, height=None, symbol="#", sleep=0.5):  # pylint: disable=too-many-locals
-        """Print to terminal reactangle with random color. Completely shit. Arguments width and height changing size of
+        """Print to terminal rectangle with random color. Complete shit. Arguments width and height changing size of
         terminal, works only in Windows.
         <br>`param width` int width of blinking rectangle
         <br>`param height` int height of blinking rectangle
@@ -95,7 +96,7 @@ class Console:
         from contextlib import suppress
 
         class State:
-            #debug#
+            # debug #
             temp = b''
             # debug#
             if decoding:
@@ -150,7 +151,7 @@ class Console:
                     timeout = end_time - time.monotonic()
                     try:
                         line = await asyncio.wait_for(process.stdout.readline(), timeout)
-                    except asyncio.TimeoutError as exc:
+                    except asyncio.TimeoutError:
                         kill_by_pid(process.pid)
                         process.kill()
                         from .print9 import Print
@@ -168,7 +169,7 @@ class Console:
                                 pass
                             break
                         elif do_something(line):
-                            continue  # while some criterium is satisfied
+                            continue  # while some criterion is satisfied
                     try:
                         kill_by_pid(process.pid)
                         process.kill()
@@ -176,7 +177,7 @@ class Console:
                         save_stderr(await asyncio.wait_for(process.stderr.read(), timeout=State.stderr_timeout))
                     except TimeoutError:
                         pass
-                    process.kill()  # timeout or some criterium is not satisfied
+                    process.kill()  # timeout or some criterion is not satisfied
                     await process.communicate()
                     break
             return await process.wait()  # wait for the child process to exit
@@ -192,14 +193,14 @@ class Console:
         return State.stdout, State.stderr, return_code, State.timeout_exception
 
     @staticmethod
-    def _get_output(commands, print_std, decoding, pureshell, universal_newlines, debug=False):
+    def _get_output(commands, print_std, decoding, pure_shell, universal_newlines, debug=False):
         import subprocess
         from .threading9 import Threading
 
         is_string = decoding or universal_newlines
 
         try:
-            with subprocess.Popen(commands, shell=pureshell, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            with subprocess.Popen(commands, shell=pure_shell, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                   universal_newlines=universal_newlines) as popen_object:
 
                 def print_out_lines(obj, color, is_string: bool):
@@ -210,7 +211,7 @@ class Console:
                         if decoding:
                             try:
                                 string_ = string.decode(decoding)
-                            except UnicodeDecodeError as e:
+                            except UnicodeDecodeError:
                                 # fallback to chardet
                                 import chardet
                                 string_ = string.decode(chardet.detect(string)['encoding'])
@@ -234,7 +235,10 @@ class Console:
         except FileNotFoundError as exception:
             if debug:
                 from .print9 import Print
-                Print.debug("commands", commands, "pureshell", pureshell, "print_std", print_std, "decoding", decoding,
+                Print.debug("commands", commands,
+                            "pure_shell", pure_shell,
+                            "print_std", print_std,
+                            "decoding", decoding,
                             "universal_newlines", universal_newlines)
             raise FileNotFoundError(exception)
         return out, err
@@ -243,21 +247,22 @@ class Console:
     windows_cp65001_fail = False
 
     @classmethod
-    def get_output(cls, *commands, pureshell=False, print_std=False, decoding=None, universal_newlines=False,
+    def get_output(cls, *commands, pure_shell=False, print_std=False, decoding=None, universal_newlines=False,
                    auto_decoding=True, auto_disable_py_buffering=True, return_merged=True, timeout=None, debug=False,
                    create_cmd_subprocess=False):
         """Return output of executing command.
-        <br>`param commands` list[string if pureshell is True] with command and arguments
-        <br>`param pureshell` boolean, if True, the specified command will be executed through the shell
-        <br>`param print_std` boolean, if True, output from command will be printed immideately (also adds argument -u to
+        <br>`param commands` list[string if pure_shell is True] with command and arguments
+        <br>`param pure_shell` boolean, if True, the specified command will be executed through the shell
+        <br>`param print_std` boolean, if True, output from command will be printed immediately
+            (also adds argument -u to
         'py' or 'python' firs arg.)
-        <br>`return` typle with strings stdout and stderr
+        <br>`return` tuple with strings stdout and stderr
         """
         import os
         from .os9 import OS
         if len(commands) == 1:
-                commands = commands[0]
-        if isinstance(commands, str) and not pureshell:
+            commands = commands[0]
+        if isinstance(commands, str) and not pure_shell:
             import shlex
             commands = shlex.split(commands, posix=False)
 
@@ -284,10 +289,10 @@ class Console:
                 else:
                     from .windows9 import Windows
                     try:
-                        win_cp = Windows.fix_unicode_encode_error(safe=False)
+                        Windows.fix_unicode_encode_error(safe=False)
                         cls.windows_cp65001 = True
                         decoding = "cp65001"
-                    except IOError:  # if cp65001 cannot be setted
+                    except IOError:  # if cp65001 cannot be set
                         cls.windows_cp65001_fail = True
                         decoding = f"cp{Windows.get_cmd_code_page()}"
             elif OS.unix_family:
@@ -301,7 +306,7 @@ class Console:
             raise NotImplementedError("asyncio.subprocess doesn't support 'universal_newlines', disable 'auto_decoding'"
                                       " or set 'decoding'")
 
-        if (timeout and pureshell and OS.windows) or create_cmd_subprocess:
+        if (timeout and pure_shell and OS.windows) or create_cmd_subprocess:
             commands_old = commands
             commands = list()
             commands.append("cmd")
@@ -316,7 +321,7 @@ class Console:
             if output[3]:
                 raise TimeoutError(fr"Timeout {timeout} reached while running {commands}")
         else:
-            output = cls._get_output(commands, print_std=print_std, decoding=decoding, pureshell=pureshell,
+            output = cls._get_output(commands, print_std=print_std, decoding=decoding, pure_shell=pure_shell,
                                      universal_newlines=universal_newlines, debug=debug)
         out = output[0]
         err = output[1]
@@ -342,7 +347,7 @@ class Console:
         if len_all <= console_width:
             pass
         else:
-            # get longest line
+            # get the longest line
             longest_string = 0
             for cnt, string in enumerate(strings):
                 if len(string) > len(strings[longest_string]):
@@ -357,4 +362,3 @@ class Console:
             strings[longest_string] = new_longest_string
 
         return strings
-

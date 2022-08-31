@@ -1,9 +1,9 @@
 #! python3
 # -*- coding: utf-8 -*-
-"""This is kinda tiny framework? Idk.
+"""This is kinda tiny framework? IDK.
 I learn Python by creating this.
-Also I have some memory issues, so programming with this library and fixing it help me to learn programming.
-Otherwise I every time search how to do some thing and just copy-paste it without understanding and memorizing.
+Also, I have some memory issues, so programming with this library and fixing it help me to learn programming.
+Otherwise, I every time search how to do something and just copy-paste it without understanding and memorizing.
 """
 
 from .bench9 import Bench
@@ -19,7 +19,7 @@ from .time9 import Time
 from .json9 import Json, JsonDict, JsonList
 from .list9 import List
 from .process9 import Process
-from .dict9 import Dict, imdict
+from .dict9 import Dict, ImDict
 from .network9 import Network
 from .bash9 import Bash
 from .macos9 import macOS
@@ -47,4 +47,3 @@ from .keyboard9 import Keyboard
 from .obj9 import Obj
 from .const9 import backslash, newline, newline2, ruble, rtl, KiB, MiB, GiB
 from ._version import __version__
-

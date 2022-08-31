@@ -24,7 +24,8 @@ class Time:
         return time.time()
     
     @staticmethod
-    def datetime(year=None, month=None, day=None, hour=None, minute=None, second=None, microsecond=None, tzinfo=None, fold=None):
+    def datetime(year=None, month=None, day=None, hour=None, minute=None, second=None, microsecond=None, tzinfo=None,
+                 fold=None):
         import datetime
         now = datetime.datetime.now()
         args = {}
@@ -121,7 +122,7 @@ class Time:
 
     @classmethod
     def sleep(cls, seconds, verbose=False, check_per_sec=10):
-        """Function to idle. If 'seconds more, than 1, running Time._timer. Otherwise run time.sleep and print time
+        """Function to idle. If 'seconds' more, than 1, running Time._timer. Otherwise, run time.sleep and print time
         left.
         <br>`param seconds` int|float, how long sleep
         <br>`param verbose` boolean, print remaining time

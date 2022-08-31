@@ -10,7 +10,7 @@ class Ssh:
     """
     @staticmethod
     def get_output(host, username, password, command, safe=False):
-        """Return output from command, runned on SSH server. Support only username`password autorisation.
+        """Return output from command, run on SSH server. Support only username`password authorisation.
         <br>`param host` string, host or IP
         <br>`param username` string
         <br>`param password` string

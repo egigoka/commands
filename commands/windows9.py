@@ -4,6 +4,7 @@
 """
 __version__ = "0.7.4"
 
+
 class Windows:
     """Class to work with Windows-specific functions
     """
@@ -11,7 +12,8 @@ class Windows:
     class RemoteSystem:
         def __init__(self, hostname, username, password, port=None, transport="ntlm"):
             import winrm
-            ### FIX winrm ###
+            # FIX winrm #
+
             def fix_run_ps(self, script):
                 from base64 import b64encode
                 encoded_ps = b64encode(script.encode('utf_16_le')).decode('ascii')
@@ -21,7 +23,8 @@ class Windows:
                 return rs
 
             winrm.Session.run_ps = fix_run_ps
-            ### END FIX winrm ###
+
+            # END FIX winrm #
 
             if port is None:
                 port = 5986 if transport == 'ssl' else 5985
@@ -49,7 +52,7 @@ class Windows:
 
     @staticmethod
     def lock():
-        """Locking windows workstation, doesn't work with Windows 10
+        """Locking Windows workstation, doesn't work with Windows 10
         <br>`return` None
         """
         from .os9 import OS
@@ -76,9 +79,11 @@ class Windows:
             return "Error getting current codepage"
         try:
             from .str9 import Str
-            if debug: print(out)
+            if debug:
+                print(out)
             out = Str.substring(out, ": ", "\r\n")
-            if debug: print(out)
+            if debug:
+                print(out)
             return int(out)
         except KeyError:
             return "Cannot get current codepage"
@@ -95,12 +100,13 @@ class Windows:
         if File.exist(lockfile):
             cp = cls.get_cmd_code_page()
             if not safe:
-                raise IOError(f"Cannot use codepage 65001, continue using {cp}, you can set other by Windows.set_cmd_code_page")
+                raise IOError(f"Cannot use codepage 65001, continue using {cp}, "
+                              f"you can set other by Windows.set_cmd_code_page")
             return cp
         previous_codepage = cls.get_cmd_code_page()
         try:
             if previous_codepage != 65001:
-                code_page = cls.set_cmd_code_page(65001)
+                cls.set_cmd_code_page(65001)
             import os
             with Print.s_print_lock:
                 command = r'''python3 -c "print('йЙ\r', end='')"'''
@@ -109,7 +115,7 @@ class Windows:
             os.system(command)
             Print("  \r", end="")
             return cls.get_cmd_code_page()
-        except Exception as e:
+        except Exception:
             if int(previous_codepage) >= 0:
                 if previous_codepage != 65001:
                     cls.set_cmd_code_page(previous_codepage)
@@ -120,14 +126,15 @@ class Windows:
                 OS._cyrillic_support = False
                 File.create(lockfile)
                 if not safe:
-                    raise IOError(f"Cannot use codepage 65001, returning to {previous_codepage}, you can set other by Windows.set_cmd_code_page")
+                    raise IOError(f"Cannot use codepage 65001, returning to {previous_codepage}, "
+                                  f"you can set other by Windows.set_cmd_code_page")
                 return previous_codepage
 
     @staticmethod
-    def user_exists(self, username):
+    def user_exists(username):
         """
         <br>`param username` string
-        <br>`return` boolean, existance of local user
+        <br>`return` boolean, existence of local user
         """
         import subprocess
         from .console9 import Console
@@ -138,7 +145,7 @@ class Windows:
             return False
 
     def _user(self, username, password=None, create=False, remove=False, retry_cnt=0):
-        """Creates or removes user user using net user command
+        """Creates or removes user using net user command
         <br>`param username` string
         <br>`param password` string
         <br>`param create` boolean, True for create user
@@ -164,6 +171,8 @@ class Windows:
                 if not self.user_exists(username):
                     raise OSError(f"User {username} already doesn't exists.")
                 command = f"net user {username} /DELETE"
+            else:
+                raise NotImplementedError
             output = Console.get_output(command)
             if "The command completed successfully." in output:
                 return
@@ -172,7 +181,7 @@ class Windows:
                     raise OSError(f"User {username} failed to create. {output}")
                 elif remove:
                     raise OSError(f"User {username} failed to remove. {output}")
-        except subprocess.CalledProcessError as output:
+        except subprocess.CalledProcessError:
             if retry_cnt < retry_times:
                 retry_cnt += 1
                 return self._user(username, password, create, remove, retry_cnt)
@@ -198,15 +207,15 @@ class Windows:
         return self._user(username=username, remove=True)
 
     @staticmethod
-    def dump_auditpol(filename=None, category="*", fastname=None, quiet=False):
+    def dump_auditpol(filename=None, category="*", fast_name=None, quiet=False):
         from .file9 import File
         from .console9 import Console
         from .time9 import Time
         import subprocess
         if not filename:
             filename = f"auditpol_{Time.dotted()}.txt"
-        if fastname:
-            filename = f"auditpol_{Time.dotted()}--{fastname}.txt"
+        if fast_name:
+            filename = f"auditpol_{Time.dotted()}--{fast_name}.txt"
         try:
             output = Console.get_output(f"auditpol /get /category:{category}")
         except subprocess.CalledProcessError:
@@ -221,10 +230,7 @@ class Windows:
     def import_winreg(cls):
         if not cls.winreg_imported:
             from .os9 import OS
-            if OS.is_python3:
-                import winreg
-            else:
-                import _winreg as winreg
+            import winreg
             cls.winreg = winreg
             cls.winreg_imported = True
         return cls.winreg
@@ -264,13 +270,15 @@ class Windows:
         winreg.CloseKey(key)
         # For some strange reason, calling SendMessage from the current process
         # doesn't propagate environment changes at all.
-        return Console.get_output(Path.python(), "-c", "import win32api, win32con; assert win32api.SendMessage(win32con.HWND_BROADCAST, win32con.WM_SETTINGCHANGE, 0, 'Environment')")
+        return Console.get_output(Path.python(), "-c", "import win32api, win32con; "
+                                                       "assert win32api.SendMessage(win32con.HWND_BROADCAST, "
+                                                       "win32con.WM_SETTINGCHANGE, 0, 'Environment')")
 
     @staticmethod
     def get_powershell_execution_policy():
         from .console9 import Console
-        psfix_command = f'''powershell -command "& {{&'Get-ExecutionPolicy'}}"'''
-        out, err = Console.get_output(psfix_command, return_merged=False)
+        powershell_fix_command = f'''powershell -command "& {{&'Get-ExecutionPolicy'}}"'''
+        out, err = Console.get_output(powershell_fix_command, return_merged=False)
         if err:
             raise OSError(err)
         return out.strip()
@@ -278,8 +286,9 @@ class Windows:
     @staticmethod
     def set_powershell_execution_policy(policy_name):
         from .console9 import Console
-        psfix_command = f'''powershell -command "& {{&'Set-ExecutionPolicy' {policy_name}}}"'''  # "Set-ExecutionPolicy {policy_name}"
-        out, err = Console.get_output(psfix_command, return_merged=False)
+        powershell_fix_command = f'''powershell -command "& {{&'Set-ExecutionPolicy' {policy_name}}}"'''
+        # "Set-ExecutionPolicy {policy_name}"
+        out, err = Console.get_output(powershell_fix_command, return_merged=False)
         if err:
             raise OSError(err)
         return out
@@ -297,7 +306,8 @@ class Windows:
             cls.set_powershell_execution_policy("RemoteSigned")
 
         File.write(temp_ps1_file, ps1_script)
-        out, err = Console.get_output(fr'powershell .\"{temp_ps1_file}"', return_merged=False, create_cmd_subprocess=True)
+        out, err = Console.get_output(fr'powershell .\"{temp_ps1_file}"', return_merged=False,
+                                      create_cmd_subprocess=True)
         File.delete(temp_ps1_file)
 
         if old_policy != "RemoteSigned":
