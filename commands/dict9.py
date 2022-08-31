@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with dicts
 """
-__version__ = "0.5.0"
+__version__ = "0.5.1"
 
 
 class ImDict(dict):
@@ -46,6 +46,7 @@ class Dict:
     def get_dict_key(dict_item):
         return dict_item[0]
 
+    @classmethod
     def sorted_by_key(self, dict_, case_insensitive=False, func=None):
         """Return sorted dict
         <br>`param dict_` input dict
