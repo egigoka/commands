@@ -3,7 +3,7 @@
 from typing import Union
 """Internal module to work with files
 """
-__version__ = "1.4.0"
+__version__ = "1.5.0"
 # pylint: disable=c-extension-no-member
 
 
@@ -239,13 +239,53 @@ class File:
         return os.path.isfile(filename)
 
     @staticmethod
-    def get_size(filename):  # return size in bytes
+    def get_size(filename, human_readable=False):  # return size in bytes
         """
         <br>`param filename` string with path to file
         <br>`return` int with file size in bytes
         """
         import os
-        return os.stat(filename).st_size
+        from .const9 import KiB, MiB, GiB, TiB
+        size_in_bytes = os.stat(filename).st_size
+        if not human_readable:
+            return size_in_bytes
+
+        size_string = f" {str(int(size_in_bytes % KiB))}b"
+
+        if size_in_bytes < KiB:
+            print("less than KiB")
+            return size_string.strip()
+
+        size_string = size_string.strip().zfill(4)
+        size_string = " " + size_string
+        size_string = f" {str(int(size_in_bytes / KiB % 1024))}KiB" + size_string
+
+        if size_in_bytes < MiB:
+            print("less than MiB")
+            return size_string.strip()
+
+        size_string = size_string.strip().zfill(11)
+        size_string = " " + size_string
+        size_string = f" {str(int(size_in_bytes / MiB % 1024))}MiB" + size_string
+
+        if size_in_bytes < GiB:
+            print("less than GiB")
+            return size_string.strip()
+
+        size_string = size_string.strip().zfill(18)
+        size_string = " " + size_string
+        size_string = f" {str(int(size_in_bytes / GiB % 1024))}GiB" + size_string
+
+        if size_in_bytes < TiB:
+            print("less than TiB")
+            return size_string.strip()
+
+        size_string = size_string.strip().zfill(25)
+        size_string = " " + size_string
+        size_string = f" {str(int(size_in_bytes / TiB))}TiB" + size_string
+
+        print("more than TiB")
+        return size_string.strip()
 
     @staticmethod
     def get_modification_time(filename):
