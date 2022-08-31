@@ -14,3 +14,4 @@ rtl = "\u202e"  # string with Right-To-Left character
 KiB = 1024
 MiB = KiB*1024
 GiB = MiB*1024
+TiB = GiB*1024
