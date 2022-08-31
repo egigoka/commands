@@ -129,7 +129,7 @@ class __Print:
 
         strings = List.to_strings(strings)
 
-        sep.join(strings)
+        string = sep.join(strings)
 
         if self.color_output_enabled:
             colored_string = termcolor.colored(string, color=color, on_color=highlight, attrs=attributes)
