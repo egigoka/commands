@@ -3,7 +3,7 @@
 from typing import Union
 """Internal module to work with files
 """
-__version__ = "1.5.0"
+__version__ = "1.5.1"
 # pylint: disable=c-extension-no-member
 
 
@@ -253,7 +253,6 @@ class File:
         size_string = f" {str(int(size_in_bytes % KiB))}b"
 
         if size_in_bytes < KiB:
-            print("less than KiB")
             return size_string.strip()
 
         size_string = size_string.strip().zfill(4)
@@ -261,7 +260,6 @@ class File:
         size_string = f" {str(int(size_in_bytes / KiB % 1024))}KiB" + size_string
 
         if size_in_bytes < MiB:
-            print("less than MiB")
             return size_string.strip()
 
         size_string = size_string.strip().zfill(11)
@@ -269,7 +267,6 @@ class File:
         size_string = f" {str(int(size_in_bytes / MiB % 1024))}MiB" + size_string
 
         if size_in_bytes < GiB:
-            print("less than GiB")
             return size_string.strip()
 
         size_string = size_string.strip().zfill(18)
@@ -277,14 +274,12 @@ class File:
         size_string = f" {str(int(size_in_bytes / GiB % 1024))}GiB" + size_string
 
         if size_in_bytes < TiB:
-            print("less than TiB")
             return size_string.strip()
 
         size_string = size_string.strip().zfill(25)
         size_string = " " + size_string
         size_string = f" {str(int(size_in_bytes / TiB))}TiB" + size_string
 
-        print("more than TiB")
         return size_string.strip()
 
     @staticmethod
