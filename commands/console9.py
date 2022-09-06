@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.11.12"
+__version__ = "0.11.13"
 
 
 class Console:
@@ -186,7 +186,8 @@ class Console:
             loop = asyncio.ProactorEventLoop()  # for subprocess' pipes on Windows
             asyncio.set_event_loop(loop)
         else:
-            loop = asyncio.get_event_loop()
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
 
         return_code = loop.run_until_complete(run_command(*commands, timeout=timeout))
         loop.close()
