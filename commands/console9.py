@@ -2,12 +2,15 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.11.13"
+__version__ = "0.11.14"
+
+import threading
 
 
 class Console:
     """Class to interact with terminal|console
     """
+
     @staticmethod
     def clean():
         """Wipe terminal output. Not tested on linux
@@ -87,128 +90,33 @@ class Console:
                 break
 
     @staticmethod
-    def _get_output_with_timeout(commands, print_std, decoding, timeout):
-        import asyncio
-        import sys
-        import time
-        import psutil
-        from asyncio.subprocess import PIPE
-        from contextlib import suppress
-
-        class State:
-            # debug #
-            temp = b''
-            # debug#
-            if decoding:
-                stdout = ""
-                stderr = ""
-            else:
-                stdout = b''
-                stderr = b''
-            timeout_exception = False
-            stderr_timeout = 1
-
-        def do_something(line):
-            if decoding:
-                try:
-                    line = line.decode(decoding)
-                # if it's output from Windows cmd and utf-16 cant decode last byte (truncated data)
-                except UnicodeDecodeError:
-                    if line[:-1]:
-                        line = line[:-1].decode(decoding) + '\n'
-                    else:
-                        line = ''
-            State.stdout += line
-            if print_std:
-
-                print(line, end="", flush=True)
-            return True
-
-        def save_stderr(stderr):
-            if decoding:
-                stderr = stderr.decode(decoding)
-            State.stderr = stderr
-            if print_std and stderr:
-                print(f"stderr:\n{stderr}", flush=True)
-
-        async def run_command(*args, timeout):
-            # start child process
-            # NOTE: universal_newlines parameter is not supported
-            process = await asyncio.create_subprocess_exec(*args, stdout=PIPE, stderr=PIPE)
-
-            # read line (sequence of bytes ending with b'\n') asynchronously
-            end_time = time.monotonic() + timeout
-            with suppress(ProcessLookupError, psutil.NoSuchProcess):
-                # it throws if process already killed, but python try to kill it one more time
-
-                def kill_by_pid(proc_pid):
-                    process = psutil.Process(proc_pid)
-                    for proc in process.children(recursive=True):
-                        proc.kill()
-                    process.kill()
-
-                while True:
-                    timeout = end_time - time.monotonic()
-                    try:
-                        line = await asyncio.wait_for(process.stdout.readline(), timeout)
-                    except asyncio.TimeoutError:
-                        kill_by_pid(process.pid)
-                        process.kill()
-                        from .print9 import Print
-                        save_stderr(await asyncio.wait_for(process.stderr.read(), timeout=State.stderr_timeout))
-                        State.timeout_exception = True
-                        break
-                    else:
-                        if not line:  # EOF
-                            try:
-                                kill_by_pid(process.pid)
-                                process.kill()
-                                from .print9 import Print
-                                save_stderr(await asyncio.wait_for(process.stderr.read(), timeout=State.stderr_timeout))
-                            except TimeoutError:
-                                pass
-                            break
-                        elif do_something(line):
-                            continue  # while some criterion is satisfied
-                    try:
-                        kill_by_pid(process.pid)
-                        process.kill()
-                        from .print9 import Print
-                        save_stderr(await asyncio.wait_for(process.stderr.read(), timeout=State.stderr_timeout))
-                    except TimeoutError:
-                        pass
-                    process.kill()  # timeout or some criterion is not satisfied
-                    await process.communicate()
-                    break
-            return await process.wait()  # wait for the child process to exit
-
-        if sys.platform == "win32":
-            loop = asyncio.ProactorEventLoop()  # for subprocess' pipes on Windows
-            asyncio.set_event_loop(loop)
-        else:
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-
-        return_code = loop.run_until_complete(run_command(*commands, timeout=timeout))
-        loop.close()
-        return State.stdout, State.stderr, return_code, State.timeout_exception
-
-    @staticmethod
-    def _get_output(commands, print_std, decoding, pure_shell, universal_newlines, debug=False):
+    def _get_output(commands, print_std, decoding, pure_shell, universal_newlines, debug=False,
+                    hook_stdout=None, hook_stderr=None, timeout=None):
         import subprocess
         from .threading9 import Threading
 
         is_string = decoding or universal_newlines
 
+        class State:
+            timeout_reached = False
+
+        def kill_popen(popen_obj):
+            State.timeout_reached = True
+            popen_obj.kill()
+
         try:
             with subprocess.Popen(commands, shell=pure_shell, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                   universal_newlines=universal_newlines) as popen_object:
-
-                def print_out_lines(obj, color, is_string: bool):
+                def print_out_lines(obj: popen_object, stderr: bool, hook):
+                    if timeout is not None:
+                        timer = threading.Timer(timeout, kill_popen, args=[popen_object])
+                        timer.start()
+                    color = "red" if stderr else "green"
                     output = b''
                     if is_string:
                         output = ''
                     for string in obj:
+                        string_ = string
                         if decoding:
                             try:
                                 string_ = string.decode(decoding)
@@ -216,18 +124,25 @@ class Console:
                                 # fallback to chardet
                                 import chardet
                                 string_ = string.decode(chardet.detect(string)['encoding'])
+                        hook(string_)
                         output += string_
                         if print_std:
                             from .print9 import Print
                             Print.colored(string_, color, end='', flush=True)
+                    if timeout is not None:
+                        timer.cancel()
                     return output
 
                 pipes = Threading(verbose=debug)
 
                 pipes.add(print_out_lines, "stdout",
-                          kwargs={"obj": popen_object.stdout, "color": "green", "is_string": is_string})
+                          kwargs={"obj": popen_object.stdout,
+                                  "stderr": False,
+                                  "hook": hook_stdout})
                 pipes.add(print_out_lines, "stderr",
-                          kwargs={"obj": popen_object.stderr, "color": "red", "is_string": is_string})
+                          kwargs={"obj": popen_object.stderr,
+                                  "stderr": True,
+                                  "hook": hook_stderr})
 
                 pipes.start(wait_for_keyboard_interrupt=True)
 
@@ -242,7 +157,7 @@ class Console:
                             "decoding", decoding,
                             "universal_newlines", universal_newlines)
             raise FileNotFoundError(exception)
-        return out, err
+        return out, err, State.timeout_reached
 
     windows_cp65001 = False
     windows_cp65001_fail = False
@@ -250,7 +165,7 @@ class Console:
     @classmethod
     def get_output(cls, *commands, pure_shell=False, print_std=False, decoding=None, universal_newlines=False,
                    auto_decoding=True, auto_disable_py_buffering=True, return_merged=True, timeout=None, debug=False,
-                   create_cmd_subprocess=False):
+                   create_cmd_subprocess=False, hook_stdout=None, hook_stderr=None):
         """Return output of executing command.
         <br>`param commands` list[string if pure_shell is True] with command and arguments
         <br>`param pure_shell` boolean, if True, the specified command will be executed through the shell
@@ -274,12 +189,27 @@ class Console:
         if not commands:
             raise IndexError("commands must not be empty")
 
+        def empty_hook(_):
+            pass
+
+        if hook_stdout is None:
+            hook_stdout = empty_hook
+        if hook_stderr is None:
+            hook_stderr = empty_hook
+
         # disable buffering for python
-        if ("py" in commands or "py" in os.path.split(commands[0])[1]) and print_std and auto_disable_py_buffering:
+        if ("py" in commands
+            or "py" in os.path.split(commands[0])[1]
+            or "python" in commands
+            or "python" in os.path.split(commands[0])[1]
+            or "python3" in commands
+            or "python3" in os.path.split(commands[0])[1]
+        ) and print_std and auto_disable_py_buffering:
             if "-u" not in commands:
                 list_commands = list(commands)
                 list_commands.insert(1, "-u")
                 commands = list_commands
+        print(commands)
         # set decoding and init
         if auto_decoding and not decoding and not universal_newlines:
             if OS.windows:
@@ -303,11 +233,8 @@ class Console:
 
         if decoding and universal_newlines:
             raise TypeError("can't decode 'str' to 'str', set universal_newlines to False for manually set decoding")
-        if timeout and universal_newlines:
-            raise NotImplementedError("asyncio.subprocess doesn't support 'universal_newlines', disable 'auto_decoding'"
-                                      " or set 'decoding'")
 
-        if (timeout and pure_shell and OS.windows) or create_cmd_subprocess:
+        if create_cmd_subprocess:
             commands_old = commands
             commands = list()
             commands.append("cmd")
@@ -316,19 +243,18 @@ class Console:
             commands.append("/C")
             commands.append(" ".join(commands_old))
 
-        if timeout:
-            output = cls._get_output_with_timeout(commands, print_std=print_std, decoding=decoding,
-                                                  timeout=timeout)
-            if output[3]:
-                raise TimeoutError(fr"Timeout {timeout} reached while running {commands}")
-        else:
-            output = cls._get_output(commands, print_std=print_std, decoding=decoding, pure_shell=pure_shell,
-                                     universal_newlines=universal_newlines, debug=debug)
-        out = output[0]
-        err = output[1]
+        out, err, timeout_reached = cls._get_output(commands, print_std=print_std, decoding=decoding,
+                                                    pure_shell=pure_shell,
+                                                    universal_newlines=universal_newlines, debug=debug,
+                                                    hook_stdout=hook_stdout,
+                                                    hook_stderr=hook_stderr,
+                                                    timeout=timeout)
         if return_merged:
             return out + err
-        return out, err
+        if timeout:
+            return out, err, timeout_reached
+        else:
+            return out, err
 
     @classmethod
     def fit(cls, *strings: str, sep: str = " "):
