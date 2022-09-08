@@ -45,5 +45,6 @@ from .archive9 import Archive, Unarchive
 from .ffmpeg9 import FFMpeg
 from .keyboard9 import Keyboard
 from .obj9 import Obj
+from .screen9 import Screen
 from .const9 import backslash, newline, newline2, ruble, rtl, KiB, MiB, GiB, TiB
 from ._version import __version__
