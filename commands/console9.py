@@ -209,7 +209,6 @@ class Console:
                 list_commands = list(commands)
                 list_commands.insert(1, "-u")
                 commands = list_commands
-        print(commands)
         # set decoding and init
         if auto_decoding and not decoding and not universal_newlines:
             if OS.windows:
