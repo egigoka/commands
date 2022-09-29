@@ -3,7 +3,7 @@
 from typing import Union
 """Internal module to work with files
 """
-__version__ = "1.5.1"
+__version__ = "1.6.0"
 # pylint: disable=c-extension-no-member
 
 
@@ -239,16 +239,8 @@ class File:
         return os.path.isfile(filename)
 
     @staticmethod
-    def get_size(filename, human_readable=False):  # return size in bytes
-        """
-        <br>`param filename` string with path to file
-        <br>`return` int with file size in bytes
-        """
-        import os
+    def format_size_human_readable(size_in_bytes):
         from .const9 import KiB, MiB, GiB, TiB
-        size_in_bytes = os.stat(filename).st_size
-        if not human_readable:
-            return size_in_bytes
 
         size_string = f" {str(int(size_in_bytes % KiB))}b"
 
@@ -281,6 +273,19 @@ class File:
         size_string = f" {str(int(size_in_bytes / TiB))}TiB" + size_string
 
         return size_string.strip()
+
+    @classmethod
+    def get_size(cls, filename, human_readable=False):  # return size in bytes
+        """
+        <br>`param filename` string with path to file
+        <br>`return` int with file size in bytes
+        """
+        import os
+        size_in_bytes = os.stat(filename).st_size
+        if not human_readable:
+            return size_in_bytes
+
+        return cls.format_size_human_readable(size_in_bytes=size_in_bytes)
 
     @staticmethod
     def get_modification_time(filename):
