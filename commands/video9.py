@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with video
 """
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 
 
 class Video:
@@ -10,10 +10,16 @@ class Video:
     """
 
     @staticmethod
-    def get_clip(path):
+    def get_clip(path, raw = False):
         from moviepy.editor import VideoFileClip
         clip = VideoFileClip(path)
-        return clip
+        if raw: 
+            return clip
+        outclip = {"duration": clip.duration,
+                   "fps": clip.fps,
+                   "size": clip.size
+                   }
+        return outclip
 
     @classmethod
     def get_length(cls, path):
@@ -32,5 +38,5 @@ class Video:
 
     @classmethod
     def get_info(cls, path):
-        return cls.get_clip(path)
+        return cls.get_clip(path, raw=True)
 
