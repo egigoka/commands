@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with video
 """
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 
 class Video:
@@ -25,17 +25,17 @@ class Video:
     @classmethod
     def get_length(cls, path):
         clip = cls.get_clip(path)
-        return clip.duration
+        return clip["duration"]
 
     @classmethod
     def get_fps(cls, path):
         clip = cls.get_clip(path)
-        return clip.fps
+        return clip["fps"]
 
     @classmethod
     def get_resolution(cls, path):
         clip = cls.get_clip(path)
-        return clip.size
+        return clip["size"]
 
     @classmethod
     def get_info(cls, path):
