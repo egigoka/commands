@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with video
 """
-__version__ = "0.0.2"
+__version__ = "0.1.1"
 
 
 class Video:
@@ -19,6 +19,7 @@ class Video:
                    "fps": clip.fps,
                    "size": clip.size
                    }
+        del clip
         return outclip
 
     @classmethod
