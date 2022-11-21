@@ -3,7 +3,7 @@
 from typing import Union
 """Internal module to work with files
 """
-__version__ = "1.6.0"
+__version__ = "1.7.0"
 # pylint: disable=c-extension-no-member
 
 
@@ -182,6 +182,11 @@ class File:
         encoding = Bytes.get_encoding(slice_of_raw_data)
         return encoding
 
+    @staticmethod
+    def _read_with_encoding(path, encoding):
+        with open(path, "r", encoding=encoding) as file:
+            return file.read()
+
     @classmethod
     def read(cls, path, encoding: str = "utf-8", auto_detect_encoding: Union[bool, int] = True, mode: str = "r"):
         # return pipe to file content
@@ -194,8 +199,11 @@ class File:
             try:
                 if auto_detect_encoding:
                     encoding = cls.get_encoding(path, count_of_symbols=auto_detect_encoding)
-                with open(path, "r", encoding=encoding) as file:
-                    return file.read()
+                try:
+                    return cls._read_with_encoding(path, encoding)
+                except LookupError:
+                    if encoding.lower() == "EUC-TW".lower():
+                        return cls._read_with_encoding(path, "TIS-620")  # crude fix for EUC-TW
             except UnicodeDecodeError:
                 import codecs
                 with codecs.open(path, encoding='cp1251', errors='replace') as file:
