@@ -2,13 +2,15 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.9.3"
+__version__ = "0.10.0"
+
 from typing import Union
 
 
 class Network:
     """Class with functions to work with network
     """
+
     @staticmethod
     def get_domain_of_url(url):
         """
@@ -100,7 +102,7 @@ class Network:
             except UnboundLocalError:
                 backup_ping_output = ""
             ping_output = ""
-        uplink = ping_output.lower().count("time=")+ping_output.lower().count("time<") >= count
+        uplink = ping_output.lower().count("time=") + ping_output.lower().count("time<") >= count
 
         if logfile or (not quiet):
             import termcolor
@@ -304,10 +306,11 @@ class Network:
                     print("IP's :")
                     for ip, ocorrencia in zip(ips_set, map(lambda x: ips.count(x), ips_set)):
                         print('{0} = {1} ocurrenc{2}'.format(ip if len(ip) > 0 else 'broken server', ocorrencia,
-                                                            'y' if ocorrencia == 1 else 'ies'))
+                                                             'y' if ocorrencia == 1 else 'ies'))
                     print('\n')
                     print(resultdict)
                 return resultdict
+
         # end code by phoemur@gmail.com
 
         ipgetter = IPgetter()
@@ -341,7 +344,8 @@ class Network:
             return ipgetter.get_external_ip()
 
     @staticmethod
-    def check_response(endpoint: str, good_response: Union[str, bytes, list, tuple], timeout: int = 10, debug: bool = False) -> bool:
+    def check_response(endpoint: str, good_response: Union[str, bytes, list, tuple], timeout: int = 10,
+                       debug: bool = False) -> bool:
         import requests
         from .list9 import List
 
@@ -382,7 +386,8 @@ class Network:
                                   timeout=timeout, debug=debug)
 
     @staticmethod
-    def get(url, params=None, basic_auth_user=None, basic_auth_password=None, **kwargs):
+    def request(url, method, params=None, basic_auth_user=None, basic_auth_password=None, data=None, json=None,
+                headers=None, **kwargs):
         import requests
 
         auth = None
@@ -390,15 +395,31 @@ class Network:
             import requests.auth
             auth = requests.auth.HTTPBasicAuth(basic_auth_user, basic_auth_password)
 
-        return requests.get(url=url, auth=auth, params=params, **kwargs)
+        if method == "get":
+            func = requests.get
+            kwargs.update({"url": url,
+                           "auth": auth,
+                           "params": params,
+                           "headers": headers})
+        elif method == "post":
+            func = requests.post
+            kwargs.update({"url": url,
+                           "auth": auth,
+                           "params": params,
+                           "data": data,
+                           "json": json,
+                           "headers": headers})
+        else:
+            raise NotImplementedError(f"Method {method} isn't supported")
 
-    @staticmethod
-    def post(url, data=None, json=None, basic_auth_user=None, basic_auth_password=None, **kwargs):
-        import requests
+        return func(**kwargs)
 
-        auth = None
-        if basic_auth_user and basic_auth_password:
-            import requests.auth
-            auth = requests.auth.HTTPBasicAuth(basic_auth_user, basic_auth_password)
+    @classmethod
+    def get(cls, url, params=None, basic_auth_user=None, basic_auth_password=None, headers=None, **kwargs):
+        return cls.request(url=url, method="get", params=params, basic_auth_user=basic_auth_user,
+                           basic_auth_password=basic_auth_password, headers=headers, **kwargs)
 
-        return requests.post(url=url, auth=auth, data=data, json=json, **kwargs)
+    @classmethod
+    def post(cls, url, params=None, data=None, json=None, basic_auth_user=None, basic_auth_password=None, headers=None, **kwargs):
+        return cls.request(url=url, method="post", params=params, basic_auth_user=basic_auth_user,
+                           basic_auth_password=basic_auth_password, data=data, json=json, headers=headers, **kwargs)
