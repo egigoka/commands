@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.14.2"
+__version__ = "0.15.0"
 
 
 class Str:
@@ -99,7 +99,7 @@ class Str:
         return cls.newlines_to_strings(string=string)
 
     @staticmethod
-    def split_every(string, chars):
+    def split_every(string, chars, reverse = False):
         """Split line every N chars
         <br>`param string` string, input
         <br>`param chars` int, count of chars, that split line
@@ -115,7 +115,13 @@ class Str:
         char_exists = "."
         char_can_be_exists = ".?"
         regexp = char_exists + char_can_be_exists*(chars-1)
-        return re.findall(regexp, string, re.DOTALL)
+        if reverse:
+            string = string[::-1]
+        output = re.findall(regexp, string, re.DOTALL)
+        if reverse:
+            output = reversed(output)
+            output = [s[::-1] for s in output]
+        return output
 
     @staticmethod
     def leftpad(string, length, char="0", rightpad=False):

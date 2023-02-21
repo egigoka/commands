@@ -45,7 +45,7 @@ if VERSION_CHANGE:
 	    new_version_text = new_version_text.replace(newline, newline2)
 	File.write(version_path, new_version_text, mode="w")  # write result to file
 
-	Print.colored("uploadin", new_version_string, "grey", "on_white")  # print to notice difference
+	Print.colored("uploadin", new_version_text, "grey", "on_white")  # print to notice difference
 
 	version_string = new_version.lstrip(version_prefix).rstrip(version_suffix)
 else:
