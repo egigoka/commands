@@ -31,7 +31,8 @@ class TSQL:
             con = pyodbc.connect(self.connect_to_sql_string)
         except pyodbc.InterfaceError as e:
             from .const9 import newline
-            raise pyodbc.ProgrammingError(f"self.connect_to_sql_string:'{self.connect_to_sql_string}{newline}query:{query}{newline}{e}")
+            raise pyodbc.ProgrammingError(f"self.connect_to_sql_string:'{self.connect_to_sql_string}{newline}"
+                                          f"query:{query}{newline}{e}")
         cur = con.cursor()
         if debug:
             Print("Successful connection to SQL")
@@ -41,7 +42,8 @@ class TSQL:
             cur.execute(query)
         except pyodbc.ProgrammingError as e:
             from .const9 import newline
-            raise pyodbc.ProgrammingError(f"self.connect_to_sql_string:'{self.connect_to_sql_string}{newline}query:{query}{newline}{e}")
+            raise pyodbc.ProgrammingError(f"self.connect_to_sql_string:'{self.connect_to_sql_string}{newline}"
+                                          f"query:{query}{newline}{e}")
         con.commit()
 
         if debug:
@@ -75,7 +77,8 @@ class TSQL:
             cur.execute(query)
         except pyodbc.ProgrammingError as e:
             from .const9 import newline
-            raise pyodbc.ProgrammingError(f"self.connect_to_sql_string:'{self.connect_to_sql_string}{newline}query:{query}{newline}{e}")
+            raise pyodbc.ProgrammingError(f"self.connect_to_sql_string:'{self.connect_to_sql_string}{newline}"
+                                          f"query:{query}{newline}{e}")
         while cur.nextset():
             pass
 
@@ -105,6 +108,7 @@ class TSQL:
             Print(f"Run query: '{query}'")
 
         out = []
+
         def get_rows(cursor):
             output = []
             for row in cursor.fetchall():
@@ -115,7 +119,8 @@ class TSQL:
             cur.execute(query)
         except pyodbc.ProgrammingError as e:
             from .const9 import newline
-            raise pyodbc.ProgrammingError(f"self.connect_to_sql_string:'{self.connect_to_sql_string}{newline}query:{query}{newline}{e}")
+            raise pyodbc.ProgrammingError(f"self.connect_to_sql_string:'{self.connect_to_sql_string}{newline}"
+                                          f"query:{query}{newline}{e}")
 
         out.append(get_rows(cur))
         while cur.nextset():
@@ -154,7 +159,7 @@ class TSQL:
         from .file9 import File
         from .time9 import Time
 
-        backup_path = Path.combine("C:", "Users", "Public", "mssqlbak",
+        backup_path = Path.combine("C:", "Users", "Public", "mssql-bak",
                                    f"{sql_database}_{Time.dotted()}.bak")
         if not File.exist(backup_path):
             File.create(backup_path)
@@ -181,5 +186,5 @@ class TSQL:
         query = "EXEC sp_spaceused"
         answer = self.query(query, debug=debug)
         data = answer[1][0][1]
-        bytes = Str.get_integers(data)[0] * 1024
-        return bytes
+        bytes_ = Str.get_integers(data)[0] * 1024
+        return bytes_

@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with dicts
 """
-__version__ = "0.4.0"
+__version__ = "0.5.1"
 
 
-
-class imdict(dict):
+class ImDict(dict):
     """Rejected PEP 351"""
     def __hash__(self):
         return id(self)
@@ -21,7 +20,6 @@ class imdict(dict):
     setdefault = _immutable
     pop = _immutable
     popitem = _immutable
-
 
 
 class Dict:
@@ -41,19 +39,31 @@ class Dict:
         return dict_.items()
 
     @staticmethod
-    def sorted_by_key(dict_, case_insensitive=False):
+    def str_lower_of_dict_key(dict_item):
+        return str.lower(dict_item[0])
+
+    @staticmethod
+    def get_dict_key(dict_item):
+        return dict_item[0]
+
+    @classmethod
+    def sorted_by_key(self, dict_, case_insensitive=False, func=None):
         """Return sorted dict
         <br>`param dict_` input dict
         <br>`param case_insensitive` sort dict insensitive
         <br>`return` OrderedDict
         """
-        if case_insensitive:
-            output = {}
-            for i in sorted(dict_, key=str.lower):
-                output[i] = dict_[i]
-            return output
         import collections
-        return collections.OrderedDict(sorted(dict_.items()))
+        if func is None:
+            if case_insensitive:
+                func = self.str_lower_of_dict_key
+            else:
+                func = self.get_dict_key
+
+        output = collections.OrderedDict()
+        for i in sorted(dict_.items(), key=func):
+            output[i[0]] = i[1]
+        return output
 
     @staticmethod
     def from_str(string):
@@ -79,14 +89,14 @@ class Dict:
         return True
 
     @classmethod
-    def all_keys_lambda(cls, dict_, func, args=(), kwargs=imdict({})):
+    def all_keys_lambda(cls, dict_, func, args=(), kwargs=ImDict({})):
         output_dict = {}
         for key, value in cls.iterable(dict_):
             output_dict[func(key, *args, **kwargs)] = value
         return output_dict
 
     @classmethod
-    def all_values_lambda(cls, dict_, func, args=(), kwargs=imdict({})):
+    def all_values_lambda(cls, dict_, func, args=(), kwargs=ImDict({})):
         output_dict = {}
         for key, value in cls.iterable(dict_):
             output_dict[key] = func(value, *args, **kwargs)

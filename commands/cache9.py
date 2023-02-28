@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 __version__ = "0.1.2"
 
-from .dict9 import imdict
+from .dict9 import ImDict
 
 
 class Cache:
-    def __init__(self, func, update_every, args=(), kwargs=imdict(), quiet=True, bench=None):
+    def __init__(self, func, update_every, args=(), kwargs=ImDict(), quiet=True, bench=None):
         from .id9 import ID
         from .bench9 import Bench
         from .threading9 import Lock
@@ -23,6 +23,8 @@ class Cache:
         self.func = func
         self.args = args
         self.kwargs = kwargs
+
+        self.stored_output = None
 
     def run(self):
         self.stored_output = self.func(*self.args, **self.kwargs)
@@ -59,7 +61,7 @@ class CachedFunction:
             return self.caches[f"{args}{kwargs}"]()
         except KeyError:
             self.caches[f"{args}{kwargs}"] = Cache(func=self.func, update_every=self.update_every,
-                                                   args=args, kwargs=kwargs, quiet=self.quiet, bench=self.bench)
+                                                   args=args, kwargs=ImDict(kwargs), quiet=self.quiet, bench=self.bench)
             return self.return_value(*args, **kwargs)
 
     def __call__(self, *args, **kwargs):

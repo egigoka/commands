@@ -4,16 +4,17 @@
 """
 __version__ = "2.0.1"
 
+
 class Base64:
     """Class to work with base64"""
     
     @staticmethod
-    def to_bytes(input):
+    def to_bytes(input_):
         import base64
-        if isinstance(input, str):
-            return base64.decodebytes(input.encode('ascii'))
+        if isinstance(input_, str):
+            return base64.decodebytes(input_.encode('ascii'))
         else:
-            return base64.decodebytes(input)
+            return base64.decodebytes(input_)
     
     @staticmethod
     def from_bytes(bytes_):

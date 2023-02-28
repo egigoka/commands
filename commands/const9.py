@@ -9,7 +9,9 @@ newline = '\n'  # string with LF newline
 ruble = u"\u20bd"  # string with ₽ symbol
 backslash = "\\"  # string with backslash
 newline2 = "\r\n"  # string with CRLF newline
-rtl = "\u202e"  # string with Right-To-Left character https://resources.infosecinstitute.com/spoof-using-right-to-left-override-rtlo-technique-2/
+rtl = "\u202e"  # string with Right-To-Left character
+# https://resources.infosecinstitute.com/spoof-using-right-to-left-override-rtlo-technique-2/
 KiB = 1024
 MiB = KiB*1024
 GiB = MiB*1024
+TiB = GiB*1024

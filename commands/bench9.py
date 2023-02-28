@@ -13,7 +13,7 @@ class Bench:
         """
         <br>`param prefix` string, prints when ending of benchmark
         <br>`param quiet` boolean, suppress output to console
-        <br>`param fraction_digits` integer, define how much digits after dot print
+        <br>`param fraction_digits` integer, define how many digits after dot print
         <br>`param time_start` datetime.datetime, set custom start time
         """
         import datetime
@@ -42,7 +42,7 @@ class Bench:
 
     def end(self, prefix_string=None, quiet_if_zero=False, start_immediately=False, quiet=None):
         """End benchmarking`
-        return time difference between start and end of bencmarking, print string with prefix
+        return time difference between start and end of benchmarking, print string with prefix
         and time difference.
         <br>`param prefix_string` string, used in print output
         <br>`param quiet_if_zero` suppress print if time interval between start and stop = 0.0 in accuracy, defined in

@@ -4,14 +4,14 @@ from typing import Union
 
 """Internal module with functions for print to console.
 """
-__version__ = "0.12.2"
+__version__ = "0.13.0"
 
 
-class Print:
+class __Print:
     """Class with functions for print to console.
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
         from threading import Lock
         self.s_print_lock = Lock()
         self.colorama_inited = False
@@ -81,7 +81,7 @@ class Print:
         return self._color_output_enabled
 
     def colored(self, *strings: Union[str, int, list, dict], attributes: list = None, end: str = "\n",
-                sep: str = " ", flush: bool = False) -> None:
+                sep: str = " ", flush: bool = False, verbose: bool = True) -> None:
         """Wrapper for termcolor.cprint, added some smartness
         <br>Usage` Print.colored("text1", "text2", "red") or Print.colored("text", "text2", "red", "on_white")
         <br>even Print.colored("text", "text2", "on_white", "red") now.
@@ -95,6 +95,7 @@ class Print:
         """
         import termcolor
         from contextlib import suppress
+        from .list9 import List
         termcolor.COLORS["gray"] = termcolor.COLORS["black"] = 30
         termcolor.HIGHLIGHTS["on_gray"] = termcolor.HIGHLIGHTS["on_black"] = 40
         from .os9 import OS
@@ -125,18 +126,17 @@ class Print:
         string = ""
         if color_args:
             strings = strings[:-color_args]
-        if len(strings) > 1:
-            for substring in strings[:-1]:  # все строки добавляются в основную строку с сепаратором
-                string += str(substring) + sep
-            string += str(strings[-1])  # последняя без сепаратора
-        else:  # if there only one object
-            string = strings[0]
+
+        strings = List.to_strings(strings)
+
+        string = sep.join(strings)
 
         if self.color_output_enabled:
             colored_string = termcolor.colored(string, color=color, on_color=highlight, attrs=attributes)
         else:
             colored_string = string
-        self.multithread_safe(colored_string, end=end, flush=flush)
+        if verbose:
+            self.multithread_safe(colored_string, end=end, flush=flush)
 
         with suppress(KeyError):  # for work with multithreading
             termcolor.COLORS.pop("gray")
@@ -144,5 +144,7 @@ class Print:
             termcolor.HIGHLIGHTS.pop("on_gray")
             termcolor.HIGHLIGHTS.pop("on_black")
 
+        return colored_string
 
-Print = Print()
+
+Print = __Print()

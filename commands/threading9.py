@@ -1,10 +1,10 @@
 #! python3
 # -*- coding: utf-8 -*-
-"""I trying work with threads
+"""I'm trying work with threads
 """
 __version__ = "1.7.0"
 
-from .dict9 import imdict
+from .dict9 import ImDict
 
 
 class IsRunning:
@@ -12,7 +12,7 @@ class IsRunning:
 
 
 class MyThread:
-    _imdict = imdict({})
+    _imdict = ImDict({})
 
     def __init__(self, func, thread_id=None, name=None, args=(), kwargs=_imdict, daemon=False, quiet=True):
         import threading
@@ -92,7 +92,7 @@ class MyThread:
 
 
 class Threading:
-    _imdict = imdict({})
+    _imdict = ImDict({})
 
     def __init__(self, daemons=None, verbose=None):
         from .id9 import ID

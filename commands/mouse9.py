@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with mouse
 """
-__version__ = "1.3.0"
-
-import pyautogui
+__version__ = "1.6.0"
 
 
 class SettingsMouse:  # pylint: disable=too-few-public-methods
@@ -35,6 +33,8 @@ class Mouse:  # pylint: disable=too-few-public-methods
             <br>`param up` boolean, scroll up or down
             <br>`return`
             """
+            import pyautogui
+
             value = int(value)
             if not up:
                 value = 0-value
@@ -61,15 +61,17 @@ class Mouse:  # pylint: disable=too-few-public-methods
         """Class with click mouse functions
         """
         @staticmethod
-        def click(button, position, quiet=False):
+        def click(button, position, quiet=False, sleep_before_click=SettingsMouse.sleep_before_click):
             """
             <br>`param button` string with button name
             <br>`param position` list with two values x and y (pixels from up and left)
             <br>`param quiet` boolean, suppress print to console
             <br>`return` None
             """
+            import pyautogui
+
             from .time9 import Time
-            Time.sleep(SettingsMouse.sleep_before_click, verbose=not quiet)
+            Time.sleep(sleep_before_click, verbose=not quiet)
             if position:
                 pyautogui.click(x=position[0], y=position[1], button=button)
             else:
@@ -78,26 +80,35 @@ class Mouse:  # pylint: disable=too-few-public-methods
                 print("click mouse " + button)
 
         @classmethod
-        def right(cls, position=None, quiet=False):
+        def right(cls, position=None, quiet=False, sleep_before_click=SettingsMouse.sleep_before_click):
             """
             <br>`param position` list with two values x and y (pixels from up and left)
             <br>`param quiet` boolean, suppress print to console
             <br>`return` None
             """
-            cls.click(button='right', position=position, quiet=quiet)
+            cls.click(button='right', position=position, quiet=quiet, sleep_before_click=sleep_before_click)
 
         @classmethod
-        def left(cls, position=None, quiet=False):
+        def left(cls, position=None, quiet=False, sleep_before_click=SettingsMouse.sleep_before_click):
             """
             <br>`param position` list with two values x and y (pixels from up and left)
             <br>`param quiet` boolean, suppress print to console
             <br>`return` None
             """
-            cls.click(button='left', position=position, quiet=quiet)
+            cls.click(button='left', position=position, quiet=quiet, sleep_before_click=sleep_before_click)
+
+        @classmethod
+        def middle(cls, position=None, quiet=False, sleep_before_click=SettingsMouse.sleep_before_click):
+            """
+            <br>`param position` list with two values x and y (pixels from up and left)
+            <br>`param quiet` boolean, suppress print to console
+            <br>`return` None
+            """
+            cls.click(button='middle', position=position, quiet=quiet, sleep_before_click=sleep_before_click)
 
     @staticmethod
-    def move(x, y, x2=None, y2=None,  # pylint: disable=too-many-arguments, invalid-name
-             duration=SettingsMouse.mouse_move_duration, tween=pyautogui.easeInOutQuad, rel=False, quiet=False):
+    def move(x, y=None, x2=None, y2=None,  # pylint: disable=too-many-arguments, invalid-name
+             duration=SettingsMouse.mouse_move_duration, tween=None, rel=False, quiet=False):
         """
         <br>`param x` int, position in pixels
         <br>`param y` int, position in pixels
@@ -109,6 +120,10 @@ class Mouse:  # pylint: disable=too-few-public-methods
         <br>`param quiet` boolean, suppress print to console
         <br>`return` None
         """
+        import pyautogui
+
+        if tween is None:
+            tween = pyautogui.easeInOutQuad
         if isinstance(x, tuple):
             if len(x) == 2:
                 y = x[1]
@@ -131,3 +146,12 @@ class Mouse:  # pylint: disable=too-few-public-methods
             pyautogui.moveRel(x, y, duration=duration, tween=tween)
         else:
             pyautogui.moveTo(x, y, duration=duration, tween=tween)
+
+    @staticmethod
+    def get_position():
+        """
+        <br>`return` typle, x and y position of mouse
+        """
+        import pyautogui
+
+        return pyautogui.position()

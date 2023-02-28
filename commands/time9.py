@@ -9,7 +9,7 @@ class Time:
     """Class to work with time
     """
     @staticmethod
-    def _lp2(string, length=2):
+    def __lp2(string, length=2):
         """Internal alias to Str.leftpad
         """
         from .str9 import Str
@@ -22,6 +22,33 @@ class Time:
         """
         import time
         return time.time()
+    
+    @staticmethod
+    def datetime(year=None, month=None, day=None, hour=None, minute=None, second=None, microsecond=None, tzinfo=None,
+                 fold=None):
+        import datetime
+        now = datetime.datetime.now()
+        args = {}
+        if year is not None:
+            args["year"] = year
+        if month is not None:
+            args["month"] = month
+        if day is not None:
+            args["day"] = day
+        if hour is not None:
+            args["hour"] = hour
+        if minute is not None:
+            args["minute"] = minute
+        if second is not None:
+            args["second"] = second
+        if microsecond is not None:
+            args["microsecond"] = microsecond
+        if tzinfo is not None:
+            args["tzinfo"] = tzinfo
+        if fold is not None:
+            args["fold"] = fold
+        datetime_datetime = now.replace(**args)
+        return datetime_datetime
 
     @staticmethod
     def timestamp_to_datetime(timestamp):
@@ -62,9 +89,9 @@ class Time:
             time = cls.timestamp_to_datetime(custom_time)
         else:
             time = datetime.datetime.now()
-        time = cls._lp2(time.year) + "." + cls._lp2(time.month) + "." + cls._lp2(time.day) + "_at_" + \
-            cls._lp2(time.hour) + "." + cls._lp2(time.minute) + "." + cls._lp2(time.second) + "." + \
-            cls._lp2(time.microsecond, 6)
+        time = cls.__lp2(time.year) + "." + cls.__lp2(time.month) + "." + cls.__lp2(time.day) + "_at_" + \
+            cls.__lp2(time.hour) + "." + cls.__lp2(time.minute) + "." + cls.__lp2(time.second) + "." + \
+            cls.__lp2(time.microsecond, 6)
         return time
 
     @staticmethod
@@ -95,7 +122,7 @@ class Time:
 
     @classmethod
     def sleep(cls, seconds, verbose=False, check_per_sec=10):
-        """Function to idle. If 'seconds more, than 1, running Time._timer. Otherwise run time.sleep and print time
+        """Function to idle. If 'seconds' more, than 1, running Time._timer. Otherwise, run time.sleep and print time
         left.
         <br>`param seconds` int|float, how long sleep
         <br>`param verbose` boolean, print remaining time

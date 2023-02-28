@@ -15,11 +15,7 @@ class Int:  # pylint: disable=too-few-public-methods
         if "list" arg activated, list will be returned, otherwise, it will be iterable obj
         """
         from .str9 import Str
-        from .os9 import OS
-        if OS.is_python3:
-            roots = range(start, end + 1)
-        else:
-            roots = xrange(start, end + 1)  # pylint: disable=undefined-variable
+        roots = range(start, end + 1)
         if to_str:
             output = []
             max_len = max(len(str(start)), len(str(end)))

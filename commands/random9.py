@@ -8,6 +8,7 @@ __version__ = "0.7.0"
 class Random:
     """Class with functions for creating some random values.
     """
+
     @staticmethod
     def integer(minimum, maximum, to_str=False):
         """
@@ -74,11 +75,6 @@ class Random:
         """
         import random
 
-        try:
-            get_char = unichr  # py2
-        except NameError:
-            get_char = chr
-
         # Update this to include code point ranges to be sampled
         include_ranges = [
             (0x0021, 0x0021),
@@ -95,9 +91,9 @@ class Random:
             (0x0384, 0x038A),
             (0x038C, 0x038C)]
 
-        alphabet = [get_char(code_point) for current_range in include_ranges
-            for code_point in range(current_range[0], current_range[1] + 1)]
-        return ''.join(random.choice(alphabet) for i in range(length))
+        alphabet = [chr(code_point) for current_range in include_ranges
+                    for code_point in range(current_range[0], current_range[1] + 1)]
+        return ''.join(random.choice(alphabet) for _ in range(length))
 
     @staticmethod
     def boolean():
@@ -114,7 +110,7 @@ class Random:
         """
         import string
         symbols = cls.string(32, string.digits + "abcdef")
-        string = symbols[:8] + "-" + symbols[8:12] + "-" + symbols [12:16] + "-" + symbols[16:20] + "-" + symbols[20:]
+        string = symbols[:8] + "-" + symbols[8:12] + "-" + symbols[12:16] + "-" + symbols[16:20] + "-" + symbols[20:]
         return string
 
     @staticmethod

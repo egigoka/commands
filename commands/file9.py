@@ -3,7 +3,7 @@
 from typing import Union
 """Internal module to work with files
 """
-__version__ = "1.2.1"
+__version__ = "1.7.0"
 # pylint: disable=c-extension-no-member
 
 
@@ -12,7 +12,7 @@ class File:
     """
     @classmethod
     def create(cls, filename, quiet=True):
-        """Creates subdirs, if needed
+        """Creates subdirectories, if needed
         <br>`param filename` string with path to creating file
         <br>`param quiet` boolean, if True, suppress output to console
         <br>`return` None
@@ -44,7 +44,8 @@ class File:
         """
         <br>`param path` string with path to deleting file
         <br>`param quiet` boolean, suppress print to console
-        <br>`param no_sleep` boolean, if True - function skip sleep in 0.05 seconds after deleting file (to ensure than file
+        <br>`param no_sleep` boolean, if True - function skip sleep in 0.05 seconds after deleting file
+        (to ensure than file
         deleted before next code run)
         <br>`return` None
         """
@@ -122,10 +123,10 @@ class File:
         return filename
 
     @classmethod
-    def backup(cls, filename, subfolder="bak", hide=True, quiet=False):
-        """Move file to subfolder, adds sort of timestamp to filename and hide file if 'hide' argument is True
+    def backup(cls, filename, subdirectory="bak", hide=True, quiet=False):
+        """Move file to subdirectory, adds sort of timestamp to filename and hide file if 'hide' argument is True
         <br>`param filename` string with path to file
-        <br>`param subfolder` string with name of subfolder of backed up files
+        <br>`param subdirectory` string with name of subdirectory of backed up files
         <br>`param hide` boolean, define hide file or not
         <br>`param quiet` boolean, suppress print to console
         <br>`return`
@@ -136,17 +137,17 @@ class File:
         from .dir9 import Dir
         from .time9 import Time
         filename = Path.full(filename)  # normalize filename
-        backup_filename = str(filename) + "." + Time.dotted() + ".bak"  # add dotted time to backup filename
+        backup_filename = str(filename) + "." + Time.dotted() + ".bak"  # add dotted time to back up filename
         backup_filename = os.path.split(backup_filename)  # splitting filename to folder and file
-        try:  # if subfolder has no len
-            if len(subfolder) < 1:  # if subfolder has zero len
-                raise TypeError("subfolder must have non-zero len")
-        except TypeError:  # if subfolder has no len
-            subfolder = "bak"  # set subfolder to default
-            print("len(subfolder) < 1, so subfolder = 'bak'")  # print error
-        subfolder = Path.combine(backup_filename[0], subfolder)  # append subfolder name
-        Dir.create(subfolder)  # create subfolder
-        backup_filename = Path.combine(subfolder, backup_filename[1])  # backup file name full path
+        try:  # if subdirectory has no len
+            if len(subdirectory) < 1:  # if subdirectory has zero len
+                raise TypeError("subdirectory must have non-zero len")
+        except TypeError:  # if subdirectory has no len
+            subdirectory = "bak"  # set subdirectory to default
+            print("len(subdirectory) < 1, so subdirectory = 'bak'")  # print error
+        subdirectory = Path.combine(backup_filename[0], subdirectory)  # append subdirectory name
+        Dir.create(subdirectory)  # create subdirectory
+        backup_filename = Path.combine(subdirectory, backup_filename[1])  # backup file name full path
         shutil.copy2(filename, backup_filename)  # finally backup file
         if hide:
             backup_filename = cls.hide(backup_filename)  # hiding file
@@ -176,13 +177,19 @@ class File:
         count_of_symbols = count_of_symbols
         if count_of_symbols is True:  # you can define how much symbols use to define encoding
             count_of_symbols = 10000
-        with open(path, "rb") as rawfile:
-            slice_of_raw_data = rawfile.read(count_of_symbols)
+        with open(path, "rb") as raw_file:
+            slice_of_raw_data = raw_file.read(count_of_symbols)
         encoding = Bytes.get_encoding(slice_of_raw_data)
         return encoding
 
+    @staticmethod
+    def _read_with_encoding(path, encoding):
+        with open(path, "r", encoding=encoding) as file:
+            return file.read()
+
     @classmethod
-    def read(cls, path, encoding: str = "utf-8", auto_detect_encoding: Union[bool, int] = True, mode: str = "r"):  # return pipe to file content
+    def read(cls, path, encoding: str = "utf-8", auto_detect_encoding: Union[bool, int] = True, mode: str = "r"):
+        # return pipe to file content
         """
         <br>`param path` path to file
         <br>`param auto_detect_encoding` how much symbols use to auto define decoding, if True, uses 10000
@@ -192,8 +199,11 @@ class File:
             try:
                 if auto_detect_encoding:
                     encoding = cls.get_encoding(path, count_of_symbols=auto_detect_encoding)
-                with open(path, "r", encoding=encoding) as file:
-                    return file.read()
+                try:
+                    return cls._read_with_encoding(path, encoding)
+                except LookupError:
+                    if encoding.lower() == "EUC-TW".lower():
+                        return cls._read_with_encoding(path, "TIS-620")  # crude fix for EUC-TW
             except UnicodeDecodeError:
                 import codecs
                 with codecs.open(path, encoding='cp1251', errors='replace') as file:
@@ -205,11 +215,12 @@ class File:
                 return content
 
     @staticmethod
-    def write(filename, what_to_write, mode="a", quiet=True):
+    def write(filename, what_to_write, mode="a", encoding="utf-8", quiet=True):
         """Write to end of file if "mode" arg isn't redefined
         <br>`param filename` string with path to file
         <br>`param what_to_write` string to write
         <br>`param mode` string with any mode that supported by python open() func
+        <br>`param encoding` string with any encoding
         <br>`param quiet` boolean, if True, suppress output to console
         <br>`return` None
         """
@@ -217,7 +228,7 @@ class File:
             print(f"Writing to file {filename}")
         if "b" not in mode and isinstance(what_to_write, str):
             with open(filename, mode=mode+"b") as file:  # open file then closes it
-                file.write(what_to_write.encode("utf-8"))
+                file.write(what_to_write.encode(encoding))
         else:
             with open(filename, mode=mode) as file:  # open file then closes it
                 if isinstance(what_to_write, int):
@@ -236,13 +247,53 @@ class File:
         return os.path.isfile(filename)
 
     @staticmethod
-    def get_size(filename):  # return size in bytes
+    def format_size_human_readable(size_in_bytes):
+        from .const9 import KiB, MiB, GiB, TiB
+
+        size_string = f" {str(int(size_in_bytes % KiB))}b"
+
+        if size_in_bytes < KiB:
+            return size_string.strip()
+
+        size_string = size_string.strip().zfill(4)
+        size_string = " " + size_string
+        size_string = f" {str(int(size_in_bytes / KiB % 1024))}KiB" + size_string
+
+        if size_in_bytes < MiB:
+            return size_string.strip()
+
+        size_string = size_string.strip().zfill(11)
+        size_string = " " + size_string
+        size_string = f" {str(int(size_in_bytes / MiB % 1024))}MiB" + size_string
+
+        if size_in_bytes < GiB:
+            return size_string.strip()
+
+        size_string = size_string.strip().zfill(18)
+        size_string = " " + size_string
+        size_string = f" {str(int(size_in_bytes / GiB % 1024))}GiB" + size_string
+
+        if size_in_bytes < TiB:
+            return size_string.strip()
+
+        size_string = size_string.strip().zfill(25)
+        size_string = " " + size_string
+        size_string = f" {str(int(size_in_bytes / TiB))}TiB" + size_string
+
+        return size_string.strip()
+
+    @classmethod
+    def get_size(cls, filename, human_readable=False):  # return size in bytes
         """
         <br>`param filename` string with path to file
-        <br>`return` int with filesize in bytes
+        <br>`return` int with file size in bytes
         """
         import os
-        return os.stat(filename).st_size
+        size_in_bytes = os.stat(filename).st_size
+        if not human_readable:
+            return size_in_bytes
+
+        return cls.format_size_human_readable(size_in_bytes=size_in_bytes)
 
     @staticmethod
     def get_modification_time(filename):
@@ -285,6 +336,15 @@ class File:
                 return out.split("; ")[1]
             except IndexError:
                 return "unknown"
+
+    @staticmethod
+    def set_modification_time(filepath, datetime):
+        import time
+        import os
+
+        mod_time = time.mktime(datetime.timetuple())
+
+        os.utime(filepath, (mod_time, mod_time))
 
     all_encodings = ['ascii', 'big5', 'big5hkscs', 'cp037', 'cp273', 'cp424', 'cp437', 'cp500', 'cp720', 'cp737',
                      'cp775', 'cp850', 'cp852', 'cp855', 'cp856', 'cp857', 'cp858', 'cp860', 'cp861', 'cp862', 'cp863',

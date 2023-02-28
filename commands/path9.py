@@ -6,7 +6,7 @@ __version__ = "2.6.1"
 
 
 class Path:
-    """Class with funtions to work with path strings
+    """Class with functions to work with path strings
     """
     @staticmethod
     def full(path):
@@ -42,11 +42,10 @@ class Path:
         return os.getcwd()
 
     @classmethod
-    def combine(cls, path_first_path, *paths, debug=False):  # todo add support for \\? on Windows
+    def combine(cls, path_first_path, *paths):  # todo add support for \\? on Windows
         """Create full path string from strings
         <br>`param path_first_path` string, first part of path
         <br>`param paths` strings, path shards to create full path string
-        <br>`param debug` boolean, print all movements
         <br>`return` string, path that can be used in shell or whatever
         """
         import os
@@ -81,13 +80,12 @@ class Path:
         """<br>`return` string, home directory of user"""
         from .os9 import OS
         from .console9 import Console
-        from .const9 import newline, newline2
         from .str9 import Str
 
         command = "echo $HOME"
         if OS.windows:
             command = "echo %userprofile%"
-        path = Console.get_output(command, pureshell=True)
+        path = Console.get_output(command, pure_shell=True)
         path = Str.nl(path)[0]
         return path
 

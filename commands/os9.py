@@ -10,7 +10,6 @@ class OS:  # pylint: disable=too-few-public-methods
     """
 
     def __init__(self):
-        self._is_python3 = None
         self._python_version_major = None
         self._python_commandline_version = None
         self._sys_platform = None
@@ -29,26 +28,11 @@ class OS:  # pylint: disable=too-few-public-methods
         self._hostname = None
 
     @property
-    def is_python3(self):
-        if self._is_python3 is None:
-            import sys
-            self._is_python3 = sys.version_info >= (3, 0)
-        return self._is_python3
-
-    @property
     def python_version_major(self):
         if self._python_version_major is None:
             import sys
             self._python_version_major = sys.version_info.major
         return self._python_version_major
-
-    @property
-    def python_commandline_version(self):
-        if self._python_commandline_version is None:
-            self._python_commandline_version = ""
-            if self.is_python3:
-                self._python_commandline_version = "3"
-        return self._python_commandline_version
 
     @property
     def sys_platform(self):
@@ -158,13 +142,13 @@ class OS:  # pylint: disable=too-few-public-methods
                     try:
                         import win_unicode_console  # pylint: disable=import-error
                         win_unicode_console.enable()
-                    except:  # pylint: disable=bare-except
+                    except Exception:  # pylint: disable=bare-except
                         pass
                 for cyr_symbol in cyr_line:
                     print(cyr_symbol * 2 + "\r", end="")
                 print("  \r", end="")
                 self._cyrillic_support = True
-            except (UnicodeEncodeError, PermissionError) as err:
+            except (UnicodeEncodeError, PermissionError):
                 pass
         return self._cyrillic_support
 
@@ -176,12 +160,12 @@ class OS:  # pylint: disable=too-few-public-methods
         return self._hostname
 
     @staticmethod
-    def walk(top, topdown=True, onerror=None, followlinks=False):
+    def walk(top, topdown=True, onerror=None, follow_links=False):
         import os
         from .dir9 import Dir
         if not Dir.exist(top):
             raise FileNotFoundError(f"Directory {top} doesn't exist")
-        return os.walk(top=top, topdown=topdown, onerror=onerror, followlinks=followlinks)
+        return os.walk(top=top, topdown=topdown, onerror=onerror, followlinks=follow_links)
 
     @staticmethod
     def system(command: str, verbose: bool = False):

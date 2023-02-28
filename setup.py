@@ -22,7 +22,9 @@ setup(
         'chardet',
         'psutil',
         'requests',
-        'thefuck'],
+        'thefuck',
+        'moviepy',
+        'mutagen'],
     extras_require={
         ':platform_system!="Linux"': ['pyautogui'],
         ':platform_system=="Windows"': ['pywin32', 'colorama', 'pywinrm', 'python-magic-win64'],

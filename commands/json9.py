@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "4.1.0"
+__version__ = "4.2.0"
 
 
 class Json:
@@ -98,14 +98,22 @@ class JsonDict(Json):
         try:
             return self.string.__getitem__(item)
         except KeyError:
-            print(f"self={self}")
-            print(f"self.string={self.string}")
-            print(f"item={item}")
-            raise
+            info_string = f'''self={self}
+self.string={self.string}")
+item={item}
+item not found!'''
+            raise KeyError(info_string)
 
     def __setitem__(self, key, value):
         output = self.string.__setitem__(key, value)
         return output
+
+    def __iter__(self):
+        return self.string.__iter__()
+
+    def __str__(self):
+        from .print9 import Print
+        return Print.prettify(self.string, quiet=True)
 
     def items(self):
         return self.string.items()
@@ -129,8 +137,12 @@ class JsonList(Json):
         if not isinstance(self.string, list):
             raise TypeError(f"Json file {filename} is not containing list")
 
-    def append(self, object):
-        self.string.append(object)
+    def __str__(self):
+        from .print9 import Print
+        return Print.prettify(self.string, quiet=True)
+
+    def append(self, element):
+        self.string.append(element)
 
     def sort(self, *args, **kwargs):
         self.string.sort(*args, **kwargs)

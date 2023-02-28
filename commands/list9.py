@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with lists
 """
-__version__ = "0.10.2"
+__version__ = "0.10.3"
 
 
 class List:
@@ -97,6 +97,10 @@ class List:
 
     @staticmethod
     def itemgetter_with_casting(item, *items, cast_to):
+        from collections.abc import Iterable
+        if not isinstance(cast_to, Iterable):
+            cast_to = (cast_to, )
+
         if not items:
             def func(obj):
                 for type_to in cast_to:
