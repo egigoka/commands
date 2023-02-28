@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with time
 """
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 
 class Time:
@@ -156,6 +156,31 @@ class Time:
         delta = time_b - time_a
         delta_combined = delta.seconds + delta.microseconds / 1E6
         return delta_combined
+
+    @classmethod
+    def human_readable(timedelta):
+        import datetime
+        if isinstance(timedelta, datetime.timedelta):
+            timedelta = timedelta.total_seconds()
+        
+        units = [('y', 31536000), ('m', 2592000), ('w', 604800), ('d', 86400), ('h', 3600), ('m', 60), ('s', 1)]
+
+        total_seconds = int(time)
+        microseconds = int((time - total_seconds) * 1000000)
+        
+        parts = []
+    
+        for unit, factor in units:
+            if total_seconds >= factor:
+                value, total_seconds = divmod(total_seconds, factor)
+                parts.append(f"{value}{unit}")
+        
+        if total_seconds > 0 or microseconds > 0:
+            parts.append(f"{total_seconds:02}s")
+        if microseconds > 0:
+            parts.append(f"{microseconds:06}ms")
+    
+        return " ".join(parts)
 
 # datetime.datetime.now().strftime('some') todo implement
 # Popen work with todo implement
