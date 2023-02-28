@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with time
 """
-__version__ = "1.2.0"
+__version__ = "1.2.2"
 
 
 class Time:
@@ -165,8 +165,8 @@ class Time:
         
         units = [('y', 31536000), ('m', 2592000), ('w', 604800), ('d', 86400), ('h', 3600), ('m', 60), ('s', 1)]
 
-        total_seconds = int(time)
-        microseconds = int((time - total_seconds) * 1000000)
+        total_seconds = int(timedelta)
+        microseconds = int((timedelta - total_seconds) * 1000000)
         
         parts = []
     
