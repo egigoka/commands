@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with time
 """
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 
 class Time:
@@ -111,12 +111,17 @@ class Time:
             time.sleep(seconds)
 
     @classmethod
-    def delta(cls, time_a, time_b):
+    def delta(cls, time_a, time_b=None):
         """
         <br>`param time_a` datetime.datetime time object|float of timestamp
         <br>`param time_b` datetime.datetime time object|float of timestamp
         <br>`return` difference between two timestamps
         """
+        from .funcs9 import multiple
+        if isinstance(time_a, multiple(int, float)) and time_b is None:
+            import datetime
+            return datetime.timedelta(seconds=time_a)
+        
         if time_a > time_b:
             time_a, time_b = time_b, time_a
         time_a = cls.timestamp_to_datetime(time_a)
