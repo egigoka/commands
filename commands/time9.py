@@ -157,7 +157,7 @@ class Time:
         delta_combined = delta.seconds + delta.microseconds / 1E6
         return delta_combined
 
-    @classmethod
+    @staticmethod
     def human_readable(timedelta):
         import datetime
         if isinstance(timedelta, datetime.timedelta):
