@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.4.10"
+__version__ = "0.5.0"
 
 
 class CLI:
@@ -90,6 +90,14 @@ class CLI:
     @classmethod
     def get_int(cls, question):
         return cls.get_ints(question=question, count_of_ints=1)
+
+    @classmethod
+    def get_integer(cls, question):
+        return cls.get_int(question=question)
+
+    @classmethod
+    def get_integers(cls, question, count_of_ints):
+        return cls.get_ints(question=question, count_of_ints=count_of_ints)
 
     wait_update_pos = 0
 
