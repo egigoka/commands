@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 """Internal module with Bench factory function
 """
-__version__ = "0.5.2"
+__version__ = "0.6.0"
 
 
 class Bench:
     """Benchmarking class (not so good, but enough for some purposes)
     """
 
-    def __init__(self, prefix="Bench passed in", quiet=True, fraction_digits=3, time_start=None):
+    def __init__(self, prefix="Bench passed in", verbose=False, fraction_digits=3, time_start=None):
         """
         <br>`param prefix` string, prints when ending of benchmark
         <br>`param quiet` boolean, suppress output to console
@@ -22,7 +22,7 @@ class Bench:
         else:
             self.time_start = datetime.datetime.now()
         self.time_end = None
-        self.quiet = quiet
+        self.quiet = not verbose
         self.prefix = prefix
         self.fraction_digits = fraction_digits
 

@@ -53,7 +53,7 @@ class CachedFunction:
 
         self.caches = {}
         self.counter = ID()
-        self.bench = Bench("cache updated in", quiet=quiet)
+        self.bench = Bench("cache updated in", verbose=not quiet)
         self.lock = Lock()
 
     def return_value(self, *args, **kwargs):

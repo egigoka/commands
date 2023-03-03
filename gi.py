@@ -8,7 +8,7 @@ import os
 from commands import *
 from commands.git9 import Git
 
-__version__ = "1.4.1"
+__version__ = "1.4.2"
 
 
 def safe_run(command):
