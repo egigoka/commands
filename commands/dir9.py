@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "1.7.0"
+__version__ = "1.8.0"
 
 
 class Dir:
@@ -241,6 +241,10 @@ class Dir:
         """
         import os
         return os.path.isdir(filename)
+
+    @classmethod
+    def exists(cls, filename):
+        return cls.exist(filename=filename)
 
     @classmethod
     def get_size(cls, path):
