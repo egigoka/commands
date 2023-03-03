@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with path strings
 """
-__version__ = "2.6.1"
+__version__ = "2.7.0"
 
 
 class Path:
@@ -142,3 +142,8 @@ class Path:
     def safe__file__(__file__):
         import os
         return os.path.realpath(__file__)
+
+    @staticmethod
+    def separator():
+        import os
+        return os.sep
