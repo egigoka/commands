@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I'm trying work with threads
 """
-__version__ = "1.8.0"
+__version__ = "1.9.0"
 
 from .dict9 import ImDict
 
@@ -142,7 +142,7 @@ class Threading:
             self.input_threads.reverse()
 
         for i in range(1, max_threads + 1):
-            t = MyThread(self.runner, kwargs=ImDict({"runner_no": i}))
+            t = MyThread(self.runner, name=f"runner_{i}", kwargs=ImDict({"runner_no": i}))
             self.runner_threads.append(t)
             t.start()
 
@@ -202,6 +202,13 @@ class Threading:
     def total_input_threads(self):
         return len(self.input_threads)
 
+    def running_threads(self):
+        running = 0
+        for runner in self.runner_threads:
+            if runner.is_running():
+                running += 1
+        running += len(self.input_threads)
+        return running
 
 class Lock:
     def __call__(self, *args, **kwargs):
