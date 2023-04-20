@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with path strings
 """
-__version__ = "2.7.0"
+__version__ = "2.8.0"
 
 
 class Path:
@@ -147,3 +147,8 @@ class Path:
     def separator():
         import os
         return os.sep
+
+    @staticmethod
+    def split(path):
+    	import os
+    	return os.path.split(path)
