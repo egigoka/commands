@@ -169,6 +169,15 @@ class Str:
         if isinstance(before, bytes):
             from .bytes9 import Bytes
             before = Bytes.to_string(before)
+        if isinstance(before, bytes):
+            from .bytes9 import Bytes
+            after = Bytes.to_string(after)
+        if not isinstance(string, str):
+            string = str(string)
+        if not isinstance(before, str):
+            before = str(before)
+        if after is not None and not isinstance(after, str):
+            after = str(after)
         start_from = string.find(before)
         if start_from != -1:
             start_from = string.find(before) + len(before)
