@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """I'm trying work with threads
 """
-__version__ = "1.9.0"
+__version__ = "1.10.0"
 
 from .dict9 import ImDict
 
@@ -97,12 +97,15 @@ class Threading:
     def __init__(self, daemons=None, verbose=None, max_threads=0, start_from_first=False):
         from .id9 import ID
         self.input_threads = []
+        self.running_threads = []
+        self.finished_threads = []
         self.runner_threads = []
         self.thread_ids = ID()
         self.daemons = daemons
         self.quiet = not verbose
         self.max_threads = max_threads
         self.thread_pop_lock = Lock()
+        self.thread_move_lock = Lock()
         self.start_from_first = start_from_first
         self.results = {}
 
@@ -125,9 +128,13 @@ class Threading:
                         print(f"Finished runner #{runner_no}")
                     return
                 thread = self.input_threads.pop()
+            with self.thread_move_lock:
+                self.running_threads.append(thread)
             self.results[thread.thread_id] = IsRunning()
             thread.start(wait_for_keyboard_interrupt=True)
             self.results[thread.thread_id] = thread.result
+            with self.thread_move_lock:
+                self.finished_threads.append(self.running_threads[self.running_threads.index(thread)])
 
 
     def start(self, wait_for_keyboard_interrupt=False, quiet=True):
