@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions for managing strings.
 """
-__version__ = "0.15.0"
+__version__ = "0.15.1"
 
 
 class Str:
@@ -170,6 +170,7 @@ class Str:
             from .bytes9 import Bytes
             before = Bytes.to_string(before)
         start_from = string.find(before)
+        after_substring = ""
         if start_from != -1:
             start_from = string.find(before) + len(before)
         else:
