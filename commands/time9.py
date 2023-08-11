@@ -1,13 +1,12 @@
 #! python3
 # -*- coding: utf-8 -*-
-"""Internal module to work with time
+"""Module with time functions
 """
-__version__ = "1.2.2"
+__version__ = "1.2.3"
 
 
 class Time:
-    """Class to work with time
-    """
+    """Module with time functions"""
     @staticmethod
     def __lp2(string, length=2):
         """Internal alias to Str.leftpad
@@ -158,28 +157,31 @@ class Time:
         return delta_combined
 
     @staticmethod
-    def human_readable(timedelta):
+    def human_readable(timedelta: int):
+        """Converts a timedelta to a human-readable string."""
         import datetime
         if isinstance(timedelta, datetime.timedelta):
             timedelta = timedelta.total_seconds()
-        
+
         units = [('y', 31536000), ('m', 2592000), ('w', 604800), ('d', 86400), ('h', 3600), ('m', 60), ('s', 1)]
+        units_len = {'y': 4, 'm': 2, 'w': 2, 'd': 2, 'h': 2, 's': 2}
 
         total_seconds = int(timedelta)
         microseconds = int((timedelta - total_seconds) * 1000000)
-        
+
         parts = []
-    
+
         for unit, factor in units:
-            if total_seconds >= factor:
+            if total_seconds >= factor or parts:
                 value, total_seconds = divmod(total_seconds, factor)
-                parts.append(f"{value}{unit}")
-        
-        if total_seconds > 0 or microseconds > 0:
-            parts.append(f"{total_seconds:02}s")
+                zeros = 0
+                if parts:
+                    zeros = units_len[unit]
+                parts.append(f"{str(value).zfill(zeros)}{unit}")
+
         if microseconds > 0:
             parts.append(f"{microseconds:06}ms")
-    
+
         return " ".join(parts)
 
 # datetime.datetime.now().strftime('some') todo implement
