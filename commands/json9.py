@@ -124,6 +124,9 @@ item not found!'''
     def keys(self):
         return self.string.keys()
 
+    def clear(self):
+        return self.string.clear()
+
 
 class JsonList(Json):
     __getitem__ = JsonDict.__getitem__
