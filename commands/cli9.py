@@ -126,7 +126,7 @@ class CLI:
         return stick
 
     @staticmethod
-    def progressbar(done, total, done_repr, total_repr, reverse=False):
+    def progressbar(done, total, done_repr="", total_repr="", reverse=False):
         """
         Generates a progress bar string with text representation of progress.
 
@@ -134,6 +134,7 @@ class CLI:
         :param total: Total number of units.
         :param done_repr: String representing completed units.
         :param total_repr: String representing total units.
+        :param reverse: If True, progress will be counting backwards (from total to 0).
         :return: A string representing the progress bar.
         """
         from .console9 import Console
@@ -144,12 +145,17 @@ class CLI:
         if done > total:
             done = total
 
+        add_split = done_repr != "" and total_repr != ""
+        add_space = done_repr != "" or total_repr != ""
+
         done_repr = str(done_repr)
         total_repr = str(total_repr)
 
         proportion_done = done / total if total else 0
 
-        text_length = len(done_repr) + len(total_repr) + 4
+        additional_space = (3 if add_split else 0) + (1 if add_space else 0)
+
+        text_length = len(done_repr) + len(total_repr) + additional_space
         bar_length = console_width - text_length
 
         full_blocks = int(proportion_done * bar_length)
@@ -157,7 +163,10 @@ class CLI:
         blocks = ["", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"]
         medium_shade = blocks[int(remainder * 8)]
 
-        progress_bar = (f"{done_repr} / {total_repr} "
+        split = " / " if add_split else ""
+        space = " " if add_space else ""
+
+        progress_bar = (f"{done_repr}{split}{total_repr}{space}"
                         + f"{'█' * full_blocks}{medium_shade}"
                         + f"{' ' * (bar_length - full_blocks - len(medium_shade))}")
 
@@ -224,4 +233,3 @@ class CLI:
                     break
 
         return date
-
