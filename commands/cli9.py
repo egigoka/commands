@@ -126,16 +126,42 @@ class CLI:
         return stick
 
     @staticmethod
-    def progressbar(count, finish, width_of_output=None):
-        """Here must be realisation of progressbar
-        <br>`param count` int|float current progress status value
-        <br>`param finish` int|float finish progress value
-        <br>`param width_of_output` int width of progressbar, by default its width of console
-        <br>`return`
+    def progressbar(done, total, done_repr, total_repr, reverse=False):
         """
-        raise NotImplementedError
-        from .console9 import Console  # pylint: disable=unreachable
-        Console.width()
+        Generates a progress bar string with text representation of progress.
+
+        :param done: Number of completed units.
+        :param total: Total number of units.
+        :param done_repr: String representing completed units.
+        :param total_repr: String representing total units.
+        :return: A string representing the progress bar.
+        """
+        from .console9 import Console
+        console_width = Console.width()
+
+        if reverse:
+            done = total - done
+        if done > total:
+            done = total
+
+        done_repr = str(done_repr)
+        total_repr = str(total_repr)
+
+        proportion_done = done / total if total else 0
+
+        text_length = len(done_repr) + len(total_repr) + 4
+        bar_length = console_width - text_length
+
+        full_blocks = int(proportion_done * bar_length)
+        remainder = (proportion_done * bar_length) % 1
+        blocks = ["", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"]
+        medium_shade = blocks[int(remainder * 8)]
+
+        progress_bar = (f"{done_repr} / {total_repr} "
+                        + f"{'█' * full_blocks}{medium_shade}"
+                        + f"{' ' * (bar_length - full_blocks - len(medium_shade))}")
+
+        return progress_bar
 
     @staticmethod
     def multiline_input(question: str) -> str:
@@ -198,3 +224,4 @@ class CLI:
                     break
 
         return date
+
