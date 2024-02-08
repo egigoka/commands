@@ -145,6 +145,9 @@ class CLI:
         if done > total:
             done = total
 
+        if done < 0:
+            done = 0
+        
         add_split = done_repr != "" and total_repr != ""
         add_space = done_repr != "" or total_repr != ""
 
