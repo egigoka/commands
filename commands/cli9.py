@@ -17,7 +17,7 @@ class CLI:
         <br>`return` boolean
         """
 
-        def check_answer(string):  # pylint: disable=inconsistent-return-statements
+        def check_answer(string: str):  # pylint: disable=inconsistent-return-statements
             """Check input from user or argument "answer"
             <br>`param string` input string, check answer for "y" or "n", for other values return None
             <br>`return` True|False|None
