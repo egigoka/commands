@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with JSON
 """
-__version__ = "4.2.0"
+__version__ = "4.3.0"
 
 
 class Json:
@@ -143,6 +143,10 @@ class JsonList(Json):
     def __str__(self):
         from .print9 import Print
         return Print.prettify(self.string, quiet=True)
+
+    def index(self, *args, **kwargs):
+        output = self.string.index(*args, **kwargs)
+        return output
 
     def append(self, element):
         self.string.append(element)
