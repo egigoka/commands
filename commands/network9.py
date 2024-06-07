@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.10.0"
+__version__ = "0.11.0"
 
 from typing import Union
 
@@ -409,6 +409,14 @@ class Network:
                            "data": data,
                            "json": json,
                            "headers": headers})
+        elif method == "delete":
+            func = requests.delete
+            kwargs.update({"url": url,
+                           "auth": auth,
+                           "params": params,
+                           "data": data,
+                           "json": json,
+                           "headers": headers})
         else:
             raise NotImplementedError(f"Method {method} isn't supported")
 
@@ -423,3 +431,8 @@ class Network:
     def post(cls, url, params=None, data=None, json=None, basic_auth_user=None, basic_auth_password=None, headers=None, **kwargs):
         return cls.request(url=url, method="post", params=params, basic_auth_user=basic_auth_user,
                            basic_auth_password=basic_auth_password, data=data, json=json, headers=headers, **kwargs)
+
+    @classmethod
+    def delete(cls, url, params=None, basic_auth_user=None, basic_auth_password=None, headers=None, **kwargs):
+        return cls.request(url=url, method="delete", params=params, basic_auth_user=basic_auth_user,
+                           basic_auth_password=basic_auth_password, headers=headers, **kwargs)

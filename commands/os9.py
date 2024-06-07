@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to check some environment properties
 """
-__version__ = "3.7.0"
+__version__ = "3.7.1"
 
 
 class OS:  # pylint: disable=too-few-public-methods
@@ -67,7 +67,7 @@ class OS:  # pylint: disable=too-few-public-methods
         return self._macos
 
     @property
-    def name(self):
+    def name(self) -> str:
         if self._name is None:
             if self.sys_platform == "linux" or self.sys_platform == "linux2":
                 self._name = "linux"
