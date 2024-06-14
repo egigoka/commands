@@ -256,8 +256,11 @@ class Console:
             return out, err
 
     @classmethod
-    def fit(cls, *strings: str, sep: str = " "):
+    def fit(cls, *strings: str, sep: str = " ", reverse=False):
         """Fit strings to console
+        <br>`param strings` list of strings
+        <br>`param sep` string to join strings
+        <br>`param reverse` boolean, if True, cut from end of string
         <br>`return` strings, that can be fit in one line print
         <br> yes, implementation is far beyond good
         """
@@ -281,8 +284,12 @@ class Console:
 
             # cut line
             cut_cnt = len_all - console_width
-            new_longest_string = strings[longest_string][cut_cnt:]
-            new_longest_string = ">>" + new_longest_string[2:]
+            if reverse:
+                new_longest_string = strings[longest_string][:-cut_cnt]
+                new_longest_string = new_longest_string[:-2] + "<<"
+            else:
+                new_longest_string = strings[longest_string][cut_cnt:]
+                new_longest_string = ">>" + new_longest_string[2:]
 
             # replace
             strings[longest_string] = new_longest_string
