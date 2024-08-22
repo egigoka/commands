@@ -266,32 +266,49 @@ class Console:
         """
         from .os9 import OS
         from .list9 import List
+        from wcwidth import wcswidth
+
         console_width = cls.width()
-        if OS.windows:  # windows add symbol to end of string :(
+        
+        if OS.windows:  # windows adds symbol to end of string :(
             console_width -= 1
         strings = List.to_strings(strings)  # replace all to strings
-        len_all = len(sep.join(strings))  # count len of all
-
+        len_all = wcswidth(sep.join(strings))  # count len of all
+        reverse = not reverse
+        prefix = ">>" if reverse else "<<"
+        
         # check for fit
         if len_all <= console_width:
             pass
         else:
             # get the longest line
-            longest_string = 0
+            longest_string_index = 0
             for cnt, string in enumerate(strings):
-                if len(string) > len(strings[longest_string]):
-                    longest_string = cnt
-
+                if wcswidth(string) > wcswidth(strings[longest_string_index]):
+                    longest_string_index = cnt
+            longest_string = strings[longest_string_index]
+            
             # cut line
-            cut_cnt = len_all - console_width
+            cut_cnt = len_all - console_width + wcswidth(prefix)
+            desired_length = wcswidth(longest_string) - cut_cnt
+            lendiff = wcswidth(longest_string) - len(longest_string)  # add buffer for double characters
             if reverse:
-                new_longest_string = strings[longest_string][:-cut_cnt]
-                new_longest_string = new_longest_string[:-2] + "<<"
-            else:
-                new_longest_string = strings[longest_string][cut_cnt:]
-                new_longest_string = ">>" + new_longest_string[2:]
+                longest_string = longest_string[::-1]
 
-            # replace
-            strings[longest_string] = new_longest_string
+            longest_string = longest_string[:int(-cut_cnt+lendiff)]
+            
+            while wcswidth(longest_string) > desired_length:
+                longest_string = longest_string[:-1]
+
+            while wcswidth(longest_string) < desired_length:
+                longest_string += " "
+
+            longest_string += prefix
+
+            if reverse:
+                longest_string = longest_string[::-1]
+
+            
+            strings[longest_string_index] = longest_string
 
         return strings
