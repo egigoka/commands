@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with video
 """
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 
 class Video:
@@ -11,7 +11,7 @@ class Video:
 
     @staticmethod
     def get_clip(path, raw = False):
-        from moviepy.editor import VideoFileClip
+        from moviepy import VideoFileClip
         clip = VideoFileClip(path)
         if raw:
             return clip
