@@ -153,3 +153,6 @@ class JsonList(Json):
 
     def sort(self, *args, **kwargs):
         self.string.sort(*args, **kwargs)
+
+    def clear(self, *args, **kwargs):
+        self.string.clear(*args, **kwargs)
