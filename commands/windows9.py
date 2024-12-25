@@ -11,7 +11,7 @@ class Windows:
 
     class RemoteSystem:
         def __init__(self, hostname, username, password, port=None, transport="ntlm"):
-            import winrm
+            import winrm  # pywinrm
             # FIX winrm #
 
             def fix_run_ps(self, script):
