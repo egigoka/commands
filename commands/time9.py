@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Module with time functions
 """
-__version__ = "1.2.3"
+__version__ = "1.2.4"
 
 
 class Time:
@@ -153,8 +153,8 @@ class Time:
         time_a = cls.timestamp_to_datetime(time_a)
         time_b = cls.timestamp_to_datetime(time_b)
         delta = time_b - time_a
-        delta_combined = delta.seconds + delta.microseconds / 1E6
-        return delta_combined
+
+        return delta.total_seconds()
 
     @staticmethod
     def human_readable(timedelta: int):
