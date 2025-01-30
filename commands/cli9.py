@@ -138,6 +138,7 @@ class CLI:
         :return: A string representing the progress bar.
         """
         from .console9 import Console
+        from .os9 import OS
         console_width = Console.width()
 
         if OS.windows:  # windows add symbol to end of string :(
