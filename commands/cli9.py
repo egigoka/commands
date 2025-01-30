@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with commandline interfaces
 """
-__version__ = "0.5.0"
+__version__ = "0.5.1"
 
 
 class CLI:
@@ -139,6 +139,9 @@ class CLI:
         """
         from .console9 import Console
         console_width = Console.width()
+
+        if OS.windows:  # windows add symbol to end of string :(
+            line = line[:-1]
 
         if reverse:
             done = total - done
