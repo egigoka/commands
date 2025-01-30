@@ -142,7 +142,7 @@ class CLI:
         console_width = Console.width()
 
         if OS.windows:  # windows add symbol to end of string :(
-            line = line[:-1]
+            console_width -= 1
 
         if reverse:
             done = total - done
