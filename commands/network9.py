@@ -4,6 +4,7 @@
 """
 __version__ = "0.11.0"
 
+import time
 from typing import Union
 
 
@@ -44,7 +45,7 @@ class Network:
         return Str.substring(url, "", proto_prefix, exception_message="The protocol of url not found") + proto_prefix
 
     @staticmethod
-    def dns_lookup(domain):
+    def get_ip(domain):
         """Resolve IP from domain name with socket.gethostbyname
         <br>`param domain` string, domain name
         <br>`return` string, IP
@@ -57,84 +58,53 @@ class Network:
 
     @classmethod
     def ping(cls,
-             domain="127.0.0.1", count=1, quiet=False, logfile=None, timeout=10000, return_ip=False):
+             domain="127.0.0.1", count=1, quiet=False, timeout=10000):
         """Wrapper under default ping command
         <br>`param domain` string, domain or IP
         <br>`param count` int, count of attempts
         <br>`param quiet` boolean, suppress print to console
-        <br>`param logfile` string, path to log file
         <br>`param timeout` int, timeout in milliseconds
         <br>`param return_ip` boolean, return string with IP
         <br>`return` boolean of availability of domain, or list of boolean domain availability, string ip and full output
                  from ping command
         """
         # todo properly work with exception
-        import re
-        from .os9 import OS
-        from .console9 import Console
+        from ping3 import ping
         domain = cls.get_domain_of_url(domain)
-        backup_ping_output = ""
+        up_message = domain + " is up!"
+        down_message = domain + " is down."
+        result = None
         if not quiet:
             from .print9 import Print
             Print.rewrite("Pinging", domain, count, "times...")
-            up_message = domain + " is up!"
-            down_message = domain + " is down."
         try:
-            if OS.windows:
-                count_arg = "n"
-                timeout_arg = "w"
-            if OS.unix_family:
-                count_arg = "c"
-                timeout_arg = "W"
-            if OS.linux:
-                timeout = int(timeout / 1000)
-            command = "ping " + domain + " -" + count_arg + " " + str(count) + \
-                      " -" + timeout_arg + " " + str(timeout)
-            ping_output = Console.get_output(command)
+
+            uplink = True
+            for i in range(count):
+
+                if i > 0:
+                    time.sleep(1)
+
+                result = ping(domain, timeout=int(timeout/1000))
+
+                if type(result) != float:
+                    uplink = False
+                    break
 
         except KeyboardInterrupt:
             import sys
             sys.exit()
-        except:  # pylint: disable=bare-except
-            #  any exception is not good ping
-            try:
-                backup_ping_output = ping_output
-            except UnboundLocalError:
-                backup_ping_output = ""
-            ping_output = ""
-        uplink = ping_output.lower().count("time=") + ping_output.lower().count("time<") >= count
+        except Exception:  # pylint: disable=bare-except
+            uplink = False
 
-        if logfile or (not quiet):
-            import termcolor
-        if logfile:
-            raise NotImplementedError()
-        #    from .log9 import plog
-        #    if uplink:
-        #        plog(logfile, domain + " is up!", quiet=True)
-        #        termcolor.cprint(up_message, "white", "on_green")
-        #    else:
-        #        plog(logfile, down_message, quiet=True)
-        #        termcolor.cprint(down_message, "white", "on_red")
-
-        elif not quiet:
+        if not quiet:
             Print.rewrite("")
             if uplink:
-                termcolor.cprint(up_message, "white", "on_green")
+                Print.colored(up_message, "white", "on_green")
             else:
-                termcolor.cprint(down_message, "white", "on_red")
-        ip = None  # pylint: disable=invalid-name
-        if return_ip:
-            from .str9 import Str
-            try:
-                for line in Str.nl(ping_output + backup_ping_output):
-                    if len(Str.get_integers(line, float_support=False)) >= 4:
-                        ip = re.findall(r'(?:\d{1,3}\.)+(?:\d{1,3})', line)
-                        break
-            except TypeError:
-                pass
-            if not ip:
-                ip = cls.dns_lookup(domain)  # pylint: disable=invalid-name
-            return uplink, ip, ping_output
+                Print.colored(down_message, "white", "on_red")
+        if count == 1:
+            return result
         return uplink
 
     @staticmethod
@@ -165,7 +135,7 @@ class Network:
         return Path.full(out)
 
     @staticmethod
-    def get_ip(fast=True, quiet=True):
+    def get_global_ip(fast=True, quiet=True):
         # much code by phoemur@gmail.com (ipgetter)
         global Print
         import re
@@ -174,17 +144,10 @@ class Network:
 
         from sys import version_info
 
-        PY3K = version_info >= (3, 0)
+        import urllib.request as urllib
+        import http.cookiejar as cjar
 
-        if PY3K:
-            import urllib.request as urllib
-            import http.cookiejar as cjar
-        else:
-            import urllib2 as urllib
-            import cookielib as cjar
-
-        __version__ = "0.7"
-        __version__ = "0.8"  # updated by egigoka@gmail.com
+        __version__ = "0.9"
 
         class IPgetter(object):
 
@@ -270,12 +233,10 @@ class Network:
                     url = opener.open(server, timeout=1)
                     content = url.read()
 
-                    # Didn't want to import chardet. Preferred to stick to stdlib
-                    if PY3K:
-                        try:
-                            content = content.decode('UTF-8')
-                        except UnicodeDecodeError:
-                            content = content.decode('ISO-8859-1')
+                    try:
+                        content = content.decode('UTF-8')
+                    except UnicodeDecodeError:
+                        content = content.decode('ISO-8859-1')
 
                     m = re.search(
                         r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)',
