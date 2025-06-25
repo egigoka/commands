@@ -61,11 +61,12 @@ class MyThread:
     def wait_for_keyboard_interrupt(self, quiet=True):
         import time
         try:
-            while self.thread.is_alive():
-                time.sleep(1)
-                if not quiet:
-                    from .print9 import Print
-                    Print(self.thread.name)
+            # while self.thread.is_alive():
+            #     time.sleep(0.1)
+            #     if not quiet:
+            #         from .print9 import Print
+            #         Print(self.thread.name)
+            self.thread.join()
         except (KeyboardInterrupt, SystemExit):
             self.raise_exception()
             raise
@@ -159,17 +160,21 @@ class Threading:
     def wait_for_keyboard_interrupt(self, quiet=True):
         import time
         try:
-            while True:
-                alive = []  # list of alive threads
-                for thread in self.runner_threads:
-                    if thread.thread.is_alive():
-                        alive.append(thread.thread.name)
-                        time.sleep(1)
-                if not alive:  # if none of processes alive
-                    return
-                if not quiet:
-                    from .print9 import Print
-                    Print("alive:", alive)
+            for t in self.runner_threads:
+                t.wait_for_keyboard_interrupt()
+            #while True:
+                # alive = []  # list of alive threads
+                # for thread in self.runner_threads:
+                #     if thread.thread.is_alive():
+                #         alive.append(thread.thread.name)
+                # if not alive:  # if none of processes alive
+                #     return
+                # if not quiet:
+                #     from .print9 import Print
+                #     Print("alive:", alive)
+                #if alive:
+                #    time.sleep(0.001)
+
         except (KeyboardInterrupt, SystemExit):
             self.raise_exception()
             raise
