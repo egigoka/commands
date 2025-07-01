@@ -115,20 +115,31 @@ class Console:
                     output = b''
                     if is_string:
                         output = ''
-                    for string in obj:
-                        string_ = string
+                    finished = False
+                    # for string in obj:
+                    while not finished:
+                        string_input = b''
+                        while True:
+                            sym = obj.read(1)
+                            if not sym:
+                                finished = True
+                                break
+                            string_input += sym
+                            if sym in [b'\r', b'\n']:
+                                break
+                        string_current = string_input
                         if decoding:
                             try:
-                                string_ = string.decode(decoding)
+                                string_current = string_input.decode(decoding)
                             except UnicodeDecodeError:
                                 # fallback to chardet
                                 import chardet
-                                string_ = string.decode(chardet.detect(string)['encoding'])
-                        hook(string_)
-                        output += string_
+                                string_current = string_input.decode(chardet.detect(string_input)['encoding'])
+                        hook(string_current)
+                        output += string_current
                         if print_std:
                             from .print9 import Print
-                            Print.colored(string_, color, end='', flush=True)
+                            Print.colored(string_current, color, end='', flush=True)
                     if timeout is not None:
                         timer.cancel()
                     return output
