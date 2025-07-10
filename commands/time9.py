@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Module with time functions
 """
-__version__ = "1.2.4"
+__version__ = "1.2.5"
 
 
 class Time:
@@ -143,8 +143,7 @@ class Time:
         <br>`param time_b` datetime.datetime time object|float of timestamp
         <br>`return` difference between two timestamps
         """
-        from .funcs9 import multiple
-        if isinstance(time_a, multiple(int, float)) and time_b is None:
+        if isinstance(time_a, (int, float)) and time_b is None:
             import datetime
             return datetime.timedelta(seconds=time_a)
         
