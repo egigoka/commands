@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to interact with terminal|console
 """
-__version__ = "0.11.14"
+__version__ = "0.11.15"
 
 import threading
 
@@ -65,6 +65,7 @@ class Console:
         import random
         from .os9 import OS
         from .print9 import Print
+        from .const9 import newline
         if (width is not None) and (height is not None) and OS.windows:
             import os
             os.system("mode con cols=" + str(width) + " lines=" + str(height))
@@ -82,7 +83,7 @@ class Console:
             try:  # New version with one long line. Works perfect, as I see.
                 import time
                 string = string * height
-                Print.colored(string, color, highlight)
+                Print.colored(newline + string, color, highlight, end = "")
                 time.sleep(sleep)
             except KeyboardInterrupt:
                 Print.colored("OK", "white", "on_grey")
