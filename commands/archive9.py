@@ -3,7 +3,7 @@
 """Internal module to work with zip and tar.lzma archives
 """
 # https://code.tutsplus.com/ru/tutorials/compressing-and-extracting-files-in-python--cms-26816
-__version__ = "0.5.2"
+__version__ = "0.5.3"
 
 
 class UniversalArchive:
@@ -114,10 +114,16 @@ class Unarchive:
         :return: None"""
         from .path9 import Path
         from .file9 import File
-
+        
+        temp_dir = Path.temp()
         archive = UniversalArchive(archive_path, mode="r", archive_type=archive_type)
-        temp_path = archive.extract(path_inside_archive, Path.temp())
+        temp_path = archive.extract(path_inside_archive, temp_dir)
         archive.close()
+
+        # tarfile.extract() returns None, zipfile.extract() returns path
+        # Manually construct path for tar archives
+        if temp_path is None:
+            temp_path = Path.combine(temp_dir, path_inside_archive)
 
         File.move(temp_path, output_path)
 
