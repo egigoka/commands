@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module with functions to work with network
 """
-__version__ = "0.11.0"
+__version__ = "0.12.0"
 
 import time
 from typing import Union
