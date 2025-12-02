@@ -1,6 +1,6 @@
 #! python3
 # -*- coding: utf-8 -*-
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 from .dict9 import ImDict
 
@@ -18,7 +18,7 @@ class Cache:
 
         self.bench = bench
         if bench is None:
-            self.bench = Bench("cache updated in", quiet=quiet)
+            self.bench = Bench("cache updated in", verbose=not quiet)
 
         self.func = func
         self.args = args
