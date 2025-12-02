@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "commands"
+dynamic = ["version"]
+description = "Mine commands"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Egor Egorov", email = "egigoka@gmail.com"}
+]
+requires-python = ">=3.6"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "termcolor",
+    "pyperclip",
+    "paramiko",
+    "chardet",
+    "psutil",
+    "requests",
+    "thefuck",
+    "moviepy",
+    "mutagen",
+    "ping3",
+]
+
+[project.optional-dependencies]
+all = [
+    "pyautogui; platform_system!='Linux'",
+    "pywin32; platform_system=='Windows'",
+    "colorama; platform_system=='Windows'",
+    "pywinrm; platform_system=='Windows'",
+    "python-magic-win64; platform_system=='Windows'",
+    "python-magic; platform_system!='Windows'",
+    "win_unicode_console; python_version<'3.6' and platform_system=='Windows'",
+]
+
+[project.urls]
+Homepage = "https://www.github.com/egigoka/commands"
+Repository = "https://www.github.com/egigoka/commands"
+
+[tool.setuptools]
+packages = ["commands"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+"*" = ["res/*"]
+
+[tool.setuptools.dynamic]
+version = {attr = "commands._version.__version__"}
