@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Internal module to work with directories
 """
-__version__ = "1.8.0"
+__version__ = "1.8.1"
 
 
 class Dir:
@@ -66,10 +66,13 @@ class Dir:
         for filename in cls.list_of_files(directory):
             if previous_name_substring in filename:
                 from .file9 import File
+                from .path9 import Path
+                path_from = Path.combine(directory, filename)
                 final_name = filename.replace(previous_name_substring, new_name_substring)
-                File.rename(filename, final_name)
+                final_path = Path.combine(directory, final_name)
+                File.rename(path_from, final_path)
                 if not quiet:
-                    print(filename, "renamed to", final_name)
+                    print(path_from, "renamed to", final_path)
 
     @classmethod
     def delete(cls, path, cleanup=False, remove_readonly=True, no_sleep=False,
