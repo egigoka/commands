@@ -346,6 +346,34 @@ class Network:
                                   b'Microsoft NCSI',
                                   timeout=timeout, debug=debug)
 
+    @classmethod
+    def check_internet_microsoft_connect(cls, timeout=10, debug=False):
+        return cls.check_response("http://www.msftconnecttest.com/connecttest.txt",
+                                  b'Microsoft Connect Test',
+                                  timeout=timeout, debug=debug)
+
+    @classmethod
+    def check_internet_google(cls, timeout=10, debug=False):
+        import requests
+        try:
+            response = requests.get("http://connectivitycheck.gstatic.com/generate_204", timeout=timeout)
+            output = response.status_code == 204 and response.content == b''
+        except (requests.exceptions.ConnectionError, requests.exceptions.ReadTimeout) as e:
+            if debug:
+                from .print9 import Print
+                Print.debug(e)
+            return False
+        if debug and not output:
+            from .print9 import Print
+            Print.debug(f"Status: {response.status_code}, Content: {response.content}")
+        return output
+
+    @classmethod
+    def check_internet_firefox(cls, timeout=10, debug=False):
+        return cls.check_response("http://detectportal.firefox.com/success.txt",
+                                  b'success\n',
+                                  timeout=timeout, debug=debug)
+
     @staticmethod
     def request(url, method, params=None, basic_auth_user=None, basic_auth_password=None, data=None, json=None,
                 headers=None, **kwargs):
