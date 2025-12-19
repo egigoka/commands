@@ -24,7 +24,6 @@ dependencies = [
     "chardet",
     "psutil",
     "requests",
-    "thefuck",
     "moviepy",
     "mutagen",
     "ping3",
