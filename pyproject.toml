@@ -27,6 +27,7 @@ dependencies = [
     "moviepy",
     "mutagen",
     "ping3",
+    "wcwidth",
 ]
 
 [project.optional-dependencies]
