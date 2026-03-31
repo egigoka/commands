@@ -411,31 +411,37 @@ class Console:
                 return stages[idx]
             return 0, 0
 
-        def handle_keys(stdscr, scroll_y, scroll_x, max_y, max_x, body_h, body_w):
+        def handle_keys(stdscr, scroll_y, scroll_x, max_y, max_x, body_h, body_w, at_bottom):
             while True:
                 key = stdscr.getch()
                 if key == -1:
                     break
                 if key in (ord("q"), ord("Q"), 27):
-                    return scroll_y, scroll_x, True
+                    return scroll_y, scroll_x, True, at_bottom
                 elif key == curses.KEY_UP:
                     scroll_y = max(0, scroll_y - 1)
+                    at_bottom = scroll_y >= max(0, max_y - body_h)
                 elif key == curses.KEY_DOWN:
                     scroll_y = min(max(0, max_y - body_h), scroll_y + 1)
+                    at_bottom = scroll_y >= max(0, max_y - body_h)
                 elif key == curses.KEY_LEFT:
                     scroll_x = max(0, scroll_x - 4)
                 elif key == curses.KEY_RIGHT:
                     scroll_x = min(max(0, max_x - body_w), scroll_x + 4)
                 elif key == curses.KEY_PPAGE:
                     scroll_y = max(0, scroll_y - body_h)
+                    at_bottom = scroll_y >= max(0, max_y - body_h)
                 elif key == curses.KEY_NPAGE:
                     scroll_y = min(max(0, max_y - body_h), scroll_y + body_h)
+                    at_bottom = scroll_y >= max(0, max_y - body_h)
                 elif key == curses.KEY_HOME:
                     scroll_y = 0
                     scroll_x = 0
+                    at_bottom = False
                 elif key == curses.KEY_END:
                     scroll_y = max(0, max_y - body_h)
-            return scroll_y, scroll_x, False
+                    at_bottom = True
+            return scroll_y, scroll_x, False, at_bottom
 
         def draw(stdscr, cur_lines, change_times, scroll_y, scroll_x, now, stages):
             height, width = stdscr.getmaxyx()
@@ -505,6 +511,7 @@ class Console:
             change_times = {}
             scroll_y = 0
             scroll_x = 0
+            at_bottom = True  # start pinned to bottom
 
             while True:
                 now = time.monotonic()
@@ -521,15 +528,18 @@ class Console:
                 max_y = len(cur_lines)
                 max_x = max((len(l) for l in cur_lines), default=0)
 
-                scroll_y = max(0, min(scroll_y, max(0, max_y - body_h)))
+                if at_bottom:
+                    scroll_y = max(0, max_y - body_h)
+                else:
+                    scroll_y = max(0, min(scroll_y, max(0, max_y - body_h)))
                 scroll_x = max(0, min(scroll_x, max(0, max_x - width)))
 
                 draw(stdscr, cur_lines, change_times, scroll_y, scroll_x, now, stages)
 
                 deadline = time.monotonic() + interval
                 while time.monotonic() < deadline:
-                    scroll_y, scroll_x, quit_ = handle_keys(
-                        stdscr, scroll_y, scroll_x, max_y, max_x, body_h, width)
+                    scroll_y, scroll_x, quit_, at_bottom = handle_keys(
+                        stdscr, scroll_y, scroll_x, max_y, max_x, body_h, width, at_bottom)
                     if quit_:
                         return
                     now = time.monotonic()
