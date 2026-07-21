@@ -161,7 +161,7 @@ class TestThreadingMissingCoverage:
         runner.runner_threads = [DummyThread("runner")]
         runner.input_threads = [DummyThread("input")]
         runner.raise_exception()
-        assert calls == ["runner", "input"]
+        assert calls == ["input"]
 
     def test_threading_get_results(self):
         """Test Threading.get_results method (lines 213-215)"""
@@ -307,5 +307,5 @@ def test_threading_wait_for_keyboard_interrupt_kills_all(monkeypatch):
     with pytest.raises(KeyboardInterrupt):
         runner.wait_for_keyboard_interrupt()
 
-    assert all(t.killed for t in runner.runner_threads)
+    assert not any(t.killed for t in runner.runner_threads)
     assert all(t.killed for t in runner.input_threads)

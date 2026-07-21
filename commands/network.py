@@ -393,7 +393,7 @@ class Network:
         if isinstance(good_response, str):
             good_response_bytes = bytes(good_response, encoding="utf-8")
         elif isinstance(good_response, list) or isinstance(good_response, tuple):
-            good_response_bytes = cast(list[bytes], List.apply_lambda_to_all_elements(good_response, bytes))
+            good_response_bytes = cast("list[bytes]", List.apply_lambda_to_all_elements(good_response, bytes))
         else:
             good_response_bytes = good_response
 

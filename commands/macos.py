@@ -137,7 +137,7 @@ class macOS:  # pylint: disable=invalid-name, too-few-public-methods
         commands = Str.to_quotes(commands)  # applescript to quotes
         command = " ".join(["osascript", "-e", commands])
         if debug:
-            print(f"{command=}")
+            print(f"command={command!r}")
         OS.system(command)
 
     @classmethod

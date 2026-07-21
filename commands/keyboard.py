@@ -24,7 +24,7 @@ class Keyboard:
     def hotkey(cls, *args: str, verbose: bool = False, **kwargs: Any) -> Any:
         """Trigger a hotkey combination via pyautogui."""
         if verbose:
-            print(f"Keyboard.hotkey({args=}, {kwargs=})")
+            print(f"Keyboard.hotkey(args={args!r}, kwargs={kwargs!r})")
         return pyautogui.hotkey(*args, **kwargs)
 
     # https://github.com/asweigart/pyautogui/issues/137

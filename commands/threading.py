@@ -9,6 +9,7 @@ from .module import LazyModule, LazyProperty
 __version__ = "1.10.1"
 
 if TYPE_CHECKING:
+    import ctypes
     import sys
     import threading
     from typing import Any, Callable, Dict as DictType, List, Mapping, Optional, Protocol, Tuple, Union
@@ -28,6 +29,7 @@ if TYPE_CHECKING:
         """Typing placeholder for immutable dictionaries."""
 
 else:
+    ctypes = LazyModule("ctypes")
     sys = LazyModule("sys")
     ImDict = LazyProperty(".dict", "ImDict")
     ID = LazyProperty(".id", "ID")
@@ -71,6 +73,7 @@ class MyThread:
         self.thread.name = name
         self.result: Any = IsRunning()
         self.killed = False
+        self._async_kill_requested = False
         self.func = func
         self.args = args
         self.kwargs = kwargs
@@ -83,8 +86,12 @@ class MyThread:
             Print(*args, **kwargs)
 
     def _make_chained_trace(self, previous_trace: Any) -> Callable[..., Any]:
+        stop_requested = False
+
         def chained_trace(frame: Any, event: str, arg: Any) -> Callable[..., Any]:
-            if self.killed:
+            nonlocal stop_requested
+            if self.killed and not self._async_kill_requested and not stop_requested:
+                stop_requested = True
                 raise SystemExit()
             if previous_trace is not None:
                 previous_trace(frame, event, arg)
@@ -95,16 +102,21 @@ class MyThread:
     def run(self) -> None:
         """Run the thread target with tracing and result capture."""
         self.qprint("Starting " + self.thread.name)
+        if self.killed:
+            self.qprint(f"Killed {self.thread.name}")
+            return
         previous_trace: Any = None
         try:
-            previous_trace = sys.gettrace()
-            sys.settrace(self._make_chained_trace(previous_trace))
+            if sys.version_info >= (3, 9):
+                previous_trace = sys.gettrace()
+                sys.settrace(self._make_chained_trace(previous_trace))
             self.result = self.func(*self.args, **self.kwargs)
             self.qprint(f"Finished {self.thread.name}. running: {self.bench.end()}")
         except SystemExit:
             self.qprint(f"Killed {self.thread.name}. running: {self.bench.end()}")
         finally:
-            sys.settrace(previous_trace)
+            if sys.version_info >= (3, 9):
+                sys.settrace(previous_trace)
 
     def start(self, wait_for_keyboard_interrupt: bool = False) -> None:
         """Start the thread and optionally block on interrupt."""
@@ -147,8 +159,21 @@ class MyThread:
         return self.localtrace
 
     def kill(self) -> None:
-        """Mark the thread as killed for tracing exit."""
+        """Request thread termination."""
+        self._async_kill_requested = sys.version_info < (3, 9) and self.thread.is_alive()
         self.killed = True
+        if not self._async_kill_requested:
+            return
+
+        thread_id = self.thread.ident
+        if thread_id is None:
+            return
+        result = ctypes.pythonapi.PyThreadState_SetAsyncExc(
+            ctypes.c_ulong(thread_id), ctypes.py_object(SystemExit)
+        )
+        if result > 1:
+            ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_ulong(thread_id), None)
+            raise SystemError("failed to stop thread cleanly")
 
     raise_exception = kill
 
@@ -264,10 +289,10 @@ class Threading:
         return ids
 
     def raise_exception(self) -> None:
-        """Raise a stop signal on all runner and input threads."""
-        for thread in self.runner_threads:
-            thread.raise_exception()
+        """Raise a stop signal on all queued and active threads."""
         for thread in self.input_threads:
+            thread.raise_exception()
+        for thread in self.running_now_threads:
             thread.raise_exception()
 
     kill = raise_exception

@@ -196,9 +196,12 @@ class TestThreadingIntegration:
         # Kill all threads
         threading_obj.kill()
 
-        # Should have set killed flags
+        # Active jobs should stop and internal runners should exit naturally.
+        for thread in threading_obj.running_now_threads:
+            assert thread.killed
         for runner in threading_obj.runner_threads:
-            assert runner.killed
+            runner.thread.join(timeout=2)
+            assert not runner.thread.is_alive()
 
     def test_threading_wait_for_completion(self):
         """Test wait_for_keyboard_interrupt without actual interrupt"""

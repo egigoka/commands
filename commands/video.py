@@ -12,10 +12,11 @@ from .module import LazyModule, LazyProperty
 __version__ = "0.2.1"
 
 moviepy = LazyModule("moviepy")
-typing = LazyModule("typing")
 KiB = LazyProperty(".const", "KiB")
-TypedDict = typing.TypedDict
-overload = typing.overload
+if not TYPE_CHECKING:
+    typing = LazyModule("typing")
+    TypedDict = getattr(typing, "TypedDict", dict)
+    overload = typing.overload
 
 
 class Video:

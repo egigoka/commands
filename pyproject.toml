@@ -28,6 +28,7 @@ dependencies = [
     "mutagen",
     "ping3",
     "wcwidth",
+    "pywin32; platform_system=='Windows'",
 ]
 
 [project.optional-dependencies]
@@ -37,7 +38,6 @@ mssql = ["pyodbc"]
 linux = ["python-xlib; platform_system=='Linux'"]
 all = [
     "pyautogui; platform_system!='Linux'",
-    "pywin32; platform_system=='Windows'",
     "colorama; platform_system=='Windows'",
     "pywinrm; platform_system=='Windows'",
     "python-magic-win64; platform_system=='Windows'",

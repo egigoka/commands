@@ -891,6 +891,8 @@ dependencies = [
     { name = "ping3" },
     { name = "psutil" },
     { name = "pyperclip" },
+    { name = "pywin32", version = "311", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9' and sys_platform == 'win32'" },
+    { name = "pywin32", version = "312", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9' and sys_platform == 'win32'" },
     { name = "requests", version = "2.31.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.8'" },
     { name = "requests", version = "2.32.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.8.*'" },
     { name = "requests", version = "2.32.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.9.*'" },
@@ -913,8 +915,6 @@ all = [
     { name = "python-magic", marker = "sys_platform != 'win32'" },
     { name = "python-magic-win64", marker = "sys_platform == 'win32'" },
     { name = "python-xlib", marker = "sys_platform == 'linux'" },
-    { name = "pywin32", version = "311", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9' and sys_platform == 'win32'" },
-    { name = "pywin32", version = "312", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9' and sys_platform == 'win32'" },
     { name = "pywinrm", version = "0.4.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.8' and sys_platform == 'win32'" },
     { name = "pywinrm", version = "0.5.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.8' and sys_platform == 'win32'" },
 ]
@@ -985,13 +985,13 @@ requires-dist = [
     { name = "python-magic-win64", marker = "sys_platform == 'win32' and extra == 'all'" },
     { name = "python-xlib", marker = "sys_platform == 'linux' and extra == 'all'" },
     { name = "python-xlib", marker = "sys_platform == 'linux' and extra == 'linux'" },
-    { name = "pywin32", marker = "sys_platform == 'win32' and extra == 'all'" },
+    { name = "pywin32", marker = "sys_platform == 'win32'" },
     { name = "pywinrm", marker = "sys_platform == 'win32' and extra == 'all'" },
     { name = "requests" },
     { name = "termcolor" },
     { name = "wcwidth" },
 ]
-provides-extras = ["test", "dev", "mssql", "linux", "all"]
+provides-extras = ["all", "dev", "linux", "mssql", "test"]
 
 [[package]]
 name = "coverage"

@@ -161,7 +161,7 @@ def test_console_get_output_print_std_bytes(monkeypatch):
     def fake_colored(*_args, **_kwargs):
         calls["called"] = True
 
-    monkeypatch.setattr(Print, "colored", staticmethod(fake_colored))
+    monkeypatch.setattr(Print, "colored", fake_colored)
     out, err = Console.get_output(
         sys.executable,
         "-c",

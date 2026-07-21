@@ -227,16 +227,16 @@ class TestThreadingComprehensive:
         # Call raise_exception to kill all threads
         threading_obj.raise_exception()
 
-        # All runner threads should have killed flag set
-        for runner in threading_obj.runner_threads:
-            assert runner.killed
-
         # All input threads should have killed flag set
         for thread in threading_obj.input_threads:
             assert thread.killed
 
-        # Wait a bit for cleanup
-        time.sleep(0.2)
+        # Active tasks and runners must terminate without blocking interpreter shutdown.
+        for thread in threading_obj.running_now_threads:
+            assert thread.killed
+        for runner in threading_obj.runner_threads:
+            runner.thread.join(timeout=2)
+            assert not runner.thread.is_alive()
 
     def test_get_results(self):
         """Test get_results method to cover lines 213-215"""
