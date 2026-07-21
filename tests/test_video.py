@@ -3,12 +3,50 @@
 # ---- from test_video9.py ----
 
 
+import json
+import types
+
 import pytest
+
+
+def _probe_info():
+    return {
+        "streams": [
+            {
+                "codec_type": "video",
+                "width": 1920,
+                "height": 1080,
+                "avg_frame_rate": "30/1",
+                "bit_rate": "5000000",
+            },
+            {"codec_type": "audio", "bit_rate": "320000"},
+        ],
+        "format": {"duration": "120.5", "bit_rate": "5320000"},
+    }
 
 
 def test_video9_import():
     from commands import Video
     assert Video is not None
+
+
+def test_video_probe_calls_ffprobe(monkeypatch):
+    import commands.video as video_module
+    from commands.video import Video
+
+    called = {}
+
+    def fake_run(command, **kwargs):
+        called["command"] = command
+        called["kwargs"] = kwargs
+        return types.SimpleNamespace(stdout=json.dumps(_probe_info()))
+
+    monkeypatch.setattr(video_module, "subprocess", types.SimpleNamespace(run=fake_run))
+
+    assert Video._probe("input.mp4") == _probe_info()
+    assert called["command"][0:3] == ["ffprobe", "-v", "error"]
+    assert called["command"][-1] == "input.mp4"
+    assert called["kwargs"] == {"capture_output": True, "check": True, "text": True}
 
 
 # Coverage improvement tests
@@ -18,23 +56,7 @@ class TestVideoCoverage:
     def test_get_clip_basic(self, monkeypatch):
         """Test Video.get_clip without raw flag (lines 14-23)"""
         from commands.video import Video
-
-        # Mock VideoFileClip
-        class MockClip:
-            duration = 120.5
-            fps = 30.0
-            size = (1920, 1080)
-
-        def mock_video_file_clip(path):
-            return MockClip()
-
-        # Mock the moviepy import
-        import sys
-        from unittest.mock import MagicMock
-
-        mock_moviepy = MagicMock()
-        mock_moviepy.VideoFileClip = mock_video_file_clip
-        sys.modules['moviepy'] = mock_moviepy
+        monkeypatch.setattr(Video, "_probe", classmethod(lambda cls, path: _probe_info()))
 
         result = Video.get_clip("test.mp4", raw=False)
 
@@ -45,29 +67,11 @@ class TestVideoCoverage:
     def test_get_clip_raw(self, monkeypatch):
         """Test Video.get_clip with raw=True (lines 16-17)"""
         from commands.video import Video
-
-        # Mock VideoFileClip
-        class MockClip:
-            duration = 60.0
-            fps = 24.0
-            size = (1280, 720)
-
-        def mock_video_file_clip(path):
-            return MockClip()
-
-        # Mock the moviepy import
-        import sys
-        from unittest.mock import MagicMock
-
-        mock_moviepy = MagicMock()
-        mock_moviepy.VideoFileClip = mock_video_file_clip
-        sys.modules['moviepy'] = mock_moviepy
+        info = _probe_info()
+        monkeypatch.setattr(Video, "_probe", classmethod(lambda cls, path: info))
 
         result = Video.get_clip("test.mp4", raw=True)
-
-        # Should return the raw clip object
-        assert hasattr(result, 'duration')
-        assert result.duration == 60.0
+        assert result is info
 
     def test_get_length(self, monkeypatch):
         """Test Video.get_length (lines 26-28)"""
@@ -98,51 +102,18 @@ class TestVideoCoverage:
     def test_get_bitrate(self, monkeypatch):
         """Test Video.get_bitrate (lines 36-39)"""
         from commands.video import Video
-
-        # Mock VideoFileClip with reader
-        class MockReader:
-            bitrate = 5000  # 5000 KiB/s
-
-        class MockClip:
-            duration = 120.0
-            fps = 30.0
-            size = (1920, 1080)
-            reader = MockReader()
-
-        def mock_get_clip(path, raw=False):
-            return MockClip()
-
-        monkeypatch.setattr(Video, "get_clip", mock_get_clip)
+        monkeypatch.setattr(Video, "get_info", classmethod(lambda cls, path: _probe_info()))
 
         result = Video.get_bitrate("test.mp4")
-        # Should multiply by KiB (1024)
-        assert result == 5000 * 1024
+        assert result == 5000000
 
     def test_get_audio_bitrate(self, monkeypatch):
         """Test Video.get_audio_bitrate (lines 42-45)"""
         from commands.video import Video
-
-        # Mock VideoFileClip with audio reader
-        class MockAudioReader:
-            bitrate = 320  # 320 KiB/s
-
-        class MockAudio:
-            reader = MockAudioReader()
-
-        class MockClip:
-            duration = 120.0
-            fps = 30.0
-            size = (1920, 1080)
-            audio = MockAudio()
-
-        def mock_get_clip(path, raw=False):
-            return MockClip()
-
-        monkeypatch.setattr(Video, "get_clip", mock_get_clip)
+        monkeypatch.setattr(Video, "get_info", classmethod(lambda cls, path: _probe_info()))
 
         result = Video.get_audio_bitrate("test.mp4")
-        # Should multiply by KiB (1024)
-        assert result == 320 * 1024
+        assert result == 320000
 
     def test_get_resolution(self, monkeypatch):
         """Test Video.get_resolution (lines 48-50)"""
@@ -160,23 +131,11 @@ class TestVideoCoverage:
     def test_get_info(self, monkeypatch):
         """Test Video.get_info (lines 53-54)"""
         from commands.video import Video
-
-        # Mock VideoFileClip
-        class MockClip:
-            duration = 180.0
-            fps = 30.0
-            size = (1920, 1080)
-
-        def mock_get_clip(path, raw=False):
-            if raw:
-                return MockClip()
-            return {"duration": 180.0, "fps": 30.0, "size": (1920, 1080)}
-
-        monkeypatch.setattr(Video, "get_clip", mock_get_clip)
+        info = _probe_info()
+        monkeypatch.setattr(Video, "_probe", classmethod(lambda cls, path: info))
 
         result = Video.get_info("test.mp4")
-        assert hasattr(result, 'duration')
-        assert result.duration == 180.0
+        assert result is info
 
     def test_video_instance_helpers(self, monkeypatch):
         from commands.video import Video
@@ -204,54 +163,28 @@ class TestVideoCoverage:
 # ---- from test_video_more.py ----
 
 
-import types
-
-import pytest
-
 from commands.video import Video
 
 
-class _DummyReader:
-    def __init__(self, bitrate):
-        self.bitrate = bitrate
-
-
-class _DummyAudio:
-    def __init__(self, bitrate):
-        self.reader = _DummyReader(bitrate)
-
-
-class _DummyClip:
-    def __init__(self):
-        self.duration = 12.5
-        self.fps = 30
-        self.size = (1920, 1080)
-        self.reader = _DummyReader(123)
-        self.audio = _DummyAudio(45)
-
-
-
-
-def test_video_class_getters_with_mocked_moviepy(monkeypatch):
-    dummy_module = types.SimpleNamespace(VideoFileClip=lambda _path: _DummyClip())
-    monkeypatch.setitem(__import__("sys").modules, "moviepy", dummy_module)
+def test_video_class_getters_with_mocked_ffprobe(monkeypatch):
+    info = _probe_info()
+    monkeypatch.setattr(Video, "_probe", classmethod(lambda cls, path: info))
 
     clip_raw = Video.get_clip("x.mp4", raw=True)
-    assert isinstance(clip_raw, _DummyClip)
+    assert clip_raw is info
 
     clip = Video.get_clip("x.mp4", raw=False)
-    assert clip["duration"] == 12.5
+    assert clip["duration"] == 120.5
     assert clip["fps"] == 30
     assert clip["size"] == (1920, 1080)
 
-    assert Video.get_length("x.mp4") == 12.5
+    assert Video.get_length("x.mp4") == 120.5
     assert Video.get_fps("x.mp4") == 30
     assert Video.get_resolution("x.mp4") == (1920, 1080)
 
-    from commands.const import KiB
-    assert Video.get_bitrate("x.mp4") == 123 * KiB
-    assert Video.get_audio_bitrate("x.mp4") == 45 * KiB
-    assert isinstance(Video.get_info("x.mp4"), _DummyClip)
+    assert Video.get_bitrate("x.mp4") == 5000000
+    assert Video.get_audio_bitrate("x.mp4") == 320000
+    assert Video.get_info("x.mp4") is info
 
 
 def test_video_instance_wrappers_call_classmethods(monkeypatch):

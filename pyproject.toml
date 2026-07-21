@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,14 +7,14 @@ name = "commands"
 dynamic = ["version"]
 description = "Mine commands"
 readme = "README.md"
-license = {file = "LICENSE"}
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [
     {name = "Egor Egorov", email = "egigoka@gmail.com"}
 ]
-requires-python = ">=3.7"
+requires-python = ">=3.11"
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
 dependencies = [
@@ -24,7 +24,6 @@ dependencies = [
     "chardet",
     "psutil",
     "requests",
-    "moviepy",
     "mutagen",
     "ping3",
     "wcwidth",
