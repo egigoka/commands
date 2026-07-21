@@ -7,11 +7,11 @@ name = "commands"
 dynamic = ["version"]
 description = "Mine commands"
 readme = "README.md"
-license = {text = "MIT"}
+license = {file = "LICENSE"}
 authors = [
     {name = "Egor Egorov", email = "egigoka@gmail.com"}
 ]
-requires-python = ">=3.6"
+requires-python = ">=3.7"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
@@ -24,13 +24,17 @@ dependencies = [
     "chardet",
     "psutil",
     "requests",
-    "thefuck",
     "moviepy",
     "mutagen",
     "ping3",
+    "wcwidth",
 ]
 
 [project.optional-dependencies]
+test = ["pytest", "pytest-cov"]
+dev = ["build", "mypy", "pydocstyle", "pylint", "pytest", "pytest-cov"]
+mssql = ["pyodbc"]
+linux = ["python-xlib; platform_system=='Linux'"]
 all = [
     "pyautogui; platform_system!='Linux'",
     "pywin32; platform_system=='Windows'",
@@ -38,7 +42,8 @@ all = [
     "pywinrm; platform_system=='Windows'",
     "python-magic-win64; platform_system=='Windows'",
     "python-magic; platform_system!='Windows'",
-    "win_unicode_console; python_version<'3.6' and platform_system=='Windows'",
+    "pyodbc",
+    "python-xlib; platform_system=='Linux'",
 ]
 
 [project.urls]
@@ -50,7 +55,28 @@ packages = ["commands"]
 include-package-data = true
 
 [tool.setuptools.package-data]
-"*" = ["res/*"]
+"commands" = ["py.typed"]
 
 [tool.setuptools.dynamic]
 version = {attr = "commands._version.__version__"}
+
+[tool.mypy]
+warn_return_any = true
+warn_unused_configs = true
+exclude = [
+    "tests/",
+    "build/",
+    "dist/",
+    "^trace_sleep\\.py$",
+    "^multithread_limit_test\\.py$",
+]
+ignore_missing_imports = true
+
+[tool.pylint.format]
+max-line-length = 120
+
+[tool.pylint.messages_control]
+disable = ["possibly-used-before-assignment"]
+
+[tool.pylint.reports]
+fail-under = 8.0
