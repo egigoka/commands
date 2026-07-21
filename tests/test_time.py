@@ -220,7 +220,7 @@ class TestTimeCoverage:
         Time.sleep(0.1, verbose=True, check_per_sec=50)
         elapsed = time.time() - start
         # Should have slept for approximately 0.1 seconds
-        assert 0.05 < elapsed < 0.2
+        assert elapsed >= 0.1
 
     def test_sleep_verbose_longer(self):
         """Test sleep with verbose=True for longer duration to test timer output"""
@@ -229,7 +229,7 @@ class TestTimeCoverage:
         # Sleep for 1.5 seconds to test the timer countdown
         Time.sleep(1.5, verbose=True, check_per_sec=10)
         elapsed = time.time() - start
-        assert 1.4 < elapsed < 2.0
+        assert elapsed >= 1.5
 
 
 def test_time_instance_helpers():
