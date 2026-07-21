@@ -72,12 +72,13 @@ class TestFFmpegCoverage:
         ff = FFMpeg(input_file="input.mkv", output_file="output.mkv")
         result = ff.subtitles(subs=["sub1.srt"], output_file="custom_output.mkv")
 
-        # Verify the class method was called with correct parameters
-        mock_add_subtitles.assert_called_once()
-        call_args = mock_add_subtitles.call_args
-        assert call_args.kwargs['input_file'] == "input.mkv"
-        assert call_args.kwargs['subs'] == ["sub1.srt"]
-        assert call_args.kwargs['output_file'] == "custom_output.mkv"
+        mock_add_subtitles.assert_called_once_with(
+            input_file="input.mkv",
+            subs=["sub1.srt"],
+            output_file="custom_output.mkv",
+            existed_langs=(),
+            debug=False,
+        )
 
     def test_audio_instance_method(self, monkeypatch):
         """Test FFMpeg.audio instance method (lines 43-44)"""
@@ -88,12 +89,13 @@ class TestFFmpegCoverage:
         ff = FFMpeg(input_file="input.mkv", output_file="output.mkv")
         result = ff.audio(audio=["audio1.mp3"], output_file="custom_output.mkv")
 
-        # Verify the class method was called with correct parameters
-        mock_add_audio.assert_called_once()
-        call_args = mock_add_audio.call_args
-        assert call_args.kwargs['input_file'] == "input.mkv"
-        assert call_args.kwargs['audio'] == ["audio1.mp3"]
-        assert call_args.kwargs['output_file'] == "custom_output.mkv"
+        mock_add_audio.assert_called_once_with(
+            input_file="input.mkv",
+            audio=["audio1.mp3"],
+            output_file="custom_output.mkv",
+            existed_langs=(),
+            debug=False,
+        )
 
     def test_convert_avi_to_mkv_verbose(self, monkeypatch, capsys):
         """Test FFMpeg.convert_avi_to_mkv with verbose=True (line 124)"""

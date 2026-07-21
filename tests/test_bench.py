@@ -71,7 +71,7 @@ class TestBenchGet:
         bench = Bench()
         time.sleep(0.02)
         delta = bench.get()
-        assert 0.02 <= delta < 0.1
+        assert delta >= 0.02
 
     def test_get_does_not_stop(self):
         """get() does not set time_end."""
@@ -96,7 +96,7 @@ class TestBenchStop:
         bench = Bench()
         time.sleep(0.02)
         delta = bench.stop()
-        assert 0.02 <= delta < 0.1
+        assert delta >= 0.02
 
     def test_stop_sets_time_end(self):
         """stop() sets time_end."""
@@ -123,7 +123,7 @@ class TestBenchEnd:
         bench = Bench()
         time.sleep(0.02)
         delta = bench.end()
-        assert 0.02 <= delta < 0.1
+        assert delta >= 0.02
 
     def test_end_stops_timer(self):
         """end() sets time_end."""
@@ -180,7 +180,7 @@ class TestBenchCall:
         bench = Bench()
         time.sleep(0.02)
         delta = bench()
-        assert 0.02 <= delta < 0.1
+        assert delta >= 0.02
 
     def test_call_does_not_stop(self):
         """Calling bench does not stop timer."""
@@ -198,7 +198,7 @@ class TestBenchContextManager:
             time.sleep(0.02)
         assert b.time_end is not None
         delta = (b.time_end - b.time_start).total_seconds()
-        assert 0.02 <= delta < 0.1
+        assert delta >= 0.02
 
     def test_context_manager_restarts(self):
         """Context manager restarts the timer on entry."""

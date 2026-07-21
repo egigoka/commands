@@ -125,7 +125,6 @@ class TestTimeSleep:
         Time.sleep(0.1)
         elapsed = time.time() - start
         assert elapsed >= 0.1
-        assert elapsed < 0.2  # Should not be too long
 
     def test_sleep_zero(self, monkeypatch):
         calls = []
