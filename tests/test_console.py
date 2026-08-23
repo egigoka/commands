@@ -111,6 +111,16 @@ class TestConsoleCoverage:
         assert isinstance(result, list)
         # Should handle double-width correctly
 
+    def test_fit_truncates_by_display_width(self, monkeypatch):
+        from wcwidth import wcswidth
+
+        monkeypatch.setattr(Console, "width", staticmethod(lambda: 5))
+
+        result = Console.fit("中中中")
+
+        assert result == [">> 中"]
+        assert wcswidth(result[0]) == 5
+
     def test_fit_windows_width_adjustment(self, monkeypatch):
         """Test Console.fit Windows width adjustment (line 286)"""
         # Mock OS.windows to test Windows path

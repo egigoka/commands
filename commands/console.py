@@ -470,11 +470,8 @@ class Console:
             # cut line
             cut_cnt = len_all - console_width + wcswidth(prefix)
             desired_length = wcswidth(longest_string) - cut_cnt
-            lendiff = wcswidth(longest_string) - len(longest_string)  # add buffer for double characters
             if reverse:
                 longest_string = longest_string[::-1]
-
-            longest_string = longest_string[:int(-cut_cnt+lendiff)]
 
             while wcswidth(longest_string) > desired_length:
                 longest_string = longest_string[:-1]
